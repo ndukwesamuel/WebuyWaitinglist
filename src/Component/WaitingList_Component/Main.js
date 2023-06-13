@@ -66,36 +66,50 @@ const Main = ({ lang, setLang }) => {
             <span className="text-[#6dad04] border-2 border-[#6dad04] ml-3 p-1 text-2xl max-sm:text-lg font-extrabold hover:border-none hover:underline hover:decoration-wavy hover:decoration-[#6dad04] hover:decoration-2 transition-all">
               difficult and expensive
             </span>{" "}
-            . We are building the digital infrastructure to enable you buy
-            conveniently and affordably through trusted groups. Don't miss out
-            on the chance to save money on your purchases. Be the first to know
-            when we launch, join the wait-list.
+            . We are building Africa's largest digital infrastructure
+            for group buying . Don't miss out on the chance to save money on
+            your purchases. Be the first to know when we launch, join the
+            wait-list.
           </p>
         )}
 
         {lang === "fn" && (
-          <p className="font-semibold text-lg max-sm:text-base max-md:text-lg text-center mt-6 max-sm:text-left max-sm:mt-3">
-            Acheter des courses et des produits alimentaires ne doit pas être si
-            <span className="text-[#6dad04] border-2 border-[#6dad04] ml-3 p-1 text-2xl max-sm:text-lg font-extrabold hover:border-none hover:underline hover:decoration-wavy hover:decoration-[#6dad04] hover:decoration-2 transition-all">
-              difficile et coûteux
-            </span>{" "}
-            . Nous construisons l'infrastructure numérique pour vous permettre
-            d'acheter de manière pratique et abordable grâce à des groupes de
-            confiance. Ne manquez pas l'occasion d'économiser de l'argent sur
-            vos achats. Soyez le premier à savoir quand nous lançons, rejoignez
-            la liste d'attente.
-          </p>
+          <>
+            <p className="font-semibold text-lg max-sm:text-base max-md:text-lg text-center mt-6 max-sm:text-left max-sm:mt-3">
+              Faire les courses et acheter des produits alimentaires ne doit pas
+              être si
+              <span className="text-[#6dad04] border-2 border-[#6dad04] ml-3 p-1 text-2xl max-sm:text-lg font-extrabold hover:border-none hover:underline hover:decoration-wavy hover:decoration-[#6dad04] hover:decoration-2 transition-all">
+                difficile et cher
+              </span>{" "}
+              . Nous construisons l'infrastructure numérique la plus grande
+              d'Afrique pour les achats en groupe. Ne manquez pas l'occasion
+              d'économiser de l'argent sur vos achats. Soyez les premiers
+              informés de notre lancement, rejoignez la liste d'attente.
+            </p>
+          </>
         )}
 
         <div className="flex content-center justify-center mt-4 gap-1">
-          <button
-            className="mt-2 transition-all bg-[#6dad04] px-8 py-2 max-sm:px-4 font-semibold rounded-md hover:border-2 border-[#6dad04] hover:bg-transparent max-sm:text-sm max-md:text-base"
-            type="button"
-            onClick={() => setLang("en")}
-          >
-            English
-            <i className="ml-1 fa-solid fa-user-group"></i>
-          </button>
+          {lang === "en" && (
+            <button
+              className="mt-2 transition-all bg-[#6dad04] px-8 py-2 max-sm:px-4 font-semibold rounded-md hover:border-2 border-[#6dad04] hover:bg-transparent max-sm:text-sm max-md:text-base"
+              type="button"
+              onClick={() => setLang("fn")}
+            >
+              français
+              <i className="ml-1 fa-solid fa-user-group"></i>
+            </button>
+          )}
+          {lang === "fn" && (
+            <button
+              className="mt-2 transition-all bg-[#6dad04] px-8 py-2 max-sm:px-4 font-semibold rounded-md hover:border-2 border-[#6dad04] hover:bg-transparent max-sm:text-sm max-md:text-base"
+              type="button"
+              onClick={() => setLang("en")}
+            >
+              English
+              <i className="ml-1 fa-solid fa-user-group"></i>
+            </button>
+          )}
 
           <button
             className="mt-2 transition-all bg-[#6dad04] px-8 py-2 max-sm:px-4 font-semibold rounded-md hover:border-2 border-[#6dad04] hover:bg-transparent max-sm:text-sm max-md:text-base"
@@ -103,15 +117,6 @@ const Main = ({ lang, setLang }) => {
             onClick={() => setJoin(true)}
           >
             Join a Group
-            <i className="ml-1 fa-solid fa-user-group"></i>
-          </button>
-
-          <button
-            className="mt-2 transition-all bg-[#6dad04] px-8 py-2 max-sm:px-4 font-semibold rounded-md hover:border-2 border-[#6dad04] hover:bg-transparent max-sm:text-sm max-md:text-base"
-            type="button"
-            onClick={() => setLang("fn")}
-          >
-            français
             <i className="ml-1 fa-solid fa-user-group"></i>
           </button>
         </div>
