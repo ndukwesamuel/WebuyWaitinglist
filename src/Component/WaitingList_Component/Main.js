@@ -116,7 +116,7 @@ const Main = ({ lang, setLang }) => {
             type="button"
             onClick={() => setJoin(true)}
           >
-            Join a Group
+            Join the Waiting List
             <i className="ml-1 fa-solid fa-user-group"></i>
           </button>
         </div>
