@@ -51,8 +51,8 @@ const Header = ({ lang, setLang }) => {
             className=" mr-4 outline-none bg-[#6dad04] rounded-[4px] font-semibold px-4 py-1 hover:bg-transparent hover:border-2 hover:border-[#6dad04] hover:text-[#e6e9ed] transition-all"
             type="Submit"
           >
-            {lang === "en" && "Log In "}
-            {lang === "fn" && "Connexion"}
+            {lang === "en" && "Sign Up"}
+            {lang === "fn" && "s'inscrire"}
           </button>
           <i className="fa-solid fa-cart-shopping cursor-pointer text-[#e6e9ed]"></i>
         </div>
