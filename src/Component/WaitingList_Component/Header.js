@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ lang, setLang }) => {
+  const navigate = useNavigate();
   return (
     <div className="w-full ">
       <header className="flex flex-row content-center justify-between">
@@ -49,7 +51,7 @@ const Header = ({ lang, setLang }) => {
         <div className=" max-sm:hidden">
           <button
             className=" mr-4 outline-none bg-[#6dad04] rounded-[4px] font-semibold px-4 py-1 hover:bg-transparent hover:border-2 hover:border-[#6dad04] hover:text-[#e6e9ed] transition-all"
-            type="Submit"
+            onClick={() => navigate("/signup")}
           >
             {lang === "en" && "Sign Up"}
             {lang === "fn" && "s'inscrire"}

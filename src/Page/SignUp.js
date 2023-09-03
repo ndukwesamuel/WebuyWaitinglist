@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
 import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
 import { useDispatch, useSelector } from "react-redux";
-import { Login_fun } from "../Redux/AutenticationSlice";
+import { Login_fun, resetSignup } from "../Redux/Auth";
+import ModalContainer, {
+  SuccessModal,
+} from "../Component/modal-container/modal-container";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
-  const data = useSelector((state) => state.AutenticationSlice);
+  const { data, isLoading, isSuccess } = useSelector(
+    (state) => state.reducer?.Auth
+  );
 
   console.log(data);
 
@@ -35,15 +41,30 @@ const SignUp = () => {
 
     let name = `${firstName} ${lastName}`;
 
-    const data = new URLSearchParams();
-    data.append("name", name);
-    data.append("email", email);
-    data.append("password", password);
-    // Perform form submission logic here using the form data
-    console.log(loginform);
+    let newData = {
+      name: name,
+      email: loginform?.email,
+      password: loginform?.password,
+    };
 
-    dispatch(Login_fun(data));
+    dispatch(Login_fun(newData));
   };
+
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const toggleSuccess = () => {
+    setShowSuccess(!showSuccess);
+    dispatch(resetSignup());
+  };
+
+  useEffect(() => {
+    if (data) {
+      setShowSuccess(true);
+    }
+    // return () => {
+    //   dispatch(resetSignup());
+    // };
+  }, [data]);
 
   return (
     <div className="flex content-center justify-center relative w-full h-screen">
@@ -140,25 +161,48 @@ const SignUp = () => {
             </div>
 
             <div className="flex flex-col mx-auto max-sm:mt-2">
-              <button
-                className="text-[#ffffff] hover:text-[#355E3B] max-sm:hover:text-[#ffffff] hover:bg-transparent hover:border-[1px] hover:border-[#355E3B] bg-[#355E3B] text-center px-[55px] py-[7px] max-sm:py-[10px] text-[14px] max-sm:text-[17px] rounded-full mx-auto"
-                type="button"
-                onClick={handleSubmit}
-              >
-                Create Account
-              </button>
+              {isLoading ? (
+                <button
+                  className="text-[#ffffff] hover:text-[#355E3B] max-sm:hover:text-[#ffffff] hover:bg-transparent hover:border-[1px] hover:border-[#355E3B] bg-[#355E3B] text-center px-[55px] py-[7px] max-sm:py-[10px] text-[14px] max-sm:text-[17px] rounded-full mx-auto"
+                  type="button"
+                >
+                  Isloading
+                </button>
+              ) : (
+                <button
+                  className="text-[#ffffff] hover:text-[#355E3B] max-sm:hover:text-[#ffffff] hover:bg-transparent hover:border-[1px] hover:border-[#355E3B] bg-[#355E3B] text-center px-[55px] py-[7px] max-sm:py-[10px] text-[14px] max-sm:text-[17px] rounded-full mx-auto"
+                  type="button"
+                  onClick={handleSubmit}
+                >
+                  Create Account
+                </button>
+              )}
               <p className="mx-auto mt-1 text-sm max-sm:text-[#ffffff]">
                 Already have an account?
                 <span className="text-[#4F7942] opacity-70 text-sm">
-                  <a className="hover:text-[#355E3B] text-xl" href="/">
+                  <Link
+                    to="/login"
+                    className="hover:text-[#355E3B] text-xl hover:cursor-pointer"
+                  >
                     Sign In
-                  </a>
+                  </Link>
                 </span>
               </p>
             </div>
           </div>
         </div>
       </div>
+
+      <ModalContainer
+        close={toggleSuccess}
+        show={showSuccess}
+        width={"max-w-xs"}
+      >
+        <div>
+          <p className="text-xl text-center">Success!</p>
+          <p className="text-xl text-center">{data?.message} to your mail</p>
+        </div>
+      </ModalContainer>
     </div>
   );
 };
