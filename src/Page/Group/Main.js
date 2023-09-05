@@ -106,6 +106,8 @@ const datas = [
 ];
 
 const Main = () => {
+  console.log(process.env.REACT_APP_Url);
+  console.log("sjhshdj");
   return (
     <div className="px-[25px] pt-[15px] pb-[40px] font-['Raleway']">
       <div className="flex items-center justify-between">

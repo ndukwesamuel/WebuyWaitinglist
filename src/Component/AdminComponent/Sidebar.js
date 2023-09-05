@@ -4,8 +4,11 @@ import { FaTachometerAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 import image from "../../assets/images/Subtract.png";
+import { useDispatch } from "react-redux";
+import { Logout_fun } from "../../Redux/AutenticationSlice";
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
   const showProductDropdown = () => {
@@ -98,7 +101,15 @@ const Sidebar = () => {
         </div>
         <div className="flex items-center gap-[10px] py-[15px] cursor-pointer">
           <i className="fa-solid fa-arrow-right-from-bracket text-[#565454]"></i>{" "}
-          <p className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]">
+          <p
+            className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]"
+            onClick={() => {
+              dispatch(Logout_fun());
+              localStorage.clear();
+              sessionStorage.clear();
+              window.location.reload();
+            }}
+          >
             Log Out
           </p>
         </div>

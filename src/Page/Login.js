@@ -18,7 +18,11 @@ const Login = () => {
     (state) => state.reducer?.AutenticationSlice
   );
 
-  console.log(data);
+  console.log(isLoading);
+
+  console.log("this is me");
+
+  console.log({ data });
 
   const dispatch = useDispatch();
 

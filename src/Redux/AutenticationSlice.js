@@ -1,15 +1,85 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Base_URL = "https://webuyam.onrender.com/api/user/login";
 
+// let main_url = process.env.REACT_APP_Url;
+let main_url = process.env.REACT_APP_Local;
 const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: null,
   data: null,
+  logout: null,
 };
+
+const Logout_fun_Service = async (data, token) => {
+  let log_outurl = main_url + "user/logout";
+
+  console.log(process.env.REACT_APP_Local);
+  try {
+    console.log(data);
+
+    const response = await axios.get(log_outurl, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(response.data);
+
+    toast.success(`${response.data?.message}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+    // return response.data;
+    // Process the response data here
+  } catch (error) {
+    console.error(error);
+
+    toast.error(`${error}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      className: "Forbidden403",
+    });
+    throw error;
+
+    // Handle the error here
+  }
+};
+
+export const Logout_fun = createAsyncThunk(
+  "AutenticationSlice/Logout_fun",
+  async (data, thunkAPI) => {
+    try {
+      let token = thunkAPI.getState().reducer.AutenticationSlice.data.token;
+      return await Logout_fun_Service(data, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 const Login_fun_Service = async (data) => {
   try {
@@ -20,7 +90,21 @@ const Login_fun_Service = async (data) => {
     // Process the response data here
   } catch (error) {
     console.error(error);
+
+    toast.error(`${error}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      className: "Forbidden403",
+    });
     // Handle the error here
+
+    throw error;
   }
 };
 
@@ -60,6 +144,16 @@ export const AutenticationSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+        toast.error(`${state.message}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       });
   },
 });
