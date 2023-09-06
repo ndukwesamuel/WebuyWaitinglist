@@ -26,14 +26,13 @@ function Create() {
 
       const config = {
         headers: {
-          // "Content-Type": "multipart/form-data",
-          // Accept: "multipart/form-data",
-
           "Content-Type": "application/json",
           Accept: "application/json",
           Authorization: `Bearer ${tokengot}`,
         },
       };
+
+      console.log(config);
       return axios.post(API_URL, formData, config);
 
       //   return axios.post(API_URL, formData, config).catch((error) => {
