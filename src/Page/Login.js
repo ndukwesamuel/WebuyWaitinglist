@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -17,12 +16,6 @@ const Login = () => {
   const { data, isLoading, isSuccess } = useSelector(
     (state) => state.reducer?.AutenticationSlice
   );
-
-  console.log(isLoading);
-
-  console.log("this is me");
-
-  console.log({ data });
 
   const dispatch = useDispatch();
 
@@ -130,22 +123,13 @@ const Login = () => {
             </div>
 
             <div className="flex flex-col mx-auto max-sm:mt-2">
-              {isLoading ? (
-                <button
-                  className="text-[#ffffff] hover:text-[#355E3B] max-sm:hover:text-[#ffffff] hover:bg-transparent hover:border-[1px] hover:border-[#355E3B] bg-[#355E3B] text-center px-[55px] py-[7px] max-sm:py-[10px] text-[14px] max-sm:text-[17px] rounded-full mx-auto"
-                  type="button"
-                >
-                  Isloading
-                </button>
-              ) : (
-                <button
-                  className="text-[#ffffff] hover:text-[#355E3B] max-sm:hover:text-[#ffffff] hover:bg-transparent hover:border-[1px] hover:border-[#355E3B] bg-[#355E3B] text-center px-[55px] py-[7px] max-sm:py-[10px] text-[14px] max-sm:text-[17px] rounded-full mx-auto"
-                  type="button"
-                  onClick={handleSubmit}
-                >
-                  Login in
-                </button>
-              )}
+              <button
+                className="text-[#ffffff] hover:text-[#355E3B] max-sm:hover:text-[#ffffff] hover:bg-transparent hover:border-[1px] hover:border-[#355E3B] bg-[#355E3B] text-center px-[55px] py-[7px] max-sm:py-[10px] text-[14px] max-sm:text-[17px] rounded-full mx-auto"
+                type="button"
+                onClick={handleSubmit}
+              >
+                {isLoading ? <> Isloading</> : <>Login </>}
+              </button>
               <p className="mx-auto mt-1 text-sm max-sm:text-[#ffffff]">
                 don't have an account?
                 <span className="text-[#4F7942] opacity-70 text-sm">
