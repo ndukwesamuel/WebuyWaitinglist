@@ -2,10 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const Base_URL = "https://webuyam.onrender.com/api/user/login";
-
-// let main_url = process.env.REACT_APP_Url;
-let main_url = process.env.REACT_APP_Local;
+let main_url = process.env.REACT_APP_Url;
+// let main_url = process.env.REACT_APP_Local;
 const initialState = {
   isError: false,
   isSuccess: false,
@@ -82,15 +80,13 @@ export const Logout_fun = createAsyncThunk(
 );
 
 const Login_fun_Service = async (data) => {
+  let Base_URL = main_url + "user/login";
+
   try {
-    console.log(data);
     const response = await axios.post(Base_URL, data);
-    console.log(response.data);
     return response.data;
     // Process the response data here
   } catch (error) {
-    console.error(error);
-
     toast.error(`${error}`, {
       position: "top-right",
       autoClose: 5000,
