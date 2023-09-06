@@ -6,6 +6,7 @@ import Navbar from "../../Component/AdminComponent/Navbar";
 import Sidebar from "../../Component/AdminComponent/Sidebar";
 import background from "../../assets/images/Rectangle 115.png";
 import { Route, Routes } from "react-router-dom";
+import GroupPage from "./GroupPage";
 
 function GroupRoute() {
   return (
@@ -27,6 +28,7 @@ function GroupRoute() {
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/orders" element={<OrdersPage />} />
+            <Route path="/group-page" element={<GroupPage />} />
           </Routes>
         </div>
       </div>

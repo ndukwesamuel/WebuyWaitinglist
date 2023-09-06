@@ -18,7 +18,6 @@ const persistConfig = {
 
 const rootReducer = (state, action) => {
   if (action.type === "RESET") {
-    console.log("his is working ");
     storage.removeItem("persist:root");
     state = {};
   }

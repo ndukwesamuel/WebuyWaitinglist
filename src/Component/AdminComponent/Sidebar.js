@@ -49,9 +49,12 @@ const Sidebar = () => {
       </div>
       <div className="flex items-center gap-[13px] py-[15px] border-b-[0.5px] border-[#000000]/[0.3] cursor-pointer">
         <i class="fa-solid fa-users text-[#565454]"></i>
-        <p className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]">
+        <Link
+          to="/group/group-page"
+          className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]"
+        >
           Groups
-        </p>
+        </Link>
       </div>
       <div className="flex items-center gap-[15px] py-[15px] border-b-[0.5px] border-[#000000]/[0.3] cursor-pointer">
         <i className="fa-solid fa-cart-shopping text-[#565454]"></i>
