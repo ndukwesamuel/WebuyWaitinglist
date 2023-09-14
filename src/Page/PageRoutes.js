@@ -5,6 +5,7 @@ import AdminRoute from "./Admin/AdminRoute";
 import Login from "./Login";
 import { Private, PrivateRoute } from "./privateroute/Private";
 import GroupRoute from "./Group/GroupRoute";
+import Dashboard from "./UserDashboard/Dashboard";
 
 const PageRoutes = () => {
   return (
@@ -21,6 +22,7 @@ const PageRoutes = () => {
 
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
+
       <Route
         path="/group/*"
         element={
