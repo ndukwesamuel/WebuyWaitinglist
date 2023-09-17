@@ -5,7 +5,6 @@ import AdminRoute from "./Admin/AdminRoute";
 import Login from "./Login";
 import { Private, PrivateRoute } from "./privateroute/Private";
 import GroupRoute from "./Group/GroupRoute";
-import Dashboard from "./UserDashboard/Dashboard";
 
 const PageRoutes = () => {
   return (

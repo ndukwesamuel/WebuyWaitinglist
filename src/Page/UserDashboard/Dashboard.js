@@ -3,6 +3,7 @@ import UserNavbar from "../../Component/UserComponent/UserNavbar";
 import UserProfile from "../../Component/UserComponent/UserProfile";
 import UserSidebar from "../../Component/UserComponent/UserSidebar";
 import { Route, Routes } from "react-router-dom";
+import Home from "../../Component/UserComponent/Home";
 
 const Dashboard = () => {
   return (
@@ -14,24 +15,14 @@ const Dashboard = () => {
           alt=""
         ></img>
       </div>
-      <div className="absolute inset-0  overflow-scroll">
+      <div className="absolute inset-0 overflow-scroll">
         <UserNavbar />
-        <UserProfile />
-        <div className="absolute top-[4rem] left-0 w-[10rem] hidden md:flex h-full ">
+        {/* <UserProfile /> */}
+        <Home />
+        <div className="absolute top-[4rem] left-0 w-[10rem] hidden md:flex ">
           <UserSidebar />
         </div>
       </div>
-
-      {/* <div className="absolute inset-0 flex overflow-scroll">
-        <div className=" basis-[12%] h-full">
-        </div>
-        <div className=" basis-[88%] h-full">
-          <UserNavbar />
-          <div className="">
-            <UserProfile />
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };

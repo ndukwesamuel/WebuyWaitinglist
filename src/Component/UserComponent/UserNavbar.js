@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { FaEnvelope, FaRegBell, FaSearch } from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa6";
 import image from "../../assets/images/Subtract.png";
-import profile from "../../assets/profile.png";
+import myImage from "../../assets/DP.jpg";
 import UserSidebar from "./UserSidebar";
 const UserNavbar = () => {
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -17,7 +17,7 @@ const UserNavbar = () => {
             <h1 className="text-[21px] font-extrabold text-[#565454] max-sm:text-3xl max-md:text-4xl">
               WE
               <img
-                className="inline-block w-[60px] mb-[4px] ml-[2px] "
+                className="inline-block w-[40px] md:w-[60px] mb-[4px] ml-[2px] "
                 src={image}
                 alt=""
               ></img>
@@ -27,14 +27,19 @@ const UserNavbar = () => {
 
         <div className="flex items-center rounded-[5px]"></div>
         <div className="flex items-center gap-[20px]">
-          <div className="flex items-center gap-[25px] border-r-[1px] pr-[25px]">
-            <FaRegBell className="cursor-pointer text-[#565454] " />
-            <FaEnvelope className="cursor-pointer text-[#565454] " />
-          </div>
           <div className="flex items-center gap-[15px] " onClick={showSidebar}>
-            <p>Jesse Iyoha</p>
+            <div className="flex gap-[.25rem] cursor-pointer">
+              <i className="fa-solid fa-globe text-[#565454]"></i>
+
+              <FaChevronDown className="text-[10px] mt-[.5rem]" />
+            </div>
+            <p className="hidden md:block">Jesse Iyoha</p>
             <div className="h-[50px] w-[50px] rounded-full bg-[#009B4D] cursor-pointer flex items-center justify-center relative z-40">
-              <img src={profile} alt="" />
+              <img
+                className="w-[48px] h-[48px] rounded-full"
+                src={myImage}
+                alt=""
+              />
             </div>
 
             {openSidebar && (

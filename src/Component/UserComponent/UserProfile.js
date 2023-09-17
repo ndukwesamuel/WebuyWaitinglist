@@ -1,4 +1,3 @@
-import profile from "../../assets/profile.png";
 import myImage from "../../assets/DP.jpg";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -33,8 +32,8 @@ const UserProfile = () => {
       <div className="font-bold text-xl pb-[10px] text-md tracking-wide">
         Profile
       </div>
-      <div className="flex flex-col items-center justify-center gap-10 md:px-[50px] pt-[30px] pb-[60px] md:flex-row  bg-[#D9D9D9] bg-opacity-50 h-auto w-full rounded-[15px] border-[#565454] ">
-        <div className="pix-container w-[300px] h-auto px-auto py-auto">
+      <div className="flex flex-col items-center justify-center gap-8 md:px-[50px] pt-[30px] pb-[60px] md:flex-row bg-[#D9D9D9] bg-opacity-50 h-auto w-full rounded-[15px] border-[#565454] ">
+        <div className="pix-container">
           <div className="flex items-center justify-center rounded-[15px] w-[250px] h-[250px] bg-[#FFFFFF] ">
             <img
               src={myImage}
