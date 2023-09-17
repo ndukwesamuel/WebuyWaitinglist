@@ -1,26 +1,6 @@
 import myImage from "../../assets/DP.jpg";
-import { Link } from "react-router-dom";
-import { useState } from "react";
 
 const UserProfile = () => {
-  const [formdata, setFormData] = useState({
-    name: "",
-    email: "",
-    address: "",
-    phone: "",
-  });
-  const { name, email, address, phone } = formdata;
-
-  const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: [e.target.value],
-    }));
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-  };
   return (
     <section className="px-[2rem] md:px-[10rem] lg:px-[15rem] pt-[25px] pb-[40px] font-['Raleway'] ">
       <div className="font-bold text-xl pb-[10px] text-md tracking-wide">
