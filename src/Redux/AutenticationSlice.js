@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { ErrorFunc } from "../utilities/ApiErrorFun";
 
 // let main_url = process.env.REACT_APP_Url;
-let main_url = process.env.REACT_APP_Local;
+let main_url = process.env.REACT_APP_Url;
 const initialState = {
   isError: false,
   isSuccess: false,

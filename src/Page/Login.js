@@ -41,7 +41,6 @@ const Login = () => {
       email: loginform?.email,
       password: loginform?.password,
     };
-
     dispatch(Login_fun(newData));
   };
 
@@ -54,12 +53,15 @@ const Login = () => {
 
   useEffect(() => {
     if (data && isSuccess) {
-      navigate("/");
+      console.log({ data });
+
+      if (data?.isAdmin) {
+        navigate("/admin");
+      } else {
+        navigate("/user-dashboard");
+      }
     }
-    // return () => {
-    //   dispatch(resetSignup());
-    // };
-  }, [data]);
+  }, [data, dispatch]);
 
   return (
     <div className="flex content-center justify-center relative w-full h-screen">

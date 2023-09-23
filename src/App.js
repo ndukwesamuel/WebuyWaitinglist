@@ -20,7 +20,7 @@ function App() {
         <Route path="/*" exact element={<PageRoutes />} />
         <Route path="/user-dashboard" exact element={<Dashboard />} />
 
-        <Route path="/admin" exact element={<AdminRoute />} />
+        {/* <Route path="/admin" exact element={<AdminRoute />} /> */}
       </Routes>
     </BrowserRouter>
   );

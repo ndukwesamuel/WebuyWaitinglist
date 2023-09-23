@@ -17,6 +17,7 @@ const initialState = {
 };
 
 const Login_fun_Service = async (data) => {
+  console.log({ data });
   try {
     console.log(data);
     const response = await axios.post(Base_URL, data);
