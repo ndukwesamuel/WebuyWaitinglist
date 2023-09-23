@@ -19,26 +19,22 @@ const PageRoutes = () => {
         }
       />
 
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/login" element={<Login />} />
-
       <Route
-        path="/group/*"
+        path="/signup"
         element={
-          <PrivateRoute>
-            <GroupRoute />
-          </PrivateRoute>
+          <Private>
+            <SignUp />
+          </Private>
         }
       />
-
-      {/* <Route
-        path="/admin/*"
+      <Route
+        path="/login"
         element={
-          <PrivateRoute>
-            <AdminRoute />
-          </PrivateRoute>
+          <Private>
+            <Login />
+          </Private>
         }
-      /> */}
+      />
     </Routes>
   );
 };

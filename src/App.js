@@ -23,7 +23,7 @@ function App() {
       <Routes>
         <Route path="/*" exact element={<PageRoutes />} />
         <Route
-          path="/user-dashboard"
+          path="/user-dashboard/*"
           exact
           element={
             <UserPrivateRoute>
@@ -33,7 +33,7 @@ function App() {
         />
 
         <Route
-          path="/admin"
+          path="/admin/*"
           exact
           element={
             <AdminPrivateRoute>

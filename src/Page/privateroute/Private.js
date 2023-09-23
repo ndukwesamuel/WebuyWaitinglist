@@ -10,7 +10,11 @@ export const Private = ({ children }) => {
     // not logged in so redirect to login page with the return url
     // return <Navigate to="/" state={{ from: history.location }} />;
 
-    return <Navigate to="/admin" />;
+    if (data?.isAdmin === false) {
+      return <Navigate to="/user-dashboard" />;
+    } else {
+      return <Navigate to="/admin" />;
+    }
   }
 
   return children;
