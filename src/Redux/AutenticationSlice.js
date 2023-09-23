@@ -17,10 +17,7 @@ const initialState = {
 const Logout_fun_Service = async (data, token) => {
   let log_outurl = main_url + "user/logout";
 
-  console.log(process.env.REACT_APP_Local);
   try {
-    console.log(data);
-
     const response = await axios.get(log_outurl, {
       headers: {
         "Content-Type": "application/json",
@@ -28,7 +25,6 @@ const Logout_fun_Service = async (data, token) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response.data);
 
     toast.success(`${response.data?.message}`, {
       position: "top-right",

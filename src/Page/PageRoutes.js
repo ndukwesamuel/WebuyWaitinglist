@@ -31,14 +31,14 @@ const PageRoutes = () => {
         }
       />
 
-      <Route
+      {/* <Route
         path="/admin/*"
         element={
           <PrivateRoute>
             <AdminRoute />
           </PrivateRoute>
         }
-      />
+      /> */}
     </Routes>
   );
 };
