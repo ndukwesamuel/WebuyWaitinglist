@@ -5,6 +5,7 @@ import AdminRoute from "./Admin/AdminRoute";
 import Login from "./Login";
 import { Private, PrivateRoute } from "./privateroute/Private";
 import GroupRoute from "./Group/GroupRoute";
+import EmailVerification from "./EmailVerification";
 
 const PageRoutes = () => {
   return (
@@ -35,6 +36,7 @@ const PageRoutes = () => {
           </Private>
         }
       />
+      <Route path="/verify-email" element={<EmailVerification />} />
     </Routes>
   );
 };

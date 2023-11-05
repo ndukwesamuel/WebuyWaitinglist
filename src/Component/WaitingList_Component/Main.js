@@ -65,7 +65,7 @@ const Main = ({ lang, setLang }) => {
             Getting groceries and foodstuff doesn't have to be so
             <span className="text-[#6dad04] border-2 border-[#6dad04] ml-3 p-1 text-2xl max-sm:text-lg font-extrabold hover:border-none hover:underline hover:decoration-wavy hover:decoration-[#6dad04] hover:decoration-2 transition-all">
               difficult and expensive
-            </span>{" "}
+            </span>
             . We are building Africa's largest digital infrastructure
             for group buying . Don't miss out on the chance to save money on
             your purchases. Be the first to know when we launch, join the

@@ -5,7 +5,7 @@ import myImage from "../../assets/DP.jpg";
 import UserSidebar from "./UserSidebar";
 const UserNavbar = () => {
   const [openSidebar, setOpenSidebar] = useState(false);
-
+  const [lang, setLang] = useState("en");
   const showSidebar = () => {
     setOpenSidebar(!openSidebar);
   };
@@ -33,7 +33,7 @@ const UserNavbar = () => {
 
               <FaChevronDown className="text-[10px] mt-[.5rem]" />
             </div>
-            <p className="hidden md:block">Jesse Iyoha</p>
+            <p className="hidden md:block">Adetayo Adewobi</p>
             <div className="h-[50px] w-[50px] rounded-full bg-[#009B4D] cursor-pointer flex items-center justify-center relative z-40">
               <img
                 className="w-[48px] h-[48px] rounded-full"
@@ -44,7 +44,7 @@ const UserNavbar = () => {
 
             {openSidebar && (
               <div className="absolute top-[4rem] md:hidden left-0 right-[10rem] w-[10rem] h-[100vh] overflow-hidden">
-                <UserSidebar />
+                <UserSidebar lang={lang} setLang={setLang} />
               </div>
             )}
           </div>

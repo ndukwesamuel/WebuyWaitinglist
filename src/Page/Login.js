@@ -139,7 +139,7 @@ const Login = () => {
                     to="/signup"
                     className="hover:text-[#355E3B] text-xl hover:cursor-pointer"
                   >
-                    Sign Up
+                    &nbsp;Sign Up
                   </Link>
                 </span>
               </p>

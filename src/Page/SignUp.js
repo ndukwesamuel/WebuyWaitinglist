@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
 import { useDispatch, useSelector } from "react-redux";
-import { Login_fun, resetSignup } from "../Redux/Auth";
+import { RegisterFun, resetSignup } from "../Redux/Auth";
 import ModalContainer, {
   SuccessModal,
 } from "../Component/modal-container/modal-container";
@@ -14,9 +14,6 @@ const SignUp = () => {
   const { data, isLoading, isSuccess } = useSelector(
     (state) => state.reducer?.Auth
   );
-
-  console.log(data);
-
   const dispatch = useDispatch();
 
   const [loginform, setLoginform] = useState({
@@ -46,7 +43,7 @@ const SignUp = () => {
       password: loginform?.password,
     };
 
-    dispatch(Login_fun(newData));
+    dispatch(RegisterFun(newData));
   };
 
   const [showSuccess, setShowSuccess] = useState(false);
@@ -60,9 +57,6 @@ const SignUp = () => {
     if (data) {
       setShowSuccess(true);
     }
-    // return () => {
-    //   dispatch(resetSignup());
-    // };
   }, [data]);
 
   return (
@@ -98,7 +92,7 @@ const SignUp = () => {
                   className="flex flex-col gap-[4px] mb-3 max-sm:text-[#ffffff] max-sm:text-base"
                 >
                   <div id="firstName" className=" flex flex-col gap-[4px]">
-                    <label for="fname" className="">
+                    <label htmlFor="fname" className="">
                       First Name
                     </label>
                     <input
@@ -112,7 +106,7 @@ const SignUp = () => {
                     ></input>
                   </div>
                   <div id="lastName" className=" flex flex-col gap-[4px] ">
-                    <label for="lname" className="">
+                    <label htmlFor="lname" className="">
                       Last Name
                     </label>
                     <input
@@ -130,7 +124,7 @@ const SignUp = () => {
                   id="email"
                   className="flex flex-col gap-[4px] mb-3 max-sm:text-[#ffffff] max-sm:text-base"
                 >
-                  <label for="email">Email Address</label>
+                  <label htmlFor="email">Email Address</label>
                   <input
                     type="email"
                     name="email"
@@ -145,7 +139,7 @@ const SignUp = () => {
                   id="password"
                   className="flex flex-col gap-[4px] max-sm:text-[#ffffff] max-sm:text-base"
                 >
-                  <label for="password">Password</label>
+                  <label htmlFor="password">Password</label>
                   <input
                     type="password"
                     name="password"
@@ -183,7 +177,7 @@ const SignUp = () => {
                     to="/login"
                     className="hover:text-[#355E3B] text-xl hover:cursor-pointer"
                   >
-                    Sign In
+                    &nbsp; Sign In
                   </Link>
                 </span>
               </p>
