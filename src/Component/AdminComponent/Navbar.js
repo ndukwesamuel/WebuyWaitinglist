@@ -14,14 +14,14 @@ const Navbar = () => {
 
   return (
     <div className=" font-['Raleway'] bg-[#ffffff] w-full">
-      <div className="flex items-center justify-between h-[70px] shadow-lg px-[25px] ">
+      <div className="flex items-center justify-between h-[50px] shadow-lg px-[25px] ">
         <div className="flex items-center rounded-[5px]">
           <input
             type="text"
-            className=" bg-[#F8F9FC] h-[40px] outline-none pl-[13px] w-[350px] rounded-[5px] placeholder:text-[14px] leading-[20px] font-normal"
+            className=" bg-[#F8F9FC] h-[30px] outline-none pl-[13px] w-[350px] rounded-[5px] placeholder:text-[14px] leading-[20px] font-normal"
             placeholder="Search for..."
           />
-          <div className="bg-[#009B4D] h-[40px] px-[14px] flex items-center justify-center cursor-pointer rounded-tr-[5px] rounded-br-[5px]">
+          <div className="bg-[#009B4D] h-[30px] px-[14px] flex items-center justify-center cursor-pointer rounded-tr-[5px] rounded-br-[5px]">
             <FaSearch color="white" />
           </div>
         </div>
@@ -34,8 +34,10 @@ const Navbar = () => {
             className="flex items-center gap-[15px] relative"
             onClick={showProfile}
           >
-            <p>Jesse Iyoha</p>
-            <div className="h-[50px] w-[50px] rounded-full bg-[#009B4D] cursor-pointer flex items-center justify-center relative z-40">
+            <p className="font-medium text-[15px] text-[#565454]">
+              Jesse Iyoha
+            </p>
+            <div className="h-[40px] w-[40px] rounded-full bg-[#009B4D] cursor-pointer flex items-center justify-center relative z-40">
               <img src={profile} alt="" />
             </div>
 

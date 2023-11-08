@@ -79,6 +79,7 @@ export const Logout_fun = createAsyncThunk(
 const Login_fun_Service = async (data) => {
   let Base_URL = main_url + "user/login";
 
+  console.log({ Base_URL, data });
   try {
     const response = await axios.post(Base_URL, data);
     return response.data;

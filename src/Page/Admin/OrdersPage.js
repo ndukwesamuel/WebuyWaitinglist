@@ -1,291 +1,142 @@
 import React from "react";
 
 // import background from "../images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg";
-import orange from "../../assets/images/Orange.png";
-
+import Sidebar from "../../Component/AdminComponent/Sidebar";
+import Navbar from "../../Component/AdminComponent/Navbar";
+import background from "../../assets/images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg";
+import Orange from "../../assets/images/Orange.png";
+import banana from "../../assets/images/Rectangle 45.png";
+import tomato from "../../assets/images/Tomato.png";
 const OrdersPage = () => {
   return (
-    <div className=" font-['Raleway']">
-      <div className=" border bg-[#F8F9FC] shadow-md cursor-pointer mt-[15px] mx-[25px] rounded-[4px]">
-        <div className=" flex items-center py-[20px] px-[30px] mb-[10px]">
-          <h2 className="text-[#009b4d] text-[24px] leading-[19px] font-bold">
-            Order{" "}
-            <span className="text-[#565454] text-[12px]">17 Order found</span>
-          </h2>
+    <div>
+      <div className="relative w-full h-full">
+        <img
+          className="object-cover w-full h-full "
+          src={background}
+          alt=""
+        ></img>
+      </div>
+      <div className="absolute inset-0 flex ">
+        <div className=" basis-[10%] h-full">
+          <Sidebar />
         </div>
-        <div className=" w-full px-[30px]">
-          <div className=" -ml-6">
-            <ol className=" font-bold flex items-center gap-[45px] w-full text-[15px]  text-[#565454]">
-              <li className="relative h-full">
-                <a
-                  className="hover:after:absolute hover:after:rounded-[10px] hover:after:bottom-[-3px] hover:after:block hover:after:bg-[#009b4d] hover:after:w-full hover:after:h-[1px] focus:after:absolute focus:after:rounded-[10px] focus:after:bottom-[-3px] focus:after:block hover:text-[#009b4d] focus:text-[#009b4d] focus:after:bg-[#009b4d] focus:after:w-full focus:after:h-[1px]"
-                  href="/"
-                  target="blank"
-                >
-                  All Orders
-                </a>{" "}
-              </li>
-              <li className="relative h-full">
-                <a
-                  className="hover:after:absolute hover:after:rounded-[10px] hover:after:bottom-[-3px] hover:after:block hover:after:bg-[#009b4d] hover:after:w-full hover:after:h-[1px] focus:after:absolute focus:after:rounded-[10px] focus:after:bottom-[-3px] hover:text-[#009b4d] focus:text-[#009b4d] focus:after:block focus:after:bg-[#009b4d] focus:after:w-full focus:after:h-[1px]"
-                  href="/"
-                >
-                  Completed
-                </a>{" "}
-              </li>
-              <li className="relative h-full">
-                <a
-                  className="hover:after:absolute hover:after:rounded-[10px] hover:after:bottom-[-3px] hover:after:block hover:after:bg-[#009b4d] hover:after:w-full hover:after:h-[1px] focus:after:absolute focus:after:rounded-[10px] hover:text-[#009b4d] focus:text-[#009b4d] focus:after:bottom-[-3px] focus:after:block focus:after:bg-[#009b4d] focus:after:w-full focus:after:h-[1px]"
-                  href="/"
-                >
-                  Pending
-                </a>{" "}
-              </li>
-            </ol>
-          </div>
-          <div className="flex flex-row text-[13px] font-bold gap-[200px] text-[#565454] pt-[10px]">
-            <div className=" w-[50%] pt-3">
-              <ul className=" flex flex-row gap-[65px] items-center">
-                <li>Order ID</li>
-                <li className="">Product's Name</li>
-                <li className=" ml-[80px]">Address</li>
-              </ul>
-            </div>
-            <div className=" w-[50%] pt-3">
-              <ul className=" flex flex-row items-center justify-around ">
-                <li>Date</li>
-                <li>Price</li>
-                <li>Status</li>
-              </ul>
-            </div>
-          </div>
-          <div className=" py-[5px] flex flex-col text-[#565454] font-semibold gap-[10px] text-[13px]">
-            <ul className="flex flex-row items-center gap-[45px]">
-              <li>
-                <a href="/">#70304034</a>
-              </li>
-              <li className=" flex flex-row items-center gap-[10px]">
-                <div className="w-[50px] flex items-center h-[50px]">
-                  <img
-                    className="transform w-auto hover:scale-[103%] transition duration-300 ease-out "
-                    src={orange}
-                    alt=""
-                  ></img>
-                </div>
-                <div>
-                  <h3 className="">Orange</h3>
-                </div>
-              </li>
-              <li className=" ml-[96px]">Merlin Metrix, Second floor.</li>
-              <li className=" ml-[145px]">20/03/2020</li>
-              <li className="">NGN 40,000</li>
-              <li className=" ml-[30px]">
-                <button
-                  className="text-[11px] bg-[#009b4d] text-white py-[7px] px-[20px] rounded-[5px] font-semibold transform hover:scale-[103%] transition duration-300 ease-out "
-                  type="button"
-                >
-                  Completed
-                </button>
-              </li>
-            </ul>
-          </div>
-          <div className=" py-[5px] flex flex-col text-[#565454] font-semibold gap-[10px] text-[13px]">
-            <ul className="flex flex-row items-center gap-[45px]">
-              <li>
-                <a href="/">#70304034</a>
-              </li>
-              <li className=" flex flex-row items-center gap-[10px]">
-                <div className="w-[50px] flex items-center h-[50px]">
-                  <img
-                    className="transform w-auto hover:scale-[103%] transition duration-300 ease-out "
-                    src={orange}
-                    alt=""
-                  ></img>
-                </div>
-                <div>
-                  <h3 className="">Orange</h3>
-                </div>
-              </li>
-              <li className=" ml-[96px]">Merlin Metrix, Second floor.</li>
-              <li className=" ml-[145px]">20/03/2020</li>
-              <li className="">NGN 40,000</li>
-              <li className=" ml-[30px]">
-                <button
-                  className="text-[11px] bg-[#009b4d] text-white py-[7px] px-[20px] rounded-[5px] font-semibold transform hover:scale-[103%] transition duration-300 ease-out "
-                  type="button"
-                >
-                  Completed
-                </button>
-              </li>
-            </ul>
-          </div>
-          <div className=" py-[5px] flex flex-col text-[#565454] font-semibold gap-[10px] text-[13px]">
-            <ul className="flex flex-row items-center gap-[45px]">
-              <li>
-                <a href="/">#70304034</a>
-              </li>
-              <li className=" flex flex-row items-center gap-[10px]">
-                <div className="w-[50px] flex items-center h-[50px]">
-                  <img
-                    className="transform w-auto hover:scale-[103%] transition duration-300 ease-out "
-                    src={orange}
-                    alt=""
-                  ></img>
-                </div>
-                <div>
-                  <h3 className="">Orange</h3>
-                </div>
-              </li>
-              <li className=" ml-[96px]">Merlin Metrix, Second floor.</li>
-              <li className=" ml-[145px]">20/03/2020</li>
-              <li className="">NGN 40,000</li>
-              <li className=" ml-[30px]">
-                <button
-                  className="text-[11px] bg-[#009b4d] text-white py-[7px] px-[20px] rounded-[5px] font-semibold transform hover:scale-[103%] transition duration-300 ease-out "
-                  type="button"
-                >
-                  Completed
-                </button>
-              </li>
-            </ul>
-          </div>
-          <div className=" py-[5px] flex flex-col text-[#565454] font-semibold gap-[10px] text-[13px]">
-            <ul className="flex flex-row items-center gap-[45px]">
-              <li>
-                <a href="/">#70304034</a>
-              </li>
-              <li className=" flex flex-row items-center gap-[10px]">
-                <div className="w-[50px] flex items-center h-[50px]">
-                  <img
-                    className="transform w-auto hover:scale-[103%] transition duration-300 ease-out "
-                    src={orange}
-                    alt=""
-                  ></img>
-                </div>
-                <div>
-                  <h3 className="">Orange</h3>
-                </div>
-              </li>
-              <li className=" ml-[96px]">Merlin Metrix, Second floor.</li>
-              <li className=" ml-[145px]">20/03/2020</li>
-              <li className="">NGN 40,000</li>
-              <li className=" ml-[30px]">
-                <button
-                  className="text-[11px] bg-[#009b4d] text-white py-[7px] px-[20px] rounded-[5px] font-semibold transform hover:scale-[103%] transition duration-300 ease-out "
-                  type="button"
-                >
-                  Completed
-                </button>
-              </li>
-            </ul>
-          </div>
-          <div className=" py-[5px] flex flex-col text-[#565454] font-semibold gap-[10px] text-[13px]">
-            <ul className="flex flex-row items-center gap-[45px]">
-              <li>
-                <a href="/">#70304034</a>
-              </li>
-              <li className=" flex flex-row items-center gap-[10px]">
-                <div className="w-[50px] flex items-center h-[50px]">
-                  <img
-                    className="transform w-auto hover:scale-[103%] transition duration-300 ease-out "
-                    src={orange}
-                    alt=""
-                  ></img>
-                </div>
-                <div>
-                  <h3 className="">Orange</h3>
-                </div>
-              </li>
-              <li className=" ml-[96px]">Merlin Metrix, Second floor.</li>
-              <li className=" ml-[145px]">20/03/2020</li>
-              <li className="">NGN 40,000</li>
-              <li className=" ml-[30px]">
-                <button
-                  className="text-[11px] bg-[#009b4d] text-white py-[7px] px-[20px] rounded-[5px] font-semibold transform hover:scale-[103%] transition duration-300 ease-out "
-                  type="button"
-                >
-                  Completed
-                </button>
-              </li>
-            </ul>
-          </div>
-          <div className=" py-[5px] flex flex-col text-[#565454] font-semibold gap-[10px] text-[13px]">
-            <ul className="flex flex-row items-center gap-[45px]">
-              <li>
-                <a href="/">#70304034</a>
-              </li>
-              <li className=" flex flex-row items-center gap-[10px]">
-                <div className="w-[50px] flex items-center h-[50px]">
-                  <img
-                    className="transform w-auto hover:scale-[103%] transition duration-300 ease-out "
-                    src={orange}
-                    alt=""
-                  ></img>
-                </div>
-                <div>
-                  <h3 className="">Orange</h3>
-                </div>
-              </li>
-              <li className=" ml-[96px]">Merlin Metrix, Second floor.</li>
-              <li className=" ml-[145px]">20/03/2020</li>
-              <li className="">
-                <div className=" w-auto max-w-fit relative">NGN 40,000</div>
-              </li>
-              <li className=" ml-[30px] relative">
-                <button
-                  className="text-[11px] bg-[#009b4d] max-w-fit text-white py-[7px] px-[20px] rounded-[5px] font-semibold transform hover:scale-[103%] transition duration-300 ease-out "
-                  type="button"
-                >
-                  Completed
-                </button>
-              </li>
-            </ul>
-          </div>
+        <div className=" basis-[90%]">
+          <Navbar />
+          <div className=" flex items-center  px-24 mt-10 justify-center">
+            <main className=" w-full  overflow-hidden table border-collapse font-['Raleway'] bg-[#fff5] shadow-md bg-opacity-5 rounded-[12.8px] mt-[15px]">
+              <section className=" w-full h-[10%] bg-[#fff4] py-[12.8px] px-[16px]">
+                <h1 className=" text-[24px] font-bold">Orders</h1>
+              </section>
+              <section className=" w-[95%] max-h-[calc(89%-25.6px)] rounded-[9.6px] overflow-auto bg-[#fffb] my-[12.8px] mx-auto    ">
+                <table className=" w-full ">
+                  <thead className="">
+                    <tr className=" text-[#565454]">
+                      <th className=" p-[16px] sticky top-0 left-0 bg-[#d5d1defe] border-collapse">
+                        {" "}
+                        Order ID{" "}
+                      </th>
+                      <th className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe] ">
+                        {" "}
+                        Product's Name{" "}
+                      </th>
+                      <th className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]">
+                        {" "}
+                        Address{" "}
+                      </th>
+                      <th className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe]">
+                        {" "}
+                        Order Date{" "}
+                      </th>
 
-          {/* <div className=" py-[10px] flex flex-col gap-[10px]">
-          <ol className="flex items-center justify-between ">
-            <li className=" flex flex-row -ml-4 items-center gap-[10px] ">
-              <div className="w-[70px] h-[47px] rounded-[10px] border">
-                <img
-                  className="transform hover:scale-[103%] transition duration-300 ease-out"
-                  src={banana}
-                  alt=""
-                ></img>
-              </div>
-              <div className="flex flex-col ">
-                <h3 className=" text-[13px] font-semibold text-[#565454]">
-                  Banana
-                </h3>
-                <p className="text-[11px] text-[#565454] font-medium">
-                  Quantity: 20
-                </p>
-              </div>
-            </li>
-            <li className=" text-[13px] font-semibold text-[#565454]">
-              #70304034
-            </li>
-            <li className="text-[13px] font-semibold text-[#565454]">
-              Salt lake, 2nd
-            </li>
-            <li className="text-[13px] font-semibold text-[#565454]">
-              10/3/2020
-            </li>
-            <li className="text-[13px] font-semibold text-[#565454]">
-              20/4/2020
-            </li>
-            <li className="text-[13px] font-semibold text-[#565454]">
-              NGN 120,000
-            </li>
-            <li>
-              <button
-                className="text-[11px] bg-[#009b4d] text-white py-[7px] px-[20px] rounded-[5px] font-semibold transform hover:scale-[103%] transition duration-300 ease-out "
-                type="button"
-              >
-                Completed
-              </button>
-            </li>
-          </ol>
-        </div> */}
+                      <th className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe]">
+                        {" "}
+                        Price{" "}
+                      </th>
+                      <th className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]">
+                        {" "}
+                        Status{" "}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className=" font-semibold text-[#565454]">
+                    <tr className=" even:bg-[#0000000b] hover:bg-[#fff6]">
+                      <td className=" p-[16px] border-collapse"> #734589 </td>
+                      <td className=" p-[16px] border-collapse">
+                        <div className=" flex flex-row items-center">
+                          <img
+                            className=" w-[60px] h-[50px] align-middle mr-[8px]"
+                            src={tomato}
+                            alt="tomato"
+                          ></img>{" "}
+                          <p className=" text-[15px]">Tomato</p>
+                        </div>{" "}
+                      </td>
+                      <td className=" p-[16px] border-collapse"> Benin </td>
+                      <td className=" p-[16px] border-collapse">
+                        {" "}
+                        17 Dec, 2022{" "}
+                      </td>
+                      <td className=" p-[16px] border-collapse">NGN50,000</td>
+                      <td className="  p-[16px] border-collapse text-black">
+                        <p className="bg-[#009b4d] text-center rounded-[32px] py-[6.4px] px-auto">
+                          Delivered
+                        </p>
+                      </td>
+                    </tr>
+                    <tr className=" even:bg-[#0000000b] hover:bg-[#fff6]">
+                      <td className=" p-[16px] border-collapse"> #734589 </td>
+                      <td className=" p-[16px] border-collapse">
+                        <div className=" flex flex-row items-center">
+                          <img
+                            className=" w-[60px] h-[50px] align-middle mr-[8px]"
+                            src={banana}
+                            alt="banana"
+                          ></img>{" "}
+                          <p className=" text-[15px]">Banana</p>
+                        </div>{" "}
+                      </td>
+                      <td className=" p-[16px] border-collapse"> Benin </td>
+                      <td className=" p-[16px] border-collapse">
+                        {" "}
+                        17 Dec, 2022{" "}
+                      </td>
+                      <td className=" p-[16px] border-collapse">NGN50,000</td>
+                      <td className="  p-[16px] border-collapse text-black">
+                        <p className="bg-[#aa6a09] py-[6.4px] px-auto text-center rounded-[32px]">
+                          Pending
+                        </p>
+                      </td>
+                    </tr>
+                    <tr className=" even:bg-[#0000000b] hover:bg-[#fff6]">
+                      <td className=" p-[16px] border-collapse"> #734589 </td>
+                      <td className=" p-[16px] border-collapse">
+                        <div className=" flex flex-row items-center">
+                          <img
+                            className=" w-[60px] h-[50px] align-middle mr-[8px]"
+                            src={Orange}
+                            alt="Oranges"
+                          ></img>{" "}
+                          <p className=" text-[15px]">Oranges</p>
+                        </div>{" "}
+                      </td>
+                      <td className=" p-[16px] border-collapse"> Benin </td>
+                      <td className=" p-[16px] border-collapse">
+                        {" "}
+                        17 Dec, 2022{" "}
+                      </td>
+                      <td className=" p-[16px] border-collapse">NGN50,000</td>
+                      <td className="  p-[16px] border-collapse text-black">
+                        <p className="bg-[#f60707] py-[6.4px] px-auto text-center rounded-[32px]">
+                          Cancelled
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+            </main>
+          </div>
         </div>
       </div>
     </div>

@@ -1,22 +1,14 @@
 import React from "react";
 
-// import {
-//   CartesianGrid,
-//   Line,
-//   LineChart,
-//   Tooltip,
-//   XAxis,
-//   YAxis,
-// } from "recharts";
-
 import {
-  LineChart,
-  Line,
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ReferenceLine,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
 } from "recharts";
 
 import avatar from "../../assets/Ellipse 13.png";
@@ -29,6 +21,7 @@ import banana from "../../assets/images/Rectangle 45.png";
 import seeds from "../../assets/images/Seeds.png";
 import tomato from "../../assets/images/Tomato.png";
 import PieComponent from "../../Component/AdminComponent/PieComponent";
+// import PieComponent from ".";
 
 const datas = [
   {
@@ -107,7 +100,7 @@ const datas = [
 
 const Main = () => {
   return (
-    <div className="px-[25px] pt-[15px] pb-[40px] font-['Raleway']">
+    <div className="px-[25px] pt-[10px] pb-[40px] font-['Raleway'] z-0">
       <div className="flex items-center justify-between">
         <h1 className="text-[24px] leading-[34px] font-semibold text-[#232323] cursor-pointer">
           Dashboard
@@ -124,14 +117,14 @@ const Main = () => {
             </div>
             <div>
               <h2 className="font-medium text-[16px]">Total Revenue</h2>
-              <h1 className="font-bold text-[20px] ">NGN 600,500</h1>
+              <h1 className="font-bold text-[19px] ">NGN 600,500</h1>
             </div>
           </div>
           <div className="flex items-center flex-row gap-1 text-[12px]">
             <div className=" bg-[#009b4d] flex items-center justify-center rounded-[50%] w-[17px] h-[17px]">
               <i className="fa-solid fa-arrow-up transform: rotate-45 text-white text-[8px]"></i>
             </div>
-            <p className=" text-[11px]">
+            <p className=" text-[10px]">
               <span className=" text-[#009B4D]">+37% </span>from last month (NGN
               100,185)
             </p>
@@ -144,14 +137,14 @@ const Main = () => {
             </div>
             <div>
               <h2 className="font-medium text-[16px]">Total Orders</h2>
-              <h1 className="font-bold text-[20px] ">2,567</h1>
+              <h1 className="font-bold text-[19px] ">2,567</h1>
             </div>
           </div>
           <div className="flex items-center flex-row gap-1 text-[12px]">
             <div className=" bg-[#F60707] flex items-center justify-center rounded-[50%] w-[17px] h-[17px]">
               <i className="fa-solid fa-arrow-up fa-flip-vertical transform: -rotate-[135deg] text-white text-[8px]"></i>
             </div>
-            <p className=" text-[11px]">
+            <p className=" text-[10px]">
               <span className=" text-[#009B4D]">-10% </span>from last month (305
               orders)
             </p>
@@ -164,14 +157,14 @@ const Main = () => {
             </div>
             <div>
               <h2 className="font-medium text-[16px]">Today's Visitors</h2>
-              <h1 className="font-bold text-[20px] ">1,459</h1>
+              <h1 className="font-bold text-[19px] ">1,459</h1>
             </div>
           </div>
           <div className="flex items-center flex-row gap-1 text-[12px]">
             <div className=" bg-[#009b4d] flex items-center justify-center rounded-[50%] w-[17px] h-[17px]">
               <i className="fa-solid fa-arrow-up transform: rotate-45 text-white text-[8px]"></i>
             </div>
-            <p className=" text-[11px]">
+            <p className=" text-[10px]">
               <span className=" text-[#009B4D]">+23% </span>from last yesterday
               (123 visitors)
             </p>
@@ -184,14 +177,14 @@ const Main = () => {
             </div>
             <div>
               <h2 className="font-medium text-[16px]">Converson Rate</h2>
-              <h1 className="font-bold text-[20px] ">20%</h1>
+              <h1 className="font-bold text-[19px] ">20%</h1>
             </div>
           </div>
           <div className="flex items-center flex-row gap-1 text-[12px]">
             <div className=" bg-[#F60707] flex items-center justify-center rounded-[50%] w-[17px] h-[17px]">
               <i className="fa-solid fa-arrow-up fa-flip-vertical transform: -rotate-[135deg] text-white text-[8px]"></i>
             </div>
-            <p className=" text-[11px]">
+            <p className=" text-[10px]">
               <span className=" text-[#009B4D]">-15%</span> from yesterday (6.5%
               rate)
             </p>
@@ -217,32 +210,38 @@ const Main = () => {
             </div>
           </div>
 
-          <div className="w-full text-[13px]">
+          <div className=" w-full text-[13px]">
             {/* <canvas id="myAreaChart"></canvas> */}
             {/* <Line options={options} data={data} /> */}
-            {/* <LineChart
-              width={870}
-              height={270}
-              data={datas}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Line
-                type="monotone"
-                dataKey="pv"
-                stroke="#f60707"
-                activeDot={{ r: 8 }}
-              />
-              <Line type="monotone" dataKey="uv" stroke="#009b4d" />
-            </LineChart> */}
+            <ResponsiveContainer width="100%" height={270}>
+              <AreaChart
+                data={datas}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <XAxis dataKey="name" />
+                <YAxis />
+                <CartesianGrid strokeDasharray="3 3" />
+                <Tooltip />
+                <ReferenceLine x="Page C" stroke="green" label="Min PAGE" />
+                <ReferenceLine
+                  y={4000}
+                  label="Max"
+                  stroke="red"
+                  strokeDasharray="3 3"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="uv"
+                  stroke="#8884d8"
+                  fill="#8884d8"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
@@ -261,6 +260,8 @@ const Main = () => {
 
           <div className="pl-[35px]">
             <PieComponent />
+
+            {}
           </div>
         </div>
       </div>
