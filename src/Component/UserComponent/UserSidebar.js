@@ -4,7 +4,7 @@ import image from "../../assets/images/Subtract.png";
 import { useDispatch } from "react-redux";
 import { Logout_fun } from "../../Redux/AutenticationSlice";
 
-const UserSidebar = () => {
+const UserSidebar = ({ lang, setLang }) => {
   const dispatch = useDispatch();
 
   return (

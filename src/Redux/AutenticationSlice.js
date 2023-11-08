@@ -3,8 +3,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ErrorFunc } from "../utilities/ApiErrorFun";
 
-// let main_url = process.env.REACT_APP_Url;
 let main_url = process.env.REACT_APP_Url;
+// let main_url = process.env.REACT_APP_Local;
 const initialState = {
   isError: false,
   isSuccess: false,
@@ -85,20 +85,19 @@ const Login_fun_Service = async (data) => {
     return response.data;
     // Process the response data here
   } catch (error) {
-    toast.error(`${error}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      className: "Forbidden403",
-    });
+    // toast.error(`${error}`, {
+    //   position: "top-right",
+    //   autoClose: 5000,
+    //   hideProgressBar: false,
+    //   closeOnClick: true,
+    //   pauseOnHover: true,
+    //   draggable: true,
+    //   progress: undefined,
+    //   theme: "light",
+    //   className: "Forbidden403",
+    // });
     // Handle the error here
 
-    ErrorFunc(error);
     throw error;
   }
 };
@@ -110,18 +109,17 @@ export const Login_fun = createAsyncThunk(
       return await Login_fun_Service(data);
     } catch (error) {
       const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
+        (error.response && error.response.data && error.response.data.error) ||
+        error.msg ||
+        error.response.data.msg ||
         error.toString();
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-export const AutenticationSlice = createSlice({
-  name: "AutenticationSlice",
+export const AuthenticationSlice = createSlice({
+  name: "AuthenticationSlice",
   initialState,
   reducers: {},
 
@@ -154,6 +152,6 @@ export const AutenticationSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {} = AutenticationSlice.actions;
+export const {} = AuthenticationSlice.actions;
 
-export default AutenticationSlice.reducer;
+export default AuthenticationSlice.reducer;

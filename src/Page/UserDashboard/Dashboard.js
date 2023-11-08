@@ -4,6 +4,7 @@ import UserProfile from "../../Component/UserComponent/UserProfile";
 import UserSidebar from "../../Component/UserComponent/UserSidebar";
 import { Route, Routes } from "react-router-dom";
 import Home from "../../Component/UserComponent/Home";
+import Wallet from "../../Component/UserComponent/Wallet";
 
 const Dashboard = () => {
   return (
@@ -19,6 +20,7 @@ const Dashboard = () => {
         <UserNavbar />
         {/* <UserProfile /> */}
         <Home />
+        {/* <Wallet /> */}
         <div className="absolute top-[4rem] left-0 w-[10rem] hidden md:flex ">
           <UserSidebar />
         </div>
