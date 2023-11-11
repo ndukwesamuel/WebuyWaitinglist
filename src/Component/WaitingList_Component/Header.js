@@ -1,12 +1,13 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+
+import { useNavigate } from 'react-router-dom';
 
 const Header = ({ lang, setLang }) => {
   const navigate = useNavigate();
   return (
     <div className="w-full ">
-      <header className="flex flex-row content-center justify-between">
-        <div className="">
+      <header className="flex flex-row content-center justify-between w-full px-0">
+        {/* <div className="">
           <i className="hidden text-2xl text-white cursor-pointer fa-solid fa-bars max-md:block max-sm:block"></i>
           <ul className="flex flex-row gap-8 text-[#e6e9ed] max-md:hidden max-sm:hidden ">
             <li className="relative h-full ">
@@ -37,8 +38,8 @@ const Header = ({ lang, setLang }) => {
               </a>
             </li>
           </ul>
-        </div>
-        <div className="text-3xl -ml-[150px] max-md:ml-[100px]">
+        </div> */}
+        <div className="text-3xl">
           <a className="cursor-pointer" href="/">
             <h1 className="font-extrabold text-white ">
               WE
@@ -48,7 +49,7 @@ const Header = ({ lang, setLang }) => {
             </h1>
           </a>
         </div>
-        <div className=" max-sm:hidden">
+        <div className="">
           <button
             className=" mr-4 outline-none bg-[#6dad04] rounded-[4px] font-semibold px-4 py-1 hover:bg-transparent hover:border-2 hover:border-[#6dad04] hover:text-[#e6e9ed] transition-all"
             onClick={() => navigate("/signup")}

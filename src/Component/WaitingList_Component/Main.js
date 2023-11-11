@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import Modal from "./Modal";
+import React, { useState } from 'react';
 
-import { useIntl } from "react-intl";
+import Modal from './Modal';
 
 const Main = ({ lang, setLang }) => {
   const [Email, setEmail] = useState("");
@@ -41,10 +40,10 @@ const Main = ({ lang, setLang }) => {
   return (
     <>
       {isOpen && <Modal setIsOpen={setIsOpen} isOpen={isOpen} />}
-      <div className="mt-[80px] text-white px-[90px] max-sm:px-[0px] max-md:px-[0px]">
+      <div className="w-full mt-[80px] text-white sm:px-0 md:px-0">
         <a className="cursor-pointer" href="/">
           {lang === "en" && (
-            <h1 className="font-extrabold text-white text-center text-5xl max-sm:text-3xl max-md:text-4xl ">
+            <h1 className="font-extrabold text-center text-white lg:text-5xl max-sm:text-3xl md:text-4xl ">
               WE
               <span className="font-extrabold text-[#6dad04] border-2 border-[#6dad04] px-1 ml-1">
                 BUY
@@ -54,16 +53,16 @@ const Main = ({ lang, setLang }) => {
           )}
 
           {lang === "fn" && (
-            <h1 className="font-extrabold text-white text-center text-5xl max-sm:text-3xl max-md:text-4xl ">
+            <h1 className="text-5xl font-extrabold text-center text-white max-sm:text-3xl max-md:text-4xl ">
               NOUS ACHETONS sera bientôt lancé...
             </h1>
           )}
         </a>
 
         {lang === "en" && (
-          <p className="font-semibold text-lg max-sm:text-base max-md:text-lg text-center mt-6 max-sm:text-left max-sm:mt-3">
+          <p className="text-lg font-semibold leading-8 text-center mt-7 max-sm:text-base max-md:text-lg max-sm:text-left max-sm:mt-3">
             Getting groceries and foodstuff doesn't have to be so
-            <span className="text-[#6dad04] border-2 border-[#6dad04] ml-3 p-1 text-2xl max-sm:text-lg font-extrabold hover:border-none hover:underline hover:decoration-wavy hover:decoration-[#6dad04] hover:decoration-2 transition-all">
+            <span className="text-[#6dad04] border-2 border-[#6dad04] ml-3 p-1 text-3xl max-sm:text-lg md:text-2xl font-extrabold hover:border-none hover:underline hover:decoration-wavy hover:decoration-[#6dad04] hover:decoration-2 transition-all">
               difficult and expensive
             </span>
             . We are building Africa's largest digital infrastructure
@@ -75,7 +74,7 @@ const Main = ({ lang, setLang }) => {
 
         {lang === "fn" && (
           <>
-            <p className="font-semibold text-lg max-sm:text-base max-md:text-lg text-center mt-6 max-sm:text-left max-sm:mt-3">
+            <p className="mt-6 text-lg font-semibold text-center max-sm:text-base max-md:text-lg max-sm:text-left max-sm:mt-3">
               Faire les courses et acheter des produits alimentaires ne doit pas
               être si
               <span className="text-[#6dad04] border-2 border-[#6dad04] ml-3 p-1 text-2xl max-sm:text-lg font-extrabold hover:border-none hover:underline hover:decoration-wavy hover:decoration-[#6dad04] hover:decoration-2 transition-all">
@@ -89,7 +88,7 @@ const Main = ({ lang, setLang }) => {
           </>
         )}
 
-        <div className="flex content-center justify-center mt-4 gap-1">
+        <div className="flex content-center justify-center gap-1 mt-4">
           {lang === "en" && (
             <button
               className="mt-2 transition-all bg-[#6dad04] px-8 py-2 max-sm:px-4 font-semibold rounded-md hover:border-2 border-[#6dad04] hover:bg-transparent max-sm:text-sm max-md:text-base"
