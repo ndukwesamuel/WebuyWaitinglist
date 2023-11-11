@@ -13,14 +13,16 @@ const Dashboard = () => {
         <img
           className="object-cover w-full h-full "
           src={background}
-          alt=""
+          alt="backgroundImage"
         ></img>
       </div>
       <div className="absolute inset-0 overflow-scroll">
         <UserNavbar />
-        {/* <UserProfile /> */}
-        <Home />
-        {/* <Wallet /> */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/wallet" element={<Wallet />} />
+        </Routes>
         <div className="absolute top-[4rem] left-0 w-[10rem] hidden md:flex ">
           <UserSidebar />
         </div>

@@ -102,7 +102,7 @@ const UserProfile = () => {
                 className="text-[#565454] p-1 rounded-md bg-[#D9D9D9] focus:outline-none"
                 placeholder="Your full name
 
-"
+    "
               />
               <label className="font-semibold">Email:</label>
               <input
@@ -121,7 +121,7 @@ const UserProfile = () => {
                 name="phone"
                 className="text-[#565454] bg-[#D9D9D9] p-1 rounded-md focus:outline-none"
                 placeholder="+2348012345
-"
+    "
               />
               <label className="font-semibold">Address:</label>
               <input

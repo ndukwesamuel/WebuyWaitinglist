@@ -53,12 +53,10 @@ const Login = () => {
 
   useEffect(() => {
     if (data && isSuccess) {
-      console.log({ data });
-
       if (data?.isAdmin) {
         navigate("/admin");
       } else {
-        navigate("/user-dashboard");
+        navigate("/dashboard");
       }
     }
   }, [data, dispatch]);
@@ -95,7 +93,7 @@ const Login = () => {
                   id="email"
                   className="flex flex-col gap-[4px] mb-3 max-sm:text-[#ffffff] max-sm:text-base"
                 >
-                  <label for="email">Email Address</label>
+                  <label htmlFor="email">Email Address</label>
                   <input
                     type="email"
                     name="email"
@@ -110,7 +108,7 @@ const Login = () => {
                   id="password"
                   className="flex flex-col gap-[4px] max-sm:text-[#ffffff] max-sm:text-base"
                 >
-                  <label for="password">Password</label>
+                  <label htmlFor="password">Password</label>
                   <input
                     type="password"
                     name="password"

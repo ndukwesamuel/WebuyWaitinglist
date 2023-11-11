@@ -5,11 +5,14 @@ import { persistReducer, persistStore } from "redux-persist";
 import Auth from "./Auth";
 import AutenticationSlice from "./AutenticationSlice";
 import groupSlice from "./groupSlice";
+import ProfileSlice from "./ProfileSlice";
+import { walletApi } from "./WalletApi";
 
 const reducers = combineReducers({
   Auth: Auth,
   AutenticationSlice: AutenticationSlice,
   groupSlice: groupSlice,
+  ProfileSlice: ProfileSlice,
 });
 
 const persistConfig = {
@@ -30,10 +33,14 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: {
     reducer: persistedReducer,
+    [walletApi.reducerPath]: walletApi.reducer,
   },
   devTools: process.env.NODE_ENV !== "production",
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }),
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware({ serializableCheck: false }).concat(
+      walletApi.middleware
+    );
+  },
 });
 
 export const persistor = persistStore(store);

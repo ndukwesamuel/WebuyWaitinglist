@@ -3,8 +3,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ErrorFunc } from "../utilities/ApiErrorFun";
 
-// let main_url = process.env.REACT_APP_Url;
-let main_url = process.env.REACT_APP_Local;
+let main_url = process.env.REACT_APP_Url;
+// let main_url = process.env.REACT_APP_Local;
 const initialState = {
   isError: false,
   isSuccess: false,
@@ -25,7 +25,6 @@ const Logout_fun_Service = async (data, token) => {
         Authorization: `Bearer ${token}`,
       },
     });
-
     toast.success(`${response.data?.message}`, {
       position: "top-right",
       autoClose: 5000,
@@ -39,8 +38,6 @@ const Logout_fun_Service = async (data, token) => {
     // return response.data;
     // Process the response data here
   } catch (error) {
-    console.error(error);
-
     toast.error(`${error}`, {
       position: "top-right",
       autoClose: 5000,
@@ -79,7 +76,6 @@ export const Logout_fun = createAsyncThunk(
 const Login_fun_Service = async (data) => {
   let Base_URL = main_url + "user/login";
 
-  console.log({ Base_URL, data });
   try {
     const response = await axios.post(Base_URL, data);
     return response.data;

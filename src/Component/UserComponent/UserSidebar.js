@@ -12,7 +12,7 @@ const UserSidebar = ({ lang, setLang }) => {
       <div className="flex items-center ml-[10px] pt-[8rem] gap-[15px] py-[15px]  cursor-pointer">
         <i className="fa-solid fa-house text-[#565454]"></i>
         <Link
-          to="/admin"
+          to="/dashboard"
           className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]"
         >
           Home
@@ -21,7 +21,7 @@ const UserSidebar = ({ lang, setLang }) => {
       <div className="flex items-center ml-[10px] gap-[16px] py-[15px]   cursor-pointer">
         <i className="fa-solid fa-address-card text-[#565454]"></i>
         <Link
-          to="/admin/orders"
+          to="/dashboard/profile"
           className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]"
         >
           Profile
@@ -30,7 +30,7 @@ const UserSidebar = ({ lang, setLang }) => {
       <div className="flex items-center ml-[10px] gap-[13px] py-[15px]   cursor-pointer">
         <i className="fa-regular fa-message text-[#565454]"></i>{" "}
         <Link
-          to="/group/group-page"
+          to=""
           className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]"
         >
           Message
@@ -38,16 +38,22 @@ const UserSidebar = ({ lang, setLang }) => {
       </div>
       <div className="flex items-center ml-[10px] gap-[15px] py-[15px]   cursor-pointer">
         <i className="fa-solid fa-wallet text-[#565454]"></i>
-        <p className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d] ">
+        <Link
+          to="/dashboard/wallet"
+          className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d] "
+        >
           Wallet
-        </p>
+        </Link>
       </div>
 
       <div className="flex items-center ml-[10px] gap-[15px] py-[15px]   cursor-pointer">
         <i className="fa-solid fa-gear text-[#565454]"></i>
-        <p className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]">
+        <Link
+          to=""
+          className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]"
+        >
           settings
-        </p>
+        </Link>
       </div>
       <div className="pt-[15px] mt-[70px]  ">
         <div className="flex items-center ml-[10px] gap-[10px] py-[15px] cursor-pointer">

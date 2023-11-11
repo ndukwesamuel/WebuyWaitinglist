@@ -24,7 +24,7 @@ function App() {
       <Routes>
         <Route path="/*" exact element={<PageRoutes />} />
         <Route
-          path="/user-dashboard/*"
+          path="/dashboard/*"
           exact
           element={
             <UserPrivateRoute>
