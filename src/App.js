@@ -14,6 +14,7 @@ import AdminRoute from "./Page/Admin/AdminRoute";
 import Dashboard from "./Page/UserDashboard/Dashboard";
 import UserProfile from "./Component/UserComponent/UserProfile";
 import Home from "./Component/UserComponent/Home";
+import Fake from "./fake/Fake";
 // import './main.scss';
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
             </AdminPrivateRoute>
           }
         />
+        <Route path="/Fake" exact element={<Fake />} />
       </Routes>
     </BrowserRouter>
   );

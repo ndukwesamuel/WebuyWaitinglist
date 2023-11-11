@@ -8,15 +8,15 @@ import { useDispatch } from "react-redux";
 import { Logout_fun } from "../../Redux/AutenticationSlice";
 
 const Sidebar = () => {
-  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const showProductDropdown = () => {
     setOpen(!open);
   };
 
   return (
-    <div className=" bg-[#ffffff] h-screen font-['Raleway'] px-[25px]">
+    <div className=" bg-[#ffffff] h-full fixed top-0 left-0 font-['Raleway'] px-[25px]">
       <div className=" py-[15px] flex items-center justify-center border-b-[0.5px] border-[#000000]/[0.3] ">
         <a className="cursor-pointer " href="/">
           <h1 className="text-[21px] font-extrabold text-[#565454] max-sm:text-3xl max-md:text-4xl">
@@ -67,13 +67,18 @@ const Sidebar = () => {
         ></i>
 
         {open && (
-          <div className="bg-white border absolute left-[135px] top-[265px] z-20  space-y-[2px] p-3 pr-4 rounded-[8px]">
-            <p className="cursor-pointer text-[13px] text-[#565454] hover:text-[#009B4D] font-semibold">
-              Product list
-            </p>
-            <p className="cursor-pointer text-[#565454] text-[13px] hover:text-[#009B4D] font-semibold">
-              Add products
-            </p>
+          <div className="bg-white border absolute left-[135px] top-[265px] z-50  space-y-[2px] w-[120px] p-3 pr-4 rounded-[8px]">
+            <Link to="/Product-list">
+              <p className="cursor-pointer text-[13px] text-[#565454] hover:text-[#009B4D] font-semibold">
+                Product list
+              </p>
+            </Link>
+
+            <Link to="/Add-products">
+              <p className="cursor-pointer text-[#565454] text-[13px] hover:text-[#009B4D] font-semibold">
+                Add products
+              </p>
+            </Link>
           </div>
         )}
       </div>
@@ -105,13 +110,13 @@ const Sidebar = () => {
         <div className="flex items-center gap-[10px] py-[15px] cursor-pointer">
           <i className="fa-solid fa-arrow-right-from-bracket text-[#565454]"></i>{" "}
           <p
-            className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]"
             onClick={() => {
               dispatch(Logout_fun());
               localStorage.clear();
               sessionStorage.clear();
               window.location.reload();
             }}
+            className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]"
           >
             Log Out
           </p>
