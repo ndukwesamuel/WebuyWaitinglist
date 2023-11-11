@@ -11,7 +11,7 @@ const EmailVerification = () => {
       const userId = searchParams.get("userId");
       const uniqueString = searchParams.get("uniqueString");
 
-      const API_URL = process.env.REACT_APP_Url;
+      const API_URL = process.env.REACT_APP_Local;
 
       const verifyEmail = async (userId, uniqueString) => {
         const form = new FormData();
@@ -34,7 +34,7 @@ const EmailVerification = () => {
             }
           })
           .catch((error) => {
-            console.error(error);
+            // console.error(error);
             toast.error(error.message);
             navigate("/");
           });
@@ -42,7 +42,7 @@ const EmailVerification = () => {
       verifyEmail(userId, uniqueString);
     }
   }, []);
-  return <div className=""></div>;
+  return <div></div>;
 };
 
 export default EmailVerification;

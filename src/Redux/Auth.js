@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const Base_URL = `${process.env.REACT_APP_Url}user/register`;
+const Base_URL = `${process.env.REACT_APP_Local}user/register`;
 
 const tokengot = localStorage.getItem("token");
 
