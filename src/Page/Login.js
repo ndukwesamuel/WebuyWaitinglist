@@ -119,6 +119,14 @@ const Login = () => {
                     className="border-b-[2px] rounded-[4px] p-1 pl-2 focus:border-b-[2px] active:border-[#4F7942] focus:outline-none outline-none w-[250px] text-[10px] border-[#4F7942] max-sm:text-sm max-sm:text-[#000000]"
                   ></input>
                 </div>
+                <p className="mx-auto mt-1 text-sm max-sm:text-[#ffffff]">
+              <Link
+                to="/forget-password"
+                className="text-[#4F7942] opacity-70 text-sm hover:text-[#355E3B] hover:cursor-pointer"
+              >
+                Forget Password?
+              </Link>
+            </p>
               </form>
             </div>
 

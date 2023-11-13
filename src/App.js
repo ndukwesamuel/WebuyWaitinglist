@@ -14,6 +14,10 @@ import AdminRoute from "./Page/Admin/AdminRoute";
 import Dashboard from "./Page/UserDashboard/Dashboard";
 import UserProfile from "./Component/UserComponent/UserProfile";
 import Home from "./Component/UserComponent/Home";
+import ForgetPassword from "./Page/ForgetPassword";
+import ResetPassword from "./Page/ResetPassword";
+
+
 import Fake from "./fake/Fake";
 // import './main.scss';
 
@@ -41,6 +45,16 @@ function App() {
               <AdminRoute />
             </AdminPrivateRoute>
           }
+        />
+        <Route
+          path="/forget-password"
+          element={<ForgetPassword />}
+        />
+        
+
+        <Route
+          path="/reset-password"
+          element={<ResetPassword />}
         />
         <Route path="/Fake" exact element={<Fake />} />
       </Routes>
