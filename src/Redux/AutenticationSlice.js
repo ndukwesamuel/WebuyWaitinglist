@@ -13,24 +13,7 @@ const initialState = {
   data: null,
   logout: null,
 };
-export const initiatePasswordReset = createAsyncThunk(
-  "AuthenticationSlice/initiatePasswordReset",
-  async (email, thunkAPI) => {
-    try {
-      // Make an API call to initiate the password reset process
-      const response = await axios.post("/api/reset-password", { email });
-      return response.data; // Assuming the response contains necessary data
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
+
 const Logout_fun_Service = async (data, token) => {
   let log_outurl = main_url + "user/logout";
 
@@ -121,7 +104,6 @@ export const Login_fun = createAsyncThunk(
     try {
       return await Login_fun_Service(data);
     } catch (error) {
-      console.log(error);
       const message =
         (error.response && error.response.data && error.response.data.error) ||
         error.msg ||
@@ -162,25 +144,9 @@ export const AuthenticationSlice = createSlice({
           progress: undefined,
           theme: "light",
         });
-        
-          builder
-        .addCase(initiatePasswordReset.pending, (state) => {
-          state.isLoading = true;
-        })
-        .addCase(initiatePasswordReset.fulfilled, (state, action) => {
-          state.isLoading = false;
-          state.isSuccess = true;
-          state.data = action.payload;
-        })
-        .addCase(initiatePasswordReset.rejected, (state, action) => {
-          state.isLoading = false;
-          state.isError = true;
-          state.message = action.payload;
-        });
       });
   },
 });
-
 
 // Action creators are generated for each case reducer function
 export const {} = AuthenticationSlice.actions;

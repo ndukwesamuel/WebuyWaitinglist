@@ -3,100 +3,60 @@ import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useSearchParams, useNavigate } from "react-router-dom";
-
+import { usePasswordResetMutation } from "../Redux/PasswordResetApi";
 
 const ResetPassword = () => {
-  const [password, setPassword] = useState("");
+  const [newPassword, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [resetSuccess, setResetSuccess] = useState(false);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const API_URL = process.env.REACT_APP_Local;
+  const [resetPassword, { isLoading, isSuccess, isError, error }] =
+    usePasswordResetMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
-
-    try {
+    if (!newPassword || !confirmPassword) {
+      toast.error("All field must be filled");
+    } else if (newPassword !== confirmPassword) {
+      toast.error("Passwords doesn't match");
+    } else if (newPassword.length < 6) {
+      toast.error("Password must be at least 6 character");
+    } else {
+      searchParams.has("userId") && searchParams.has("uniqueString");
       const userId = searchParams.get("userId");
-      const resetToken = searchParams.get("resetToken");
-
-      const response = await axios.post(
-        API_URL + "user/reset-password",
-        {
-          userId,
-          resetToken,
-          newPassword: password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.data.success) {
-        setResetSuccess(true);
-        // Optionally, you can redirect the user or perform any other actions
+      const uniqueString = searchParams.get("uniqueString");
+      const response = await resetPassword({
+        userId,
+        uniqueString,
+        newPassword,
+      });
+      console.log(response);
+      if (response.error) {
+        toast.error(response.error.data.message);
       } else {
-        toast.error(response.data.message || "Password reset failed");
+        if (response.data.error === true) {
+          toast.error(response.data.message);
+          navigate("/forget-password");
+        } else {
+          toast.success(response.data.message);
+          navigate("/login");
+        }
       }
-    } catch (error) {
-      console.error("Error resetting password:", error);
-      toast.error("An error occurred while resetting the password");
     }
   };
-
-  useEffect(() => {
-    if (searchParams.has("userId") && searchParams.has("resetToken")) {
-      const userId = searchParams.get("userId");
-      const resetToken = searchParams.get("resetToken");
-
-      const resetPassword = async (userId, resetToken) => {
-        try {
-          const response = await axios.post(
-            API_URL + "user/reset-password",
-            {
-              userId,
-              resetToken,
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-
-          if (response.data.success) {
-            toast.success(`${response.data.message}`);
-            navigate("/login");
-          } else {
-            toast.error(response.data.message);
-            navigate("/");
-          }
-        } catch (error) {
-          toast.error(error.message);
-          navigate("/");
-        }
-      };
-
-      resetPassword(userId, resetToken);
-    }
-  }, []);
-
-
 
   return (
     <div className="flex content-center justify-center relative w-full h-screen">
       <div className="flex content-center justify-center w-full h-full bg-no-repeat bg-cover bg-center relative z-10">
         <div className="flex flex-row absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white w-[1000px] max-sm:w-full max-sm:bg-transparent rounded-xl rounded-l-xl h-[500px] z-40">
           <div className="w-1/2 h-full max-sm:hidden bg-[#5F8575] rounded-l-xl">
-            <img className="w-auto h-full ml-4 max-sm:hidden" src={image} alt="" />
+            <img
+              className="w-auto h-full ml-4 max-sm:hidden"
+              src={image}
+              alt=""
+            />
           </div>
           <div className="w-1/2 p-7 max-sm:p-0 max-sm:w-full">
             <div className="w-[200px] max-sm:w-full flex flex-col content-center justify-center max-sm:-mt-3">
@@ -123,7 +83,7 @@ const ResetPassword = () => {
                   <input
                     type="password"
                     name="password"
-                    value={password}
+                    value={newPassword}
                     onChange={(e) => setPassword(e.target.value)}
                     id="password"
                     placeholder="Enter new password"
@@ -159,7 +119,5 @@ const ResetPassword = () => {
       </div>
     </div>
   );
-  
-  
-  };  
+};
 export default ResetPassword;
