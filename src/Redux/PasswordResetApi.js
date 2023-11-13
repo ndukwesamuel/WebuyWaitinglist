@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// process.env.REACT_APP_Url
+// process.env.REACT_APP_Local
 export const passwordResetApi = createApi({
   reducerPath: "passwordRestApi",
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_Local }),
+  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_Url }),
   endpoints: (builder) => ({
     reqPasswordReset: builder.mutation({
       query: (data) => ({

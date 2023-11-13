@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
 import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
@@ -120,13 +119,13 @@ const Login = () => {
                   ></input>
                 </div>
                 <p className="mx-auto mt-1 text-sm max-sm:text-[#ffffff]">
-              <Link
-                to="/forget-password"
-                className="text-[#4F7942] opacity-70 text-sm hover:text-[#355E3B] hover:cursor-pointer"
-              >
-                Forget Password?
-              </Link>
-            </p>
+                  <Link
+                    to="/forget-password"
+                    className="text-[#4F7942] opacity-70 text-sm hover:text-[#355E3B] hover:cursor-pointer"
+                  >
+                    Forget Password?
+                  </Link>
+                </p>
               </form>
             </div>
 

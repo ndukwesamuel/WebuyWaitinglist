@@ -11,7 +11,7 @@ const EmailVerification = () => {
       const userId = searchParams.get("userId");
       const uniqueString = searchParams.get("uniqueString");
 
-      const API_URL = process.env.REACT_APP_Local;
+      const API_URL = process.env.REACT_APP_Url;
 
       const verifyEmail = async (userId, uniqueString) => {
         const form = new FormData();
