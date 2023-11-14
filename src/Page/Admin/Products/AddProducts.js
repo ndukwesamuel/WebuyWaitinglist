@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 import {
   FaAlignCenter,
@@ -7,34 +7,94 @@ import {
   FaAlignRight,
   FaAngleDown,
   FaBold,
-  FaChevronDown,
   FaFont,
   FaInfoCircle,
   FaItalic,
-  FaPlusCircle,
   FaSortDown,
   FaUnderline,
-} from "react-icons/fa";
+} from 'react-icons/fa';
 
-import Navbar from "../../components/AdminComponent/Navbar";
-import Sidebar from "../../components/AdminComponent/Sidebar";
-import background from "../../images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg";
+import Navbar from '../../components/Navbar';
+import Sidebar from '../../components/Sidebar';
+import background from '../../images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg';
 
 const AddProducts = () => {
+  const [productName, setProductName] = useState("");
+  const [productDescription, setProductDescription] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [discount, setDiscount] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [price, setPrice] = useState(""); // State to store the input value
   const [selectedCurrency, setSelectedCurrency] = useState("dollar"); // Default currency
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setSelectedImage(imageUrl);
+    }
+  };
+
+  const applyUppercase = () => {
+    setProductDescription((prevDescription) => {
+      if (prevDescription === prevDescription.toUpperCase()) {
+        return prevDescription.toLowerCase(); // If text is already uppercase, make it normal
+      } else {
+        return prevDescription.toUpperCase(); // If text is not uppercase, make it uppercase
+      }
+    });
+  };
+
+  const applyBold = () => {
+    const textarea = document.getElementById("myTextarea"); // Replace 'myTextarea' with the actual ID of your textarea
+    textarea.classList.toggle("bold-text");
+  };
+
+  const applyItalic = () => {
+    const textarea = document.getElementById("myTextarea");
+    const currentFontStyle = getComputedStyle(textarea).fontStyle;
+    textarea.style.fontStyle =
+      currentFontStyle === "italic" ? "normal" : "italic";
+  };
+
+  const applyUnderline = () => {
+    const textarea = document.getElementById("myTextarea"); // Replace 'myTextarea' with the actual ID of your textarea
+    textarea.classList.toggle("underline-text");
+  };
+
+  const applyAlignment = (alignment) => {
+    const textarea = document.getElementById("myTextarea"); // Replace 'myTextarea' with the actual ID of your textarea
+    textarea.style.textAlign = alignment;
+  };
 
   const handleQuantityChange = (event) => {
     setQuantity(event.target.value);
   };
 
-  const handlePriceChange = (event) => {
-    setPrice(event.target.value);
+  const handleProductNameChange = (e) => {
+    setProductName(e.target.value);
   };
 
-  const handleCurrencyChange = (event) => {
-    setSelectedCurrency(event.target.value);
+  const handleProductDescription = (e) => {
+    setProductDescription(e.target.value);
+  };
+
+  const handleDiscountChange = (e) => {
+    setDiscount(e.target.value);
+  };
+
+  const handlePriceChange = (e) => {
+    setPrice(e.target.value);
+  };
+
+  const handleCurrencyChange = (e) => {
+    setSelectedCurrency(e.target.value);
+  };
+
+  const handleCategoryChange = (e) => {
+    const newCategory = e.target.value;
+    setSelectedCategory(newCategory);
   };
 
   // Define a mapping of currency symbols
@@ -43,6 +103,12 @@ const AddProducts = () => {
     { value: "dollar", label: "$" },
     { value: "naira", label: "₦" },
     { value: "franc", label: "Fr" },
+  ];
+
+  const categoryOptions = [
+    { value: "", label: "category", disabled: true, hidden: true },
+    { value: "computers", label: "computers" },
+    { value: "groceries", label: "groceries" },
   ];
 
   return (
@@ -60,7 +126,7 @@ const AddProducts = () => {
         </div>
         <div className=" basis-[90%] ">
           <Navbar />
-          <div className=" mt-8 pl-20 pr-14 w-full h-full">
+          <div className=" my-8 pl-20 pr-14 w-full">
             <header className=" w-full">
               <h1 className=" text-[24px] leading-[34px] font-semibold text-white  ">
                 Add Product
@@ -70,22 +136,173 @@ const AddProducts = () => {
               </p>
             </header>
             <div className=" w-full h-full flex mt-8 flex-row content-center justify-between gap-6">
-              <section className=" flex flex-col content-center gap-8">
-                <div className="flex content-center items-center justify-center w-[150px] h-[150px] bg-white rounded-lg">
-                  <FaPlusCircle size={"40"} style={{ color: "#009b4d" }} />
+              <section className="w-full flex-col h-[510px] flex content-center p-5  bg-[#f5f6fa] rounded-lg cursor-pointer">
+                <header className=" w-full flex content-center justify-between">
+                  <h1 className="font-medium text-base text-[#565454]">
+                    Product Image
+                  </h1>
+                  <FaInfoCircle style={{ color: "#565454" }} />
+                </header>
+                <div className=" w-full mt-2 border-dashed border-[1px] flex rounded-lg flex-col content-center justify-center items-center border-[#cbc8c8]">
+                  <label
+                    htmlFor="imageInput"
+                    className="w-full flex content-center  items-center justify-center"
+                  >
+                    {selectedImage ? (
+                      <img
+                        src={selectedImage}
+                        alt="Selected"
+                        className="w-full h-full object-contain max-h-[293px] rounded-lg mb-4"
+                      />
+                    ) : (
+                      <i
+                        className="fa-regular fa-images mt-28"
+                        style={{ color: "#727a89", fontSize: "25px" }}
+                      ></i>
+                    )}
+                  </label>
+                  <input
+                    type="file"
+                    id="imageInput"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleImageUpload}
+                  />
+                  {!selectedImage && (
+                    <div className="flex content-center items-center gap-2 mt-2 pb-28">
+                      <p className="text-xs text-[#727a89] font-semibold text-center">
+                        Drop your Product Images here. or{" "}
+                        <label
+                          htmlFor="imageInput"
+                          className="font-bold text-[#009b4d] text-sm cursor-pointer"
+                        >
+                          click to Browse
+                        </label>
+                      </p>
+                    </div>
+                  )}
                 </div>
-                <div className="flex content-center items-center justify-center w-[150px] h-[150px] bg-white rounded-lg">
-                  <FaPlusCircle size={"40"} style={{ color: "#009b4d" }} />
-                </div>
-                <div className="flex content-center items-center justify-center w-[150px] h-[150px] bg-white rounded-lg">
-                  <FaPlusCircle size={"40"} style={{ color: "#009b4d" }} />
-                </div>
-                <div className="flex content-center items-center justify-center w-[150px] h-[150px] bg-white rounded-lg">
-                  <FaPlusCircle size={"40"} style={{ color: "#009b4d" }} />
+                <div className=" w-full mt-3 flex flex-row content-center justify-between gap-3">
+                  <div className="w-full border-dashed border-[1px] flex rounded-lg flex-col content-center justify-center items-center border-[#cbc8c8]">
+                    <label
+                      htmlFor="imageInput"
+                      className="w-full flex content-center  items-center justify-center"
+                    >
+                      {selectedImage ? (
+                        <img
+                          src={selectedImage}
+                          alt="Selected"
+                          className="w-full h-full object-contain max-h-[111px] rounded-lg mb-4"
+                        />
+                      ) : (
+                        <i
+                          className="fa-regular fa-images mt-8"
+                          style={{ color: "#727a89", fontSize: "16px" }}
+                        ></i>
+                      )}
+                    </label>
+                    <input
+                      type="file"
+                      id="imageInput"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleImageUpload}
+                    />
+                    {!selectedImage && (
+                      <div className="flex content-center items-center gap-2 mt-2 pb-8">
+                        <p className="text-[8px] text-[#727a89] font-semibold text-center">
+                          Drop your Product Images here. or{" "}
+                          <label
+                            htmlFor="imageInput"
+                            className="font-bold text-[#009b4d] text-[9px] cursor-pointer"
+                          >
+                            click to Browse
+                          </label>
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  <div className="w-full border-dashed border-[1px] p-0 flex rounded-lg flex-col content-center justify-center items-center border-[#cbc8c8]">
+                    <label
+                      htmlFor="imageInput"
+                      className="w-full flex content-center  items-center justify-center"
+                    >
+                      {selectedImage ? (
+                        <img
+                          src={selectedImage}
+                          alt="Selected"
+                          className="w-full h-full object-contain max-h-[111px] rounded-lg mb-4"
+                        />
+                      ) : (
+                        <i
+                          className="fa-regular fa-images"
+                          style={{ color: "#727a89", fontSize: "16px" }}
+                        ></i>
+                      )}
+                    </label>
+                    <input
+                      type="file"
+                      id="imageInput"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleImageUpload}
+                    />
+                    {!selectedImage && (
+                      <div className="flex content-center items-center gap-2 mt-2">
+                        <p className="text-[8px] text-[#727a89] font-semibold text-center">
+                          Drop your Product Images here. or{" "}
+                          <label
+                            htmlFor="imageInput"
+                            className="font-bold text-[#009b4d] text-[9px] cursor-pointer"
+                          >
+                            click to Browse
+                          </label>
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  <div className="w-full border-dashed border-[1px] p-0 flex rounded-lg flex-col content-center justify-center items-center border-[#cbc8c8]">
+                    <label
+                      htmlFor="imageInput"
+                      className="w-full flex content-center  items-center justify-center"
+                    >
+                      {selectedImage ? (
+                        <img
+                          src={selectedImage}
+                          alt="Selected"
+                          className="w-full h-full object-contain max-h-[111px] rounded-lg mb-4"
+                        />
+                      ) : (
+                        <i
+                          className="fa-regular fa-images"
+                          style={{ color: "#727a89", fontSize: "16px" }}
+                        ></i>
+                      )}
+                    </label>
+                    <input
+                      type="file"
+                      id="imageInput"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleImageUpload}
+                    />
+                    {!selectedImage && (
+                      <div className="flex content-center items-center gap-2 mt-2">
+                        <p className="text-[8px] text-[#727a89] font-semibold text-center">
+                          Drop your Product Images here. or{" "}
+                          <label
+                            htmlFor="imageInput"
+                            className="font-bold text-[#009b4d] text-[9px] cursor-pointer"
+                          >
+                            click to Browse
+                          </label>
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </section>
-              <section className=" w-[350px] h-full bg-white rounded-lg"></section>
-              <section className=" flex flex-col content-center w-[450px] h-full bg-white rounded-lg py-4 px-6">
+              <section className=" flex flex-col content-center w-full h-full bg-white rounded-lg py-5 px-6">
                 <div className=" w-full flex flex-col content-center">
                   <div className="w-full flex flex-row content-center justify-between">
                     <h2 className=" font-medium text-base text-[#565454]">
@@ -93,8 +310,15 @@ const AddProducts = () => {
                     </h2>
                     <FaInfoCircle style={{ color: "#565454" }} />
                   </div>
-                  <div className="w-full mt-2 text-center flex content-center items-center pl-5 text-[#009b4d] font-semibold bg-[#f6f6f6] h-10 rounded-lg">
-                    <p className=" text-sm">Cat Fish Bundle</p>
+                  <div className="w-full mt-2 text-center flex content-center items-center ">
+                    <input
+                      className=" w-full pl-5 text-[#009b4d] text-sm font-semibold bg-[#f6f6f6] h-10 rounded-lg"
+                      placeholder="Product name"
+                      type="text"
+                      name="product"
+                      value={productName}
+                      onChange={handleProductNameChange}
+                    ></input>
                   </div>
                 </div>
                 <div className="w-full flex flex-col content-center mt-6">
@@ -105,27 +329,44 @@ const AddProducts = () => {
                     <FaInfoCircle style={{ color: "#565454" }} />
                   </div>
                   <div className=" w-full mt-2">
-                    <div className=" w-full flex content-center items-center rounded-t-lg border-b-[1px] border-black h-[40px] py-2 bg-[#f3f3f3] px-5">
-                      <FaFont />
-                      <FaSortDown className=" ml-1" />
-                      <div className=" w-[1.5px] mx-3 rounded-full h-full bg-[#cbc8c8]"></div>
-                      <FaBold />
-                      <FaItalic className=" mx-5" />
-                      <FaUnderline />
-                      <div className=" w-[1.5px] mx-3 rounded-full h-full bg-[#cbc8c8]"></div>
-                      <FaAlignLeft />
-                      <FaAlignCenter className=" mx-5" />
-                      <FaAlignRight />
-                      <FaAlignJustify className=" mx-5" />
+                    <div className="w-full flex content-center items-center rounded-t-lg border-b-[1px] border-black h-[40px] py-2 bg-[#f3f3f3] px-5">
+                      <button onClick={applyUppercase}>
+                        <FaFont />
+                      </button>
+                      <FaSortDown className="ml-1" />
+                      <div className="divider w-[1.5px] mx-3 rounded-full h-full bg-[#cbc8c8]"></div>
+                      <button onClick={applyBold}>
+                        <FaBold />
+                      </button>
+                      <button onClick={applyItalic}>
+                        <FaItalic className="mx-5" />
+                      </button>
+                      <button onClick={applyUnderline}>
+                        <FaUnderline />
+                      </button>
+                      <div className="divider w-[1.5px] mx-3 rounded-full h-full bg-[#cbc8c8]"></div>
+                      <button onClick={() => applyAlignment("left")}>
+                        <FaAlignLeft />
+                      </button>
+                      <button onClick={() => applyAlignment("center")}>
+                        <FaAlignCenter className="mx-5" />
+                      </button>
+                      <button onClick={() => applyAlignment("right")}>
+                        <FaAlignRight />
+                      </button>
+                      <button onClick={() => applyAlignment("justify")}>
+                        <FaAlignJustify className="mx-5" />
+                      </button>
                     </div>
-                    <div className=" w-full h-auto rounded-b-lg bg-[#f3f3f3] p-5">
-                      <p className=" text-[#6f6d6d] text-base">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Netus et malesuada fames ac turpis egestas
-                        sed tempus. Aliquet nec ullamcorper sit amet risus
-                        nullam. Duis tristique sollicitudin nibh sit.
-                      </p>
+                    <div className=" w-full rounded-b-lg bg-[#f3f3f3]">
+                      <textarea
+                        id="myTextarea"
+                        className="w-full h-full p-3 bg-[#f3f3f3] text-[#6f6d6d] text-sm rounded-b-lg"
+                        placeholder="Product description"
+                        value={productDescription}
+                        onChange={handleProductDescription}
+                        rows={4}
+                      ></textarea>
                     </div>
                   </div>
                 </div>
@@ -147,9 +388,23 @@ const AddProducts = () => {
                     <h2 className="font-medium text-base text-[#565454]">
                       Category
                     </h2>
-                    <div className="w-full mt-2 text-center flex content-center justify-between items-center px-5 text-[#6f6d6d] font-semibold bg-[#f6f6f6] h-10 rounded-lg">
-                      <p className=" text-sm">Bag of seeds</p>
-                      <FaChevronDown size={13} />
+                    <div className="relative mt-2">
+                      <select
+                        className="w-full pl-5 pr-10 h-10 bg-[#f6f6f6] text-[#6f6d6d] rounded-lg"
+                        value={selectedCategory}
+                        onChange={handleCategoryChange}
+                      >
+                        {categoryOptions.map((option) => (
+                          <option
+                            key={option.value}
+                            disabled={option.disabled}
+                            hidden={option.hidden}
+                            value={option.value}
+                          >
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -187,13 +442,31 @@ const AddProducts = () => {
                     <h2 className="font-medium text-base text-[#565454]">
                       Discount
                     </h2>
-                    <div className="w-full mt-2 text-center flex content-center justify-between items-center px-5 text-[#6f6d6d] font-semibold bg-[#f6f6f6] h-10 rounded-lg">
-                      <p className=" text-sm">Bag of seeds</p>
-                      <FaChevronDown size={13} />
-                    </div>
+                    <input
+                      className=" w-full h-10 bg-[#f6f6f6] text-[#6f6d6d] pl-5 rounded-lg mt-2"
+                      placeholder="discount"
+                      type="number"
+                      name="discount"
+                      value={discount}
+                      onChange={handleDiscountChange}
+                    ></input>
                   </div>
                 </div>
               </section>
+            </div>
+            <div className=" w-full max-w-[486px] flex flex-row content-center items-center gap-8 mt-4">
+              <button
+                className="w-full bg-[#f3f3f3] text-[#009b4d] font-semibold py-2 rounded-lg"
+                type="submit"
+              >
+                Discard
+              </button>
+              <button
+                className=" w-full bg-[#009b4d] text-white font-semibold py-2 rounded-lg"
+                type="submit"
+              >
+                Add Product
+              </button>
             </div>
           </div>
         </div>

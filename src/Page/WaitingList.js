@@ -7,7 +7,7 @@ function WaitingList() {
   const [lang, setLang] = useState("en");
 
   return (
-    <div className=" h-screen w-full bg-[url('../public/images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg')] bg-no-repeat bg-center bg-cover py-8 max-sm:px-5 md:px-8">
+    <div className=" h-screen w-full bg-[url('../public/images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg')] bg-no-repeat bg-center bg-cover py-8 lg:px-28 max-sm:px-5 md:px-8">
       <Header lang={lang} setLang={setLang} />
       <Main lang={lang} setLang={setLang} />
     </div>

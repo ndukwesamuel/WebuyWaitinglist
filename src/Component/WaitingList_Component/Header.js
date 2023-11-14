@@ -6,7 +6,7 @@ const Header = ({ lang, setLang }) => {
   const navigate = useNavigate();
   return (
     <div className="w-full ">
-      <header className="flex flex-row content-center justify-between w-full px-0">
+      <header className="flex flex-row content-center justify-between w-full">
         {/* <div className="">
           <i className="hidden text-2xl text-white cursor-pointer fa-solid fa-bars max-md:block max-sm:block"></i>
           <ul className="flex flex-row gap-8 text-[#e6e9ed] max-md:hidden max-sm:hidden ">

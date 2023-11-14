@@ -78,7 +78,7 @@ const Login = () => {
       }}
     >
       <div className="flex content-center justify-center w-full h-full  bg-no-repeat bg-cover bg-center relative z-10">
-        <div className="flex flex-row absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white w-[1000px] md:w-full max-sm:w-full max-sm:bg-transparent rounded-xl rounded-l-xl h-[500px] z-40">
+        <div className="flex flex-row absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white w-[1000px] md:w-full xl:max-w-[1440px] max-sm:w-full max-sm:bg-transparent rounded-xl rounded-l-xl h-[500px] z-40">
           <div className=" w-1/2 h-full max-sm:hidden bg-[#5F8575] rounded-l-xl">
             <img
               className=" w-auto h-full ml-4 max-sm:hidden"

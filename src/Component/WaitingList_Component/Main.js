@@ -40,7 +40,7 @@ const Main = ({ lang, setLang }) => {
   return (
     <>
       {isOpen && <Modal setIsOpen={setIsOpen} isOpen={isOpen} />}
-      <div className="w-full mt-[80px] text-white sm:px-0 md:px-0">
+      <div className="w-full mt-[80px] text-white">
         <a className="cursor-pointer" href="/">
           {lang === "en" && (
             <h1 className="font-extrabold text-center text-white lg:text-5xl max-sm:text-3xl md:text-4xl ">
