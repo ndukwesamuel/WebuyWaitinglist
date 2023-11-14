@@ -1,16 +1,42 @@
 import { Route, Routes } from "react-router-dom";
 import WaitingList from "./WaitingList";
 import SignUp from "./SignUp";
+import AdminRoute from "./Admin/AdminRoute";
+import Login from "./Login";
+import { Private, PrivateRoute } from "./privateroute/Private";
+import GroupRoute from "./Group/GroupRoute";
+import EmailVerification from "./EmailVerification";
 
 const PageRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<WaitingList />} />
-      <Route path="/signup" element={<SignUp />} />
-      {/* <Route path="/employee/*" element={<AdminRoute />} />
-        <Route path="/admin/*" element={<AdminRoute />} />
-  
-        <Route path="/auth/*" element={<AuthenticationRoute />} /> */}
+      <Route
+        path="/*"
+        exact
+        element={
+          <Private>
+            <WaitingList />
+          </Private>
+        }
+      />
+
+      <Route
+        path="/signup"
+        element={
+          <Private>
+            <SignUp />
+          </Private>
+        }
+      />
+      <Route
+        path="/login"
+        element={
+          <Private>
+            <Login />
+          </Private>
+        }
+      />
+      <Route path="/verify-email" element={<EmailVerification />} />
     </Routes>
   );
 };

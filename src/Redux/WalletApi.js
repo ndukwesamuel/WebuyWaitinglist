@@ -1,0 +1,28 @@
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+// REACT_APP_Local;
+export const walletApi = createApi({
+  reducerPath: "walletApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: process.env.REACT_APP_Url,
+    prepareHeaders: (headers, { getState }) => {
+      // Add your token to the headers
+      const token = getState().reducer.AutenticationSlice.data.token;
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+
+      return headers;
+    },
+  }),
+  endpoints: (builder) => ({
+    getTransactionHistory: builder.query({
+      query: () => "wallet/history",
+    }),
+    // getProduct: builder.query({
+    //   query: (id) => `product/${id}`,
+    // }),
+  }),
+});
+
+export const { useGetTransactionHistoryQuery } = walletApi;

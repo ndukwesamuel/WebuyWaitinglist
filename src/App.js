@@ -1,23 +1,24 @@
-// import React from "react";
-// import WaitingList from "./Page/WaitingList";
-
-// function App() {
-//   return (
-//     <div>
-//       <WaitingList />
-//     </div>
-//   );
-// }
-
-// export default App;
-
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import PageRoutes from "./Page/PageRoutes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  AdminPrivateRoute,
+  Private,
+  UserPrivateRoute,
+} from "./Page/privateroute/Private";
+import OrdersPage from "./Page/Admin/OrdersPage";
+import AdminRoute from "./Page/Admin/AdminRoute";
+import Dashboard from "./Page/UserDashboard/Dashboard";
+import UserProfile from "./Component/UserComponent/UserProfile";
+import Home from "./Component/UserComponent/Home";
+import ForgetPassword from "./Page/ForgetPassword";
+import ResetPassword from "./Page/ResetPassword";
 
+
+import Fake from "./fake/Fake";
 // import './main.scss';
 
 function App() {
@@ -26,6 +27,36 @@ function App() {
       <ToastContainer />
       <Routes>
         <Route path="/*" exact element={<PageRoutes />} />
+        <Route
+          path="/dashboard/*"
+          exact
+          element={
+            <UserPrivateRoute>
+              <Dashboard />
+            </UserPrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/*"
+          exact
+          element={
+            <AdminPrivateRoute>
+              <AdminRoute />
+            </AdminPrivateRoute>
+          }
+        />
+        <Route
+          path="/forget-password"
+          element={<ForgetPassword />}
+        />
+        
+
+        <Route
+          path="/reset-password"
+          element={<ResetPassword />}
+        />
+        <Route path="/Fake" exact element={<Fake />} />
       </Routes>
     </BrowserRouter>
   );
