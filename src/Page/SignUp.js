@@ -1,21 +1,12 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from "react";
 
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
-import image from '../assets/istockphoto-1320029684-612x612__1_-removebg.png';
-import background from '../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg';
-import ModalContainer from '../Component/modal-container/modal-container';
-import {
-  RegisterFun,
-  resetSignup,
-} from '../Redux/Auth';
+import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
+import background from "../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg";
+import ModalContainer from "../Component/modal-container/modal-container";
+import { RegisterFun, resetSignup } from "../Redux/Auth";
 
 const SignUp = () => {
   const { data, isLoading } = useSelector(
@@ -187,7 +178,7 @@ const SignUp = () => {
                 <span className="text-[#4F7942] opacity-70 text-sm">
                   <Link
                     to="/login"
-                    className="hover:text-[#355E3B] text-xl hover:cursor-pointer"
+                    className="hover:text-[#355E3B] text-xl max-sm:text-[#ffffff] hover:cursor-pointer"
                   >
                     &nbsp; Sign In
                   </Link>
