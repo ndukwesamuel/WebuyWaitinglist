@@ -66,7 +66,7 @@ const Login = () => {
         navigate("/dashboard");
       }
     }
-  }, [data, dispatch]);
+  }, [data, dispatch, isSuccess, navigate]);
 
   return (
     <div
@@ -150,7 +150,11 @@ const Login = () => {
                 type="button"
                 onClick={handleSubmit}
               >
-                {isLoading ? <> Isloading</> : <>Login </>}
+                {isLoading ? (
+        <div className="flex items-center">
+          <div className="w-4 h-4 border-t-2 border-[#4f7942] border-solid rounded-full animate-spin" />
+        </div>
+      ) : ( <>Login </>)}
               </button>
               <p className="mx-auto mt-1 text-sm max-sm:text-[#ffffff]">
                 don't have an account?
