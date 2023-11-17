@@ -3,8 +3,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ErrorFunc } from "../utilities/ApiErrorFun";
 
-let main_url = process.env.REACT_APP_Url;
-// let main_url = process.env.REACT_APP_Local;
+// let main_url = process.env.REACT_APP_Url;
+let main_url = process.env.REACT_APP_Local;
 const initialState = {
   isError: false,
   isSuccess: false,
@@ -56,10 +56,10 @@ const Logout_fun_Service = async (data, token) => {
 };
 
 export const Logout_fun = createAsyncThunk(
-  "AutenticationSlice/Logout_fun",
+  "AuthenticationSlice/Logout_fun",
   async (data, thunkAPI) => {
     try {
-      let token = thunkAPI.getState().reducer.AutenticationSlice.data.token;
+      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
       return await Logout_fun_Service(data, token);
     } catch (error) {
       const message =
@@ -99,7 +99,7 @@ const Login_fun_Service = async (data) => {
 };
 
 export const Login_fun = createAsyncThunk(
-  "AutenticationSlice/Login_fun",
+  "AuthenticationSlice/Login_fun",
   async (data, thunkAPI) => {
     try {
       return await Login_fun_Service(data);

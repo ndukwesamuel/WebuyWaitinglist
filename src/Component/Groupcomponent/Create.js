@@ -8,7 +8,7 @@ let main_url = process.env.REACT_APP_Local;
 
 function Create() {
   const { data, isLoading, isSuccess } = useSelector(
-    (state) => state.reducer?.AutenticationSlice
+    (state) => state.reducer?.AuthenticationSlice
   );
   const [formData, setFormData] = useState({
     name: "",
