@@ -11,7 +11,7 @@ function JoinGroup() {
   const dispatch = useDispatch();
 
   const { data, isLoading, isSuccess } = useSelector(
-    (state) => state.reducer?.AutenticationSlice
+    (state) => state.reducer?.AuthenticationSlice
   );
 
   useEffect(() => {

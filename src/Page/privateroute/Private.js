@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 
 export const Private = ({ children }) => {
   const { data, isLoading, isSuccess } = useSelector(
-    (state) => state.reducer?.AutenticationSlice
+    (state) => state.reducer?.AuthenticationSlice
   );
 
   if (data?.token) {
@@ -22,7 +22,7 @@ export const Private = ({ children }) => {
 
 export const PrivateRoute = ({ children }) => {
   const { data, isLoading, isSuccess } = useSelector(
-    (state) => state.reducer?.AutenticationSlice
+    (state) => state.reducer?.AuthenticationSlice
   );
 
   console.log({ data });
@@ -38,7 +38,7 @@ export const PrivateRoute = ({ children }) => {
 
 export const AdminPrivateRoute = ({ children }) => {
   const { data, isLoading, isSuccess } = useSelector(
-    (state) => state.reducer?.AutenticationSlice
+    (state) => state.reducer?.AuthenticationSlice
   );
 
   if (!data?.token) {
@@ -56,7 +56,7 @@ export const AdminPrivateRoute = ({ children }) => {
 
 export const UserPrivateRoute = ({ children }) => {
   const { data, isLoading, isSuccess } = useSelector(
-    (state) => state.reducer?.AutenticationSlice
+    (state) => state.reducer?.AuthenticationSlice
   );
 
   if (!data?.token) {

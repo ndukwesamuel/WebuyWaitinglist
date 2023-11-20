@@ -7,7 +7,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const { data: transaction, isError, error } = useGetTransactionHistoryQuery();
   const { data: profile } = useSelector((state) => state.reducer?.ProfileSlice);
-  console.log(transaction);
 
   useEffect(() => {
     const fetchData = async () => {

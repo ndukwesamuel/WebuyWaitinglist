@@ -3,7 +3,7 @@ import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
 import { persistReducer, persistStore } from "redux-persist";
 import Auth from "./Auth";
-import AutenticationSlice from "./AutenticationSlice";
+import AuthenticationSlice from "./AuthenticationSlice";
 import groupSlice from "./groupSlice";
 import ProfileSlice from "./ProfileSlice";
 import { walletApi } from "./WalletApi";
@@ -11,7 +11,7 @@ import { passwordResetApi } from "./PasswordResetApi";
 
 const reducers = combineReducers({
   Auth: Auth,
-  AutenticationSlice: AutenticationSlice,
+  AuthenticationSlice: AuthenticationSlice,
   groupSlice: groupSlice,
   ProfileSlice: ProfileSlice,
 });

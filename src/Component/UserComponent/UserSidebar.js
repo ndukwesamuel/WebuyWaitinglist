@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import image from "../../assets/images/Subtract.png";
 import { useDispatch } from "react-redux";
-import { Logout_fun } from "../../Redux/AutenticationSlice";
+import { Logout_fun } from "../../Redux/AuthenticationSlice";
 
 const UserSidebar = ({ lang, setLang }) => {
   const dispatch = useDispatch();

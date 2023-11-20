@@ -6,13 +6,13 @@ import { Link, useNavigate } from "react-router-dom";
 import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
 import background from "../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg";
 import ModalContainer from "../Component/modal-container/modal-container";
-import { Login_fun } from "../Redux/AutenticationSlice";
+import { Login_fun } from "../Redux/AuthenticationSlice";
 import { resetSignup } from "../Redux/Auth";
 
 const Login = () => {
   const navigate = useNavigate();
   const { data, isLoading, isSuccess } = useSelector(
-    (state) => state.reducer?.AutenticationSlice
+    (state) => state.reducer?.AuthenticationSlice
   );
 
   const dispatch = useDispatch();
@@ -57,7 +57,7 @@ const Login = () => {
         navigate("/dashboard");
       }
     }
-  }, [data, dispatch]);
+  }, [data, dispatch, isSuccess, navigate]);
 
   return (
     <div
@@ -141,7 +141,11 @@ const Login = () => {
                 type="button"
                 onClick={handleSubmit}
               >
-                {isLoading ? <> Isloading</> : <>Login </>}
+                {isLoading ? (
+        <div className="flex items-center">
+          <div className="w-4 h-4 border-t-2 border-[#4f7942] border-solid rounded-full animate-spin" />
+        </div>
+      ) : ( <>Login </>)}
               </button>
               <p className="mx-auto mt-1 text-sm max-sm:text-[#ffffff]">
                 don't have an account?
