@@ -47,10 +47,10 @@ const ForgetPassword = () => {
             </div>
             <div className="w-1/2 p-7 max-sm:p-0 max-sm:w-full">
               <div className="w-[200px] max-sm:w-full flex flex-col content-center justify-center max-sm:-mt-3">
-                <h1 className="text-[#4F7942] text-[40px] max-sm:text-[#ffffff] max-sm:text-[40px] max-sm:text-right font-semibold">
+                <h1 className="text-[#4F7942] text-[40px] max-sm:text-[#ffffff] max-sm:text-[40px] max-sm:text-center font-semibold">
                   Forget Password
                 </h1>
-                <p className="text-[#4F7942] max-sm:text-[#ffffff] max-sm:text-[25px] max-sm:font-semibold opacity-70 max-sm:text-right">
+                <p className="text-[#4F7942] max-sm:text-[#ffffff] max-sm:text-[25px] max-sm:font-semibold opacity-70 max-sm:text-center">
                   Enter your email to reset your password.
                 </p>
               </div>
