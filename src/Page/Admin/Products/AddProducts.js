@@ -113,7 +113,7 @@ const AddProducts = () => {
 
   return (
     <div className=" font-['Raleway']">
-      <div className="relative w-full h-full">
+      <div className="fixed top-0 left-0 w-full h-full">
         <img
           className="object-cover w-full h-full "
           src={background}
@@ -126,8 +126,8 @@ const AddProducts = () => {
         </div>
         <div className=" basis-[90%] ">
           <Navbar />
-          <div className=" my-8 pl-20 pr-14 w-full">
-            <header className=" w-full">
+          <div className="w-full pl-20 my-8 pr-14">
+            <header className="w-full ">
               <h1 className=" text-[24px] leading-[34px] font-semibold text-white  ">
                 Add Product
               </h1>
@@ -135,9 +135,9 @@ const AddProducts = () => {
                 webuy/product/add products
               </p>
             </header>
-            <div className=" w-full h-full flex mt-8 flex-row content-center justify-between gap-6">
+            <div className="flex flex-row content-center justify-between w-full h-full gap-6 mt-8 ">
               <section className="w-full flex-col h-[510px] flex content-center p-5  bg-[#f5f6fa] rounded-lg cursor-pointer">
-                <header className=" w-full flex content-center justify-between">
+                <header className="flex content-center justify-between w-full ">
                   <h1 className="font-medium text-base text-[#565454]">
                     Product Image
                   </h1>
@@ -146,7 +146,7 @@ const AddProducts = () => {
                 <div className=" w-full mt-2 border-dashed border-[1px] flex rounded-lg flex-col content-center justify-center items-center border-[#cbc8c8]">
                   <label
                     htmlFor="imageInput"
-                    className="w-full flex content-center  items-center justify-center"
+                    className="flex items-center content-center justify-center w-full"
                   >
                     {selectedImage ? (
                       <img
@@ -169,7 +169,7 @@ const AddProducts = () => {
                     onChange={handleImageUpload}
                   />
                   {!selectedImage && (
-                    <div className="flex content-center items-center gap-2 mt-2 pb-28">
+                    <div className="flex items-center content-center gap-2 mt-2 pb-28">
                       <p className="text-xs text-[#727a89] font-semibold text-center">
                         Drop your Product Images here. or{" "}
                         <label
@@ -182,11 +182,11 @@ const AddProducts = () => {
                     </div>
                   )}
                 </div>
-                <div className=" w-full mt-3 flex flex-row content-center justify-between gap-3">
+                <div className="flex flex-row content-center justify-between w-full gap-3 mt-3 ">
                   <div className="w-full border-dashed border-[1px] flex rounded-lg flex-col content-center justify-center items-center border-[#cbc8c8]">
                     <label
                       htmlFor="imageInput"
-                      className="w-full flex content-center  items-center justify-center"
+                      className="flex items-center content-center justify-center w-full"
                     >
                       {selectedImage ? (
                         <img
@@ -196,7 +196,7 @@ const AddProducts = () => {
                         />
                       ) : (
                         <i
-                          className="fa-regular fa-images mt-8"
+                          className="mt-8 fa-regular fa-images"
                           style={{ color: "#727a89", fontSize: "16px" }}
                         ></i>
                       )}
@@ -209,7 +209,7 @@ const AddProducts = () => {
                       onChange={handleImageUpload}
                     />
                     {!selectedImage && (
-                      <div className="flex content-center items-center gap-2 mt-2 pb-8">
+                      <div className="flex items-center content-center gap-2 pb-8 mt-2">
                         <p className="text-[8px] text-[#727a89] font-semibold text-center">
                           Drop your Product Images here. or{" "}
                           <label
@@ -225,7 +225,7 @@ const AddProducts = () => {
                   <div className="w-full border-dashed border-[1px] p-0 flex rounded-lg flex-col content-center justify-center items-center border-[#cbc8c8]">
                     <label
                       htmlFor="imageInput"
-                      className="w-full flex content-center  items-center justify-center"
+                      className="flex items-center content-center justify-center w-full"
                     >
                       {selectedImage ? (
                         <img
@@ -248,7 +248,7 @@ const AddProducts = () => {
                       onChange={handleImageUpload}
                     />
                     {!selectedImage && (
-                      <div className="flex content-center items-center gap-2 mt-2">
+                      <div className="flex items-center content-center gap-2 mt-2">
                         <p className="text-[8px] text-[#727a89] font-semibold text-center">
                           Drop your Product Images here. or{" "}
                           <label
@@ -264,7 +264,7 @@ const AddProducts = () => {
                   <div className="w-full border-dashed border-[1px] p-0 flex rounded-lg flex-col content-center justify-center items-center border-[#cbc8c8]">
                     <label
                       htmlFor="imageInput"
-                      className="w-full flex content-center  items-center justify-center"
+                      className="flex items-center content-center justify-center w-full"
                     >
                       {selectedImage ? (
                         <img
@@ -287,7 +287,7 @@ const AddProducts = () => {
                       onChange={handleImageUpload}
                     />
                     {!selectedImage && (
-                      <div className="flex content-center items-center gap-2 mt-2">
+                      <div className="flex items-center content-center gap-2 mt-2">
                         <p className="text-[8px] text-[#727a89] font-semibold text-center">
                           Drop your Product Images here. or{" "}
                           <label
@@ -302,15 +302,15 @@ const AddProducts = () => {
                   </div>
                 </div>
               </section>
-              <section className=" flex flex-col content-center w-full h-full bg-white rounded-lg py-5 px-6">
-                <div className=" w-full flex flex-col content-center">
-                  <div className="w-full flex flex-row content-center justify-between">
+              <section className="flex flex-col content-center w-full h-full px-6 py-5 bg-white rounded-lg ">
+                <div className="flex flex-col content-center w-full ">
+                  <div className="flex flex-row content-center justify-between w-full">
                     <h2 className=" font-medium text-base text-[#565454]">
                       Product name
                     </h2>
                     <FaInfoCircle style={{ color: "#565454" }} />
                   </div>
-                  <div className="w-full mt-2 text-center flex content-center items-center ">
+                  <div className="flex items-center content-center w-full mt-2 text-center ">
                     <input
                       className=" w-full pl-5 text-[#009b4d] text-sm font-semibold bg-[#f6f6f6] h-10 rounded-lg"
                       placeholder="Product name"
@@ -321,14 +321,14 @@ const AddProducts = () => {
                     ></input>
                   </div>
                 </div>
-                <div className="w-full flex flex-col content-center mt-6">
-                  <div className="w-full flex flex-row content-center justify-between">
+                <div className="flex flex-col content-center w-full mt-6">
+                  <div className="flex flex-row content-center justify-between w-full">
                     <h2 className=" font-medium text-base text-[#565454]">
                       Description
                     </h2>
                     <FaInfoCircle style={{ color: "#565454" }} />
                   </div>
-                  <div className=" w-full mt-2">
+                  <div className="w-full mt-2 ">
                     <div className="w-full flex content-center items-center rounded-t-lg border-b-[1px] border-black h-[40px] py-2 bg-[#f3f3f3] px-5">
                       <button onClick={applyUppercase}>
                         <FaFont />
@@ -370,8 +370,8 @@ const AddProducts = () => {
                     </div>
                   </div>
                 </div>
-                <div className=" w-full flex mt-6 content-center gap-11">
-                  <div className=" w-full flex flex-col">
+                <div className="flex content-center w-full mt-6 gap-11">
+                  <div className="flex flex-col w-full ">
                     <h2 className="font-medium text-base text-[#565454]">
                       Quantity
                     </h2>
@@ -384,7 +384,7 @@ const AddProducts = () => {
                       onChange={handleQuantityChange}
                     ></input>
                   </div>
-                  <div className=" w-full flex flex-col">
+                  <div className="flex flex-col w-full ">
                     <h2 className="font-medium text-base text-[#565454]">
                       Category
                     </h2>
@@ -408,8 +408,8 @@ const AddProducts = () => {
                     </div>
                   </div>
                 </div>
-                <div className=" w-full flex mt-6 content-center gap-11">
-                  <div className=" w-full flex flex-col">
+                <div className="flex content-center w-full mt-6 gap-11">
+                  <div className="flex flex-col w-full ">
                     <h2 className="font-medium text-base text-[#565454]">
                       Price per unit
                     </h2>
@@ -438,7 +438,7 @@ const AddProducts = () => {
                       </select>
                     </div>
                   </div>
-                  <div className=" w-full flex flex-col">
+                  <div className="flex flex-col w-full ">
                     <h2 className="font-medium text-base text-[#565454]">
                       Discount
                     </h2>

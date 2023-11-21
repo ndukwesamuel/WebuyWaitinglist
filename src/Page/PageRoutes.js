@@ -6,7 +6,6 @@ import Login from "./Login";
 import { Private, PrivateRoute } from "./privateroute/Private";
 import GroupRoute from "./Group/GroupRoute";
 import EmailVerification from "./EmailVerification";
-import HomePage from "./HomePage";
 
 const PageRoutes = () => {
   return (
@@ -16,7 +15,7 @@ const PageRoutes = () => {
         exact
         element={
           <Private>
-            <HomePage />
+            <WaitingList />
           </Private>
         }
       />

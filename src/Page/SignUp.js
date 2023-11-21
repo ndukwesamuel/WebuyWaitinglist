@@ -1,24 +1,15 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from "react";
 
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
-import image from '../assets/istockphoto-1320029684-612x612__1_-removebg.png';
-import background from '../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg';
-import ModalContainer from '../Component/modal-container/modal-container';
-import {
-  RegisterFun,
-  resetSignup,
-} from '../Redux/Auth';
+import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
+import background from "../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg";
+import ModalContainer from "../Component/modal-container/modal-container";
+import { RegisterFun, resetSignup } from "../Redux/Auth";
 
 const SignUp = () => {
-  const { data, isLoading, isSuccess } = useSelector(
+  const { data, isLoading } = useSelector(
     (state) => state.reducer?.Auth
   );
   const dispatch = useDispatch();
@@ -168,28 +159,26 @@ const SignUp = () => {
             </div>
 
             <div className="flex flex-col mx-auto max-sm:mt-2">
-              {isLoading ? (
-                <button
-                  className="text-[#ffffff] hover:text-[#355E3B] max-sm:hover:text-[#ffffff] hover:bg-transparent hover:border-[1px] hover:border-[#355E3B] bg-[#355E3B] text-center px-[55px] py-[7px] max-sm:py-[10px] text-[14px] max-sm:text-[17px] rounded-full mx-auto"
-                  type="button"
-                >
-                  Isloading
-                </button>
-              ) : (
-                <button
-                  className="text-[#ffffff] hover:text-[#355E3B] max-sm:hover:text-[#ffffff] hover:bg-transparent hover:border-[1px] hover:border-[#355E3B] bg-[#355E3B] text-center px-[55px] py-[7px] max-sm:py-[10px] text-[14px] max-sm:text-[17px] rounded-full mx-auto"
-                  type="button"
-                  onClick={handleSubmit}
-                >
-                  Create Account
-                </button>
-              )}
+              <button
+                className="text-[#ffffff] hover:text-[#355E3B] max-sm:hover:text-[#ffffff] hover:bg-transparent hover:border-[1px] hover:border-[#355E3B] bg-[#355E3B] text-center px-[55px] py-[7px] max-sm:py-[10px] text-[14px] max-sm:text-[17px] rounded-full mx-auto"
+                type="button"
+                onClick={handleSubmit}
+              >
+                {isLoading ? (
+                  <div className="flex items-center px-[40px] py-[2px]  ">
+                    <div className="w-4 h-4 border-t-2 border-[#4f7942] border-solid rounded-full animate-spin" />
+                    {/* <span className="ml-2">Loading...</span> */}
+                  </div>
+                ) : (
+                  <> Create Account </>
+                )}
+              </button>
               <p className="mx-auto mt-1 text-sm max-sm:text-[#ffffff]">
                 Already have an account?
                 <span className="text-[#4F7942] opacity-70 text-sm">
                   <Link
                     to="/login"
-                    className="hover:text-[#355E3B] text-xl hover:cursor-pointer"
+                    className="hover:text-[#355E3B] text-xl max-sm:text-[#ffffff] hover:cursor-pointer"
                   >
                     &nbsp; Sign In
                   </Link>

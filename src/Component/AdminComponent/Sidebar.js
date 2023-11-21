@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import image from "../../assets/images/Subtract.png";
 import { useDispatch } from "react-redux";
-import { Logout_fun } from "../../Redux/AutenticationSlice";
+import { Logout_fun } from "../../Redux/AuthenticationSlice";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);

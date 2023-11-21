@@ -1,27 +1,18 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from "react";
 
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
-import {
-  Link,
-  useNavigate,
-} from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
-import image from '../assets/istockphoto-1320029684-612x612__1_-removebg.png';
-import background from '../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg';
-import ModalContainer from '../Component/modal-container/modal-container';
-import { Login_fun } from '../Redux/AutenticationSlice';
-import { resetSignup } from '../Redux/Auth';
+import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
+import background from "../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg";
+import ModalContainer from "../Component/modal-container/modal-container";
+import { Login_fun } from "../Redux/AuthenticationSlice";
+import { resetSignup } from "../Redux/Auth";
 
 const Login = () => {
   const navigate = useNavigate();
   const { data, isLoading, isSuccess } = useSelector(
-    (state) => state.reducer?.AutenticationSlice
+    (state) => state.reducer?.AuthenticationSlice
   );
 
   const dispatch = useDispatch();
@@ -66,7 +57,7 @@ const Login = () => {
         navigate("/dashboard");
       }
     }
-  }, [data, dispatch]);
+  }, [data, dispatch, isSuccess, navigate]);
 
   return (
     <div
@@ -133,10 +124,10 @@ const Login = () => {
                     className="border-b-[2px] rounded-[4px] p-1 pl-2 focus:border-b-[2px] active:border-[#4F7942] focus:outline-none outline-none w-[250px] text-[10px] border-[#4F7942] max-sm:text-sm max-sm:text-[#000000]"
                   ></input>
                 </div>
-                <p className="mx-auto mt-3 text-sm max-sm:text-[#ffffff]">
+                <p className="mx-auto mt-3  ">
                   <Link
                     to="/forget-password"
-                    className="text-[#4F7942] opacity-70 text-sm hover:text-[#355E3B] hover:cursor-pointer"
+                    className="text-[#4F7942] opacity-70 text-md hover:text-[#355E3B] hover:cursor-pointer max-sm:text-[#ffffff]"
                   >
                     Forget Password?
                   </Link>
@@ -150,14 +141,18 @@ const Login = () => {
                 type="button"
                 onClick={handleSubmit}
               >
-                {isLoading ? <> Isloading</> : <>Login </>}
+                {isLoading ? (
+        <div className="flex items-center">
+          <div className="w-4 h-4 border-t-2 border-[#4f7942] border-solid rounded-full animate-spin" />
+        </div>
+      ) : ( <>Login </>)}
               </button>
               <p className="mx-auto mt-1 text-sm max-sm:text-[#ffffff]">
                 don't have an account?
                 <span className="text-[#4F7942] opacity-70 text-sm">
                   <Link
                     to="/signup"
-                    className="hover:text-[#355E3B] text-xl hover:cursor-pointer"
+                    className="hover:text-[#355E3B] text-xl max-sm:text-[#ffffff] hover:cursor-pointer"
                   >
                     &nbsp;Sign Up
                   </Link>
