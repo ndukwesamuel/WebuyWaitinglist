@@ -142,10 +142,12 @@ const Login = () => {
                 onClick={handleSubmit}
               >
                 {isLoading ? (
-        <div className="flex items-center">
-          <div className="w-4 h-4 border-t-2 border-[#4f7942] border-solid rounded-full animate-spin" />
-        </div>
-      ) : ( <>Login </>)}
+                  <div className="flex items-center">
+                    <div className="w-4 h-4 border-t-2 border-[#4f7942] border-solid rounded-full animate-spin" />
+                  </div>
+                ) : (
+                  <>Login </>
+                )}
               </button>
               <p className="mx-auto mt-1 text-sm max-sm:text-[#ffffff]">
                 don't have an account?
