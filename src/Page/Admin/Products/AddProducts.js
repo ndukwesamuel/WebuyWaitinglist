@@ -24,20 +24,28 @@ import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplas
 import { useMutation } from "react-query";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-// let Base_URL = process.env.REACT_APP_Local;
+import { useLocation } from "react-router";
+let local = process.env.REACT_APP_Local;
 
 const Base_URL = process.env.REACT_APP_Url;
 
-const AddProducts = () => {
-  const [productName, setProductName] = useState("");
-  const [productDescription, setProductDescription] = useState("");
+const AddProducts = ({}) => {
+  let { state } = useLocation();
+
+  console.log({ state });
+
+  const [productName, setProductName] = useState(state?.name);
+  const [productDescription, setProductDescription] = useState(
+    state?.description
+  );
   const [quantity, setQuantity] = useState("");
   const [discount, setDiscount] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [price, setPrice] = useState(""); // State to store the input value
+  const [selectedCategory, setSelectedCategory] = useState(state?.category);
+  const [price, setPrice] = useState(state?.price); // State to store the input value
   const [selectedCurrency, setSelectedCurrency] = useState("dollar"); // Default currency
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(state?.image);
   const [uploadimage, setUploadimage] = useState(null);
+  // const [productID, setProductID] = useState(state?._id);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -129,7 +137,6 @@ const AddProducts = () => {
     (formData) => {
       // Your API request code here
       // Use formData to send the image data to the API
-      let API_URL = `${Base_URL}products`;
 
       const tokengot = data?.token;
 
@@ -141,7 +148,13 @@ const AddProducts = () => {
         },
       };
 
-      return axios.post("http://localhost:5000/api/products", formData, config);
+      if (state) {
+        let API_URL = `${Base_URL}products/${state?._id}`;
+        return axios.put(API_URL, formData, config);
+      } else {
+        let API_URL = `${Base_URL}products`;
+        return axios.post(API_URL, formData, config);
+      }
     },
     {
       onSuccess: (data) => {
@@ -157,7 +170,7 @@ const AddProducts = () => {
         });
 
         // dispatch(Talent_manager_details_Get_all_player_fun());
-        // console.log({ game: data });
+        console.log({ game: data });
 
         setProductName("");
         setProductDescription("");
@@ -182,8 +195,8 @@ const AddProducts = () => {
           theme: "light",
           className: "Forbidden403",
         });
-        // console.log({ game: e });
-        // console.log({ game: e?.response?.data?.message });
+        console.log({ game: e });
+        console.log({ game: e?.response?.data?.message });
       },
     }
   );
@@ -192,14 +205,26 @@ const AddProducts = () => {
 
     const formData = new FormData();
 
-    formData.append("name", productName);
-    formData.append("description", productDescription);
-    formData.append("quantity", quantity);
-    formData.append("discount", discount);
-    formData.append("price", price);
-    formData.append("currency", selectedCurrency);
-    formData.append("category", "groceries");
-    formData.append("image", uploadimage);
+    if (state) {
+      formData.append("name", productName);
+      formData.append("description", productDescription);
+      formData.append("quantity", quantity);
+      formData.append("discount", discount);
+      formData.append("price", price);
+      formData.append("currency", selectedCurrency);
+      formData.append("category", "groceries");
+      formData.append("image", uploadimage);
+      formData.append("productId", state?._id);
+    } else {
+      formData.append("name", productName);
+      formData.append("description", productDescription);
+      formData.append("quantity", quantity);
+      formData.append("discount", discount);
+      formData.append("price", price);
+      formData.append("currency", selectedCurrency);
+      formData.append("category", "groceries");
+      formData.append("image", uploadimage);
+    }
 
     creatProduct.mutate(formData);
   };
@@ -555,7 +580,7 @@ const AddProducts = () => {
               >
                 Discard
               </button>
-              {selectedImage && uploadimage && (
+              {selectedImage && (
                 <button
                   className=" w-full bg-[#009b4d] text-white font-semibold py-2 rounded-lg"
                   // type="submit"
