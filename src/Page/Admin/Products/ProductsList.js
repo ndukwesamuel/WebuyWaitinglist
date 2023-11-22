@@ -10,6 +10,7 @@ import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplas
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { AllProduct_fun } from "../../../Redux/ProductSlice";
+import { MdDelete } from "react-icons/md";
 
 function ProductCard({ product }) {
   return (
@@ -28,6 +29,16 @@ function ProductCard({ product }) {
         </p>
         <p className="text-lg font-extrabold price">${product.price}</p>
         <p className="category">{product.category}</p>
+      </div>
+
+      <div className="flex justify-center">
+        <MdDelete
+          className=" text-red-600 text-2xl"
+          onClick={() => {
+            // deleteProduct(product._id);
+            console.log(product._id);
+          }}
+        />
       </div>
     </div>
   );
