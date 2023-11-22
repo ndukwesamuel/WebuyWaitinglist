@@ -1,7 +1,11 @@
-import myImage from "../../assets/DP.jpg";
+import avatar from "../../assets/avatar.jpg";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Profile_fun, ProfileUpdate_fun } from "../../Redux/ProfileSlice";
+import {
+  Profile_fun,
+  ProfileUpdate_fun,
+  ProfileImage_fun,
+} from "../../Redux/ProfileSlice";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 const UserProfile = () => {
@@ -9,6 +13,7 @@ const UserProfile = () => {
   const { data: profile } = useSelector((state) => state.reducer?.ProfileSlice);
 
   const [editForm, setEditForm] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
   const showEditform = () => {
     setEditForm(!editForm);
   };
@@ -38,12 +43,21 @@ const UserProfile = () => {
       [e.target.name]: e.target.value,
     }));
   };
+
+  const onImageChange = async (e) => {
+    setProfileImage(URL.createObjectURL(e.target.files[0]));
+    const imageData = new FormData();
+    imageData.append("image", e.target.files[0]);
+    const response = await dispatch(ProfileImage_fun(imageData));
+    const message = response.payload.data.message;
+    toast.success(message);
+  };
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(Profile_fun());
     };
     fetchData();
-  }, [dispatch]);
+  }, [dispatch, profileImage]);
   const onSubmit = async (e) => {
     e.preventDefault();
     const response = await dispatch(ProfileUpdate_fun(formdata));
@@ -59,23 +73,37 @@ const UserProfile = () => {
       </div>
       <div className="flex flex-col items-center justify-center gap-8 md:px-[50px] pt-[30px] pb-[60px] md:flex-row bg-[#D9D9D9] bg-opacity-50 h-auto w-full rounded-[15px] border-[#565454] ">
         <div className="pix-container">
-          <label htmlFor="upload-photo" className="cursor-pointer text-xl">
-            Click to add Image
-          </label>
+          {User && (profileImage || User.profileImage) ? (
+            <div
+              className="flex items-center justify-center rounded-[15px] w-[250px] h-[250px] bg-[#FFFFFF] cursor-pointer"
+              onClick={() => document.getElementById("upload-photo").click()}
+            >
+              <img
+                src={User.profileImage || profileImage}
+                alt=""
+                className=" object-fit w-[240px] h-[240px] rounded-[15px] "
+              />
+            </div>
+          ) : (
+            <div
+              className="flex items-center justify-center rounded-[15px] w-[250px] h-[250px] bg-[#FFFFFF] cursor-pointer"
+              onClick={() => document.getElementById("upload-photo").click()}
+            >
+              <img
+                src={avatar}
+                alt=""
+                className=" object-fit w-[240px] h-[240px] rounded-[15px] "
+              />
+            </div>
+          )}
+
           <input
             type="file"
-            name="profileImage"
+            name="image"
             id="upload-photo"
-            className="flex items-center justify-center rounded-[15px] w-[250px] h-[250px] bg-[#FFFFFF] opacity-0 "
+            className="  opacity-0 "
+            onChange={(e) => onImageChange(e)}
           />
-
-          {/* <div className="flex items-center justify-center rounded-[15px] w-[250px] h-[250px] bg-[#FFFFFF] ">
-            <img
-              src={myImage}
-              alt=""
-              className=" object-fit w-[240px] h-[240px] rounded-[15px] "
-            />
-          </div> */}
           <div className="flex justify-start mt-[10px] gap-[10px] ">
             <Link
               to=""
