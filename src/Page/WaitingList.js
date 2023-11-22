@@ -1,15 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import Header from '../Component/WaitingList_Component/Header';
-import Main from '../Component/WaitingList_Component/Main';
+import Header from "../Component/WaitingList_Component/Header";
+import Main from "../Component/WaitingList_Component/Main";
+
+import background from "../assets/images/medium-shot-man-delivering-groceries 1.jpg";
+import Footer from "../Component/WaitingList_Component/Footer";
 
 function WaitingList() {
   const [lang, setLang] = useState("en");
 
   return (
-    <div className=" h-screen w-full bg-[url('../public/images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg')] bg-no-repeat bg-center bg-cover py-8 lg:px-28 max-sm:px-5 md:px-8">
-      <Header lang={lang} setLang={setLang} />
-      <Main lang={lang} setLang={setLang} />
+    <div className="w-full h-screen overflow-hidden font-['Raleway']">
+      <div className="relative w-full h-full">
+        <img
+          className="object-cover w-full h-screen transition-all"
+          src={background}
+          alt=""
+        ></img>
+      </div>
+      <div className="absolute inset-0 overflow-hidden">
+        <Header lang={lang} setLang={setLang} />
+        <Main lang={lang} setLang={setLang} />
+        <Footer lang={lang} setLang={setLang} />
+      </div>
     </div>
   );
 }
