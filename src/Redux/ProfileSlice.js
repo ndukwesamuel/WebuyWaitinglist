@@ -3,8 +3,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ErrorFunc } from "../utilities/ApiErrorFun";
 
-// let main_url = process.env.REACT_APP_Url;
-let main_url = process.env.REACT_APP_Local;
+let main_url = process.env.REACT_APP_Url;
+// let main_url = process.env.REACT_APP_Local;
 const initialState = {
   isError: false,
   isSuccess: false,
@@ -56,23 +56,27 @@ const ProfileUpdate_fun_Service = async (data, token) => {
     });
     return response;
   } catch (error) {
-    // toast.error(`${error}`, {
-    //   position: "top-right",
-    //   autoClose: 5000,
-    //   hideProgressBar: false,
-    //   closeOnClick: true,
-    //   pauseOnHover: true,
-    //   draggable: true,
-    //   progress: undefined,
-    //   theme: "light",
-    //   className: "Forbidden403",
-    // });
+    throw error;
+  }
+};
+const ProfileImage_fun_Service = async (data, token) => {
+  let profile_url = main_url + "user/upload-image";
+
+  try {
+    const response = await axios.put(profile_url, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } catch (error) {
     throw error;
 
     // Handle the error here
   }
 };
-
 export const Profile_fun = createAsyncThunk(
   "AuthenticationSlice/Profile_fun",
   async (data, thunkAPI) => {
@@ -80,7 +84,6 @@ export const Profile_fun = createAsyncThunk(
       let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
       return await Profile_fun_Service(data, token);
     } catch (error) {
-      console.log(error);
       const message =
         (error.response && error.response.data && error.response.data.msg) ||
         error.message ||
@@ -98,6 +101,23 @@ export const ProfileUpdate_fun = createAsyncThunk(
     try {
       let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
       return await ProfileUpdate_fun_Service(data, token);
+    } catch (error) {
+      const message =
+        (error.response && error.response.data && error.response.data.msg) ||
+        error.message ||
+        error.msg ||
+        error.response.data.msg ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+export const ProfileImage_fun = createAsyncThunk(
+  "AuthenticationSlice/ProfileImage_fun",
+  async (data, thunkAPI) => {
+    try {
+      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      return await ProfileImage_fun_Service(data, token);
     } catch (error) {
       const message =
         (error.response && error.response.data && error.response.data.msg) ||
@@ -149,6 +169,29 @@ export const ProfileSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(ProfileUpdate_fun.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        toast.error(`${state.message}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .addCase(ProfileImage_fun.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(ProfileImage_fun.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.data = action.payload;
+      })
+      .addCase(ProfileImage_fun.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

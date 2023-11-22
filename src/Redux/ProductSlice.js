@@ -5,12 +5,15 @@ import { ErrorFunc } from "../utilities/ApiErrorFun";
 
 // let main_url = process.env.REACT_APP_Url;
 let main_url = process.env.REACT_APP_Local;
+
+const Base_URL = process.env.REACT_APP_Url;
+
 const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: null,
-  prodcutdata: null,
+  AllProductData: null,
 };
 
 const Profile_fun_Service = async (data, token) => {
@@ -92,12 +95,24 @@ export const Profile_fun = createAsyncThunk(
   }
 );
 
-export const ProfileUpdate_fun = createAsyncThunk(
-  "AuthenticationSlice/ProfileUpdate_fun",
-  async (data, thunkAPI) => {
+const AllProduct_fun_Service = async (token) => {
+  let API_URL = `${Base_URL}products`;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.get(API_URL, config);
+  return response.data;
+};
+export const AllProduct_fun = createAsyncThunk(
+  "ProductSlice/AllProduct_fun",
+  async (_, thunkAPI) => {
     try {
       let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
-      return await ProfileUpdate_fun_Service(data, token);
+      console.log({ token });
+      return await AllProduct_fun_Service(token);
     } catch (error) {
       const message =
         (error.response && error.response.data && error.response.data.msg) ||
@@ -140,16 +155,17 @@ export const ProductSlice = createSlice({
           theme: "light",
         });
       })
-      .addCase(ProfileUpdate_fun.pending, (state) => {
+      .addCase(AllProduct_fun.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(ProfileUpdate_fun.fulfilled, (state, action) => {
+      .addCase(AllProduct_fun.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.data = action.payload;
+        state.AllProductData = action.payload;
       })
-      .addCase(ProfileUpdate_fun.rejected, (state, action) => {
+      .addCase(AllProduct_fun.rejected, (state, action) => {
         state.isLoading = false;
+
         state.isError = true;
         state.message = action.payload;
         toast.error(`${state.message}`, {
