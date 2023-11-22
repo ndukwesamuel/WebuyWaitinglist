@@ -12,7 +12,8 @@ const UserSidebar = ({ lang, setLang }) => {
       <div className="flex items-center ml-[10px] pt-[8rem] gap-[15px] py-[15px]  cursor-pointer">
         <i className="fa-solid fa-house text-[#565454]"></i>
         <Link
-          to="/dashboard"
+          // to="/dashboard"
+          to="/facilitator"
           className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]"
         >
           Home
