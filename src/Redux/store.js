@@ -8,12 +8,14 @@ import groupSlice from "./groupSlice";
 import ProfileSlice from "./ProfileSlice";
 import { walletApi } from "./WalletApi";
 import { passwordResetApi } from "./PasswordResetApi";
+import ProductSlice from "./ProductSlice";
 
 const reducers = combineReducers({
   Auth: Auth,
   AuthenticationSlice: AuthenticationSlice,
   groupSlice: groupSlice,
   ProfileSlice: ProfileSlice,
+  ProductSlice: ProductSlice,
 });
 
 const persistConfig = {

@@ -8,6 +8,8 @@ import Navbar from "../../../Component/AdminComponent/Navbar";
 // import Sidebar from '../../components/Sidebar';
 import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { AllProduct_fun } from "../../../Redux/ProductSlice";
 
 function ProductCard({ product }) {
   return (
@@ -48,35 +50,28 @@ const LoadingSkeleton = () => {
 };
 
 const ProductsList = () => {
+  const { AllProductData } = useSelector(
+    (state) => state?.reducer?.ProductSlice
+  );
+  console.log({ AllProductData });
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
   useEffect(() => {
     // Simulate a delay to show loading screens
-    setTimeout(() => {
-      fetch("https://webuyam.onrender.com/api/products")
-        .then((response) => response.json())
-        .then((data) => {
-          setProducts(data);
-          setFilteredProducts(data);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-          setIsLoading(false);
-          setError("Error fetching data.");
-        });
-    }, 2000); // Simulate a 2-second delay
-  }, []);
+
+    dispatch(AllProduct_fun());
+  }, [dispatch]);
 
   useEffect(() => {
     // Filter products based on search query
-    const filtered = products.filter(
+    const filtered = AllProductData.filter(
       (product) =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.category.toLowerCase().includes(searchQuery.toLowerCase())
@@ -90,7 +85,7 @@ const ProductsList = () => {
     } else {
       setError("");
     }
-  }, [searchQuery, products]);
+  }, [searchQuery, AllProductData]);
 
   return (
     <div className="font-['Raleway']">
