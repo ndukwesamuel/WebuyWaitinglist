@@ -24,9 +24,9 @@ import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplas
 import { useMutation } from "react-query";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-let Base_URL = process.env.REACT_APP_Local;
+// let Base_URL = process.env.REACT_APP_Local;
 
-// const Base_URL = process.env.REACT_APP_Url;
+const Base_URL = process.env.REACT_APP_Url;
 
 const AddProducts = () => {
   const [productName, setProductName] = useState("");
@@ -130,7 +130,6 @@ const AddProducts = () => {
       // Your API request code here
       // Use formData to send the image data to the API
       let API_URL = `${Base_URL}products`;
-      console.log({ formData, API_URL });
 
       const tokengot = data?.token;
 
@@ -158,7 +157,7 @@ const AddProducts = () => {
         });
 
         // dispatch(Talent_manager_details_Get_all_player_fun());
-        console.log({ game: data });
+        // console.log({ game: data });
 
         setProductName("");
         setProductDescription("");
@@ -183,8 +182,8 @@ const AddProducts = () => {
           theme: "light",
           className: "Forbidden403",
         });
-        console.log({ game: e });
-        console.log({ game: e?.response?.data?.message });
+        // console.log({ game: e });
+        // console.log({ game: e?.response?.data?.message });
       },
     }
   );
