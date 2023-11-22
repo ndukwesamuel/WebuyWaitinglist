@@ -1,16 +1,13 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from "react";
 
-import {
-  FaSearch,
-  FaSlidersH,
-} from 'react-icons/fa';
+import { FaSearch, FaSlidersH } from "react-icons/fa";
+import Sidebar from "../../../Component/AdminComponent/Sidebar";
+import Navbar from "../../../Component/AdminComponent/Navbar";
 
-import Navbar from '../../components/Navbar';
-import Sidebar from '../../components/Sidebar';
-import background from '../../images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg';
+// import Navbar from '../../../Component/ Navbar';
+// import Sidebar from '../../components/Sidebar';
+import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
+import { useNavigate } from "react-router";
 
 function ProductCard({ product }) {
   return (
@@ -56,6 +53,8 @@ const ProductsList = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Simulate a delay to show loading screens
@@ -113,7 +112,16 @@ const ProductsList = () => {
                 webuy/product/products
               </p>
             </header>
-            <div className="flex flex-col w-full h-full p-5 mt-5 bg-white n rounded-xl">
+            <div className="flex flex-col w-full h-full p-5  mt-5 bg-white n rounded-xl">
+              <div className="f flex   justify-end gap-5 my-3">
+                <button
+                  onClick={() => navigate("/admin/Addproduct")}
+                  className=" border-green-400  border-2 cursor-pointer px-3 py-2 rounded-2xl "
+                >
+                  Create product{" "}
+                </button>
+              </div>
+
               <div className="relative w-full">
                 <input
                   className="w-full pl-8 pr-12 py-2 border-2 border-[#f3f3f3] rounded-xl text-xs"

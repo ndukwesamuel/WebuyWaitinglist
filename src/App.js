@@ -9,16 +9,9 @@ import {
   Private,
   UserPrivateRoute,
 } from "./Page/privateroute/Private";
-import OrdersPage from "./Page/Admin/OrdersPage";
 import AdminRoute from "./Page/Admin/AdminRoute";
 import Dashboard from "./Page/UserDashboard/Dashboard";
-import UserProfile from "./Component/UserComponent/UserProfile";
-import Home from "./Component/UserComponent/Home";
-import ForgetPassword from "./Page/ForgetPassword";
-import ResetPassword from "./Page/ResetPassword";
 
-
-import Fake from "./fake/Fake";
 // import './main.scss';
 
 function App() {
@@ -46,17 +39,6 @@ function App() {
             </AdminPrivateRoute>
           }
         />
-        <Route
-          path="/forget-password"
-          element={<ForgetPassword />}
-        />
-        
-
-        <Route
-          path="/reset-password"
-          element={<ResetPassword />}
-        />
-        <Route path="/Fake" exact element={<Fake />} />
       </Routes>
     </BrowserRouter>
   );
