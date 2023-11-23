@@ -3,8 +3,6 @@ import React, {
   useState,
 } from 'react';
 
-import { CiLock } from 'react-icons/ci';
-import { MdOutlineMail } from 'react-icons/md';
 import {
   useDispatch,
   useSelector,
@@ -110,34 +108,30 @@ const Login = () => {
                   name="email"
                   value={email}
                   onChange={handleChange}
-                  id="email"
+                  icon={MdOutlineMail}
                 />
               </div>
-            </div> */}
 
-            <div className="my-5">
-              <ReusableInput
-                label="Email"
-                type="text"
-                placeholder="Enter your email address"
-                name="email"
-                value={email}
-                onChange={handleChange}
-                icon={MdOutlineMail}
-              />
-            </div>
+              <div className="my-5">
+                <ReusableInput
+                  label="Password"
+                  type="password"
+                  placeholder="Enter your Password"
+                  name="password"
+                  value={password}
+                  onChange={handleChange}
+                  icon={CiLock}
+                />
+              </div>
 
-            <div className="my-5">
-              <ReusableInput
-                label="Password"
-                type="password"
-                placeholder="Enter your Password"
-                name="password"
-                value={password}
-                onChange={handleChange}
-                icon={CiLock}
-              />
-            </div>
+              {/* <p className="mx-auto mt-3 "> */}
+              <Link
+                to="/forget-password"
+                className="text-[12px] flex justify-end cursor-pointer"
+              >
+                Forget Password ?
+              </Link>
+              {/* </p> */}
 
             {/* <p className="mx-auto mt-3 "> */}
             <Link
