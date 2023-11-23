@@ -6,9 +6,12 @@ import UserSidebar from "../../Component/UserComponent/UserSidebar";
 import { IoCart } from "react-icons/io5";
 import { IoCartOutline } from "react-icons/io5";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { Logout_fun } from "../../Redux/AuthenticationSlice";
 
 const UserNavbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [openSidebar, setOpenSidebar] = useState(false);
   const [lang, setLang] = useState("en");
@@ -44,13 +47,17 @@ const UserNavbar = () => {
               />
             </div>
             <p className="hidden md:block">Adetayo Adewobi</p>
-            <div className="h-[50px] w-[50px] rounded-full bg-[#009B4D] cursor-pointer flex items-center justify-center relative z-40">
-              <img
-                className="w-[48px] h-[48px] rounded-full"
-                src={myImage}
-                alt=""
-              />
-            </div>
+            <button
+              onClick={() => {
+                dispatch(Logout_fun());
+                localStorage.clear();
+                sessionStorage.clear();
+                window.location.reload();
+              }}
+              className="text-[14px] border-2 px-2 leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]"
+            >
+              Log Out
+            </button>
 
             {openSidebar && (
               <div className="absolute top-[4rem] md:hidden left-0 right-[10rem] w-[10rem] h-[100vh] overflow-hidden">
