@@ -3,9 +3,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
+import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
 import background from "../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg";
-import { resetSignup } from "../Redux/Auth";
+import ModalContainer from "../Component/modal-container/modal-container";
 import { Login_fun } from "../Redux/AuthenticationSlice";
+import { resetSignup } from "../Redux/Auth";
+import { MdOutlineMail } from "react-icons/md";
+import { CiLock } from "react-icons/ci";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -66,34 +70,31 @@ const Login = () => {
         backgroundPosition: "center",
       }}
     >
-      <div className="bg-white font-['Raleway']  shadow-2xl flex justify-center   rounded-xl p-10">
-        <div>
-          <div className="text-center">
-            <p className="text-[30px] font-medium text-[#009B4D]"> Sign in</p>
-            <p>If you don’t have an account register</p>
-            <p>
-              {" "}
-              You can{" "}
-              <Link
-                to="/signup"
-                className="text-[#009B4D] text-[15px] font-medium "
-              >
-                {" "}
-                Register here !{" "}
-              </Link>
-            </p>
-          </div>
+      <div className=" md:flex md:justify-center">
+        <div className="bg-white   shadow-2xl flex justify-center   rounded-xl py-5 md:w-[50%]  lg:py-36 ">
+          <div>
+            <div className="text-center">
+              <p className="text-[30px] font-medium text-[#009B4D] lg:text-[40px]">
+                Sign in
+              </p>
+              <p className="lg:text-[20px]">
+                If you don’t have an account register
+              </p>
+              <p className="lg:text-[20px]">
+                You can{" "}
+                <Link
+                  to="/signup"
+                  className="text-[#009B4D] text-[15px] font-medium "
+                >
+                  Register here !{" "}
+                </Link>
+              </p>
+            </div>
 
-          <form className="flex-col justify-center gap-4 ">
-            {/* <div className="mb-3 ">
-              <label htmlFor="" className="block">
-                {console.log({ email })}
-                Email
-              </label>
-              <div className="flex items-center gap-4 bor border-b-[1px] border-[#99999999] ">
-                <MdOutlineMail />
-                <input
-                  className="w-full outline-none out "
+            <form className=" flex-col gap-4 justify-center">
+              <div className="my-5">
+                <ReusableInput
+                  label="Email"
                   type="text"
                   placeholder="Enter your email address"
                   name="email"
@@ -115,38 +116,30 @@ const Login = () => {
                 />
               </div>
 
-              {/* <p className="mx-auto mt-3 "> */}
-            <Link
-              to="/forget-password"
-              className="text-[12px] flex justify-end cursor-pointer"
-            >
-              Forget Password ?
-            </Link>
-            {/* </p> */}
+              {/* <p className="mx-auto mt-3  "> */}
+              <Link
+                to="/forget-password"
+                className="text-[12px] flex justify-end cursor-pointer"
+              >
+                Forget Password ?
+              </Link>
+              {/* </p> */}
 
-            {/* <p className="mx-auto mt-3 "> */}
-            <Link
-              to="/forget-password"
-              className="text-[12px] flex justify-end cursor-pointer"
-            >
-              Forget Password?
-            </Link>
-            {/* </p> */}
-
-            <button
-              className="text-[#ffffff] hover:text-[#355E3B] mt-10  hover:bg-transparent hover:border-[1px] hover:border-[#355E3B] bg-[#009B4D] text-center px-[55px] py-[7px]  text-[14px] rounded-[10px]  w-full"
-              type="button"
-              onClick={handleSubmit}
-            >
-              {isLoading ? (
-                <div className="flex items-center justify-center">
-                  <div className="w-4 h-4 border-t-2 border-[#4f7942] border-solid rounded-full animate-spin" />
-                </div>
-              ) : (
-                <>Login </>
-              )}
-            </button>
-          </form>
+              <button
+                className="text-[#ffffff] hover:text-[#355E3B] mt-10  hover:bg-transparent hover:border-[1px] hover:border-[#355E3B] bg-[#009B4D] text-center px-[55px] py-[7px]  text-[14px] rounded-[10px]  w-full"
+                type="button"
+                onClick={handleSubmit}
+              >
+                {isLoading ? (
+                  <div className="flex justify-center items-center">
+                    <div className="w-4 h-4 border-t-2 border-[#4f7942] border-solid rounded-full animate-spin" />
+                  </div>
+                ) : (
+                  <>Login </>
+                )}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -178,7 +171,7 @@ const ReusableInput = ({
       <div className="flex items-center gap-4 border-b-[1px] border-[#99999999]">
         {Icon && <Icon />}
         <input
-          className="w-full outline-none"
+          className="outline-none w-full"
           type={isPasswordVisible ? "text" : type}
           placeholder={placeholder}
           name={name}
