@@ -3,7 +3,13 @@ import { FaChevronDown } from "react-icons/fa6";
 import image from "../../assets/images/Subtract.png";
 import myImage from "../../assets/DP.jpg";
 import UserSidebar from "../../Component/UserComponent/UserSidebar";
+import { IoCart } from "react-icons/io5";
+import { IoCartOutline } from "react-icons/io5";
+import { useNavigate } from "react-router";
+
 const UserNavbar = () => {
+  const navigate = useNavigate();
+
   const [openSidebar, setOpenSidebar] = useState(false);
   const [lang, setLang] = useState("en");
   const showSidebar = () => {
@@ -13,7 +19,7 @@ const UserNavbar = () => {
     <div className=" font-['Raleway'] bg-[#ffffff] w-full ">
       <div className="flex items-center justify-between h-[70px] shadow-lg px-[25px] ">
         <div className=" py-[15px] flex items-center justify-center   ">
-          <a className="cursor-pointer " href="/">
+          <a className="cursor-pointer " href="/facilitator">
             <h1 className="text-[21px] font-extrabold text-[#565454] max-sm:text-3xl max-md:text-4xl">
               WE
               <img
@@ -32,6 +38,10 @@ const UserNavbar = () => {
               <i className="fa-solid fa-globe text-[#565454]"></i>
 
               <FaChevronDown className="text-[10px] mt-[.5rem]" />
+              <IoCartOutline
+                className="text-[20px] "
+                onClick={() => navigate("/facilitator/cart")}
+              />
             </div>
             <p className="hidden md:block">Adetayo Adewobi</p>
             <div className="h-[50px] w-[50px] rounded-full bg-[#009B4D] cursor-pointer flex items-center justify-center relative z-40">

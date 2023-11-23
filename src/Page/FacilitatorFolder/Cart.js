@@ -199,7 +199,7 @@ const Cart = () => {
       <div className="w-full pl-20 mt-8 pr-14">
         <div className="flex flex-col w-full h-full p-5  mt-5 bg-white n rounded-xl">
           <header className="w-full mb-5">
-            <h1 className="text-[24px] leading-[34px] font-semibold text-black">
+            <h1 className="text-[24px] leading-[34px] font-semibold text-[#009B4D]">
               Cart
             </h1>
 
@@ -266,7 +266,7 @@ const CartSummary = ({ cartItems }) => {
           <span className="font-semibold">${calculateTotalPrice()}</span>
         </div>
       </div>
-      <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+      <button className="mt-4 bg-[#009B4D] text-white py-2 px-4 rounded w-full">
         Checkout
       </button>
     </div>
