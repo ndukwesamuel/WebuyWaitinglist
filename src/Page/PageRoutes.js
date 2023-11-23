@@ -4,7 +4,7 @@ import SignUp from "./SignUp";
 import AdminRoute from "./Admin/AdminRoute";
 import Login from "./Login";
 import { Private, PrivateRoute } from "./privateroute/Private";
-import GroupRoute from "./Group/GroupRoute";
+// import GroupRoute from "./Group/GroupRoute";
 import EmailVerification from "./EmailVerification";
 
 const PageRoutes = () => {
