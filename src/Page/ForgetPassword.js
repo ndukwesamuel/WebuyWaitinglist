@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
+// import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
 import background from "../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg";
 
-import { useReqPasswordResetMutation } from "../../Redux/PasswordResetApi";
+import { useReqPasswordResetMutation } from "../Redux/PasswordResetApi";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { MdOutlineMail } from "react-icons/md";
