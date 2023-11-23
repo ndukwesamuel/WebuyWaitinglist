@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import background
-  from '../../assets/medium-shot-man-delivering-groceries_9714x5464_4500.0.jpg';
+import background from "../../assets/medium-shot-man-delivering-groceries_9714x5464_4500.0.jpg";
+import { Link } from "react-router-dom";
 
 const Main = ({ lang, setLang }) => {
   return (
@@ -45,23 +45,12 @@ const Main = ({ lang, setLang }) => {
               </p>
             )}
 
-            {lang === "en" && (
-              <button
-                className="bg-[#009b4d] border-[0.5px] drop-shadow-md border-black text-[#ffffff] text-base font-semibold mt-4 rounded-full px-[20px] py-[10px] hover:bg-opacity-60 hover:border-none transition-transform "
-                type="button"
-              >
-                Create a Group
-              </button>
-            )}
-
-            {lang === "fr" && (
-              <button
-                className="bg-[#009b4d] border-[0.5px] drop-shadow-md border-black text-[#ffffff] text-base font-semibold mt-4 rounded-full px-[20px] py-[10px] hover:bg-opacity-60 hover:border-none transition-transform "
-                type="button"
-              >
-                Créer un groupe
-              </button>
-            )}
+            <Link
+              to="/login"
+              className="bg-[#009b4d] border-[0.5px] drop-shadow-md border-black text-[#ffffff] text-base font-semibold mt-4 rounded-full px-[20px] py-[10px] hover:bg-opacity-60 hover:border-none transition-transform "
+            >
+              {lang === "fr" ? "Créer un groupe" : "Create a Group"}
+            </Link>
           </div>
         </div>
         <div className=" w-full flex content-center max-sm:hidden gap-4 max-sm:flex-col justify-end max-sm:justify-center mb-2 place-items-end max-sm:place-items-center place-content-end max-sm:place-content-center max-sm:mt-10">
