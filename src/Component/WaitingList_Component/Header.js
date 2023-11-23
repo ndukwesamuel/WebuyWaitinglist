@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react';
 
-import image from "../../assets/images/Subtract.png";
+import image from '../../assets/Subtract.png';
 
 const Header = ({ lang, setLang }) => {
   return (
     <>
-      <div className="flex flex-row px-[140px] pt-[20px] absolute  items-center justify-between w-full ">
+      <div className="flex flex-row lg:px-[140px] max-sm:px-5 md:px-10 pt-[20px] absolute top-0 left-0  items-center justify-between w-full ">
         <a className="cursor-pointer " href="/">
-          <h1 className="text-[25px] font-extrabold text-[#faf5e9] max-sm:text-3xl max-md:text-4xl">
+          <h1 className="text-[23px] font-extrabold text-[#faf5e9] max-sm:text-3xl max-md:text-4xl">
             WE
             <img
-              className="inline-block w-[70px] mb-[4px] ml-[2px] "
+              className="inline-block w-[60px] mb-[4px] ml-[2px] "
               src={image}
               alt=""
             ></img>
@@ -18,12 +18,12 @@ const Header = ({ lang, setLang }) => {
         </a>
         <div>
           <input
-            className=" p-3 w-[200px] h-7 bg-[#faf5e9] opacity-25 rounded-full"
+            className=" p-3 w-[200px] h-7 max-sm:hidden bg-[#faf5e9] opacity-25 rounded-full"
             type="text"
             name="search"
-            value={lang === "fn" ? "rechercher" : "search"}
+            value={lang === "fr" ? "rechercher" : "search"}
           ></input>
-          <i class="fa-sharp fa-solid fa-magnifying-glass relative right-[25px] top-[1px]"></i>
+          <i className="fa-sharp fa-solid fa-magnifying-glass max-sm:hidden relative right-[25px] top-[1px]"></i>
 
           <button
             className=" bg-transparent text-[#faf5e9] focus:text-[#009b4d] focus:text-opacity-60 font-semibold text-md"
@@ -35,7 +35,7 @@ const Header = ({ lang, setLang }) => {
           <button
             className=" bg-transparent ml-2 text-[#faf5e9] font-semibold text-md focus:text-[#009b4d] focus:text-opacity-60"
             type="button"
-            onClick={() => setLang("fn")}
+            onClick={() => setLang("fr")}
           >
             FR
           </button>
