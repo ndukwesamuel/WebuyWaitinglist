@@ -196,8 +196,8 @@ const Cart = () => {
 
   return (
     <div className="font-['Raleway']">
-      <div className="w-full pl-20 mt-8 pr-14">
-        <div className="flex flex-col w-full h-full p-5  mt-5 bg-white n rounded-xl">
+      <div className="w-full px-3 md:pl-20 mt-8 md:pr-14">
+        <div className="flex flex-col w-full h-full p-5  mt-5 bg-white n rounded-xl ">
           <header className="w-full mb-5">
             <h1 className="text-[24px] leading-[34px] font-semibold text-[#009B4D]">
               Cart
@@ -219,15 +219,15 @@ const Cart = () => {
           </div>
           {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
 
-          <div className="flex w-full justify-between">
-            <div className="w-[70%]">
+          <div className="md:flex w-full justify-between">
+            <div className="md:w-[70%]">
               <CartPage
                 cartItems={cartItems}
                 onRemoveItem={handleRemoveItem}
                 onUpdateQuantity={handleUpdateQuantity}
               />
             </div>
-            <div className="w-[20%]">
+            <div className="md:w-[25%]">
               <CartSummary cartItems={cartItems} />
             </div>
           </div>
@@ -277,14 +277,14 @@ const CartSummary = ({ cartItems }) => {
 
 const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
   return (
-    <div className="container mx-auto my-8">
+    <div className="container mx-auto my-8   ">
       {cartItems.length === 0 ? (
         <p className="text-center ">Your cart is empty</p>
       ) : (
         <ul className="grid grid-cols-1 gap-4">
           {cartItems.map((item, index) => (
             <li key={index} className="border p-4">
-              <div className="flex items-center gap-5">
+              <div className="flex  flex-col md:flex-row items-center gap-5">
                 <img
                   src={item.image}
                   alt={item.name}
@@ -318,7 +318,7 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
                       <p className="text-gray-600">Remove</p>
                     </div>
 
-                    <div>
+                    <div className="flex">
                       <button
                         onClick={() =>
                           onUpdateQuantity(item.id, item.quantity - 1)

@@ -58,12 +58,6 @@ const UserNavbar = () => {
             >
               Log Out
             </button>
-
-            {openSidebar && (
-              <div className="absolute top-[4rem] md:hidden left-0 right-[10rem] w-[10rem] h-[100vh] overflow-hidden">
-                <UserSidebar lang={lang} setLang={setLang} />
-              </div>
-            )}
           </div>
         </div>
       </div>
