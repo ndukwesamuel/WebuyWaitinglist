@@ -55,7 +55,7 @@ const Login = () => {
       if (data?.isAdmin) {
         navigate("/admin");
       } else {
-        navigate("/dashboard");
+        navigate("/facilitator");
       }
     }
   }, [data, dispatch, isSuccess, navigate]);
