@@ -11,7 +11,7 @@ export const Private = ({ children }) => {
     // return <Navigate to="/" state={{ from: history.location }} />;
 
     if (data?.isAdmin === false) {
-      return <Navigate to="/dashboard" />;
+      return <Navigate to="/facilitator" />;
     } else {
       return <Navigate to="/admin" />;
     }
@@ -48,7 +48,7 @@ export const AdminPrivateRoute = ({ children }) => {
   }
 
   if (data?.isAdmin === false) {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to="/facilitator" />;
   }
 
   return children;
