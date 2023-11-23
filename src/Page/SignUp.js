@@ -1,14 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import { Link } from 'react-router-dom';
 
+<<<<<<< HEAD
 import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
 import background from "../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg";
 import ModalContainer from "../Component/modal-container/modal-container";
 import { RegisterFun, resetSignup } from "../Redux/Auth";
 import { MdOutlineMail } from "react-icons/md";
 import { CiLock, CiUser } from "react-icons/ci";
+=======
+import image from '../assets/istockphoto-1320029684-612x612__1_-removebg.png';
+import background from '../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg';
+import ModalContainer from '../Component/modal-container/modal-container';
+import {
+  RegisterFun,
+  resetSignup,
+} from '../Redux/Auth';
+>>>>>>> 9267c328321a886649cf16e797d18490f7335591
 
 const SignUp = () => {
   const { data, isLoading } = useSelector((state) => state.reducer?.Auth);
@@ -66,6 +82,7 @@ const SignUp = () => {
         backgroundPosition: "center",
       }}
     >
+<<<<<<< HEAD
       <div className=" md:flex md:justify-center">
         <div className="bg-white   shadow-2xl flex justify-center   rounded-xl py-5 md:w-[50%]  lg:py-36 ">
           <div>
@@ -84,6 +101,24 @@ const SignUp = () => {
                 >
                   Login here !
                 </Link>
+=======
+      <div className="relative z-10 font-['Raleway'] flex content-center justify-center w-full h-full bg-center bg-no-repeat bg-cover">
+        <div className="flex flex-row absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white w-[1000px] xl:max-w-[1440px] md:w-full max-sm:w-full max-sm:bg-transparent rounded-xl rounded-l-xl h-[500px] z-40">
+          <div className=" w-1/2 h-full max-sm:hidden bg-[#5F8575] rounded-l-xl">
+            <img
+              className="w-auto h-full ml-4 max-sm:hidden"
+              src={image}
+              alt=""
+            ></img>
+          </div>
+          <div className="w-1/2 p-7 max-sm:p-0 max-sm:w-full">
+            <div className="flex flex-col content-center justify-center w-full max-sm:w-full max-sm:-mt-3">
+              <h1 className="text-[#4F7942] text-[40px] max-sm:text-[#ffffff] max-sm:text-[40px] max-sm:text-center font-semibold">
+                Welcome
+              </h1>
+              <p className="text-[#4F7942] font-semibold max-sm:text-white max-sm:text-[25px] max-sm:text-center max-sm:font-medium opacity-70">
+                Let's get you started!
+>>>>>>> 9267c328321a886649cf16e797d18490f7335591
               </p>
             </div>
 
