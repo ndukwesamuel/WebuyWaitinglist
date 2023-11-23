@@ -63,7 +63,7 @@ const Login = () => {
 
   return (
     <div
-      className=" min-h-screen py-10 px-5"
+      className=" min-h-screen py-10 px-2"
       style={{
         backgroundImage: `url(${background})`,
         backgroundSize: "cover",
