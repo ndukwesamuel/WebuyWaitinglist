@@ -70,91 +70,76 @@ const Login = () => {
         backgroundPosition: "center",
       }}
     >
-      <div className="bg-white   shadow-2xl flex justify-center   rounded-xl py-5">
-        <div>
-          <div className="text-center">
-            <p className="text-[30px] font-medium text-[#009B4D]"> Sign in</p>
-            <p>If you don’t have an account register</p>
-            <p>
-              {" "}
-              You can{" "}
-              <Link
-                to="/signup"
-                className="text-[#009B4D] text-[15px] font-medium "
-              >
-                {" "}
-                Register here !{" "}
-              </Link>
-            </p>
-          </div>
+      <div className=" md:flex md:justify-center">
+        <div className="bg-white   shadow-2xl flex justify-center   rounded-xl py-5 md:w-[50%]  lg:py-36 ">
+          <div>
+            <div className="text-center">
+              <p className="text-[30px] font-medium text-[#009B4D] lg:text-[40px]">
+                Sign in
+              </p>
+              <p className="lg:text-[20px]">
+                If you don’t have an account register
+              </p>
+              <p className="lg:text-[20px]">
+                You can{" "}
+                <Link
+                  to="/signup"
+                  className="text-[#009B4D] text-[15px] font-medium "
+                >
+                  Register here !{" "}
+                </Link>
+              </p>
+            </div>
 
-          <form className=" flex-col gap-4 justify-center">
-            {/* <div className=" mb-3">
-              <label htmlFor="" className="block">
-                {console.log({ email })}
-                Email
-              </label>
-              <div className="flex items-center gap-4 bor border-b-[1px] border-[#99999999] ">
-                <MdOutlineMail />
-                <input
-                  className="out outline-none w-full "
+            <form className=" flex-col gap-4 justify-center">
+              <div className="my-5">
+                <ReusableInput
+                  label="Email"
                   type="text"
                   placeholder="Enter your email address"
                   name="email"
                   value={email}
                   onChange={handleChange}
-                  id="email"
+                  icon={MdOutlineMail}
                 />
               </div>
-            </div> */}
 
-            <div className="my-5">
-              <ReusableInput
-                label="Email"
-                type="text"
-                placeholder="Enter your email address"
-                name="email"
-                value={email}
-                onChange={handleChange}
-                icon={MdOutlineMail}
-              />
-            </div>
+              <div className="my-5">
+                <ReusableInput
+                  label="Password"
+                  type="password"
+                  placeholder="Enter your Password"
+                  name="password"
+                  value={password}
+                  onChange={handleChange}
+                  icon={CiLock}
+                />
+              </div>
 
-            <div className="my-5">
-              <ReusableInput
-                label="Password"
-                type="password"
-                placeholder="Enter your Password"
-                name="password"
-                value={password}
-                onChange={handleChange}
-                icon={CiLock}
-              />
-            </div>
+              {/* <p className="mx-auto mt-3  "> */}
+              <Link
+                to="/forget-password"
+                className="text-[12px] flex justify-end cursor-pointer"
+              >
+                Forget Password ?
+              </Link>
+              {/* </p> */}
 
-            {/* <p className="mx-auto mt-3  "> */}
-            <Link
-              to="/forget-password"
-              className="text-[12px] flex justify-end cursor-pointer"
-            >
-              Forget Password?
-            </Link>
-            {/* </p> */}
-
-            <button
-              className="text-[#ffffff] hover:text-[#355E3B] mt-10  hover:bg-transparent hover:border-[1px] hover:border-[#355E3B] bg-[#009B4D] text-center px-[55px] py-[7px]  text-[14px] rounded-[10px]  w-full"
-              type="button"
-              onClick={handleSubmit}
-            >
-              {isLoading ? (
-                <div className="flex justify-center items-center">
-                  <div className="w-4 h-4 border-t-2 border-[#4f7942] border-solid rounded-full animate-spin" />
-                </div>
-              ) : (
-                <>Login </>
-              )}
-            </button>
-          </form>
+              <button
+                className="text-[#ffffff] hover:text-[#355E3B] mt-10  hover:bg-transparent hover:border-[1px] hover:border-[#355E3B] bg-[#009B4D] text-center px-[55px] py-[7px]  text-[14px] rounded-[10px]  w-full"
+                type="button"
+                onClick={handleSubmit}
+              >
+                {isLoading ? (
+                  <div className="flex justify-center items-center">
+                    <div className="w-4 h-4 border-t-2 border-[#4f7942] border-solid rounded-full animate-spin" />
+                  </div>
+                ) : (
+                  <>Login </>
+                )}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
