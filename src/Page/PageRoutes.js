@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import WaitingList from "./WaitingList";
 import SignUp from "./SignUp";
+import AdminRoute from "./Admin/AdminRoute";
 import Login from "./Login";
 import { Private, PrivateRoute } from "./privateroute/Private";
+import GroupRoute from "./Group/GroupRoute";
 import EmailVerification from "./EmailVerification";
-import ResetPassword from "./ResetPassword";
-import ForgetPassword from "./ForgetPassword";
 
 const PageRoutes = () => {
   return (
@@ -36,9 +36,6 @@ const PageRoutes = () => {
           </Private>
         }
       />
-      <Route path="/forget-password" element={<ForgetPassword />} />
-
-      <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/verify-email" element={<EmailVerification />} />
     </Routes>
   );

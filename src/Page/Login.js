@@ -5,9 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 
 import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
 import background from "../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg";
-import ModalContainer from "../Component/modal-container/modal-container";
-import { Login_fun } from "../Redux/AuthenticationSlice";
-import { resetSignup } from "../Redux/Auth";
+import ModalContainer from "../../Component/modal-container/modal-container";
+import { Login_fun } from "../../Redux/AuthenticationSlice";
+import { resetSignup } from "../../Redux/Auth";
 import { MdOutlineMail } from "react-icons/md";
 import { CiLock } from "react-icons/ci";
 
