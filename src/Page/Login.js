@@ -1,15 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { CiLock } from 'react-icons/ci';
+import { MdOutlineMail } from 'react-icons/md';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import {
+  Link,
+  useNavigate,
+} from 'react-router-dom';
 
-import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
-import background from "../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg";
-import ModalContainer from "../Component/modal-container/modal-container";
-import { Login_fun } from "../Redux/AuthenticationSlice";
-import { resetSignup } from "../Redux/Auth";
-import { MdOutlineMail } from "react-icons/md";
-import { CiLock } from "react-icons/ci";
+import background from '../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg';
+import { resetSignup } from '../Redux/Auth';
+import { Login_fun } from '../Redux/AuthenticationSlice';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -63,14 +70,14 @@ const Login = () => {
 
   return (
     <div
-      className=" min-h-screen py-10 px-5"
+      className="flex items-center content-center justify-center min-h-screen px-5 py-10 mx-auto "
       style={{
         backgroundImage: `url(${background})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <div className="bg-white   shadow-2xl flex justify-center   rounded-xl py-5">
+      <div className="bg-white font-['Raleway']  shadow-2xl flex justify-center   rounded-xl p-10">
         <div>
           <div className="text-center">
             <p className="text-[30px] font-medium text-[#009B4D]"> Sign in</p>
@@ -88,8 +95,8 @@ const Login = () => {
             </p>
           </div>
 
-          <form className=" flex-col gap-4 justify-center">
-            {/* <div className=" mb-3">
+          <form className="flex-col justify-center gap-4 ">
+            {/* <div className="mb-3 ">
               <label htmlFor="" className="block">
                 {console.log({ email })}
                 Email
@@ -97,7 +104,7 @@ const Login = () => {
               <div className="flex items-center gap-4 bor border-b-[1px] border-[#99999999] ">
                 <MdOutlineMail />
                 <input
-                  className="out outline-none w-full "
+                  className="w-full outline-none out "
                   type="text"
                   placeholder="Enter your email address"
                   name="email"
@@ -132,7 +139,7 @@ const Login = () => {
               />
             </div>
 
-            {/* <p className="mx-auto mt-3  "> */}
+            {/* <p className="mx-auto mt-3 "> */}
             <Link
               to="/forget-password"
               className="text-[12px] flex justify-end cursor-pointer"
@@ -147,7 +154,7 @@ const Login = () => {
               onClick={handleSubmit}
             >
               {isLoading ? (
-                <div className="flex justify-center items-center">
+                <div className="flex items-center justify-center">
                   <div className="w-4 h-4 border-t-2 border-[#4f7942] border-solid rounded-full animate-spin" />
                 </div>
               ) : (
@@ -186,7 +193,7 @@ const ReusableInput = ({
       <div className="flex items-center gap-4 border-b-[1px] border-[#99999999]">
         {Icon && <Icon />}
         <input
-          className="outline-none w-full"
+          className="w-full outline-none"
           type={isPasswordVisible ? "text" : type}
           placeholder={placeholder}
           name={name}
