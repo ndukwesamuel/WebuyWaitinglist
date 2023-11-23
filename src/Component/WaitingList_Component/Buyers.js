@@ -1,16 +1,28 @@
 import React from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 import background
   from '../../assets/horizontal-shot-happy-surprised-woman-reacts-something-funny-carries-freshly-picked-vegetables-from-garden-keeps-clean-eating-prefers-vegetarian-food-poses-indoor-empty-space-text.jpg';
 
 const Main = ({ lang, setLang }) => {
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate("/SignUp");
+  };
+
+
+
+
+
   return (
     <>
       <div
         className=" w-full h-screen bg-center bg-cover lg:px-[140px] max-sm:pt-44 max-sm:px-5 md:px-10 flex items-center justify-end max-sm:w-full "
         style={{ backgroundImage: `url(${background})` }}
       >
-        <div className=" w-1/2 max-sm:w-full">
+        <div className="w-1/2  max-sm:w-full">
           {lang === "en" && (
             <h1 className=" text-[60px] max-sm:text-center text-shadow-inner text-stroke font-black text-[#009b4d] text-opacity-60 leading-[60px] max-sm:leading-[55px] font-['Raleway']">
               Affordable, <br></br>
@@ -44,10 +56,11 @@ const Main = ({ lang, setLang }) => {
           )}
 
           {lang === "en" && (
-            <div className=" w-full flex max-sm:justify-center">
+            <div className="flex w-full  max-sm:justify-center">
               <button
                 className="bg-[#009b4d] bg-opacity-60 drop-shadow-2xl border-[0.5px] border-black font-['Raleway'] text-[#ffffff] text-base font-semibold mt-6 rounded-full px-8 py-2 hover:bg-opacity-60 hover:border-none transition-transform "
                 type="button"
+                onClick={handleLogin}
               >
                 Join a Group
               </button>
@@ -55,10 +68,11 @@ const Main = ({ lang, setLang }) => {
           )}
 
           {lang === "fr" && (
-            <div className="w-full flex max-sm:justify-center">
+            <div className="flex w-full max-sm:justify-center">
               <button
                 className="bg-[#009b4d] bg-opacity-60 drop-shadow-2xl border-[0.5px] border-black font-['Raleway'] text-[#ffffff] text-base font-semibold mt-6 rounded-full px-8 py-2 hover:bg-opacity-60 hover:border-none transition-transform "
                 type="button"
+                onClick={handleLogin}
               >
                 Rejoindre un groupe
               </button>

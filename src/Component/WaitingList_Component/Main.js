@@ -1,14 +1,25 @@
-import React from "react";
+import React from 'react';
 
-import background from "../../assets/medium-shot-man-delivering-groceries_9714x5464_4500.0.jpg";
-import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
+import background
+  from '../../assets/medium-shot-man-delivering-groceries_9714x5464_4500.0.jpg';
 
 const Main = ({ lang, setLang }) => {
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate('/SignUp');
+  }
+
+
+
+
   return (
     <>
       {/* <div className="relative w-full h-full">
         <img
-          className="object-cover bg-top w-full h-screen transition-all"
+          className="object-cover w-full h-screen transition-all bg-top"
           src={background}
           alt=""
         ></img>
@@ -45,15 +56,28 @@ const Main = ({ lang, setLang }) => {
               </p>
             )}
 
-            <Link
-              to="/login"
-              className="bg-[#009b4d] border-[0.5px] drop-shadow-md border-black text-[#ffffff] text-base font-semibold mt-4 rounded-full px-[20px] py-[10px] hover:bg-opacity-60 hover:border-none transition-transform "
-            >
-              {lang === "fr" ? "Créer un groupe" : "Create a Group"}
-            </Link>
+            {lang === "en" && (
+              <button
+                className="bg-[#009b4d] border-[0.5px] drop-shadow-md border-black text-[#ffffff] text-base font-semibold mt-4 rounded-full px-[20px] py-[10px] hover:bg-opacity-60 hover:border-none transition-transform "
+                type="button"
+                onClick={handleLogin}
+              >
+                Create a Group
+              </button>
+            )}
+
+            {lang === "fr" && (
+              <button
+                className="bg-[#009b4d] border-[0.5px] drop-shadow-md border-black text-[#ffffff] text-base font-semibold mt-4 rounded-full px-[20px] py-[10px] hover:bg-opacity-60 hover:border-none transition-transform "
+                type="button"
+                onClick={handleLogin}
+              >
+                Créer un groupe
+              </button>
+            )}
           </div>
         </div>
-        <div className=" w-full flex content-center max-sm:hidden gap-4 max-sm:flex-col justify-end max-sm:justify-center mb-2 place-items-end max-sm:place-items-center place-content-end max-sm:place-content-center max-sm:mt-10">
+        <div className="flex content-center justify-end w-full gap-4 mb-2 max-sm:hidden max-sm:flex-col max-sm:justify-center place-items-end max-sm:place-items-center place-content-end max-sm:place-content-center max-sm:mt-10">
           <div className="flex flex-col content-center w-full h-[150px] max-sm:h-auto float-left p-3 rounded-3xl bg-[#665a3c] bg-opacity-80 text-[#faf5e9] font-medium border-[1px] border-[#ffffff]">
             {lang === "en" && (
               <h2 className="p-2 leading-tight text-center lg:text-xl md:text-[18px] ">

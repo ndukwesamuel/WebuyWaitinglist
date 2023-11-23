@@ -3,9 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
+// import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
 import background from "../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg";
-import ModalContainer from "../Component/modal-container/modal-container";
 import { Login_fun } from "../Redux/AuthenticationSlice";
 import { resetSignup } from "../Redux/Auth";
 import { MdOutlineMail } from "react-icons/md";
@@ -63,7 +62,7 @@ const Login = () => {
 
   return (
     <div
-      className=" min-h-screen py-10 px-5"
+      className=" min-h-screen py-10 px-2"
       style={{
         backgroundImage: `url(${background})`,
         backgroundSize: "cover",
