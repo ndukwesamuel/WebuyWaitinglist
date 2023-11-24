@@ -27,7 +27,10 @@ const Main = ({ lang, setLang }) => {
 
       <div
         className="w-full h-screen bg-center bg-cover lg:px-[140px] max-sm:px-5 md:px-10 flex flex-col max-sm:h-full"
-        style={{ backgroundImage: `url(${background})` }}
+        style={{
+          backgroundImage: `url(${background})`,
+          backgroundPosition: "right", // Adjust this value as needed
+        }}
       >
         <div className=" flex items-center justify-start my-auto font-['Raleway']">
           <div className=" lg:w-1/2 max-sm:w-full md:w-3/5 mt-[100px]">
