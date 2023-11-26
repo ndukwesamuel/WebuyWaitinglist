@@ -11,6 +11,7 @@ import {
 } from "./Page/privateroute/Private";
 import AdminRoute from "./Page/Admin/AdminRoute";
 import Dashboard from "./Page/UserDashboard/Dashboard";
+import FacilitatorRoute from "./Page/FacilitatorFolder/FacilitatorRoute";
 
 // import './main.scss';
 
@@ -20,6 +21,17 @@ function App() {
       <ToastContainer />
       <Routes>
         <Route path="/*" exact element={<PageRoutes />} />
+
+        <Route
+          path="/facilitator/*"
+          exact
+          element={
+            <UserPrivateRoute>
+              <FacilitatorRoute />
+            </UserPrivateRoute>
+          }
+        />
+
         <Route
           path="/dashboard/*"
           exact

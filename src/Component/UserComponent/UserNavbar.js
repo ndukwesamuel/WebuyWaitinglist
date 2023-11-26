@@ -10,7 +10,7 @@ const UserNavbar = () => {
     setOpenSidebar(!openSidebar);
   };
   return (
-    <div className=" font-['Raleway'] bg-[#ffffff] w-full">
+    <div className=" font-['Raleway'] bg-[#ffffff] w-full ">
       <div className="flex items-center justify-between h-[70px] shadow-lg px-[25px] ">
         <div className=" py-[15px] flex items-center justify-center   ">
           <a className="cursor-pointer " href="/">

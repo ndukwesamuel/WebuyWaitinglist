@@ -1,29 +1,33 @@
-import React, { useState } from "react";
+import 'swiper/css';
+import 'swiper/css/pagination';
 
-import Header from "../Component/WaitingList_Component/Header";
-import Main from "../Component/WaitingList_Component/Main";
+import React, { useState } from 'react';
 
-import background from "../assets/images/medium-shot-man-delivering-groceries 1.jpg";
-import Footer from "../Component/WaitingList_Component/Footer";
+import { Pagination } from 'swiper/modules';
+import {
+  Swiper,
+  SwiperSlide,
+} from 'swiper/react';
+
+import Buyers from '../Component/WaitingList_Component/Buyers';
+import Main from '../Component/WaitingList_Component/Main';
 
 function WaitingList() {
   const [lang, setLang] = useState("en");
 
   return (
-    <div className="w-full h-screen overflow-hidden font-['Raleway']">
-      <div className="relative w-full h-full">
-        <img
-          className="object-cover w-full h-screen transition-all"
-          src={background}
-          alt=""
-        ></img>
-      </div>
-      <div className="absolute inset-0 overflow-hidden">
-        <Header lang={lang} setLang={setLang} />
-        <Main lang={lang} setLang={setLang} />
-        <Footer lang={lang} setLang={setLang} />
-      </div>
-    </div>
+    <>
+      <Swiper pagination={true} modules={[Pagination]} className="mySwiper w-full h-full font-['Raleway']">
+        <SwiperSlide className="">
+          {" "}
+          <Main lang={lang} setLang={setLang} />{" "}
+        </SwiperSlide>
+        <SwiperSlide>
+          {" "}
+          <Buyers lang={lang} setLang={setLang} />{" "}
+        </SwiperSlide>
+      </Swiper>
+    </>
   );
 }
 
