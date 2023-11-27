@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Button, Card } from "flowbite-react";
 
 import { FaSearch, FaSlidersH } from "react-icons/fa";
 import { useMutation } from "react-query";
@@ -8,13 +9,12 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
-import { CiEdit } from "react-icons/ci";
 
 import { Link } from "react-router-dom";
 import { AllProduct_fun } from "../../Redux/ProductSlice";
 const Base_URL = process.env.REACT_APP_Url;
 
-function ProductCard({ product }) {
+function ProductCard({ product, name, price, description }) {
   const { token } = useSelector(
     (state) => state?.reducer?.AuthenticationSlice?.data
   );
@@ -89,23 +89,45 @@ function ProductCard({ product }) {
   };
   return (
     <>
-      <div className="rounded-xl font-['Raleway'] w-full border-[1.5px] mt-5 border-[#f3f3f3]">
-        <div className="w-full">
+      <Card className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg mb-6">
+        <a href="#">
           <img
-            className="w-full rounded-xl"
+            className="rounded-t-lg w-full"
             src={product.image}
             alt={product.name}
           />
-        </div>
-        <div className="w-full p-3">
-          <h2 className="name font-bold text-[#797d81]">{product.name}</h2>
-          <p className="description text-sm text-[#707378]">
+        </a>
+        <div className="p-5">
+          <a href="#" className="text-green-800">
+            <h5 className="mb-2 text-2xl font-bold tracking-tight">
+              {product?.name}
+            </h5>
+          </a>
+          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
             {product.description}
           </p>
-          <p className="text-lg font-extrabold price">${product.price}</p>
-          <p className="category">{product.category}</p>
+          <div className="flex items-center justify-between">
+            <span className="text-2xl font-bold text-green-800">
+              {`$${product.price?.toFixed(2)}`}
+            </span>
+          </div>
+          <Button className=" rounded-lg bg-green-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700">
+            ADD TO CART
+            <svg
+              className="-mr-1 ml-2 h-4 w-4"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </Button>
         </div>
-      </div>
+      </Card>
     </>
   );
 }
