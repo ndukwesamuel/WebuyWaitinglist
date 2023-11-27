@@ -27,7 +27,6 @@ function ProductCard({ product }) {
       // Use formData to send the image data to the API
 
       let API_URL = `${Base_URL}products/${formData}`;
-      console.log({ API_URL });
 
       const config = {
         headers: {
@@ -89,13 +88,18 @@ function ProductCard({ product }) {
     // dispatch(resetSignup());
   };
 
+  const [productImage, setProductImage] = useState(null);
+
   return (
     <>
       <div className="rounded-xl font-['Raleway'] w-full border-[1.5px] mt-5 border-[#f3f3f3]">
         <div className="w-full">
           <img
             className="w-full rounded-xl"
-            src={product.image}
+            src={
+              productImage ||
+              "https://hinacreates.com/wp-content/uploads/2021/06/dummy2-450x341.png"
+            }
             alt={product.name}
           />
         </div>
@@ -135,8 +139,6 @@ const Cart = () => {
     (state) => state?.reducer?.ProductSlice
   );
 
-  console.log({ cart_data });
-
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -145,8 +147,6 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-
-  console.log({ caa: cart_data?.items });
 
   const filtered = cart_data?.items?.filter(
     (product) =>

@@ -239,6 +239,8 @@ const Allprodcut = () => {
       product.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  console.log({ filtered });
+
   return (
     <div className="font-['Raleway']">
       <div className="w-full pl-20 mt-8 pr-14">
