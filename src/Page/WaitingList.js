@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import Header from '../Component/WaitingList_Component/Header';
-import Main from '../Component/WaitingList_Component/Main';
+import Header from "../Component/WaitingList_Component/Header";
+import Main from "../Component/WaitingList_Component/Main";
 
 function WaitingList() {
   const [lang, setLang] = useState("en");
