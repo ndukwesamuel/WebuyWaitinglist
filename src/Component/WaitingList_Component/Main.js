@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import background
   from '../../assets/medium-shot-man-delivering-groceries_9714x5464_4500.0.jpg';
+import Header from '../WaitingList_Component/Header';
 
 const Main = ({ lang, setLang }) => {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ const Main = ({ lang, setLang }) => {
           backgroundPosition: "right", // Adjust this value as needed
         }}
       >
+        <Header lang={lang} setLang={setLang} />
         <div className=" flex items-center justify-start my-auto font-['Raleway']">
           <div className=" lg:w-1/2 max-sm:w-full md:w-3/5 mt-[100px]">
             {lang === "en" && (
