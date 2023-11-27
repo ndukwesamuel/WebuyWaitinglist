@@ -249,7 +249,7 @@ export default Cart;
 
 const CartSummary = ({ cartItems }) => {
   const calculateTotalPrice = () => {
-    return cartItems.reduce(
+    return cartItems?.reduce(
       (total, item) => total + item.price * item.quantity,
       0
     );
