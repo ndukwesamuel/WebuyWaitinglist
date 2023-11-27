@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-
 import { FaEnvelope, FaRegBell, FaSearch } from "react-icons/fa";
 
 import profile from "../../assets/profile.png";
+import { useState } from "react";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
