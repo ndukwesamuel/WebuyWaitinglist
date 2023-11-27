@@ -12,7 +12,7 @@ import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
 
 import { Link } from "react-router-dom";
-import { AllProduct_fun } from "../../Redux/ProductSlice";
+import { AllProduct_fun, GetUSerCart_Fun } from "../../Redux/ProductSlice";
 const Base_URL = process.env.REACT_APP_Url;
 
 function ProductCard({ product }) {
@@ -88,6 +88,7 @@ function ProductCard({ product }) {
     setShowSuccess(!showSuccess);
     // dispatch(resetSignup());
   };
+
   return (
     <>
       <div className="rounded-xl font-['Raleway'] w-full border-[1.5px] mt-5 border-[#f3f3f3]">
@@ -130,12 +131,12 @@ const LoadingSkeleton = () => {
 };
 
 const Cart = () => {
-  const { AllProductData, isLoading } = useSelector(
+  const { AllProductData, isLoading, cart_data } = useSelector(
     (state) => state?.reducer?.ProductSlice
   );
 
-  console.log({ AllProductData });
-  console.log({ AllProductData });
+  console.log({ cart_data });
+
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -145,13 +146,9 @@ const Cart = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Simulate a delay to show loading screens
+  console.log({ caa: cart_data?.items });
 
-    dispatch(AllProduct_fun());
-  }, [dispatch]);
-
-  const filtered = AllProductData?.filter(
+  const filtered = cart_data?.items?.filter(
     (product) =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       product.category.toLowerCase().includes(searchQuery.toLowerCase())
@@ -181,18 +178,27 @@ const Cart = () => {
   ]);
 
   const handleRemoveItem = (itemId) => {
-    const updatedCart = cartItems.filter((item) => item.id !== itemId);
+    const updatedCart = cartItems?.filter((item) => item.id !== itemId);
     setCartItems(updatedCart);
   };
 
   const handleUpdateQuantity = (itemId, newQuantity) => {
-    const updatedCart = cartItems.map((item) =>
+    const updatedCart = cartItems?.map((item) =>
       item.id === itemId
         ? { ...item, quantity: Math.max(1, newQuantity) }
         : item
     );
     setCartItems(updatedCart);
   };
+
+  useEffect(() => {
+    dispatch(GetUSerCart_Fun());
+
+    // i will remove the product
+    dispatch(AllProduct_fun());
+
+    return () => {};
+  }, []);
 
   return (
     <div className="font-['Raleway']">
@@ -222,13 +228,13 @@ const Cart = () => {
           <div className="md:flex w-full justify-between">
             <div className="md:w-[70%]">
               <CartPage
-                cartItems={cartItems}
+                cartItems={filtered}
                 onRemoveItem={handleRemoveItem}
                 onUpdateQuantity={handleUpdateQuantity}
               />
             </div>
             <div className="md:w-[25%]">
-              <CartSummary cartItems={cartItems} />
+              <CartSummary cartItems={filtered} />
             </div>
           </div>
         </div>

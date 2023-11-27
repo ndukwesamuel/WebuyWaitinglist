@@ -14,7 +14,55 @@ const initialState = {
   isLoading: false,
   message: null,
   AllProductData: null,
+
+  cart_isError: false,
+  cart_isSuccess: false,
+  cart_isLoading: false,
+  cart_message: null,
+  cart_data: null,
 };
+
+const GetUSerCart_Fun_Service = async (token) => {
+  let url = `${Base_URL}cart`;
+
+  console.log({ token, url });
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.get(url, config);
+
+    console.log({ jhd: response.data });
+
+    return response.data;
+  } catch (error) {
+    console.log({ error });
+    throw error;
+  }
+};
+export const GetUSerCart_Fun = createAsyncThunk(
+  "ProductSlice/GetUSerCart_Fun",
+  async (_, thunkAPI) => {
+    try {
+      let token =
+        thunkAPI.getState()?.reducer?.AuthenticationSlice?.data?.token;
+      return await GetUSerCart_Fun_Service(token);
+
+      console.log({ token });
+    } catch (error) {
+      console.log({ error });
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 const Profile_fun_Service = async (data, token) => {
   let profile_url = main_url + "user/profile";
@@ -104,6 +152,8 @@ const AllProduct_fun_Service = async (token) => {
     },
   };
   const response = await axios.get(API_URL, config);
+
+  console.log({ d: response?.data });
   return response.data;
 };
 export const AllProduct_fun = createAsyncThunk(
@@ -169,6 +219,30 @@ export const ProductSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         toast.error(`${state.message}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .addCase(GetUSerCart_Fun.pending, (state) => {
+        state.cart_isLoading = true;
+      })
+      .addCase(GetUSerCart_Fun.fulfilled, (state, action) => {
+        state.cart_isLoading = false;
+        state.cart_isSuccess = true;
+        state.cart_data = action.payload;
+      })
+      .addCase(GetUSerCart_Fun.rejected, (state, action) => {
+        state.cart_isLoading = false;
+
+        state.cart_isError = true;
+        state.cart_message = action.payload;
+        toast.error(`${state.cart_message}`, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
