@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 import background
   from '../../assets/horizontal-shot-happy-surprised-woman-reacts-something-funny-carries-freshly-picked-vegetables-from-garden-keeps-clean-eating-prefers-vegetarian-food-poses-indoor-empty-space-text.jpg';
-import Header from '../WaitingList_Component/Header';
 
 const Main = ({ lang, setLang }) => {
   const navigate = useNavigate();
@@ -23,7 +22,6 @@ const Main = ({ lang, setLang }) => {
         className=" w-full h-screen bg-center bg-cover lg:px-[140px] max-sm:pt-44 max-sm:px-5 md:px-10 flex items-center justify-end max-sm:w-full "
         style={{ backgroundImage: `url(${background})` }}
       >
-        <Header lang={lang} setLang={setLang} />
         <div className="w-1/2  max-sm:w-full">
           {lang === "en" && (
             <h1 className=" text-[60px] max-sm:text-center text-shadow-inner text-stroke font-black text-[#009b4d] text-opacity-60 leading-[60px] max-sm:leading-[55px] font-['Raleway']">

@@ -1,24 +1,14 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from "react";
 
-import {
-  CiLock,
-  CiUser,
-} from 'react-icons/ci';
-import { MdOutlineMail } from 'react-icons/md';
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
-import background from '../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg';
-import {
-  RegisterFun,
-  resetSignup,
-} from '../Redux/Auth';
+import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
+import background from "../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg";
+import ModalContainer from "../Component/modal-container/modal-container";
+import { RegisterFun, resetSignup } from "../Redux/Auth";
+import { MdOutlineMail } from "react-icons/md";
+import { CiLock, CiUser } from "react-icons/ci";
 
 const SignUp = () => {
   const { data, isLoading } = useSelector((state) => state.reducer?.Auth);
@@ -77,7 +67,7 @@ const SignUp = () => {
       }}
     >
       <div className=" md:flex md:justify-center">
-        <div className="bg-white   shadow-2xl flex justify-center font-['Raleway']  rounded-xl py-5 md:w-[50%]  lg:py-36 ">
+        <div className="bg-white   shadow-2xl flex justify-center   rounded-xl py-5 md:w-[50%]  lg:py-36 ">
           <div>
             <div className="text-center">
               <p className="text-[30px] font-medium text-[#009B4D] lg:text-[40px]">
