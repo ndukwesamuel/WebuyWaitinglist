@@ -2,13 +2,6 @@
     border: 2px solid red;
 }
 
-/* 
-@font-face {
-  font-family: 'Gothic';
-  src: url(/src/font/Showcard\ Gothic\ Regular.ttf);
-}
-
-#root{
-  font-family: "Gothic", "Raleway", sans-serif;
-} */
+/* Import Swiper styles */
+/* import 'swiper/css/swiper.min.css'; */
 
