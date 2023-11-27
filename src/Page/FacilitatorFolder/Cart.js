@@ -178,7 +178,7 @@ const Cart = () => {
   ]);
 
   const handleRemoveItem = (itemId) => {
-    const updatedCart = cartItems?.filter((item) => item.id !== itemId);
+    const updatedCart = cartItems?.filter((item) => item?.id !== itemId);
     setCartItems(updatedCart);
   };
 
@@ -284,31 +284,31 @@ const CartSummary = ({ cartItems }) => {
 const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
   return (
     <div className="container mx-auto my-8   ">
-      {cartItems.length === 0 ? (
+      {cartItems?.length === 0 ? (
         <p className="text-center ">Your cart is empty</p>
       ) : (
         <ul className="grid grid-cols-1 gap-4">
-          {cartItems.map((item, index) => (
+          {cartItems?.map((item, index) => (
             <li key={index} className="border p-4">
               <div className="flex  flex-col md:flex-row items-center gap-5">
                 <img
-                  src={item.image}
-                  alt={item.name}
+                  src={item?.image}
+                  alt={item?.name}
                   className="w-32 rounded-md h-32 object-cover "
                 />
                 <div className="w-full">
                   <div className="flex gap-5">
                     <div className="w-[80%]">
-                      <h2 className="text-lg font-semibold">{item.name}</h2>
-                      <p className="text-gray-600">${item.price}</p>
-                      <p className="text-gray-600">{item.description}</p>
+                      <h2 className="text-lg font-semibold">{item?.name}</h2>
+                      <p className="text-gray-600">${item?.price}</p>
+                      <p className="text-gray-600">{item?.description}</p>
                     </div>
 
                     <p
                       className="w-[20%]"
                       onClick={() => onRemoveItem(item.id)}
                     >
-                      $ {item.price * item.quantity}
+                      $ {item?.price * item?.quantity}
                     </p>
                   </div>
 
@@ -327,16 +327,16 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
                     <div className="flex">
                       <button
                         onClick={() =>
-                          onUpdateQuantity(item.id, item.quantity - 1)
+                          onUpdateQuantity(item?.id, item?.quantity - 1)
                         }
                         className="px-2  border bg-[#009B4D] rounded text-white"
                       >
                         -
                       </button>
-                      <span className="mx-2">{item.quantity}</span>
+                      <span className="mx-2">{item?.quantity}</span>
                       <button
                         onClick={() =>
-                          onUpdateQuantity(item.id, item.quantity + 1)
+                          onUpdateQuantity(item?.id, item?.quantity + 1)
                         }
                         className="px-2  border bg-[#009B4D] rounded text-white"
                       >
