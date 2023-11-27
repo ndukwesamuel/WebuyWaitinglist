@@ -6,8 +6,6 @@ import { Private, PrivateRoute } from "./privateroute/Private";
 import EmailVerification from "./EmailVerification";
 import ResetPassword from "./ResetPassword";
 import ForgetPassword from "./ForgetPassword";
-import ProductPage from "./ProductPage";
-
 
 const PageRoutes = () => {
   return (
@@ -42,8 +40,6 @@ const PageRoutes = () => {
 
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/verify-email" element={<EmailVerification />} />
-      <Route path="/product-page" element={<ProductPage />} />
-
     </Routes>
   );
 };
