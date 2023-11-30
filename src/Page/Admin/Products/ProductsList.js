@@ -110,7 +110,7 @@ function ProductCard({ product }) {
           <p className="description text-sm text-[#707378]">
             {product.description}
           </p>
-          <p className="text-lg font-extrabold price">${product.price}</p>
+          <p className="text-lg font-extrabold price">{product.price}</p>
           <p className="category">{product.category}</p>
         </div>
 
