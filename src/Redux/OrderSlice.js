@@ -3,9 +3,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ErrorFunc } from "../utilities/ApiErrorFun";
 
-// let main_url = process.env.REACT_APP_Url;
-let main_url = process.env.REACT_APP_Local;
-
 const Base_URL = process.env.REACT_APP_Url;
 
 const initialState = {
@@ -29,7 +26,7 @@ const initialState = {
 };
 
 const GetUSerCart_Fun_Service = async (token) => {
-  let url = `${main_url}cart`;
+  let url = `${Base_URL}cart`;
 
   try {
     const config = {
@@ -66,7 +63,7 @@ export const GetUSerCart_Fun = createAsyncThunk(
 );
 
 const Profile_fun_Service = async (data, token) => {
-  let profile_url = main_url + "user/profile";
+  let profile_url = Base_URL + "user/profile";
 
   try {
     const response = await axios.get(profile_url, {
@@ -96,7 +93,7 @@ const Profile_fun_Service = async (data, token) => {
   }
 };
 const ProfileUpdate_fun_Service = async (data, token) => {
-  let profile_url = main_url + "user/profile";
+  let profile_url = Base_URL + "user/profile";
 
   try {
     const response = await axios.put(profile_url, data, {

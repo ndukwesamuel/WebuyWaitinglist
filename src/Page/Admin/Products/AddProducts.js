@@ -25,7 +25,6 @@ import { useMutation } from "react-query";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useLocation } from "react-router";
-let local = process.env.REACT_APP_Local;
 
 const Base_URL = process.env.REACT_APP_Url;
 

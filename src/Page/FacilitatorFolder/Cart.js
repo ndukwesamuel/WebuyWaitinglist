@@ -18,7 +18,6 @@ import ModalContainer, {
   Reusable_modal,
 } from "../../Component/modal-container/modal-container";
 const Base_URL = process.env.REACT_APP_Url;
-const Local_URL = process.env.REACT_APP_Local;
 
 const LoadingSkeleton = () => {
   return (
@@ -173,6 +172,9 @@ const CartSummary = ({ cartItems }) => {
     (state) => state?.reducer?.AuthenticationSlice?.data
   );
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   console.log({ cartItems });
   const toggleSuccess = () => {
     setShowSuccess(!showSuccess);
@@ -228,7 +230,7 @@ const CartSummary = ({ cartItems }) => {
           progress: undefined,
           theme: "light",
         });
-        // dispatch(GetUSerCart_Fun());
+        dispatch(GetUSerCart_Fun());
       },
       onError: (error) => {
         console.error("Error occurred while submitting the form:", error);
