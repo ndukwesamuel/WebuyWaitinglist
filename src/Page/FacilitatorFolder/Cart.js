@@ -168,7 +168,7 @@ export default Cart;
 // CartSummary.js
 
 const CartSummary = ({ cartItems }) => {
-  const [showSuccess, setShowSuccess] = useState(true);
+  const [showSuccess, setShowSuccess] = useState(false);
   const { token } = useSelector(
     (state) => state?.reducer?.AuthenticationSlice?.data
   );
@@ -218,7 +218,7 @@ const CartSummary = ({ cartItems }) => {
     },
     {
       onSuccess: (data) => {
-        toast.success(`Product updated in  cart !`, {
+        toast.success(`Product has been orders!`, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -295,7 +295,10 @@ const CartSummary = ({ cartItems }) => {
           <span className="font-semibold">${calculateTotalPrice()}</span>
         </div>
       </div>
-      <button className="mt-4 bg-[#009B4D] text-white py-2 px-4 rounded w-full">
+      <button
+        className="mt-4 bg-[#009B4D] text-white py-2 px-4 rounded w-full"
+        onClick={() => setShowSuccess(true)}
+      >
         Checkout
       </button>
 
