@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 
 function AdminRoute() {
   const data = useSelector((state) => state.reducer?.AuthenticationSlice);
+  console.log({ data });
   return (
     <div className="">
       <div className="relative w-full h-screen">

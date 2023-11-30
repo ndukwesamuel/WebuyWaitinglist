@@ -6,12 +6,15 @@ import UserSidebar from "../../Component/UserComponent/UserSidebar";
 import { IoCart } from "react-icons/io5";
 import { IoCartOutline } from "react-icons/io5";
 import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Logout_fun } from "../../Redux/AuthenticationSlice";
 
 const UserNavbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { token, fullName } = useSelector(
+    (state) => state?.reducer?.AuthenticationSlice?.data
+  );
 
   const [openSidebar, setOpenSidebar] = useState(false);
   const [lang, setLang] = useState("en");
@@ -46,7 +49,7 @@ const UserNavbar = () => {
                 onClick={() => navigate("/facilitator/cart")}
               />
             </div>
-            <p className="hidden md:block">Adetayo Adewobi</p>
+            <p className="hidden md:block">{fullName}</p>
             <button
               onClick={() => {
                 dispatch(Logout_fun());

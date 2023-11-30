@@ -15,9 +15,10 @@ import { AllProduct_fun } from "../../Redux/ProductSlice";
 const Base_URL = process.env.REACT_APP_Url;
 
 function ProductCard({ product, name, price, description }) {
-  const { token } = useSelector(
+  const { token, fullName } = useSelector(
     (state) => state?.reducer?.AuthenticationSlice?.data
   );
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const delete_Product_mutate = useMutation(
@@ -216,8 +217,6 @@ const Allprodcut = () => {
     (state) => state?.reducer?.ProductSlice
   );
 
-  console.log({ AllProductData });
-
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -238,8 +237,6 @@ const Allprodcut = () => {
       product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       product.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-  console.log({ filtered });
 
   return (
     <div className="font-['Raleway']">

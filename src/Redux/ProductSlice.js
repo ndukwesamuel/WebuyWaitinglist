@@ -23,9 +23,8 @@ const initialState = {
 };
 
 const GetUSerCart_Fun_Service = async (token) => {
-  let url = `${Base_URL}cart`;
+  let url = `${main_url}cart`;
 
-  console.log({ token, url });
   try {
     const config = {
       headers: {
@@ -34,11 +33,10 @@ const GetUSerCart_Fun_Service = async (token) => {
     };
     const response = await axios.get(url, config);
 
-    console.log({ jhd: response.data });
+    console.log({ response: response.data });
 
     return response.data;
   } catch (error) {
-    console.log({ error });
     throw error;
   }
 };
@@ -49,10 +47,7 @@ export const GetUSerCart_Fun = createAsyncThunk(
       let token =
         thunkAPI.getState()?.reducer?.AuthenticationSlice?.data?.token;
       return await GetUSerCart_Fun_Service(token);
-
-      console.log({ token });
     } catch (error) {
-      console.log({ error });
       const message =
         (error.response &&
           error.response.data &&
@@ -131,7 +126,6 @@ export const Profile_fun = createAsyncThunk(
       let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
       return await Profile_fun_Service(data, token);
     } catch (error) {
-      console.log(error);
       const message =
         (error.response && error.response.data && error.response.data.msg) ||
         error.message ||
@@ -153,7 +147,6 @@ const AllProduct_fun_Service = async (token) => {
   };
   const response = await axios.get(API_URL, config);
 
-  console.log({ d: response?.data });
   return response.data;
 };
 export const AllProduct_fun = createAsyncThunk(
@@ -161,7 +154,6 @@ export const AllProduct_fun = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
-      console.log({ token });
       return await AllProduct_fun_Service(token);
     } catch (error) {
       const message =

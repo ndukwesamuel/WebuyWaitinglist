@@ -10,111 +10,15 @@ import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
+import { MdOutlineRemoveShoppingCart } from "react-icons/md";
 
 import { Link } from "react-router-dom";
 import { AllProduct_fun, GetUSerCart_Fun } from "../../Redux/ProductSlice";
+import ModalContainer, {
+  Reusable_modal,
+} from "../../Component/modal-container/modal-container";
 const Base_URL = process.env.REACT_APP_Url;
-
-function ProductCard({ product }) {
-  const { token } = useSelector(
-    (state) => state?.reducer?.AuthenticationSlice?.data
-  );
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const delete_Product_mutate = useMutation(
-    (formData) => {
-      // Your API request code here
-      // Use formData to send the image data to the API
-
-      let API_URL = `${Base_URL}products/${formData}`;
-
-      const config = {
-        headers: {
-          // "Content-Type": "application/json",
-          // Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      // console.log(config);
-      // return axios.post(API_URL, formData, config);
-
-      return axios.delete(API_URL, config).catch((error) => {
-        console.error("Network error:", error.message);
-        throw error; // Rethrow the error to trigger onError in useMutation
-      });
-
-      //   return axios.post(API_URL, formData, config).catch((error) => {
-      //     console.error("Network error:", error.message);
-      //     throw error; // Rethrow the error to trigger onError in useMutation
-      //   });
-    },
-    {
-      onSuccess: (data) => {
-        toast.success(`Product has been succefully deleted !`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        console.log({ data });
-        dispatch(AllProduct_fun());
-      },
-      onError: (error) => {
-        console.error("Error occurred while submitting the form:", error);
-        toast.error(`${error?.response?.data?.msg}`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          className: "Forbidden403",
-        });
-      },
-    }
-  );
-
-  const [showSuccess, setShowSuccess] = useState(true);
-
-  const toggleSuccess = () => {
-    setShowSuccess(!showSuccess);
-    // dispatch(resetSignup());
-  };
-
-  const [productImage, setProductImage] = useState(null);
-
-  return (
-    <>
-      <div className="rounded-xl font-['Raleway'] w-full border-[1.5px] mt-5 border-[#f3f3f3]">
-        <div className="w-full">
-          <img
-            className="w-full rounded-xl"
-            src={
-              productImage ||
-              "https://hinacreates.com/wp-content/uploads/2021/06/dummy2-450x341.png"
-            }
-            alt={product.name}
-          />
-        </div>
-        <div className="w-full p-3">
-          <h2 className="name font-bold text-[#797d81]">{product.name}</h2>
-          <p className="description text-sm text-[#707378]">
-            {product.description}
-          </p>
-          <p className="text-lg font-extrabold price">${product.price}</p>
-          <p className="category">{product.category}</p>
-        </div>
-      </div>
-    </>
-  );
-}
+const Local_URL = process.env.REACT_APP_Local;
 
 const LoadingSkeleton = () => {
   return (
@@ -139,6 +43,8 @@ const Cart = () => {
     (state) => state?.reducer?.ProductSlice
   );
 
+  console.log({ cart_data });
+
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -148,7 +54,7 @@ const Cart = () => {
 
   const navigate = useNavigate();
 
-  const filtered = cart_data?.items?.filter(
+  const filtered = cart_data?.userCart?.items?.filter(
     (product) =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       product.category.toLowerCase().includes(searchQuery.toLowerCase())
@@ -226,13 +132,27 @@ const Cart = () => {
           {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
 
           <div className="md:flex w-full justify-between">
-            <div className="md:w-[70%]">
-              <CartPage
-                cartItems={filtered}
-                onRemoveItem={handleRemoveItem}
-                onUpdateQuantity={handleUpdateQuantity}
-              />
-            </div>
+            {cart_data?.message ? (
+              <div className="md:w-[70%]">
+                <div className="flex justify-center items-end">
+                  <MdOutlineRemoveShoppingCart className="text-[100px] mt-20" />
+                </div>
+                <CartPage
+                  cartItems={filtered}
+                  onRemoveItem={handleRemoveItem}
+                  onUpdateQuantity={handleUpdateQuantity}
+                />
+              </div>
+            ) : (
+              <div className="md:w-[70%]">
+                <CartPage
+                  cartItems={filtered}
+                  onRemoveItem={handleRemoveItem}
+                  onUpdateQuantity={handleUpdateQuantity}
+                />
+              </div>
+            )}
+
             <div className="md:w-[25%]">
               <CartSummary cartItems={filtered} />
             </div>
@@ -248,11 +168,114 @@ export default Cart;
 // CartSummary.js
 
 const CartSummary = ({ cartItems }) => {
+  const [showSuccess, setShowSuccess] = useState(true);
+  const { token } = useSelector(
+    (state) => state?.reducer?.AuthenticationSlice?.data
+  );
+
+  console.log({ cartItems });
+  const toggleSuccess = () => {
+    setShowSuccess(!showSuccess);
+    // dispatch(resetSignup());
+  };
   const calculateTotalPrice = () => {
     return cartItems?.reduce(
       (total, item) => total + item.price * item.quantity,
       0
     );
+  };
+
+  const [shippingAddress, setShippingAddress] = useState({
+    shippingAddress1: "",
+    shippingAddress2: "",
+    city: "",
+    zip: "",
+    country: "",
+    phone: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setShippingAddress({
+      ...shippingAddress,
+      [name]: value,
+    });
+  };
+
+  const createmutation = useMutation(
+    (formData) => {
+      let API_URL = `${Base_URL}orders`;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      return axios.post(API_URL, formData, config);
+    },
+    {
+      onSuccess: (data) => {
+        toast.success(`Product updated in  cart !`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        // dispatch(GetUSerCart_Fun());
+      },
+      onError: (error) => {
+        console.error("Error occurred while submitting the form:", error);
+        toast.error(`${error?.response?.data?.msg}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          className: "Forbidden403",
+        });
+      },
+    }
+  );
+
+  const [shippingAddress1, setShippingAddress1] = useState("aquinas college");
+  const [shippingAddress2, setShippingAddress2] = useState("hospital road");
+  const [city, setCity] = useState("akure");
+  const [zip, setZip] = useState("00000");
+  const [country, setCountry] = useState("Nigeria");
+  const [phone, setPhone] = useState("123456");
+  // const [user, setUser] = useState("654d19e95101748a438e1e06");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const orderData = {
+      orderItems: cartItems.map((item) => ({
+        quantity: item?.quantity,
+        product: item?.productId?._id, // Assuming you have a 'product' property in your cart item
+      })),
+
+      shippingAddress1,
+      shippingAddress2,
+      city,
+      zip,
+      country,
+      phone,
+      // user,
+    };
+
+    console.log({ orderData });
+
+    createmutation.mutate(orderData);
   };
 
   return (
@@ -275,6 +298,93 @@ const CartSummary = ({ cartItems }) => {
       <button className="mt-4 bg-[#009B4D] text-white py-2 px-4 rounded w-full">
         Checkout
       </button>
+
+      <ModalContainer close={toggleSuccess} show={showSuccess}>
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Shipping Address 1:
+            </label>
+            <input
+              type="text"
+              value={shippingAddress1}
+              onChange={(e) => setShippingAddress1(e.target.value)}
+              className="border rounded w-full py-2 px-3"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Shipping Address 2:
+            </label>
+            <input
+              type="text"
+              value={shippingAddress2}
+              onChange={(e) => setShippingAddress2(e.target.value)}
+              className="border rounded w-full py-2 px-3"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              City
+            </label>
+            <input
+              type="text"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              className="border rounded w-full py-2 px-3"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Zip conde
+            </label>
+            <input
+              type="text"
+              value={zip}
+              onChange={(e) => setZip(e.target.value)}
+              className="border rounded w-full py-2 px-3"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Country
+            </label>
+            <input
+              type="text"
+              value={zip}
+              onChange={(e) => setCountry(e.target.value)}
+              className="border rounded w-full py-2 px-3"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Phone
+            </label>
+            <input
+              type="text"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="border rounded w-full py-2 px-3"
+            />
+          </div>
+
+          {/* Repeat similar structure for other fields */}
+
+          <div className="mb-4">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </ModalContainer>
     </div>
   );
 };
@@ -282,6 +392,134 @@ const CartSummary = ({ cartItems }) => {
 // CartPage.js
 
 const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
+  const dispatch = useDispatch();
+  const [itemImages, setItemImages] = useState({});
+  const { token } = useSelector(
+    (state) => state?.reducer?.AuthenticationSlice?.data
+  );
+
+  let placeholderImageUrl =
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg";
+
+  const imageFun = (id) => {
+    // return itemImages[id] || placeholderImageUrl;
+    return "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg";
+  };
+
+  const handledecreaseitem = useMutation(
+    (formData) => {
+      let API_URL = `${Base_URL}cart/decreaseItem`;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      return axios.patch(API_URL, formData, config);
+    },
+    {
+      onSuccess: (data) => {
+        toast.success(`item has been deducted from cart !`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        dispatch(GetUSerCart_Fun());
+      },
+      onError: (error) => {
+        toast.error(`${error?.response?.data?.message}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          className: "Forbidden403",
+        });
+      },
+    }
+  );
+
+  const createmutation = useMutation(
+    (formData) => {
+      let API_URL = `${Base_URL}cart/addItem`;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      return axios.post(API_URL, formData, config);
+    },
+    {
+      onSuccess: (data) => {
+        toast.success(`Product updated in  cart !`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        dispatch(GetUSerCart_Fun());
+      },
+      onError: (error) => {
+        console.error("Error occurred while submitting the form:", error);
+        toast.error(`${error?.response?.data?.msg}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          className: "Forbidden403",
+        });
+      },
+    }
+  );
+
+  const handleAddToCart = (item) => {
+    let formData = {
+      productId: item?.productId?._id,
+      quantity: "1",
+      price: item?.price,
+      name: item?.name,
+    };
+    console.log({ formData });
+
+    console.log({ item });
+
+    createmutation.mutate(formData);
+  };
+
+  const handleremoveToCart = (item) => {
+    console.log({ item });
+    let formData = {
+      productId: item?.productId?._id,
+      quantity: "1",
+    };
+
+    console.log({ formData });
+    handledecreaseitem.mutate(formData);
+  };
+
   return (
     <div className="container mx-auto my-8   ">
       {cartItems?.length === 0 ? (
@@ -292,7 +530,8 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
             <li key={index} className="border p-4">
               <div className="flex  flex-col md:flex-row items-center gap-5">
                 <img
-                  src={item?.image}
+                  // src={item?.image}
+                  src={item?.productId?.image}
                   alt={item?.name}
                   className="w-32 rounded-md h-32 object-cover "
                 />
@@ -318,7 +557,7 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
                       //   className="text-red-500 hover:text-red-700"
                     >
                       <MdDeleteOutline
-                        onClick={() => onRemoveItem(item.id)}
+                        onClick={() => onRemoveItem(item)}
                         className="text-red-500 hover:text-red-700"
                       />
                       <p className="text-gray-600">Remove</p>
@@ -327,7 +566,9 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
                     <div className="flex">
                       <button
                         onClick={() =>
-                          onUpdateQuantity(item?.id, item?.quantity - 1)
+                          // onUpdateQuantity(item?.id, item?.quantity - 1)
+
+                          handleremoveToCart(item)
                         }
                         className="px-2  border bg-[#009B4D] rounded text-white"
                       >
@@ -335,9 +576,12 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
                       </button>
                       <span className="mx-2">{item?.quantity}</span>
                       <button
-                        onClick={() =>
-                          onUpdateQuantity(item?.id, item?.quantity + 1)
-                        }
+                        onClick={() => {
+                          onUpdateQuantity(item?.id, item?.quantity + 1);
+
+                          handleAddToCart(item);
+                          // console.log({ item });
+                        }}
                         className="px-2  border bg-[#009B4D] rounded text-white"
                       >
                         +
