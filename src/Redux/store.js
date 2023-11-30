@@ -9,6 +9,7 @@ import ProfileSlice from "./ProfileSlice";
 import { walletApi } from "./WalletApi";
 import { passwordResetApi } from "./PasswordResetApi";
 import ProductSlice from "./ProductSlice";
+import OrderSlice from "./OrderSlice";
 
 const reducers = combineReducers({
   Auth: Auth,
@@ -16,6 +17,7 @@ const reducers = combineReducers({
   groupSlice: groupSlice,
   ProfileSlice: ProfileSlice,
   ProductSlice: ProductSlice,
+  OrderSlice: OrderSlice,
 });
 
 const persistConfig = {
