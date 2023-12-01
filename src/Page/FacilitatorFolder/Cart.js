@@ -513,100 +513,10 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
     handledecreaseitem.mutate(formData);
   };
 
-  const Deletemutation = useMutation(
-    (formData) => {
-      // let API_URL = `${Base_URL}cart/deleteItem`;
-
-      let API_URL = `http://127.0.0.1:5000/api/cart/deleteItem`;
-
-      // const config = {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Accept: "application/json",
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // };
-      // console.log({ formData, token });
-      // return axios.delete(
-      //   "http://127.0.0.1:5000/api/cart/deleteItem",
-      //   formData,
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Accept: "application/json",
-      //     Authorization: `Bearer ${token}`,
-      //   }
-      // );
-
-      // const config = {
-      const headers = {
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      };
-      // };
-
-      // console.log("Request URL:", API_URL);
-      // console.log("Request Data:", formData);
-      // console.log("Request Config:", config);
-      // return axios.delete(API_URL, formData, headers);
-
-      return axios.delete(
-        // `${apiEndpoint}/api/cart/${productId}`, // Adjust the endpoint as per your API design
-        API_URL,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            // Add any other headers as needed
-          },
-        },
-        // config
-        formData
-      );
-    },
-    {
-      onSuccess: (data) => {
-        console.log({ data });
-        toast.success(`Product has been deleted !`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        dispatch(GetUSerCart_Fun());
-      },
-      onError: (error) => {
-        console.log({ error });
-        toast.error(`${error?.response?.data?.msg}`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          className: "Forbidden403",
-        });
-      },
-    }
-  );
-
-  // const handleDelete = (item) => {
-
-  //   Deletemutation.mutate({
-  //     productId: item?.productId?._id,
-  //   });
-  // };
-
   const handleDelete = (item) => {
-    const apiEndpoint = "http://127.0.0.1:5000/api/cart/deleteItem"; // Replace with your API endpoint
-
     const deleteProduct = async () => {
       try {
-        await axios.delete(`${apiEndpoint}`, {
+        await axios.delete(`${Base_URL}cart/deleteItem`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -617,6 +527,9 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
 
         // If you need to handle success, you can add your logic here
         console.log("Product deleted successfully");
+
+        // Dispatch the GetUSerCart_Fun() function after successful deletion
+        dispatch(GetUSerCart_Fun());
       } catch (error) {
         // Handle errors appropriately, e.g., show an error message to the user
         console.error("Error deleting product:", error.response.data);
@@ -626,6 +539,7 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
     // Call the deleteProduct function when the handleDelete is invoked
     deleteProduct();
   };
+
   return (
     <div className="container mx-auto my-8   ">
       {cartItems?.length === 0 ? (
