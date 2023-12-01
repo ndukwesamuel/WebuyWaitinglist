@@ -42,8 +42,6 @@ const Cart = () => {
     (state) => state?.reducer?.ProductSlice
   );
 
-  console.log({ cart_data });
-
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -175,7 +173,6 @@ const CartSummary = ({ cartItems }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log({ cartItems });
   const toggleSuccess = () => {
     setShowSuccess(!showSuccess);
     // dispatch(resetSignup());
@@ -233,7 +230,6 @@ const CartSummary = ({ cartItems }) => {
         dispatch(GetUSerCart_Fun());
       },
       onError: (error) => {
-        console.error("Error occurred while submitting the form:", error);
         toast.error(`${error?.response?.data?.msg}`, {
           position: "top-right",
           autoClose: 5000,
@@ -274,8 +270,6 @@ const CartSummary = ({ cartItems }) => {
       phone,
       // user,
     };
-
-    console.log({ orderData });
 
     createmutation.mutate(orderData);
   };
@@ -484,7 +478,6 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
         dispatch(GetUSerCart_Fun());
       },
       onError: (error) => {
-        console.error("Error occurred while submitting the form:", error);
         toast.error(`${error?.response?.data?.msg}`, {
           position: "top-right",
           autoClose: 5000,
@@ -507,24 +500,73 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
       price: item?.price,
       name: item?.name,
     };
-    console.log({ formData });
-
-    console.log({ item });
 
     createmutation.mutate(formData);
   };
 
   const handleremoveToCart = (item) => {
-    console.log({ item });
     let formData = {
       productId: item?.productId?._id,
       quantity: "1",
     };
 
-    console.log({ formData });
     handledecreaseitem.mutate(formData);
   };
 
+  const Deletemutation = useMutation(
+    (formData) => {
+      let API_URL = `${Base_URL}cart/addItem`;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      return axios.post(API_URL, formData, config);
+    },
+    {
+      onSuccess: (data) => {
+        toast.success(`Product updated in  cart !`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        dispatch(GetUSerCart_Fun());
+      },
+      onError: (error) => {
+        toast.error(`${error?.response?.data?.msg}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          className: "Forbidden403",
+        });
+      },
+    }
+  );
+
+  const handleDelete = (item) => {
+    console.log({ item });
+    // let formData = {
+    //   productId: item?.productId?._id,
+    //   quantity: "1",
+    // };
+
+    // console.log({ formData });
+    // Deletemutation.mutate(formData);
+  };
   return (
     <div className="container mx-auto my-8   ">
       {cartItems?.length === 0 ? (
@@ -562,7 +604,7 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
                       //   className="text-red-500 hover:text-red-700"
                     >
                       <MdDeleteOutline
-                        onClick={() => onRemoveItem(item)}
+                        onClick={() => handleDelete(item)}
                         className="text-red-500 hover:text-red-700"
                       />
                       <p className="text-gray-600">Remove</p>
@@ -585,7 +627,6 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
                           onUpdateQuantity(item?.id, item?.quantity + 1);
 
                           handleAddToCart(item);
-                          // console.log({ item });
                         }}
                         className="px-2  border bg-[#009B4D] rounded text-white"
                       >
