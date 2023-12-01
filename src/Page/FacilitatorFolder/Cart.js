@@ -515,21 +515,57 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
 
   const Deletemutation = useMutation(
     (formData) => {
-      let API_URL = `${Base_URL}cart/addItem`;
+      // let API_URL = `${Base_URL}cart/deleteItem`;
 
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+      let API_URL = `http://127.0.0.1:5000/api/cart/deleteItem`;
+
+      // const config = {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Accept: "application/json",
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // };
+      // console.log({ formData, token });
+      // return axios.delete(
+      //   "http://127.0.0.1:5000/api/cart/deleteItem",
+      //   formData,
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Accept: "application/json",
+      //     Authorization: `Bearer ${token}`,
+      //   }
+      // );
+
+      // const config = {
+      const headers = {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
       };
+      // };
 
-      return axios.post(API_URL, formData, config);
+      // console.log("Request URL:", API_URL);
+      // console.log("Request Data:", formData);
+      // console.log("Request Config:", config);
+      // return axios.delete(API_URL, formData, headers);
+
+      return axios.delete(
+        // `${apiEndpoint}/api/cart/${productId}`, // Adjust the endpoint as per your API design
+        API_URL,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // Add any other headers as needed
+          },
+        },
+        // config
+        formData
+      );
     },
     {
       onSuccess: (data) => {
-        toast.success(`Product updated in  cart !`, {
+        console.log({ data });
+        toast.success(`Product has been deleted !`, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -542,6 +578,7 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
         dispatch(GetUSerCart_Fun());
       },
       onError: (error) => {
+        console.log({ error });
         toast.error(`${error?.response?.data?.msg}`, {
           position: "top-right",
           autoClose: 5000,
@@ -557,15 +594,37 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
     }
   );
 
-  const handleDelete = (item) => {
-    console.log({ item });
-    // let formData = {
-    //   productId: item?.productId?._id,
-    //   quantity: "1",
-    // };
+  // const handleDelete = (item) => {
 
-    // console.log({ formData });
-    // Deletemutation.mutate(formData);
+  //   Deletemutation.mutate({
+  //     productId: item?.productId?._id,
+  //   });
+  // };
+
+  const handleDelete = (item) => {
+    const apiEndpoint = "http://127.0.0.1:5000/api/cart/deleteItem"; // Replace with your API endpoint
+
+    const deleteProduct = async () => {
+      try {
+        await axios.delete(`${apiEndpoint}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            // Add any other headers as needed
+          },
+          data: { productId: item?.productId?._id },
+        });
+
+        // If you need to handle success, you can add your logic here
+        console.log("Product deleted successfully");
+      } catch (error) {
+        // Handle errors appropriately, e.g., show an error message to the user
+        console.error("Error deleting product:", error.response.data);
+      }
+    };
+
+    // Call the deleteProduct function when the handleDelete is invoked
+    deleteProduct();
   };
   return (
     <div className="container mx-auto my-8   ">
@@ -598,19 +657,18 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
                     </p>
                   </div>
 
-                  <div className="flex w-full items-center  mt-5">
+                  <div className="flex w-full items-center  mt-5 justify-between ">
                     <div
-                      className="flex items-center text-red-500 w-[80%] cursor-pointer"
+                      className="flex items-center text-red-500 cursor-pointer "
                       //   className="text-red-500 hover:text-red-700"
+                      onClick={() => handleDelete(item)}
                     >
-                      <MdDeleteOutline
-                        onClick={() => handleDelete(item)}
-                        className="text-red-500 hover:text-red-700"
-                      />
-                      <p className="text-gray-600">Remove</p>
+                      <MdDeleteOutline className="text-red-500 hover:text-red-700" />
+
+                      <p className="text-red-500 hover:text-red-700">Remove</p>
                     </div>
 
-                    <div className="flex">
+                    <div className="flex ">
                       <button
                         onClick={() =>
                           // onUpdateQuantity(item?.id, item?.quantity - 1)
