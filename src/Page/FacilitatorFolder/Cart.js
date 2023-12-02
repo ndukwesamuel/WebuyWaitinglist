@@ -291,12 +291,15 @@ const CartSummary = ({ cartItems }) => {
           <span className="font-semibold">${calculateTotalPrice()}</span>
         </div>
       </div>
-      <button
-        className="mt-4 bg-[#009B4D] text-white py-2 px-4 rounded w-full"
-        onClick={() => setShowSuccess(true)}
-      >
-        Checkout
-      </button>
+
+      {cartItems?.length > 0 && (
+        <button
+          className="mt-4 bg-[#009B4D] text-white py-2 px-4 rounded w-full"
+          onClick={() => setShowSuccess(true)}
+        >
+          Checkout
+        </button>
+      )}
 
       <ModalContainer close={toggleSuccess} show={showSuccess}>
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
