@@ -43,6 +43,7 @@ export const GetUSerCart_Fun = createAsyncThunk(
     try {
       let token =
         thunkAPI.getState()?.reducer?.AuthenticationSlice?.data?.token;
+      console.log({ token });
       return await GetUSerCart_Fun_Service(token);
     } catch (error) {
       const message =

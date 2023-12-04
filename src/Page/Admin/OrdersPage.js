@@ -108,6 +108,10 @@ const OrdersPage = () => {
                         {" "}
                         Product's Name{" "}
                       </th>
+                      <th className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe]">
+                        {" "}
+                        Price{" "}
+                      </th>
                       <th className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]">
                         {" "}
                         Address{" "}
@@ -117,10 +121,6 @@ const OrdersPage = () => {
                         Order Date{" "}
                       </th>
 
-                      <th className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe]">
-                        {" "}
-                        Price{" "}
-                      </th>
                       <th className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]">
                         {" "}
                         Status{" "}
@@ -137,23 +137,49 @@ const OrdersPage = () => {
                           {order?.user?.fullName}{" "}
                         </td>
                         <td className=" p-[16px] border-collapse">
-                          <div className=" flex flex-row items-center">
-                            <img
-                              className=" w-[60px] h-[50px] align-middle mr-[8px]"
-                              src={tomato}
-                              alt="tomato"
-                            ></img>{" "}
-                            <p className=" text-[15px]">
-                              {order?.orderItems?.map((id) =>
-                                console.log("this is order", id)
-                              )}
-                              {order.orderItems?.map((productId) => (
-                                <ProductDetails
-                                  key={productId}
-                                  productId={productId}
-                                />
-                              ))}
-                            </p>
+                          <div className=" ">
+                            {order?.orderItems?.map((product_info) => {
+                              console.log({
+                                hhh: product_info?.product?.image,
+                              });
+
+                              return (
+                                <div className="">
+                                  {/* <img
+                                    className=" w-[60px] h-[50px] rounded-[12.8px]"
+                                    src={product_info?.product?.image}
+                                    alt="tomato"
+                                  ></img> */}
+
+                                  <li className=" text-[15px]">
+                                    {product_info?.product?.name}
+                                  </li>
+                                </div>
+                              );
+                            })}
+                          </div>{" "}
+                        </td>
+                        <td className=" p-[16px] border-collapse">
+                          <div className=" ">
+                            {order?.orderItems?.map((product_info) => {
+                              console.log({
+                                hhh: product_info?.product?.image,
+                              });
+
+                              return (
+                                <div className="">
+                                  {/* <img
+                                    className=" w-[60px] h-[50px] rounded-[12.8px]"
+                                    src={product_info?.product?.image}
+                                    alt="tomato"
+                                  ></img> */}
+
+                                  <li className=" text-[15px]">
+                                    {product_info?.product?.price}
+                                  </li>
+                                </div>
+                              );
+                            })}
                           </div>{" "}
                         </td>
                         <td className=" p-[16px] border-collapse">
