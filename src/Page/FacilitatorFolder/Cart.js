@@ -17,6 +17,7 @@ import { AllProduct_fun, GetUSerCart_Fun } from "../../Redux/ProductSlice";
 import ModalContainer, {
   Reusable_modal,
 } from "../../Component/modal-container/modal-container";
+import { Payment_fun } from "../../Redux/PaymentSlice";
 const Base_URL = process.env.REACT_APP_Url;
 
 const LoadingSkeleton = () => {
@@ -201,6 +202,72 @@ const CartSummary = ({ cartItems }) => {
     });
   };
 
+  const makeAuthorizationRequest = (authorizationUrl) => {
+    console.log({ authorizationUrl });
+    axios
+      .get(authorizationUrl)
+      .then((response) => {
+        console.log("Successful request to authorization_url", response);
+
+        // Handle the response as needed
+      })
+      .catch((error) => {
+        console.error("Error making request to authorization_url", error);
+
+        // Handle the error as needed
+      });
+  };
+
+  const Paymentmutation = useMutation(
+    (formData) => {
+      let API_URL = `${Base_URL}checkout/payment`;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      return axios.post(API_URL, formData, config);
+    },
+    {
+      onSuccess: (data) => {
+        let newdata = data?.data;
+        let newdata2 = JSON.parse(newdata);
+        console.log({ newdata2 });
+
+        makeAuthorizationRequest(newdata2.authorization_url);
+
+        console.log({ newdata2 });
+        toast.success(`Product has been orders!`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        dispatch(GetUSerCart_Fun());
+      },
+      onError: (error) => {
+        toast.error(`${error?.response?.data?.msg}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          className: "Forbidden403",
+        });
+      },
+    }
+  );
   const createmutation = useMutation(
     (formData) => {
       let API_URL = `${Base_URL}orders`;
@@ -217,6 +284,7 @@ const CartSummary = ({ cartItems }) => {
     },
     {
       onSuccess: (data) => {
+        console.log({ data });
         toast.success(`Product has been orders!`, {
           position: "top-right",
           autoClose: 5000,
@@ -259,7 +327,12 @@ const CartSummary = ({ cartItems }) => {
     const orderData = {
       orderItems: cartItems.map((item) => ({
         quantity: item?.quantity,
-        product: item?.productId?._id, // Assuming you have a 'product' property in your cart item
+        product: item?.productId?._id,
+
+        // Assuming you have a 'product' property in your cart item
+
+        // quantity: 10,
+        // product: "656ec883a71f3b20c1b70341",
       })),
 
       shippingAddress1,
@@ -271,7 +344,9 @@ const CartSummary = ({ cartItems }) => {
       // user,
     };
 
-    createmutation.mutate(orderData);
+    // createmutation.mutate(orderData);
+
+    dispatch(Payment_fun(orderData));
   };
 
   return (
@@ -280,18 +355,17 @@ const CartSummary = ({ cartItems }) => {
       <div className="bg-gray-100 p-4 border">
         <div className="flex justify-between mb-2">
           <span>Subtotal:</span>
-          <span>${calculateTotalPrice()}</span>
+          <span>₦{calculateTotalPrice()}</span>
         </div>
         <div className="flex justify-between mb-2">
           <span>Shipping:</span>
-          <span>$0.00</span>
+          <span>₦0.00</span>
         </div>
         <div className="flex justify-between">
           <span className="font-semibold">Total:</span>
-          <span className="font-semibold">${calculateTotalPrice()}</span>
+          <span className="font-semibold">₦{calculateTotalPrice()}</span>
         </div>
       </div>
-
       {cartItems?.length > 0 && (
         <button
           className="mt-4 bg-[#009B4D] text-white py-2 px-4 rounded w-full"
@@ -300,7 +374,6 @@ const CartSummary = ({ cartItems }) => {
           Checkout
         </button>
       )}
-
       <ModalContainer close={toggleSuccess} show={showSuccess}>
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
           <div className="mb-4">
@@ -377,12 +450,12 @@ const CartSummary = ({ cartItems }) => {
 
           {/* Repeat similar structure for other fields */}
 
-          <div className="mb-4">
+          <div className="mb-4 flex justify-center">
             <button
               type="submit"
-              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+              className="bg-[#009B4D] text-white py-2 px-4 rounded hover:bg-[#009B4D] focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
             >
-              Submit
+              Pay
             </button>
           </div>
         </form>
@@ -562,7 +635,7 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
                   <div className="flex gap-5">
                     <div className="w-[80%]">
                       <h2 className="text-lg font-semibold">{item?.name}</h2>
-                      <p className="text-gray-600">${item?.price}</p>
+                      <p className="text-gray-600">₦{item?.price}</p>
                       <p className="text-gray-600">{item?.description}</p>
                     </div>
 
@@ -570,7 +643,7 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
                       className="w-[20%]"
                       onClick={() => onRemoveItem(item.id)}
                     >
-                      $ {item?.price * item?.quantity}
+                      ₦{item?.price * item?.quantity}
                     </p>
                   </div>
 
