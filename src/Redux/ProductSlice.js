@@ -17,6 +17,12 @@ const initialState = {
   cart_isLoading: false,
   cart_message: null,
   cart_data: null,
+
+  userOrders_isError: false,
+  userOrders_isSuccess: false,
+  userOrders_isLoading: false,
+  userOrders_message: null,
+  userOrders_data: null,
 };
 
 const GetUSerCart_Fun_Service = async (token) => {
@@ -165,6 +171,35 @@ export const AllProduct_fun = createAsyncThunk(
   }
 );
 
+const UserOrders_fun_Service = async (token) => {
+  let API_URL = `${Base_URL}orders`;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.get(API_URL, config);
+  return response.data;
+};
+export const UserOrders_fun = createAsyncThunk(
+  "ProductSlice/UserOrders_fun",
+  async (_, thunkAPI) => {
+    try {
+      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      return await UserOrders_fun_Service(token);
+    } catch (error) {
+      const message =
+        (error.response && error.response.data && error.response.data.msg) ||
+        error.message ||
+        error.msg ||
+        error.response.data.msg ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const ProductSlice = createSlice({
   name: "ProductSlice",
   initialState,
@@ -233,6 +268,31 @@ export const ProductSlice = createSlice({
         state.cart_isError = true;
         state.cart_message = action.payload;
         toast.error(`${state.cart_message}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+
+      .addCase(UserOrders_fun.pending, (state) => {
+        state.userOrders_isLoading = true;
+      })
+      .addCase(UserOrders_fun.fulfilled, (state, action) => {
+        state.userOrders_isLoading = false;
+        state.userOrders_isSuccess = true;
+        state.userOrders_data = action.payload;
+      })
+      .addCase(UserOrders_fun.rejected, (state, action) => {
+        state.userOrders_isLoading = false;
+
+        state.userOrders_isError = true;
+        state.userOrders_message = action.payload;
+        toast.error(`${state.userOrders_message}`, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
