@@ -191,10 +191,6 @@ const AllOrders = () => {
                         <td className=" p-[16px] border-collapse">
                           <div className=" ">
                             {order?.orderItems?.map((product_info) => {
-                              console.log({
-                                hhh: product_info?.product?.image,
-                              });
-
                               return (
                                 <div className="">
                                   {/* <img
@@ -214,10 +210,6 @@ const AllOrders = () => {
                         <td className=" p-[16px] border-collapse">
                           <div className=" ">
                             {order?.orderItems?.map((product_info) => {
-                              console.log({
-                                hhh: product_info?.product?.image,
-                              });
-
                               return (
                                 <div className="">
                                   {/* <img
@@ -284,10 +276,6 @@ const CartSummary = ({ cartItems }) => {
     (state) => state?.reducer?.AuthenticationSlice?.data
   );
 
-  const ss = useSelector((state) => state?.reducer?.AuthenticationSlice?.data);
-
-  console.log({ ss });
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -318,117 +306,6 @@ const CartSummary = ({ cartItems }) => {
       [name]: value,
     });
   };
-
-  const makeAuthorizationRequest = (authorizationUrl) => {
-    console.log({ authorizationUrl });
-    axios
-      .get(authorizationUrl)
-      .then((response) => {
-        console.log("Successful request to authorization_url", response);
-
-        // Handle the response as needed
-      })
-      .catch((error) => {
-        console.error("Error making request to authorization_url", error);
-
-        // Handle the error as needed
-      });
-  };
-
-  const Paymentmutation = useMutation(
-    (formData) => {
-      let API_URL = `${Base_URL}checkout/payment`;
-
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      return axios.post(API_URL, formData, config);
-    },
-    {
-      onSuccess: (data) => {
-        let newdata = data?.data;
-        let newdata2 = JSON.parse(newdata);
-        console.log({ newdata2 });
-
-        makeAuthorizationRequest(newdata2.authorization_url);
-
-        console.log({ newdata2 });
-        toast.success(`Product has been orders!`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        dispatch(GetUSerCart_Fun());
-      },
-      onError: (error) => {
-        toast.error(`${error?.response?.data?.msg}`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          className: "Forbidden403",
-        });
-      },
-    }
-  );
-  const createmutation = useMutation(
-    (formData) => {
-      let API_URL = `${Base_URL}orders`;
-
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      return axios.post(API_URL, formData, config);
-    },
-    {
-      onSuccess: (data) => {
-        console.log({ data });
-        toast.success(`Product has been orders!`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        dispatch(GetUSerCart_Fun());
-      },
-      onError: (error) => {
-        toast.error(`${error?.response?.data?.msg}`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          className: "Forbidden403",
-        });
-      },
-    }
-  );
 
   const [shippingAddress1, setShippingAddress1] = useState("aquinas college");
   const [shippingAddress2, setShippingAddress2] = useState("hospital road");

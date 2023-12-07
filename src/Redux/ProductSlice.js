@@ -180,6 +180,8 @@ const UserOrders_fun_Service = async (token) => {
     },
   };
   const response = await axios.get(API_URL, config);
+  console.log({ ss: response.data });
+
   return response.data;
   // console.log({ ss: response.data });
 };
@@ -190,6 +192,7 @@ export const UserOrders_fun = createAsyncThunk(
       let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
       return await UserOrders_fun_Service(token);
     } catch (error) {
+      console.log({ error });
       const message =
         (error.response && error.response.data && error.response.data.msg) ||
         error.message ||
