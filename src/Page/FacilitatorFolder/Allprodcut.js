@@ -209,7 +209,7 @@ const Allprodcut = () => {
 
     <div className="font-['Raleway']">
       <div className="w-full pl-20 mt-8 pr-14">
-        <div className="flex flex-col w-full h-full p-5  mt-5 bg-white n rounded-xl">
+        <div className="flex flex-col w-full h-full p-5  mt-5 bg-white n rounded-xl debug">
           <header className="w-full">
             <h1 className="text-[24px] leading-[34px] font-semibold text-black">
               Products
