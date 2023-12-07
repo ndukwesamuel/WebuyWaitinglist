@@ -192,24 +192,9 @@ const Allprodcut = () => {
   );
 
   return (
-    // <div className="font-['Raleway']">
-    //   <div className="relative w-full h-full">
-    //     <img className="object-cover w-full h-full" src={background} alt="" />
-    //   </div>
-    //   <div className="absolute inset-0 flex">
-    //     <div className="basis-[10%] h-full">
-    //       <Sidebar />
-    //     </div>
-    //     <div className="basis-[90%]">
-    //       <Navbar />
-
-    //     </div>
-    //   </div>
-    // </div>
-
     <div className="font-['Raleway']">
-      <div className="w-full pl-20 mt-8 pr-14">
-        <div className="flex flex-col w-full h-full p-5  mt-5 bg-white n rounded-xl debug">
+      <div className="w-full xl:pl-20 mt-8 xl:pr-14">
+        <div className="flex flex-col w-full h-full p-5  mt-5 bg-white n rounded-xl">
           <header className="w-full">
             <h1 className="text-[24px] leading-[34px] font-semibold text-black">
               Products
@@ -228,7 +213,7 @@ const Allprodcut = () => {
             <FaSlidersH className="absolute text-xs text-black transform -translate-y-1/2 right-4 top-1/2" />
           </div>
           {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 ">
             {isLoading
               ? Array(4)
                   .fill()
