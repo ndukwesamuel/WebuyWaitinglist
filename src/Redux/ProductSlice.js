@@ -172,7 +172,7 @@ export const AllProduct_fun = createAsyncThunk(
 );
 
 const UserOrders_fun_Service = async (token) => {
-  let API_URL = `${Base_URL}orders`;
+  let API_URL = `${Base_URL}orders/user-order`;
 
   const config = {
     headers: {
@@ -181,6 +181,7 @@ const UserOrders_fun_Service = async (token) => {
   };
   const response = await axios.get(API_URL, config);
   return response.data;
+  // console.log({ ss: response.data });
 };
 export const UserOrders_fun = createAsyncThunk(
   "ProductSlice/UserOrders_fun",

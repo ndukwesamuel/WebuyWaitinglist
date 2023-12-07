@@ -149,13 +149,11 @@ function ProductCard({ product, name, price, description }) {
   return (
     <>
       <Card className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg mb-6">
-        <a href="#">
-          <img
-            className="rounded-t-lg w-full"
-            src={product.image}
-            alt={product.name}
-          />
-        </a>
+        <img
+          className="rounded-t-lg  h-[50%]"
+          src={product.image}
+          alt={product.name}
+        />
         <div className="p-5">
           <a href="#" className="text-green-800">
             <h5 className="mb-2 text-2xl font-bold tracking-tight">
@@ -239,14 +237,14 @@ const Allprodcut = () => {
   );
 
   return (
-    <div className="font-['Raleway']">
+    <div className=" font-['Raleway'] bg-[#ffffff] w-full ">
       <div className="w-full pl-20 mt-8 pr-14">
         <div className="flex flex-col w-full h-full p-5  mt-5 bg-white n rounded-xl">
-          <header className="w-full">
-            <h1 className="text-[24px] leading-[34px] font-semibold text-black">
-              Products
-            </h1>
-          </header>
+          <div className="text-center my-6">
+            <h2 className="text-3xl font-extrabold text-[#007A3D] max-sm:text-4xl max-md:text-5xl">
+              Discover Our Products
+            </h2>
+          </div>
           <div className="relative w-full">
             <input
               className="w-full pl-8 pr-12 py-2 border-2 border-[#f3f3f3] rounded-xl text-xs"
