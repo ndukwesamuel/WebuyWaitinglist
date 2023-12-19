@@ -36,8 +36,6 @@ const GetUSerCart_Fun_Service = async (token) => {
     };
     const response = await axios.get(url, config);
 
-    console.log({ response: response.data });
-
     return response.data;
   } catch (error) {
     throw error;
@@ -64,7 +62,6 @@ export const GetUSerCart_Fun = createAsyncThunk(
 
 const Get_All_User_Orders_Service = async (token) => {
   let API_URL = `${Base_URL}orders`;
-  console.log({ token, API_URL });
 
   const config = {
     headers: {
@@ -73,7 +70,6 @@ const Get_All_User_Orders_Service = async (token) => {
   };
   const response = await axios.get(API_URL, config);
 
-  console.log({ response: response.data });
   return response.data;
 };
 export const Get_All_User_Orders_fun = createAsyncThunk(

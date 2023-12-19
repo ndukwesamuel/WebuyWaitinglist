@@ -69,7 +69,12 @@ const OrdersPage = () => {
       </div>
     );
   };
-
+  const formatDate = (dateString) => {
+    const dateOrdered = new Date(dateString);
+    return dateOrdered instanceof Date && !isNaN(dateOrdered)
+      ? `${dateOrdered.toLocaleDateString()}`
+      : "Invalid Date";
+  };
   return (
     <div>
       <div className="relative w-full h-full">
@@ -108,32 +113,34 @@ const OrdersPage = () => {
                         Product's Name{" "}
                       </th>
                       <th className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe]">
-                        {" "}
-                        Price{" "}
+                        Price
                       </th>
                       <th className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]">
-                        {" "}
-                        Address{" "}
+                        Address
                       </th>
                       <th className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe]">
-                        {" "}
-                        Order Date{" "}
+                        Order Date
                       </th>
-
                       <th className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]">
-                        {" "}
-                        Status{" "}
+                        Total Amount
+                      </th>
+                      <th className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]">
+                        Status
                       </th>
                     </tr>
                   </thead>
 
                   <tbody className=" font-semibold text-[#565454]">
                     {All_User_orders?.orders?.map((order) => (
-                      <tr className=" even:bg-[#0000000b] hover:bg-[#fff6]">
-                        <td className=" p-[16px] border-collapse"> #734589 </td>
+                      <tr
+                        className=" even:bg-[#0000000b] hover:bg-[#fff6]"
+                        key={order._id}
+                      >
                         <td className=" p-[16px] border-collapse">
-                          {" "}
-                          {order?.user?.fullName}{" "}
+                          #{order._id}
+                        </td>
+                        <td className=" p-[16px] border-collapse">
+                          {order?.user?.fullName}
                         </td>
                         <td className=" p-[16px] border-collapse">
                           <div className=" ">
@@ -179,15 +186,13 @@ const OrdersPage = () => {
                                 </div>
                               );
                             })}
-                          </div>{" "}
+                          </div>
                         </td>
                         <td className=" p-[16px] border-collapse">
-                          {" "}
                           {`${order?.shippingAddress1},  ${order?.shippingAddress2}, ${order?.city}, ${order?.country}`}
                         </td>
                         <td className=" p-[16px] border-collapse">
-                          {" "}
-                          {order?.dateOrdered}
+                          {formatDate(order?.dateOrdered)}
                         </td>
                         <td className=" p-[16px] border-collapse">
                           NGN{order?.totalPrice}
