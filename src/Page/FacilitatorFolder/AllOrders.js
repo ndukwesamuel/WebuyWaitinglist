@@ -1,28 +1,4 @@
-import React, { useEffect, useState } from "react";
-
-import { FaSearch, FaSlidersH } from "react-icons/fa";
-import { useMutation } from "react-query";
-import axios from "axios";
-
-import { useNavigate } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { MdDelete } from "react-icons/md";
-import { toast } from "react-toastify";
-import { CiEdit } from "react-icons/ci";
-import { MdDeleteOutline } from "react-icons/md";
-import { MdOutlineRemoveShoppingCart } from "react-icons/md";
-
-import { Link } from "react-router-dom";
-import {
-  AllProduct_fun,
-  GetUSerCart_Fun,
-  UserOrders_fun,
-} from "../../Redux/ProductSlice";
-import ModalContainer, {
-  Reusable_modal,
-} from "../../Component/modal-container/modal-container";
-import { Payment_fun } from "../../Redux/PaymentSlice";
-const Base_URL = process.env.REACT_APP_Url;
+import { useGetUserOrderQuery } from "../../Redux/orderApi";
 
 const LoadingSkeleton = () => {
   return (
@@ -43,102 +19,23 @@ const LoadingSkeleton = () => {
 };
 
 const AllOrders = () => {
-  const yproducts = [
-    {
-      id: 1,
-      products: [
-        {
-          id: 1,
-          name: "Product 1",
-          category: "Electronics",
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          price: 49.99,
-        },
-        // Add more products for Order 1
-      ],
-    },
-    {
-      id: 2,
-      products: [
-        {
-          id: 2,
-          name: "Product 2",
-          category: "Clothing",
-          description:
-            "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          price: 29.99,
-        },
-        // Add more products for Order 2
-      ],
-    },
-    // Add more orders as needed
-  ];
-  const { AllProductData, isLoading, cart_data, userOrders_data } = useSelector(
-    (state) => state?.reducer?.ProductSlice
-  );
-  const { All_User_orders } = useSelector((state) => state.reducer?.OrderSlice);
+  const { data: orders, isLoading, isError } = useGetUserOrderQuery();
+  if (isLoading) {
+    return <LoadingSkeleton />;
+  }
 
-  console.log({ userOrders_data });
-  const [products, setProducts] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [error, setError] = useState("");
-  // const [isLoading, setIsLoading] = useState(true);
-  const dispatch = useDispatch();
+  if (isError) {
+    return <div>Error loading orders</div>;
+  }
 
-  const navigate = useNavigate();
+  const userOrder = orders.message;
 
-  const filtered = cart_data?.userCart?.items?.filter(
-    (product) =>
-      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.category.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Item 1",
-      price: 10,
-      quantity: 2,
-      image:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg",
-      description: "Description for Item 1",
-    },
-    {
-      id: 2,
-      name: "Item 2",
-      price: 15,
-      quantity: 1,
-      image:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg",
-
-      description: "Description for Item 2",
-    },
-    // Add your actual cart items here
-  ]);
-
-  const handleRemoveItem = (itemId) => {
-    const updatedCart = cartItems?.filter((item) => item?.id !== itemId);
-    setCartItems(updatedCart);
+  const formatDate = (dateString) => {
+    const dateOrdered = new Date(dateString);
+    return dateOrdered instanceof Date && !isNaN(dateOrdered)
+      ? `${dateOrdered.toLocaleDateString()}`
+      : "Invalid Date";
   };
-
-  const handleUpdateQuantity = (itemId, newQuantity) => {
-    const updatedCart = cartItems?.map((item) =>
-      item.id === itemId
-        ? { ...item, quantity: Math.max(1, newQuantity) }
-        : item
-    );
-    setCartItems(updatedCart);
-  };
-
-  useEffect(() => {
-    dispatch(UserOrders_fun());
-
-    // i will remove the product
-
-    return () => {};
-  }, []);
 
   return (
     <div className="font-['Raleway']">
@@ -146,29 +43,95 @@ const AllOrders = () => {
         <div className="flex flex-col w-full h-full p-5  mt-5 bg-white n rounded-xl ">
           <header className="w-full mb-5">
             <h1 className="text-[24px] leading-[34px] font-semibold text-[#009B4D]">
-              Cart
+              Orders
             </h1>
 
             <hr />
           </header>
-          <div className="relative w-full">
-            <input
-              className="w-full pl-8 pr-12 py-2 border-2 border-[#f3f3f3] rounded-xl text-xs"
-              type="text"
-              name="search"
-              value={searchQuery}
-              placeholder="Search products..."
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#c3c2c2] text-xs" />
-            <FaSlidersH className="absolute text-xs text-black transform -translate-y-1/2 right-4 top-1/2" />
-          </div>
 
-          <div className="bg-gray-100 min-h-screen flex items-center justify-center">
-            {yproducts.map((order) => (
-              <OrderCard key={order.id} order={order} />
-            ))}
-          </div>
+          <main className="w-full overflow-x-auto bg-[#fff5] shadow-md bg-opacity-5 rounded-[12.8px] mt-[15px]">
+            <section className=" w-[95%] max-h-[calc(89%-25.6px)] rounded-[9.6px] overflow-auto bg-[#fffb] my-[12.8px] mx-auto    ">
+              <div className="flex justify-center">
+                <table className=" w-full table-auto">
+                  <thead>
+                    <tr className=" text-[#565454]">
+                      <th className=" p-[16px] sticky top-0 left-0 bg-[#d5d1defe] border-collapse">
+                        Order ID
+                      </th>
+                      <th className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe] ">
+                        Payment status
+                      </th>
+                      <th className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe]">
+                        Date
+                      </th>
+                      <th className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]">
+                        Order Status
+                      </th>
+                      <th className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]">
+                        Order items
+                      </th>
+                      <th className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]">
+                        Quantity
+                      </th>
+                      <th className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]">
+                        Total
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className=" font-semibold text-[#565454] ">
+                    {userOrder &&
+                      userOrder?.map((order) => (
+                        <tr
+                          className=" even:bg-[#0000000b] hover:bg-[#fff6]"
+                          key={order.orderId}
+                        >
+                          <td className=" p-[16px] border-collapse">
+                            #{order.orderId}
+                          </td>
+                          <td className=" p-[16px] border-collapse">
+                            {order?.paymentStatus}
+                          </td>
+
+                          <td className=" p-[16px] border-collapse">
+                            {formatDate(order?.dateOrdered)}
+                          </td>
+
+                          <td className="p-[16px] border-collapse text-black">
+                            <p
+                              className={`text-center rounded-full py-[6.4px] px-auto 
+    ${
+      order?.status === "Cancelled"
+        ? "bg-red-500 text-black"
+        : order?.status === "Pending"
+        ? "bg-brown-500 text-black debug"
+        : order?.status === "Delivered"
+        ? "bg-green-500 text-black"
+        : ""
+    }`}
+                            >
+                              {order?.status}
+                            </p>
+                          </td>
+                          <td className=" p-[16px] border-collapse">
+                            {order?.orderItems
+                              .map((item) => item.product.name)
+                              .join(", ")}
+                          </td>
+                          <td className=" p-[16px] border-collapse">
+                            {order?.orderItems
+                              .map((item) => item.quantity)
+                              .join(", ")}
+                          </td>
+                          <td className=" p-[16px] border-collapse">
+                            #{order?.totalPrice}
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </main>
         </div>
       </div>
     </div>
@@ -176,43 +139,3 @@ const AllOrders = () => {
 };
 
 export default AllOrders;
-
-// CartSummary.js
-// src/components/OrderCard.js
-
-const OrderCard = ({ order }) => {
-  return (
-    <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl mb-4">
-      <div className="p-8">
-        <h2 className="text-2xl font-bold mb-4">Order #{order.id}</h2>
-        {order.products.map((product) => (
-          <div key={product.id} className="mb-4">
-            <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-              {product.category}
-            </div>
-            <a
-              href="#"
-              className="block mt-1 text-lg leading-tight font-medium text-black hover:underline"
-            >
-              {product.name}
-            </a>
-            <p className="mt-2 text-gray-500">{product.description}</p>
-            <div className="mt-2">
-              <span className="text-gray-500">Price: ${product.price}</span>
-            </div>
-          </div>
-        ))}
-        <div className="mt-4">
-          <span className="text-gray-500 font-semibold">
-            Total: ${calculateTotal(order.products)}
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-};
-const calculateTotal = (products) => {
-  return products
-    .reduce((total, product) => total + product.price, 0)
-    .toFixed(2);
-};

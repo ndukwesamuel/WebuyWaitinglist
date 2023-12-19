@@ -52,7 +52,6 @@ const OrdersPage = () => {
         };
         try {
           const response = await axios.get(API_URL, config);
-          console.log({ response: response.data });
 
           setProductDetails(response.data);
         } catch (error) {
