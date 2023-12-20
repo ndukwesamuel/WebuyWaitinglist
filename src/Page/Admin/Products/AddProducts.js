@@ -22,9 +22,10 @@ import Navbar from "../../../Component/AdminComponent/Navbar";
 // import Sidebar from '../../components/Sidebar';
 import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
 import { useMutation } from "react-query";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { useLocation } from "react-router";
+import { fetchCategoryOptions } from "../../../Redux/CategoryOptionsApi";
 
 const Base_URL = process.env.REACT_APP_Url;
 
@@ -129,7 +130,8 @@ const AddProducts = ({}) => {
     { value: "computers", label: "computers" },
     { value: "groceries", label: "groceries" },
   ];
-
+  const dispatch = useDispatch();
+  dispatch(fetchCategoryOptions());
   const { data } = useSelector((state) => state.reducer.AuthenticationSlice);
 
   const creatProduct = useMutation(
