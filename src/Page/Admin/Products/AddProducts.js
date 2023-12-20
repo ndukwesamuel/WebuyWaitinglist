@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   FaAlignCenter,
@@ -22,14 +22,24 @@ import Navbar from "../../../Component/AdminComponent/Navbar";
 // import Sidebar from '../../components/Sidebar';
 import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
 import { useMutation } from "react-query";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { useLocation } from "react-router";
+import { fetchCategoryOptions } from "../../../Redux/CategoryOptionsApi";
+import { Category_fun } from "../../../Redux/ProductSlice";
 
 const Base_URL = process.env.REACT_APP_Url;
 
 const AddProducts = ({}) => {
   let { state } = useLocation();
+
+  const { category_data } = useSelector((state) => state.reducer?.ProductSlice);
+
+  useEffect(() => {
+    dispatch(Category_fun());
+
+    return () => {};
+  }, []);
 
   console.log({ state });
 
@@ -129,7 +139,8 @@ const AddProducts = ({}) => {
     { value: "computers", label: "computers" },
     { value: "groceries", label: "groceries" },
   ];
-
+  const dispatch = useDispatch();
+  dispatch(fetchCategoryOptions());
   const { data } = useSelector((state) => state.reducer.AuthenticationSlice);
 
   const creatProduct = useMutation(
@@ -199,6 +210,8 @@ const AddProducts = ({}) => {
       },
     }
   );
+
+  console.log({ selectedCategory });
   const handleAddProduct = (e) => {
     e.preventDefault();
 
@@ -211,7 +224,7 @@ const AddProducts = ({}) => {
       formData.append("discount", discount);
       formData.append("price", price);
       formData.append("currency", selectedCurrency);
-      formData.append("category", "groceries");
+      formData.append("category", selectedCategory);
       formData.append("image", uploadimage);
       formData.append("productId", state?._id);
     } else {
@@ -221,7 +234,7 @@ const AddProducts = ({}) => {
       formData.append("discount", discount);
       formData.append("price", price);
       formData.append("currency", selectedCurrency);
-      formData.append("category", "groceries");
+      formData.append("category", selectedCategory);
       formData.append("image", uploadimage);
     }
 
@@ -511,14 +524,14 @@ const AddProducts = ({}) => {
                           value={selectedCategory}
                           onChange={handleCategoryChange}
                         >
-                          {categoryOptions.map((option) => (
+                          {category_data.map((option) => (
                             <option
                               key={option.value}
                               disabled={option.disabled}
                               hidden={option.hidden}
                               value={option.value}
                             >
-                              {option.label}
+                              {option?.name}
                             </option>
                           ))}
                         </select>
