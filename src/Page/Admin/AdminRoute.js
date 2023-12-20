@@ -10,6 +10,7 @@ import ProductsList from "./Products/ProductsList";
 import GroupPage from "../UserDashboard/GroupPage";
 import AddProducts from "./Products/AddProducts";
 import { useSelector } from "react-redux";
+import Category from "./Category";
 
 function AdminRoute() {
   const data = useSelector((state) => state.reducer?.AuthenticationSlice);
@@ -35,7 +36,7 @@ function AdminRoute() {
             <Route path="/orders" element={<OrdersPage />} />
             <Route path="/products" element={<ProductsList />} />
             <Route path="/Addproduct" element={<AddProducts />} />
-
+            <Route path="/category" element={<Category />} />
             <Route path="/group" element={<GroupPage />} />
           </Routes>
         </div>
