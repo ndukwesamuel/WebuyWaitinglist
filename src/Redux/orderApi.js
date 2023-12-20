@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const walletApi = createApi({
-  reducerPath: "walletApi",
+export const orderApi = createApi({
+  reducerPath: "orderApi",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_Url,
     prepareHeaders: (headers, { getState }) => {
@@ -15,13 +15,10 @@ export const walletApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getTransactionHistory: builder.query({
-      query: () => "wallet/history",
+    getUserOrder: builder.query({
+      query: () => "orders/user-order",
     }),
-    // getProduct: builder.query({
-    //   query: (id) => `product/${id}`,
-    // }),
   }),
 });
 
-export const { useGetTransactionHistoryQuery } = walletApi;
+export const { useGetUserOrderQuery } = orderApi;

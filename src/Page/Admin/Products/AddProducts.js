@@ -126,7 +126,6 @@ const AddProducts = ({}) => {
   ];
 
   const categoryOptions = [
-    
     { value: "", label: "category", disabled: true, hidden: true },
     { value: "computers", label: "computers" },
     { value: "groceries", label: "groceries" },

@@ -3,9 +3,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ErrorFunc } from "../utilities/ApiErrorFun";
 
-// let main_url = process.env.REACT_APP_Url;
-let main_url = process.env.REACT_APP_Local;
-
 const Base_URL = process.env.REACT_APP_Url;
 
 const initialState = {
@@ -14,10 +11,60 @@ const initialState = {
   isLoading: false,
   message: null,
   AllProductData: null,
+
+  cart_isError: false,
+  cart_isSuccess: false,
+  cart_isLoading: false,
+  cart_message: null,
+  cart_data: null,
+
+  userOrders_isError: false,
+  userOrders_isSuccess: false,
+  userOrders_isLoading: false,
+  userOrders_message: null,
+  userOrders_data: null,
 };
 
+const GetUSerCart_Fun_Service = async (token) => {
+  let url = `${Base_URL}cart`;
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.get(url, config);
+
+    console.log({ response: response.data });
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+export const GetUSerCart_Fun = createAsyncThunk(
+  "ProductSlice/GetUSerCart_Fun",
+  async (_, thunkAPI) => {
+    try {
+      let token =
+        thunkAPI.getState()?.reducer?.AuthenticationSlice?.data?.token;
+      console.log({ token });
+      return await GetUSerCart_Fun_Service(token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const Profile_fun_Service = async (data, token) => {
-  let profile_url = main_url + "user/profile";
+  let profile_url = Base_URL + "user/profile";
 
   try {
     const response = await axios.get(profile_url, {
@@ -47,7 +94,7 @@ const Profile_fun_Service = async (data, token) => {
   }
 };
 const ProfileUpdate_fun_Service = async (data, token) => {
-  let profile_url = main_url + "user/profile";
+  let profile_url = Base_URL + "user/profile";
 
   try {
     const response = await axios.put(profile_url, data, {
@@ -83,7 +130,6 @@ export const Profile_fun = createAsyncThunk(
       let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
       return await Profile_fun_Service(data, token);
     } catch (error) {
-      console.log(error);
       const message =
         (error.response && error.response.data && error.response.data.msg) ||
         error.message ||
@@ -104,6 +150,7 @@ const AllProduct_fun_Service = async (token) => {
     },
   };
   const response = await axios.get(API_URL, config);
+
   return response.data;
 };
 export const AllProduct_fun = createAsyncThunk(
@@ -111,9 +158,41 @@ export const AllProduct_fun = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
-      console.log({ token });
       return await AllProduct_fun_Service(token);
     } catch (error) {
+      const message =
+        (error.response && error.response.data && error.response.data.msg) ||
+        error.message ||
+        error.msg ||
+        error.response.data.msg ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+const UserOrders_fun_Service = async (token) => {
+  let API_URL = `${Base_URL}orders/user-order`;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.get(API_URL, config);
+  console.log({ ss: response.data });
+
+  return response.data;
+  // console.log({ ss: response.data });
+};
+export const UserOrders_fun = createAsyncThunk(
+  "ProductSlice/UserOrders_fun",
+  async (_, thunkAPI) => {
+    try {
+      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      return await UserOrders_fun_Service(token);
+    } catch (error) {
+      console.log({ error });
       const message =
         (error.response && error.response.data && error.response.data.msg) ||
         error.message ||
@@ -169,6 +248,55 @@ export const ProductSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         toast.error(`${state.message}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .addCase(GetUSerCart_Fun.pending, (state) => {
+        state.cart_isLoading = true;
+      })
+      .addCase(GetUSerCart_Fun.fulfilled, (state, action) => {
+        state.cart_isLoading = false;
+        state.cart_isSuccess = true;
+        state.cart_data = action.payload;
+      })
+      .addCase(GetUSerCart_Fun.rejected, (state, action) => {
+        state.cart_isLoading = false;
+
+        state.cart_isError = true;
+        state.cart_message = action.payload;
+        toast.error(`${state.cart_message}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+
+      .addCase(UserOrders_fun.pending, (state) => {
+        state.userOrders_isLoading = true;
+      })
+      .addCase(UserOrders_fun.fulfilled, (state, action) => {
+        state.userOrders_isLoading = false;
+        state.userOrders_isSuccess = true;
+        state.userOrders_data = action.payload;
+      })
+      .addCase(UserOrders_fun.rejected, (state, action) => {
+        state.userOrders_isLoading = false;
+
+        state.userOrders_isError = true;
+        state.userOrders_message = action.payload;
+        toast.error(`${state.userOrders_message}`, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,

@@ -1,19 +1,19 @@
-import React from 'react';
-import { Button, Card } from 'flowbite-react';
+import React from "react";
+import { Button, Card } from "flowbite-react";
 
 const ProductCard = ({ name, price, description }) => {
   return (
     <Card className="w-full max-w-sm bg-white border border-white-200 rounded-3xl border-[1.5px] mt-5 shadow dark:bg-white-800 dark:border-gray-700 ">
-      <a href="#">
-        <img
-          className="rounded-t-lg"
-          src="https://via.placeholder.com/300x200" // Replace with the actual image source
-          alt="product image"
-        />
-      </a>
+      <img
+        className="rounded-t-lg"
+        src="https://via.placeholder.com/300x200" // Replace with the actual image source
+        alt="product image"
+      />
       <div className="">
         <a href="#">
-          <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-black">{name}</h5>
+          <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-black">
+            {name}
+          </h5>
         </a>
         <div className="flex items-center mt-2.5 mb-5">
           <div className="flex items-center space-x-1 ">
@@ -44,10 +44,10 @@ const ProductCard = ({ name, price, description }) => {
           </span>
         </div>
         <div className="flex flex-col sm:flex-row items-center justify-between">
-          <span className="text-3xl font-bold text-gray-900 dark:text-black">${price}</span>
-          <Button
-            className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-light green-700 dark:focus:ring-green-800 mt-3 sm:mt-0"
-          >
+          <span className="text-3xl font-bold text-gray-900 dark:text-black">
+            ${price}
+          </span>
+          <Button className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-light green-700 dark:focus:ring-green-800 mt-3 sm:mt-0">
             Add to cart
           </Button>
         </div>
@@ -57,4 +57,3 @@ const ProductCard = ({ name, price, description }) => {
 };
 
 export default ProductCard;
-

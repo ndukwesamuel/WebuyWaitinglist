@@ -7,11 +7,10 @@ import AuthenticationSlice from "./AuthenticationSlice";
 import groupSlice from "./groupSlice";
 import ProfileSlice from "./ProfileSlice";
 import { walletApi } from "./WalletApi";
+import { orderApi } from "./orderApi";
 import { passwordResetApi } from "./PasswordResetApi";
-import { productApi } from "./ProductApi";
 import ProductSlice from "./ProductSlice";
-import { addCategoryApi } from "./AddCategoryApi";
-
+import OrderSlice from "./OrderSlice";
 
 const reducers = combineReducers({
   Auth: Auth,
@@ -19,7 +18,7 @@ const reducers = combineReducers({
   groupSlice: groupSlice,
   ProfileSlice: ProfileSlice,
   ProductSlice: ProductSlice,
-  addCategory: addCategoryApi
+  OrderSlice: OrderSlice,
 });
 
 const persistConfig = {
@@ -42,19 +41,15 @@ export const store = configureStore({
     reducer: persistedReducer,
     [walletApi.reducerPath]: walletApi.reducer,
     [passwordResetApi.reducerPath]: passwordResetApi.reducer,
-    [productApi.reducerPath]: productApi.reducer,
-    [addCategoryApi.reducerPath]: addCategoryApi.reducer, 
-
+    [orderApi.reducerPath]: orderApi.reducer,
   },
   devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({ serializableCheck: false }).concat(
       walletApi.middleware,
       passwordResetApi.middleware,
-      productApi.middleware,
-      addCategoryApi.middleware
-
-          );
+      orderApi.middleware
+    );
   },
   passwordResetApi,
 });

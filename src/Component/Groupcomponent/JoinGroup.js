@@ -4,7 +4,7 @@ import { getallGroup_fun } from "../../Redux/groupSlice";
 import { toast } from "react-toastify";
 import { useMutation } from "react-query";
 import axios from "axios";
-let main_url = process.env.REACT_APP_Local;
+let main_url = process.env.REACT_APP_Url;
 
 function JoinGroup() {
   const { get_all_group } = useSelector((state) => state.reducer?.groupSlice);

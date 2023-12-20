@@ -10,106 +10,15 @@ import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
+import { MdOutlineRemoveShoppingCart } from "react-icons/md";
 
 import { Link } from "react-router-dom";
-import { AllProduct_fun } from "../../Redux/ProductSlice";
+import { AllProduct_fun, GetUSerCart_Fun } from "../../Redux/ProductSlice";
+import ModalContainer, {
+  Reusable_modal,
+} from "../../Component/modal-container/modal-container";
+import { Payment_fun } from "../../Redux/PaymentSlice";
 const Base_URL = process.env.REACT_APP_Url;
-
-function ProductCard({ product }) {
-  const { token } = useSelector(
-    (state) => state?.reducer?.AuthenticationSlice?.data
-  );
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const delete_Product_mutate = useMutation(
-    (formData) => {
-      // Your API request code here
-      // Use formData to send the image data to the API
-
-      let API_URL = `${Base_URL}products/${formData}`;
-      console.log({ API_URL });
-
-      const config = {
-        headers: {
-          // "Content-Type": "application/json",
-          // Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      // console.log(config);
-      // return axios.post(API_URL, formData, config);
-
-      return axios.delete(API_URL, config).catch((error) => {
-        console.error("Network error:", error.message);
-        throw error; // Rethrow the error to trigger onError in useMutation
-      });
-
-      //   return axios.post(API_URL, formData, config).catch((error) => {
-      //     console.error("Network error:", error.message);
-      //     throw error; // Rethrow the error to trigger onError in useMutation
-      //   });
-    },
-    {
-      onSuccess: (data) => {
-        toast.success(`Product has been succefully deleted !`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        console.log({ data });
-        dispatch(AllProduct_fun());
-      },
-      onError: (error) => {
-        console.error("Error occurred while submitting the form:", error);
-        toast.error(`${error?.response?.data?.msg}`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          className: "Forbidden403",
-        });
-      },
-    }
-  );
-
-  const [showSuccess, setShowSuccess] = useState(true);
-
-  const toggleSuccess = () => {
-    setShowSuccess(!showSuccess);
-    // dispatch(resetSignup());
-  };
-  return (
-    <>
-      <div className="rounded-xl font-['Raleway'] w-full border-[1.5px] mt-5 border-[#f3f3f3]">
-        <div className="w-full">
-          <img
-            className="w-full rounded-xl"
-            src={product.image}
-            alt={product.name}
-          />
-        </div>
-        <div className="w-full p-3">
-          <h2 className="name font-bold text-[#797d81]">{product.name}</h2>
-          <p className="description text-sm text-[#707378]">
-            {product.description}
-          </p>
-          <p className="text-lg font-extrabold price">${product.price}</p>
-          <p className="category">{product.category}</p>
-        </div>
-      </div>
-    </>
-  );
-}
 
 const LoadingSkeleton = () => {
   return (
@@ -130,12 +39,10 @@ const LoadingSkeleton = () => {
 };
 
 const Cart = () => {
-  const { AllProductData, isLoading } = useSelector(
+  const { AllProductData, isLoading, cart_data } = useSelector(
     (state) => state?.reducer?.ProductSlice
   );
 
-  console.log({ AllProductData });
-  console.log({ AllProductData });
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -145,13 +52,7 @@ const Cart = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Simulate a delay to show loading screens
-
-    dispatch(AllProduct_fun());
-  }, [dispatch]);
-
-  const filtered = AllProductData?.filter(
+  const filtered = cart_data?.userCart?.items?.filter(
     (product) =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       product.category.toLowerCase().includes(searchQuery.toLowerCase())
@@ -181,18 +82,27 @@ const Cart = () => {
   ]);
 
   const handleRemoveItem = (itemId) => {
-    const updatedCart = cartItems.filter((item) => item.id !== itemId);
+    const updatedCart = cartItems?.filter((item) => item?.id !== itemId);
     setCartItems(updatedCart);
   };
 
   const handleUpdateQuantity = (itemId, newQuantity) => {
-    const updatedCart = cartItems.map((item) =>
+    const updatedCart = cartItems?.map((item) =>
       item.id === itemId
         ? { ...item, quantity: Math.max(1, newQuantity) }
         : item
     );
     setCartItems(updatedCart);
   };
+
+  useEffect(() => {
+    dispatch(GetUSerCart_Fun());
+
+    // i will remove the product
+    dispatch(AllProduct_fun());
+
+    return () => {};
+  }, []);
 
   return (
     <div className="font-['Raleway']">
@@ -220,15 +130,29 @@ const Cart = () => {
           {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
 
           <div className="md:flex w-full justify-between">
-            <div className="md:w-[70%]">
-              <CartPage
-                cartItems={cartItems}
-                onRemoveItem={handleRemoveItem}
-                onUpdateQuantity={handleUpdateQuantity}
-              />
-            </div>
+            {cart_data?.message ? (
+              <div className="md:w-[70%]">
+                <div className="flex justify-center items-end">
+                  <MdOutlineRemoveShoppingCart className="text-[100px] mt-20" />
+                </div>
+                <CartPage
+                  cartItems={filtered}
+                  onRemoveItem={handleRemoveItem}
+                  onUpdateQuantity={handleUpdateQuantity}
+                />
+              </div>
+            ) : (
+              <div className="md:w-[70%]">
+                <CartPage
+                  cartItems={filtered}
+                  onRemoveItem={handleRemoveItem}
+                  onUpdateQuantity={handleUpdateQuantity}
+                />
+              </div>
+            )}
+
             <div className="md:w-[25%]">
-              <CartSummary cartItems={cartItems} />
+              <CartSummary cartItems={filtered} />
             </div>
           </div>
         </div>
@@ -242,11 +166,187 @@ export default Cart;
 // CartSummary.js
 
 const CartSummary = ({ cartItems }) => {
+  const [showSuccess, setShowSuccess] = useState(false);
+  const { token } = useSelector(
+    (state) => state?.reducer?.AuthenticationSlice?.data
+  );
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const toggleSuccess = () => {
+    setShowSuccess(!showSuccess);
+    // dispatch(resetSignup());
+  };
   const calculateTotalPrice = () => {
-    return cartItems.reduce(
+    return cartItems?.reduce(
       (total, item) => total + item.price * item.quantity,
       0
     );
+  };
+
+  const [shippingAddress, setShippingAddress] = useState({
+    shippingAddress1: "",
+    shippingAddress2: "",
+    city: "",
+    zip: "",
+    country: "",
+    phone: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setShippingAddress({
+      ...shippingAddress,
+      [name]: value,
+    });
+  };
+
+  const makeAuthorizationRequest = (authorizationUrl) => {
+    console.log({ authorizationUrl });
+    axios
+      .get(authorizationUrl)
+      .then((response) => {
+        console.log("Successful request to authorization_url", response);
+
+        // Handle the response as needed
+      })
+      .catch((error) => {
+        console.error("Error making request to authorization_url", error);
+
+        // Handle the error as needed
+      });
+  };
+
+  const Paymentmutation = useMutation(
+    (formData) => {
+      let API_URL = `${Base_URL}checkout/payment`;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      return axios.post(API_URL, formData, config);
+    },
+    {
+      onSuccess: (data) => {
+        let newdata = data?.data;
+        let newdata2 = JSON.parse(newdata);
+        console.log({ newdata2 });
+
+        makeAuthorizationRequest(newdata2.authorization_url);
+
+        console.log({ newdata2 });
+        toast.success(`Product has been orders!`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        dispatch(GetUSerCart_Fun());
+      },
+      onError: (error) => {
+        toast.error(`${error?.response?.data?.msg}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          className: "Forbidden403",
+        });
+      },
+    }
+  );
+  const createmutation = useMutation(
+    (formData) => {
+      let API_URL = `${Base_URL}orders`;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      return axios.post(API_URL, formData, config);
+    },
+    {
+      onSuccess: (data) => {
+        console.log({ data });
+        toast.success(`Product has been orders!`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        dispatch(GetUSerCart_Fun());
+      },
+      onError: (error) => {
+        toast.error(`${error?.response?.data?.msg}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          className: "Forbidden403",
+        });
+      },
+    }
+  );
+
+  const [shippingAddress1, setShippingAddress1] = useState("aquinas college");
+  const [shippingAddress2, setShippingAddress2] = useState("hospital road");
+  const [city, setCity] = useState("akure");
+  const [zip, setZip] = useState("00000");
+  const [country, setCountry] = useState("Nigeria");
+  const [phone, setPhone] = useState("123456");
+  // const [user, setUser] = useState("654d19e95101748a438e1e06");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const orderData = {
+      orderItems: cartItems.map((item) => ({
+        quantity: item?.quantity,
+        product: item?.productId?._id,
+
+        // Assuming you have a 'product' property in your cart item
+
+        // quantity: 10,
+        // product: "656ec883a71f3b20c1b70341",
+      })),
+
+      shippingAddress1,
+      shippingAddress2,
+      city,
+      zip,
+      country,
+      phone,
+      // user,
+    };
+
+    // createmutation.mutate(orderData);
+
+    dispatch(Payment_fun(orderData));
   };
 
   return (
@@ -255,20 +355,111 @@ const CartSummary = ({ cartItems }) => {
       <div className="bg-gray-100 p-4 border">
         <div className="flex justify-between mb-2">
           <span>Subtotal:</span>
-          <span>${calculateTotalPrice()}</span>
+          <span>₦{calculateTotalPrice()}</span>
         </div>
         <div className="flex justify-between mb-2">
           <span>Shipping:</span>
-          <span>$0.00</span>
+          <span>₦0.00</span>
         </div>
         <div className="flex justify-between">
           <span className="font-semibold">Total:</span>
-          <span className="font-semibold">${calculateTotalPrice()}</span>
+          <span className="font-semibold">₦{calculateTotalPrice()}</span>
         </div>
       </div>
-      <button className="mt-4 bg-[#009B4D] text-white py-2 px-4 rounded w-full">
-        Checkout
-      </button>
+      {cartItems?.length > 0 && (
+        <button
+          className="mt-4 bg-[#009B4D] text-white py-2 px-4 rounded w-full"
+          onClick={() => setShowSuccess(true)}
+        >
+          Checkout
+        </button>
+      )}
+      <ModalContainer close={toggleSuccess} show={showSuccess}>
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Shipping Address 1:
+            </label>
+            <input
+              type="text"
+              value={shippingAddress1}
+              onChange={(e) => setShippingAddress1(e.target.value)}
+              className="border rounded w-full py-2 px-3"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Shipping Address 2:
+            </label>
+            <input
+              type="text"
+              value={shippingAddress2}
+              onChange={(e) => setShippingAddress2(e.target.value)}
+              className="border rounded w-full py-2 px-3"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              City
+            </label>
+            <input
+              type="text"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              className="border rounded w-full py-2 px-3"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Zip conde
+            </label>
+            <input
+              type="text"
+              value={zip}
+              onChange={(e) => setZip(e.target.value)}
+              className="border rounded w-full py-2 px-3"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Country
+            </label>
+            <input
+              type="text"
+              value={zip}
+              onChange={(e) => setCountry(e.target.value)}
+              className="border rounded w-full py-2 px-3"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Phone
+            </label>
+            <input
+              type="text"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="border rounded w-full py-2 px-3"
+            />
+          </div>
+
+          {/* Repeat similar structure for other fields */}
+
+          <div className="mb-4 flex justify-center">
+            <button
+              type="submit"
+              className="bg-[#009B4D] text-white py-2 px-4 rounded hover:bg-[#009B4D] focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+            >
+              Pay
+            </button>
+          </div>
+        </form>
+      </ModalContainer>
     </div>
   );
 };
@@ -276,62 +467,215 @@ const CartSummary = ({ cartItems }) => {
 // CartPage.js
 
 const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
+  const dispatch = useDispatch();
+  const [itemImages, setItemImages] = useState({});
+  const { token } = useSelector(
+    (state) => state?.reducer?.AuthenticationSlice?.data
+  );
+
+  let placeholderImageUrl =
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg";
+
+  const imageFun = (id) => {
+    // return itemImages[id] || placeholderImageUrl;
+    return "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/1200px-Good_Food_Display_-_NCI_Visuals_Online.jpg";
+  };
+
+  const handledecreaseitem = useMutation(
+    (formData) => {
+      let API_URL = `${Base_URL}cart/decreaseItem`;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      return axios.patch(API_URL, formData, config);
+    },
+    {
+      onSuccess: (data) => {
+        toast.success(`item has been deducted from cart !`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        dispatch(GetUSerCart_Fun());
+      },
+      onError: (error) => {
+        toast.error(`${error?.response?.data?.message}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          className: "Forbidden403",
+        });
+      },
+    }
+  );
+
+  const createmutation = useMutation(
+    (formData) => {
+      let API_URL = `${Base_URL}cart/addItem`;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      return axios.post(API_URL, formData, config);
+    },
+    {
+      onSuccess: (data) => {
+        toast.success(`Product updated in  cart !`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        dispatch(GetUSerCart_Fun());
+      },
+      onError: (error) => {
+        toast.error(`${error?.response?.data?.msg}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          className: "Forbidden403",
+        });
+      },
+    }
+  );
+
+  const handleAddToCart = (item) => {
+    let formData = {
+      productId: item?.productId?._id,
+      quantity: "1",
+      price: item?.price,
+      name: item?.name,
+    };
+
+    createmutation.mutate(formData);
+  };
+
+  const handleremoveToCart = (item) => {
+    let formData = {
+      productId: item?.productId?._id,
+      quantity: "1",
+    };
+
+    handledecreaseitem.mutate(formData);
+  };
+
+  const handleDelete = (item) => {
+    const deleteProduct = async () => {
+      try {
+        await axios.delete(`${Base_URL}cart/deleteItem`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            // Add any other headers as needed
+          },
+          data: { productId: item?.productId?._id },
+        });
+
+        // If you need to handle success, you can add your logic here
+        console.log("Product deleted successfully");
+
+        // Dispatch the GetUSerCart_Fun() function after successful deletion
+        dispatch(GetUSerCart_Fun());
+      } catch (error) {
+        // Handle errors appropriately, e.g., show an error message to the user
+        console.error("Error deleting product:", error.response.data);
+      }
+    };
+
+    // Call the deleteProduct function when the handleDelete is invoked
+    deleteProduct();
+  };
+
   return (
     <div className="container mx-auto my-8   ">
-      {cartItems.length === 0 ? (
+      {cartItems?.length === 0 ? (
         <p className="text-center ">Your cart is empty</p>
       ) : (
         <ul className="grid grid-cols-1 gap-4">
-          {cartItems.map((item, index) => (
+          {cartItems?.map((item, index) => (
             <li key={index} className="border p-4">
               <div className="flex  flex-col md:flex-row items-center gap-5">
                 <img
-                  src={item.image}
-                  alt={item.name}
+                  // src={item?.image}
+                  src={item?.productId?.image}
+                  alt={item?.name}
                   className="w-32 rounded-md h-32 object-cover "
                 />
                 <div className="w-full">
                   <div className="flex gap-5">
                     <div className="w-[80%]">
-                      <h2 className="text-lg font-semibold">{item.name}</h2>
-                      <p className="text-gray-600">${item.price}</p>
-                      <p className="text-gray-600">{item.description}</p>
+                      <h2 className="text-lg font-semibold">{item?.name}</h2>
+                      <p className="text-gray-600">₦{item?.price}</p>
+                      <p className="text-gray-600">{item?.description}</p>
                     </div>
 
                     <p
                       className="w-[20%]"
                       onClick={() => onRemoveItem(item.id)}
                     >
-                      $ {item.price * item.quantity}
+                      ₦{item?.price * item?.quantity}
                     </p>
                   </div>
 
-                  <div className="flex w-full items-center  mt-5">
+                  <div className="flex w-full items-center  mt-5 justify-between ">
                     <div
-                      className="flex items-center text-red-500 w-[80%] cursor-pointer"
+                      className="flex items-center text-red-500 cursor-pointer "
                       //   className="text-red-500 hover:text-red-700"
+                      onClick={() => handleDelete(item)}
                     >
-                      <MdDeleteOutline
-                        onClick={() => onRemoveItem(item.id)}
-                        className="text-red-500 hover:text-red-700"
-                      />
-                      <p className="text-gray-600">Remove</p>
+                      <MdDeleteOutline className="text-red-500 hover:text-red-700" />
+
+                      <p className="text-red-500 hover:text-red-700">Remove</p>
                     </div>
 
-                    <div className="flex">
+                    <div className="flex ">
                       <button
                         onClick={() =>
-                          onUpdateQuantity(item.id, item.quantity - 1)
+                          // onUpdateQuantity(item?.id, item?.quantity - 1)
+
+                          handleremoveToCart(item)
                         }
                         className="px-2  border bg-[#009B4D] rounded text-white"
                       >
                         -
                       </button>
-                      <span className="mx-2">{item.quantity}</span>
+                      <span className="mx-2">{item?.quantity}</span>
                       <button
-                        onClick={() =>
-                          onUpdateQuantity(item.id, item.quantity + 1)
-                        }
+                        onClick={() => {
+                          onUpdateQuantity(item?.id, item?.quantity + 1);
+
+                          handleAddToCart(item);
+                        }}
                         className="px-2  border bg-[#009B4D] rounded text-white"
                       >
                         +

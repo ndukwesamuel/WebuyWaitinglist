@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { useSelector } from "react-redux";
-let main_url = process.env.REACT_APP_Local;
+let main_url = process.env.REACT_APP_Url;
 
 function Create() {
   const { data, isLoading, isSuccess } = useSelector(

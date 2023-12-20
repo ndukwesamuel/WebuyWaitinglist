@@ -77,7 +77,7 @@ const Login = () => {
                 Sign in
               </p>
               <p className="lg:text-[20px]">
-                If you don’t have an account register
+                If you don’t have an account registered
               </p>
               <p className="lg:text-[20px]">
                 You can{" "}
@@ -85,7 +85,7 @@ const Login = () => {
                   to="/signup"
                   className="text-[#009B4D] text-[15px] font-medium "
                 >
-                  Register here !{" "}
+                  Register here !
                 </Link>
               </p>
             </div>

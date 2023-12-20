@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 import image from "../../assets/images/Subtract.png";
 import myImage from "../../assets/DP.jpg";
@@ -6,18 +6,48 @@ import UserSidebar from "../../Component/UserComponent/UserSidebar";
 import { IoCart } from "react-icons/io5";
 import { IoCartOutline } from "react-icons/io5";
 import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Logout_fun } from "../../Redux/AuthenticationSlice";
+import { AllProduct_fun, GetUSerCart_Fun } from "../../Redux/ProductSlice";
+import { Link } from "react-router-dom";
 
 const UserNavbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { token, fullName } = useSelector(
+    (state) => state?.reducer?.AuthenticationSlice?.data
+  );
+  const { AllProductData, isLoading, cart_data, cart_isSuccess } = useSelector(
+    (state) => state?.reducer?.ProductSlice
+  );
+
+  console.log({ aa: cart_data?.userCart?.items?.length });
 
   const [openSidebar, setOpenSidebar] = useState(false);
   const [lang, setLang] = useState("en");
   const showSidebar = () => {
     setOpenSidebar(!openSidebar);
   };
+
+  useEffect(() => {
+    dispatch(GetUSerCart_Fun());
+
+    // i will remove the product
+    dispatch(AllProduct_fun());
+
+    return () => {};
+  }, [dispatch, cart_isSuccess]);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const options = [
+    { name: "Orders", link: "orders" },
+    { name: "My Account", link: "#" },
+  ];
   return (
     <div className=" font-['Raleway'] bg-[#ffffff] w-full ">
       <div className="flex items-center justify-between h-[70px] shadow-lg px-[25px] ">
@@ -41,12 +71,64 @@ const UserNavbar = () => {
               <i className="fa-solid fa-globe text-[#565454]"></i>
 
               <FaChevronDown className="text-[10px] mt-[.5rem]" />
-              <IoCartOutline
-                className="text-[20px] "
-                onClick={() => navigate("/facilitator/cart")}
-              />
+
+              <dv className="flex relative">
+                <IoCartOutline
+                  className="text-[20px] "
+                  onClick={() => navigate("/facilitator/cart")}
+                />
+                <span className="ab absolute top-[-7px] left-[18px] bottom-4">
+                  {cart_data?.userCart?.items?.length}
+                </span>
+              </dv>
             </div>
-            <p className="hidden md:block">Adetayo Adewobi</p>
+            <p className="hidden md:block"></p>
+            <div className="relative inline-block text-left">
+              <button
+                type="button"
+                className="inline-flex justify-center items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 active:bg-gray-200"
+                id="options-menu"
+                onClick={toggleDropdown}
+              >
+                Hi {fullName}
+                <svg
+                  className="-mr-1 ml-2 h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+
+              {isOpen && (
+                <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                  <div
+                    className="py-1"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="options-menu"
+                  >
+                    {options.map((option, index) => (
+                      <Link
+                        key={index}
+                        to={`/facilitator/${option.link}`}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                        role="menuitem"
+                      >
+                        {console.log(`/${option?.link}`)}
+
+                        {option?.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
             <button
               onClick={() => {
                 dispatch(Logout_fun());

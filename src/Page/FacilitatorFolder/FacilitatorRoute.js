@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Allprodcut from "./Allprodcut";
 import UserNavbar from "./Header";
 import Cart from "./Cart";
+import AllOrders from "./AllOrders";
 const FacilitatorRoute = () => {
   return (
     <div className="">
@@ -19,6 +20,7 @@ const FacilitatorRoute = () => {
           <Routes>
             <Route path="/" element={<Allprodcut />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/orders" element={<AllOrders />} />
 
             {/* <Route path="/" element={<Main />} />
           <Route path="/orders" element={<OrdersPage />} />

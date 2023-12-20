@@ -9,9 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 import { CiEdit } from "react-icons/ci";
+import { Button, Card } from "flowbite-react";
 
 import { Link } from "react-router-dom";
 import { AllProduct_fun } from "../../Redux/ProductSlice";
+
 const Base_URL = process.env.REACT_APP_Url;
 
 function ProductCard({ product }) {
@@ -20,38 +22,29 @@ function ProductCard({ product }) {
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const delete_Product_mutate = useMutation(
-    (formData) => {
-      // Your API request code here
-      // Use formData to send the image data to the API
 
-      let API_URL = `${Base_URL}products/${formData}`;
-      console.log({ API_URL });
+  const [showSuccess, setShowSuccess] = useState(true);
+
+  const createmutation = useMutation(
+    (formData) => {
+      let API_URL = `${Base_URL}cart/addItem`;
+
+      console.log({ API_URL, formData });
 
       const config = {
         headers: {
-          // "Content-Type": "application/json",
-          // Accept: "application/json",
+          "Content-Type": "application/json",
+          Accept: "application/json",
           Authorization: `Bearer ${token}`,
         },
       };
 
-      // console.log(config);
-      // return axios.post(API_URL, formData, config);
-
-      return axios.delete(API_URL, config).catch((error) => {
-        console.error("Network error:", error.message);
-        throw error; // Rethrow the error to trigger onError in useMutation
-      });
-
-      //   return axios.post(API_URL, formData, config).catch((error) => {
-      //     console.error("Network error:", error.message);
-      //     throw error; // Rethrow the error to trigger onError in useMutation
-      //   });
+      return axios.post(API_URL, formData, config);
     },
     {
       onSuccess: (data) => {
-        toast.success(`Product has been succefully deleted !`, {
+        console.log({ data });
+        toast.success(`Product has been added to cart !`, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -61,8 +54,6 @@ function ProductCard({ product }) {
           progress: undefined,
           theme: "light",
         });
-        console.log({ data });
-        dispatch(AllProduct_fun());
       },
       onError: (error) => {
         console.error("Error occurred while submitting the form:", error);
@@ -81,31 +72,76 @@ function ProductCard({ product }) {
     }
   );
 
-  const [showSuccess, setShowSuccess] = useState(true);
+  const handleAddToCart = () => {
+    let formData = {
+      productId: product?._id,
+      quantity: "1",
+      price: product?.price,
+      name: product?.name,
+    };
 
-  const toggleSuccess = () => {
-    setShowSuccess(!showSuccess);
-    // dispatch(resetSignup());
+    createmutation.mutate(formData);
   };
   return (
     <>
-      <div className="rounded-xl font-['Raleway'] w-full border-[1.5px] mt-5 border-[#f3f3f3]">
-        <div className="w-full">
+      <Card className="w-full max-w-sm bg-white  border-white-200 rounded-3xl border-[1.5px] mt-5 shadow dark:bg-white-800 dark:border-gray-700 ">
+        <div className="">
           <img
-            className="w-full rounded-xl"
+            className="rounded-t-lg
+            w-full
+        
+  
+        h-[178.9px]
+        "
             src={product.image}
             alt={product.name}
           />
         </div>
-        <div className="w-full p-3">
-          <h2 className="name font-bold text-[#797d81]">{product.name}</h2>
-          <p className="description text-sm text-[#707378]">
-            {product.description}
-          </p>
-          <p className="text-lg font-extrabold price">${product.price}</p>
-          <p className="category">{product.category}</p>
+        <div className="">
+          <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-black">
+            {product?.name}
+          </h5>
+          <div className="flex items-center mt-2.5 mb-5">
+            <div className="flex items-center space-x-1 ">
+              {[...Array(4)].map((_, index) => (
+                <svg
+                  key={index}
+                  className="w-4 h-4 text-yellow-300"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 22 20"
+                >
+                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                </svg>
+              ))}
+              <svg
+                className="w-4 h-4 text-gray-200 dark:text-gray-600"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 22 20"
+              >
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+              </svg>
+            </div>
+            <span className="bg-black-100 text-black-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-white-200 dark:text-black-800 ms-3">
+              {product?.description}
+            </span>
+          </div>
+          <div className="flex flex-col sm:flex-row items-center justify-between">
+            <span className="text-3xl font-bold text-gray-900 dark:text-black">
+              ${product?.price}
+            </span>
+            <Button
+              onClick={handleAddToCart}
+              className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-light green-700 dark:focus:ring-green-800 mt-3 sm:mt-0"
+            >
+              Add to cart
+            </Button>
+          </div>
         </div>
-      </div>
+      </Card>
     </>
   );
 }
@@ -157,23 +193,8 @@ const Allprodcut = () => {
   );
 
   return (
-    // <div className="font-['Raleway']">
-    //   <div className="relative w-full h-full">
-    //     <img className="object-cover w-full h-full" src={background} alt="" />
-    //   </div>
-    //   <div className="absolute inset-0 flex">
-    //     <div className="basis-[10%] h-full">
-    //       <Sidebar />
-    //     </div>
-    //     <div className="basis-[90%]">
-    //       <Navbar />
-
-    //     </div>
-    //   </div>
-    // </div>
-
     <div className="font-['Raleway']">
-      <div className="w-full pl-20 mt-8 pr-14">
+      <div className="w-full xl:pl-20 mt-8 xl:pr-14">
         <div className="flex flex-col w-full h-full p-5  mt-5 bg-white n rounded-xl">
           <header className="w-full">
             <h1 className="text-[24px] leading-[34px] font-semibold text-black">
@@ -193,7 +214,7 @@ const Allprodcut = () => {
             <FaSlidersH className="absolute text-xs text-black transform -translate-y-1/2 right-4 top-1/2" />
           </div>
           {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 ">
             {isLoading
               ? Array(4)
                   .fill()

@@ -1,18 +1,32 @@
-import React, { useState } from 'react';
+import "swiper/css";
+import "swiper/css/pagination";
 
-import Header from '../Component/WaitingList_Component/Header';
-import Main from '../Component/WaitingList_Component/Main';
+import React, { useState } from "react";
+
+import { Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import Buyers from "../Component/WaitingList_Component/Buyers";
+import Main from "../Component/WaitingList_Component/Main";
 
 function WaitingList() {
   const [lang, setLang] = useState("en");
 
   return (
-    <div className="w-full h-screen font-['Raleway']">
-      <div className="absolute inset-0">
-        <Header lang={lang} setLang={setLang} />
-        <Main lang={lang} setLang={setLang} />
-      </div>
-    </div>
+    <>
+      <Swiper
+        pagination={true}
+        modules={[Pagination]}
+        className="mySwiper w-full h-full font-['Raleway']"
+      >
+        <SwiperSlide className="">
+          <Main lang={lang} setLang={setLang} />{" "}
+        </SwiperSlide>
+        <SwiperSlide>
+          <Buyers lang={lang} setLang={setLang} />{" "}
+        </SwiperSlide>
+      </Swiper>
+    </>
   );
 }
 

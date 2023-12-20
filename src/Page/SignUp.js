@@ -74,10 +74,10 @@ const SignUp = () => {
                 Register Here,
               </p>
               <p className="lg:text-[20px]">
-                If you already have an account register
+                If you already have an account registered
               </p>
               <p className="lg:text-[20px]">
-                You can
+                You can &nbsp;
                 <Link
                   to="/login"
                   className="text-[#009B4D] text-[15px] font-medium "

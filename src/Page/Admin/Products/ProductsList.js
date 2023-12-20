@@ -110,7 +110,7 @@ function ProductCard({ product }) {
           <p className="description text-sm text-[#707378]">
             {product.description}
           </p>
-          <p className="text-lg font-extrabold price">${product.price}</p>
+          <p className="text-lg font-extrabold price">{product.price}</p>
           <p className="category">{product.category}</p>
         </div>
 
@@ -184,29 +184,40 @@ const ProductsList = () => {
     dispatch(AllProduct_fun());
   }, [dispatch]);
 
-  useEffect(() => {
-    // Filter products based on search query
-    const filtered = AllProductData?.filter(
+  // useEffect(() => {
+  //   // Filter products based on search query
+  //   let filtered;
+  //   if (AllProductData?.message) {
+  //     filtered = [];
+  //   } else {
+  //     filtered = AllProductData?.filter(
+  //       (product) =>
+  //         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //         product.category.toLowerCase().includes(searchQuery.toLowerCase())
+  //     );
+  //   }
+
+  //   setFilteredProducts(filtered);
+
+  //   // Check if there are no search results
+  //   if (filtered?.length === 0 && searchQuery !== "") {
+  //     setError("No matching products found.");
+  //   } else {
+  //     setError("");
+  //   }
+  // }, [searchQuery, AllProductData]);
+
+  let filtered;
+
+  if (AllProductData?.message) {
+    filtered = [];
+  } else {
+    filtered = AllProductData?.filter(
       (product) =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.category.toLowerCase().includes(searchQuery.toLowerCase())
     );
-
-    setFilteredProducts(filtered);
-
-    // Check if there are no search results
-    if (filtered.length === 0 && searchQuery !== "") {
-      setError("No matching products found.");
-    } else {
-      setError("");
-    }
-  }, [searchQuery, AllProductData]);
-
-  const filtered = AllProductData?.filter(
-    (product) =>
-      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.category.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  }
 
   return (
     <div className="font-['Raleway']">
