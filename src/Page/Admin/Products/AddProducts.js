@@ -17,31 +17,28 @@ import axios from "axios";
 
 import Sidebar from "../../../Component/AdminComponent/Sidebar";
 import Navbar from "../../../Component/AdminComponent/Navbar";
-
-// import Navbar from '../../../Component/ Navbar';
-// import Sidebar from '../../components/Sidebar';
 import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
 import { useMutation } from "react-query";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { useLocation } from "react-router";
 import { fetchCategoryOptions } from "../../../Redux/CategoryOptionsApi";
-import { Category_fun } from "../../../Redux/ProductSlice";
+import { Category_fun } from "../../../Redux/categorySlice";
 
 const Base_URL = process.env.REACT_APP_Url;
 
 const AddProducts = ({}) => {
   let { state } = useLocation();
 
-  const { category_data } = useSelector((state) => state.reducer?.ProductSlice);
+  const { category_data } = useSelector(
+    (state) => state.reducer?.CategorySlice
+  );
 
   useEffect(() => {
     dispatch(Category_fun());
 
     return () => {};
   }, []);
-
-  console.log({ state });
 
   const [productName, setProductName] = useState(state?.name);
   const [productDescription, setProductDescription] = useState(
@@ -180,7 +177,6 @@ const AddProducts = ({}) => {
         });
 
         // dispatch(Talent_manager_details_Get_all_player_fun());
-        console.log({ game: data });
 
         setProductName("");
         setProductDescription("");

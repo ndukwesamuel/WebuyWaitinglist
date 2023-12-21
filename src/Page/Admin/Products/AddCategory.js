@@ -4,7 +4,7 @@ import Sidebar from "../../../Component/AdminComponent/Sidebar";
 import Navbar from "../../../Component/AdminComponent/Navbar";
 import { addCategoryApi } from "../../../Redux/AddCategoryApi";
 import { useDispatch, useSelector } from "react-redux";
-import { Category_fun } from "../../../Redux/ProductSlice";
+import { Category_fun } from "../../../Redux/categorySlice";
 import axios from "axios";
 import { useMutation } from "react-query";
 import { toast } from "react-toastify";
@@ -17,28 +17,10 @@ const AddCategory = () => {
   const { token } = useSelector(
     (state) => state?.reducer?.AuthenticationSlice?.data
   );
+
   const [categoryName, setCategoryName] = useState("");
   const dispatch = useDispatch();
-  const [category, setCategory] = useState([
-    {
-      name: 'Apple MacBook Pro 17"',
-      colour: "Silver",
-      description: "Laptop",
-      price: "$2999",
-    },
-    {
-      name: "Microsoft Surface Pro",
-      colour: "White",
-      description: "Laptop PC",
-      price: "$1999",
-    },
-    {
-      name: "Magic Mouse 2",
-      colour: "Black",
-      description: "Accessories",
-      price: "$99",
-    },
-  ]);
+  const [category, setCategory] = useState([]);
 
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -88,7 +70,9 @@ const AddCategory = () => {
 
     Deletemutation.mutate(id);
   };
-  const { category_data } = useSelector((state) => state.reducer?.ProductSlice);
+  const { category_data } = useSelector(
+    (state) => state.reducer?.CategorySlice
+  );
 
   console.log({ category_data });
 
@@ -259,9 +243,6 @@ const AddCategory = () => {
                         >
                           {category.name}
                         </th>
-                        <td className="px-6 py-4">{category.colour}</td>
-                        <td className="px-6 py-4">{category.description}</td>
-                        <td className="px-6 py-4">{category.price}</td>
                         <td className="px-6 py-4">
                           <button
                             type="button"

@@ -1,80 +1,24 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 
-// import background from "../images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg";
 import Sidebar from "../../Component/AdminComponent/Sidebar";
 import Navbar from "../../Component/AdminComponent/Navbar";
 import background from "../../assets/images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg";
-import Orange from "../../assets/images/Orange.png";
-import banana from "../../assets/images/Rectangle 45.png";
-import tomato from "../../assets/images/Tomato.png";
+
 import { useDispatch, useSelector } from "react-redux";
-import { Get_All_User_Orders_fun } from "../../Redux/OrderSlice";
-import { Category_fun } from "../../Redux/ProductSlice";
-const Base_URL = process.env.REACT_APP_Url;
+import { Category_fun } from "../../Redux/categorySlice";
 
 const Category = () => {
-  const { token } = useSelector(
-    (state) => state.reducer?.AuthenticationSlice?.data
+  const { category_data } = useSelector(
+    (state) => state.reducer?.categorySlice
   );
-
-  const { category_data } = useSelector((state) => state.reducer?.ProductSlice);
-
-  console.log({ category_data });
 
   const dispatch = useDispatch();
 
-  const { All_User_orders } = useSelector((state) => state.reducer?.OrderSlice);
-
-  console.log({ All_User_orders: All_User_orders?.orders });
   useEffect(() => {
     dispatch(Category_fun());
 
     return () => {};
   }, []);
-
-  // let filtered = AllProductData?.filter(
-  //   (product) =>
-  //     product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //     product.category.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
-
-  const ProductDetails = ({ productId }) => {
-    const [productDetails, setProductDetails] = useState({
-      name: "",
-      image: "",
-    });
-
-    useEffect(() => {
-      const fetchProductDetails = async () => {
-        let API_URL = `${Base_URL}products/${productId}`;
-        console.log({ token, API_URL });
-
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        try {
-          const response = await axios.get(API_URL, config);
-          console.log({ response: response.data });
-
-          setProductDetails(response.data);
-        } catch (error) {
-          console.error("Error fetching product details:", error);
-        }
-      };
-
-      fetchProductDetails();
-    }, [productId]);
-
-    return (
-      <div>
-        <img src={productDetails.image} alt={productDetails.name} />
-        <p className="text-[15px]">{productDetails.name}</p>
-      </div>
-    );
-  };
 
   return (
     <div>
@@ -120,7 +64,6 @@ const Category = () => {
                       </th>
                     </tr>
                   </thead>
-
                   <tbody className=" font-semibold text-[#565454]">
                     {category_data?.map((order, index) => (
                       <tr className=" even:bg-[#0000000b] hover:bg-[#fff6]">
