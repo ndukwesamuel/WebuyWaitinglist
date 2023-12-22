@@ -27,18 +27,18 @@ import { Category_fun } from "../../../Redux/categorySlice";
 
 const Base_URL = process.env.REACT_APP_Url;
 
-const AddProducts = ({}) => {
+const AddProducts = () => {
   let { state } = useLocation();
 
   const { category_data } = useSelector(
     (state) => state.reducer?.CategorySlice
   );
 
-  useEffect(() => {
-    dispatch(Category_fun());
+  // useEffect(() => {
+  //   dispatch(Category_fun());
 
-    return () => {};
-  }, []);
+  //   return () => {};
+  // }, []);
 
   const [productName, setProductName] = useState(state?.name);
   const [productDescription, setProductDescription] = useState(
@@ -136,8 +136,8 @@ const AddProducts = ({}) => {
     { value: "computers", label: "computers" },
     { value: "groceries", label: "groceries" },
   ];
-  const dispatch = useDispatch();
-  dispatch(fetchCategoryOptions());
+  // const dispatch = useDispatch();
+  // dispatch(fetchCategoryOptions());
   const { data } = useSelector((state) => state.reducer.AuthenticationSlice);
 
   const creatProduct = useMutation(
@@ -520,13 +520,12 @@ const AddProducts = ({}) => {
                           value={selectedCategory}
                           onChange={handleCategoryChange}
                         >
+                          <option defaultValue={"Select a category"}>
+                            Select a category
+                          </option>
+
                           {category_data.map((option) => (
-                            <option
-                              key={option.value}
-                              disabled={option.disabled}
-                              hidden={option.hidden}
-                              value={option.value}
-                            >
+                            <option key={option._id} value={option.value}>
                               {option?.name}
                             </option>
                           ))}

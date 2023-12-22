@@ -18,63 +18,31 @@ const AddCategory = () => {
     (state) => state?.reducer?.AuthenticationSlice?.data
   );
 
-  const [categoryName, setCategoryName] = useState("");
   const dispatch = useDispatch();
-  const [category, setCategory] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
 
   const [showSuccess, setShowSuccess] = useState(false);
 
   const toggleSuccess = () => {
     setShowSuccess(!showSuccess);
-    // dispatch(resetSignup());
   };
 
   const [edit, setEdit] = useState(false);
   const [name, setName] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(name);
-    createmutation.mutate(name);
-  };
-
-  const handleCategoryNameChange = (e) => {
-    setCategoryName(e.target.value);
-  };
-
-  const handleDeleteCategory = (index) => {
-    const updatedCategory = [...category];
-    updatedCategory.splice(index, 1);
-    setCategory(updatedCategory);
-  };
-
-  const handleAddCategory = () => {
-    const newCategoryData = {
-      name: categoryName,
-      // Add other properties as needed (color, description, price, etc.)
-    };
-
-    dispatch(addCategoryApi(newCategoryData))
-      .then(() => {
-        // Optional: Handle success (e.g., clear form fields)
-        setCategoryName("");
-      })
-      .catch((error) => {
-        console.error("Error adding category:", error);
-        // Optional: Handle error
-      });
-  };
-
   const handleDelete = (category) => {
-    let id = category._id;
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this category?"
+    );
 
-    Deletemutation.mutate(id);
+    let id = category._id;
+    if (confirmed) {
+      Deletemutation.mutate(id);
+    }
   };
   const { category_data } = useSelector(
     (state) => state.reducer?.CategorySlice
   );
-
-  console.log({ category_data });
 
   useEffect(() => {
     dispatch(Category_fun());
@@ -85,7 +53,6 @@ const AddCategory = () => {
   const Deletemutation = useMutation(
     (formData) => {
       let API_URL = `${Base_URL}category/${formData}`;
-      console.log({ API_URL, formData });
 
       const config = {
         headers: {
@@ -98,8 +65,8 @@ const AddCategory = () => {
       return axios.delete(API_URL, config);
     },
     {
-      onSuccess: (data) => {
-        toast.success(`category has been Deleted !`, {
+      onSuccess: (response) => {
+        toast.success(`${response?.data?.message}`, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -112,25 +79,28 @@ const AddCategory = () => {
         dispatch(Category_fun());
       },
       onError: (error) => {
-        console.error("Error occurred while submitting the form:", error);
-        toast.error(`${error?.response?.data?.msg}`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          className: "Forbidden403",
-        });
+        toast.error(
+          `${error?.response?.data?.message}` ||
+            `${error?.response?.data?.msg}`,
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            className: "Forbidden403",
+          }
+        );
       },
     }
   );
 
   const createmutation = useMutation(
-    (formData) => {
-      let API_URL = `${Base_URL}category/`;
+    async ({ id, name }) => {
+      let API_URL = `${Base_URL}category`;
 
       const config = {
         headers: {
@@ -140,19 +110,19 @@ const AddCategory = () => {
         },
       };
 
-      let data = { name: formData };
-      // return axios.post(API_URL, data);
-      console.log({ API_URL, formData, data, token });
+      let data = { name };
 
       if (edit) {
-        return axios.put(API_URL, formData, config);
+        const PUT_URL = `${API_URL}/${id}`;
+        return await axios.put(PUT_URL, data, config);
       } else {
-        return axios.post(API_URL, data, config);
+        return await axios.post(API_URL, data, config);
       }
     },
     {
-      onSuccess: (data) => {
-        toast.success(`category has been Created !`, {
+      onSuccess: (response) => {
+        const message = response?.data?.message || "Operation successful";
+        toast.success(message, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -165,8 +135,9 @@ const AddCategory = () => {
         dispatch(Category_fun());
       },
       onError: (error) => {
-        console.error("Error occurred while submitting the form:", error);
-        toast.error(`${error?.response?.data?.msg}`, {
+        const errorMessage =
+          error?.response?.data?.message || "An error occurred";
+        toast.error(errorMessage, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -182,15 +153,16 @@ const AddCategory = () => {
   );
 
   const handleEdit = (category) => {
-    // let id = category._id;
     setShowSuccess(true);
+    setSelectedCategory(category);
     console.log({ category });
     setName(category?.name);
-
-    // createmutation.mutate(id);
-    // createmutation.mutate(category);
+    setEdit(true);
   };
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    createmutation.mutate({ id: selectedCategory._id, name });
+  };
   return (
     <div className="font-['Raleway']">
       <div className="fixed top-0 left-0 w-full h-full">
@@ -300,8 +272,6 @@ const AddCategory = () => {
               className="border rounded w-full py-2 px-3"
             />
           </div>
-
-          {/* Repeat similar structure for other fields */}
 
           <div className="mb-4 flex justify-center">
             <button
