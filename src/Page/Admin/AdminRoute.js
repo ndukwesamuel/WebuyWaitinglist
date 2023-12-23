@@ -9,14 +9,12 @@ import { Route, Routes } from "react-router-dom";
 import ProductsList from "./Products/ProductsList";
 import GroupPage from "../UserDashboard/GroupPage";
 import AddProducts from "./Products/AddProducts";
-import AddCategory from "./Products/AddCategory";
+import Category from "./Category";
 
 import { useSelector } from "react-redux";
-import Category from "./Category";
 
 function AdminRoute() {
   const data = useSelector((state) => state.reducer?.AuthenticationSlice);
-  console.log({ data });
   return (
     <div className="">
       <div className="relative w-full h-screen">
@@ -38,9 +36,7 @@ function AdminRoute() {
             <Route path="/orders" element={<OrdersPage />} />
             <Route path="/products" element={<ProductsList />} />
             <Route path="/Addproduct" element={<AddProducts />} />
-            <Route path="/category" element={<AddCategory />} />
-            {/* <Route path="/category" element={<Category />} />
-            <Route path="/Addcategory" element={<AddCategory />} /> */}
+            <Route path="/category" element={<Category />} />
             <Route path="/group" element={<GroupPage />} />
           </Routes>
         </div>
