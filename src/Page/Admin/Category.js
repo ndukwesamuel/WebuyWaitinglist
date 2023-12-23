@@ -1,203 +1,289 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-
-// import background from "../images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg";
+import background from "../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
 import Sidebar from "../../Component/AdminComponent/Sidebar";
 import Navbar from "../../Component/AdminComponent/Navbar";
-import background from "../../assets/images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg";
-import Orange from "../../assets/images/Orange.png";
-import banana from "../../assets/images/Rectangle 45.png";
-import tomato from "../../assets/images/Tomato.png";
 import { useDispatch, useSelector } from "react-redux";
-import { Get_All_User_Orders_fun } from "../../Redux/OrderSlice";
-import { Category_fun } from "../../Redux/ProductSlice";
+import { Category_fun } from "../../Redux/categorySlice";
+import axios from "axios";
+import { useMutation } from "react-query";
+import { toast } from "react-toastify";
+import { IoAddCircleSharp } from "react-icons/io5";
+import ModalContainer from "../../Component/modal-container/modal-container";
+
 const Base_URL = process.env.REACT_APP_Url;
 
-const Category = () => {
+const AddCategory = () => {
   const { token } = useSelector(
-    (state) => state.reducer?.AuthenticationSlice?.data
+    (state) => state?.reducer?.AuthenticationSlice?.data
   );
 
-  const { category_data } = useSelector((state) => state.reducer?.ProductSlice);
-
-  console.log({ category_data });
-
   const dispatch = useDispatch();
+  const [selectedCategory, setSelectedCategory] = useState([]);
 
-  const { All_User_orders } = useSelector((state) => state.reducer?.OrderSlice);
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  console.log({ All_User_orders: All_User_orders?.orders });
+  const toggleSuccess = () => {
+    setShowSuccess(!showSuccess);
+  };
+
+  const [edit, setEdit] = useState(false);
+  const [name, setName] = useState("");
+
+  const handleDelete = (category) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this category?"
+    );
+
+    let id = category._id;
+    if (confirmed) {
+      Deletemutation.mutate(id);
+    }
+  };
+  const { category_data } = useSelector(
+    (state) => state.reducer?.CategorySlice
+  );
+
   useEffect(() => {
     dispatch(Category_fun());
 
     return () => {};
   }, []);
 
-  // let filtered = AllProductData?.filter(
-  //   (product) =>
-  //     product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //     product.category.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
+  const Deletemutation = useMutation(
+    (formData) => {
+      let API_URL = `${Base_URL}category/${formData}`;
 
-  const ProductDetails = ({ productId }) => {
-    const [productDetails, setProductDetails] = useState({
-      name: "",
-      image: "",
-    });
-
-    useEffect(() => {
-      const fetchProductDetails = async () => {
-        let API_URL = `${Base_URL}products/${productId}`;
-        console.log({ token, API_URL });
-
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        try {
-          const response = await axios.get(API_URL, config);
-          console.log({ response: response.data });
-
-          setProductDetails(response.data);
-        } catch (error) {
-          console.error("Error fetching product details:", error);
-        }
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       };
 
-      fetchProductDetails();
-    }, [productId]);
+      return axios.delete(API_URL, config);
+    },
+    {
+      onSuccess: (response) => {
+        toast.success(`${response?.data?.message}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        dispatch(Category_fun());
+      },
+      onError: (error) => {
+        toast.error(
+          `${error?.response?.data?.message}` ||
+            `${error?.response?.data?.msg}`,
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            className: "Forbidden403",
+          }
+        );
+      },
+    }
+  );
 
-    return (
-      <div>
-        <img src={productDetails.image} alt={productDetails.name} />
-        <p className="text-[15px]">{productDetails.name}</p>
-      </div>
-    );
+  const createmutation = useMutation(
+    async ({ id, name }) => {
+      let API_URL = `${Base_URL}category`;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      let data = { name };
+
+      if (edit) {
+        const PUT_URL = `${API_URL}/${id}`;
+        return await axios.put(PUT_URL, data, config);
+      } else {
+        return await axios.post(API_URL, data, config);
+      }
+    },
+    {
+      onSuccess: (response) => {
+        const message = response?.data?.message || "Operation successful";
+        toast.success(message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        dispatch(Category_fun());
+      },
+      onError: (error) => {
+        const errorMessage =
+          error?.response?.data?.message || "An error occurred";
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          className: "Forbidden403",
+        });
+      },
+    }
+  );
+
+  const handleEdit = (category) => {
+    setShowSuccess(true);
+    setSelectedCategory(category);
+    console.log({ category });
+    setName(category?.name);
+    setEdit(true);
   };
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    createmutation.mutate({ id: selectedCategory._id, name });
+  };
   return (
-    <div>
-      <div className="relative w-full h-full">
-        <img
-          className="object-cover w-full h-full "
-          src={background}
-          alt=""
-        ></img>
+    <div className="font-['Raleway']">
+      <div className="fixed top-0 left-0 w-full h-full">
+        <img className="object-cover w-full h-full" src={background} alt="" />
       </div>
-      <div className="absolute inset-0 flex ">
-        <div className=" basis-[10%] h-full">
+      <div className="absolute inset-0 flex">
+        <div className="basis-[10%] h-full">
           <Sidebar />
         </div>
-        <div className=" basis-[90%]">
+        <div className="basis-[90%] ">
           <Navbar />
-          <div className=" flex items-center  px-24 mt-10 justify-center">
-            <main className=" w-full  overflow-hidden table border-collapse font-['Raleway'] bg-[#fff5] shadow-md bg-opacity-5 rounded-[12.8px] mt-[15px]">
-              <section className=" w-full h-[10%] bg-[#fff4] py-[12.8px] px-[16px]">
-                <h1 className=" text-[24px] font-bold">Orders</h1>
-              </section>
-              <section className=" w-[95%] max-h-[calc(89%-25.6px)] rounded-[9.6px] overflow-auto bg-[#fffb] my-[12.8px] mx-auto    ">
-                <table className=" w-full ">
-                  <thead className="">
-                    <tr className=" text-[#565454]">
-                      <th className=" p-[16px] sticky top-0 left-0 bg-[#d5d1defe] border-collapse">
-                        {" "}
-                        ID
-                      </th>
+          <div className="w-full pl-20 my-8 pr-14 h-24 min-h-full ">
+            <header className="w-full ">
+              <h1 className="text-[24px] leading-[34px] font-semibold text-white  ">
+                Category
+              </h1>
+            </header>
+            <form className="w-full max-w-2xl-lg bg-white p-8 rounded shadow-lg overflow-y-auto h-24 min-h-full ">
+              <IoAddCircleSharp
+                className="text-[50px]"
+                onClick={() => {
+                  setName("");
+                  setShowSuccess(true);
+                }}
+              />
 
-                      <th className=" p-[16px] sticky top-0 left-0 bg-[#d5d1defe] border-collapse">
-                        {" "}
+              {/* Table */}
+              <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-8 h-full">
+                <table className="w-full text-sm text-left rtl:text-right text-black-500 dark:text-gray-400">
+                  <thead className="font-medium text-base text-[#565454]">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">
                         Category Name
                       </th>
-                      <th className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe] ">
-                        {" "}
-                        Edit
-                      </th>
 
-                      <th className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]">
-                        {" "}
-                        Delete{" "}
+                      <th scope="col" className="px-6 py-3">
+                        <span className="sr-only">Edit</span>
                       </th>
                     </tr>
                   </thead>
-
-                  <tbody className=" font-semibold text-[#565454]">
-                    {category_data?.map((order, index) => (
-                      <tr className=" even:bg-[#0000000b] hover:bg-[#fff6]">
-                        <td className=" p-[16px] border-collapse">{index}</td>
-                        <td className=" p-[16px] border-collapse">
-                          {" "}
-                          {order?.name}
-                        </td>
-                        <td className=" p-[16px] border-collapse">
-                          {" "}
-                          <span className=" cursor-pointer bg-green-500 text-white py-3 px-5">
-                            {" "}
-                            Edit
-                          </span>
-                        </td>
-
-                        <td className=" p-[16px] border-collapse">
-                          <div className=" ">
-                            {order?.orderItems?.map((product_info) => {
-                              console.log({
-                                hhh: product_info?.product?.image,
-                              });
-
-                              return (
-                                <div className="">
-                                  {/* <img
-                                    className=" w-[60px] h-[50px] rounded-[12.8px]"
-                                    src={product_info?.product?.image}
-                                    alt="tomato"
-                                  ></img> */}
-
-                                  <li className=" text-[15px]">
-                                    {product_info?.product?.price}
-                                  </li>
-                                </div>
-                              );
-                            })}
-                          </div>{" "}
-                        </td>
-                        <td className=" p-[16px] border-collapse">
-                          {" "}
-                          {`${order?.shippingAddress1},  ${order?.shippingAddress2}, ${order?.city}, ${order?.country}`}
-                        </td>
-                        <td className=" p-[16px] border-collapse">
-                          {" "}
-                          {order?.dateOrdered}
-                        </td>
-                        <td className=" p-[16px] border-collapse">
-                          NGN{order?.totalPrice}
-                        </td>
-                        <td className="p-[16px] border-collapse text-black">
-                          <p
-                            className={`text-center rounded-[32px] py-[6.4px] px-auto 
-    ${
-      order?.status === "Cancelled"
-        ? "bg-red-500 text-white"
-        : order?.status === "Pending"
-        ? "bg-brown-500 text-white debug"
-        : order?.status === "Delivered"
-        ? "bg-green-500 text-white"
-        : ""
-    }`}
+                  <tbody>
+                    {category_data.map((category, index) => (
+                      <tr
+                        key={index}
+                        className="bg-white border-b dark:bg-white-800 dark:border-white-700"
+                      >
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-black-900 whitespace-nowrap dark:text-black"
+                        >
+                          {category.name}
+                        </th>
+                        <td className="px-6 py-4">
+                          <button
+                            type="button"
+                            onClick={() => handleEdit(category)}
+                            className="font-medium text-blue-600 dark:text-blue-500 "
                           >
-                            {order?.status}
-                          </p>
+                            Edit
+                          </button>
+                        </td>
+                        <td className="px-6 py-4">
+                          <button
+                            type="button"
+                            onClick={() => handleDelete(category)}
+                            className="font-medium text-red-600 dark:text-red-500 "
+                          >
+                            Delete
+                          </button>
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
-              </section>
-            </main>
+              </div>
+
+              {/* Submit and Cancel Buttons */}
+              <div className="flex content-center w-full mt-6 gap-8">
+                <button
+                  className="w-full bg-[#f3f3f3] text-[#009b4d] font-semibold py-2 rounded-lg"
+                  type="submit"
+                >
+                  Cancel
+                </button>
+                <button
+                  className="w-full bg-[#009b4d] text-white font-semibold py-2 rounded-lg"
+                  type="submit"
+                >
+                  Add Category
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
+
+      <ModalContainer close={toggleSuccess} show={showSuccess}>
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Category name
+            </label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="border rounded w-full py-2 px-3"
+            />
+          </div>
+
+          <div className="mb-4 flex justify-center">
+            <button
+              type="submit"
+              className="bg-[#009B4D] text-white py-2 px-4 rounded hover:bg-[#009B4D] focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </ModalContainer>
     </div>
   );
 };
 
-export default Category;
+export default AddCategory;

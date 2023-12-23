@@ -21,7 +21,6 @@ const OrdersPage = () => {
 
   const { All_User_orders } = useSelector((state) => state.reducer?.OrderSlice);
 
-  console.log({ All_User_orders: All_User_orders?.orders });
   useEffect(() => {
     dispatch(Get_All_User_Orders_fun());
 
@@ -34,41 +33,41 @@ const OrdersPage = () => {
   //     product.category.toLowerCase().includes(searchQuery.toLowerCase())
   // );
 
-  const ProductDetails = ({ productId }) => {
-    const [productDetails, setProductDetails] = useState({
-      name: "",
-      image: "",
-    });
+  // const ProductDetails = ({ productId }) => {
+  //   const [productDetails, setProductDetails] = useState({
+  //     name: "",
+  //     image: "",
+  //   });
 
-    useEffect(() => {
-      const fetchProductDetails = async () => {
-        let API_URL = `${Base_URL}products/${productId}`;
-        console.log({ token, API_URL });
+  //   useEffect(() => {
+  //     const fetchProductDetails = async () => {
+  //       let API_URL = `${Base_URL}products/${productId}`;
+  //       console.log({ token, API_URL });
 
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        try {
-          const response = await axios.get(API_URL, config);
+  //       const config = {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       };
+  //       try {
+  //         const response = await axios.get(API_URL, config);
 
-          setProductDetails(response.data);
-        } catch (error) {
-          console.error("Error fetching product details:", error);
-        }
-      };
+  //         setProductDetails(response.data);
+  //       } catch (error) {
+  //         console.error("Error fetching product details:", error);
+  //       }
+  //     };
 
-      fetchProductDetails();
-    }, [productId]);
+  //     fetchProductDetails();
+  //   }, [productId]);
 
-    return (
-      <div>
-        <img src={productDetails.image} alt={productDetails.name} />
-        <p className="text-[15px]">{productDetails.name}</p>
-      </div>
-    );
-  };
+  //   return (
+  //     <div>
+  //       <img src={productDetails.image} alt={productDetails.name} />
+  //       <p className="text-[15px]">{productDetails.name}</p>
+  //     </div>
+  //   );
+  // };
   const formatDate = (dateString) => {
     const dateOrdered = new Date(dateString);
     return dateOrdered instanceof Date && !isNaN(dateOrdered)
@@ -110,7 +109,7 @@ const OrdersPage = () => {
                       </th>
                       <th className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe] ">
                         {" "}
-                        Product's Name{" "}
+                        Product's Name
                       </th>
                       <th className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe]">
                         Price
@@ -145,10 +144,6 @@ const OrdersPage = () => {
                         <td className=" p-[16px] border-collapse">
                           <div className=" ">
                             {order?.orderItems?.map((product_info) => {
-                              console.log({
-                                hhh: product_info?.product?.image,
-                              });
-
                               return (
                                 <div className="">
                                   {/* <img
@@ -157,7 +152,10 @@ const OrdersPage = () => {
                                     alt="tomato"
                                   ></img> */}
 
-                                  <li className=" text-[15px]">
+                                  <li
+                                    className=" text-[15px]"
+                                    key={product_info._id}
+                                  >
                                     {product_info?.product?.name}
                                   </li>
                                 </div>
@@ -168,9 +166,9 @@ const OrdersPage = () => {
                         <td className=" p-[16px] border-collapse">
                           <div className=" ">
                             {order?.orderItems?.map((product_info) => {
-                              console.log({
-                                hhh: product_info?.product?.image,
-                              });
+                              // console.log({
+                              //   hhh: product_info?.product?.image,
+                              // });
 
                               return (
                                 <div className="">
@@ -180,7 +178,10 @@ const OrdersPage = () => {
                                     alt="tomato"
                                   ></img> */}
 
-                                  <li className=" text-[15px]">
+                                  <li
+                                    className=" text-[15px]"
+                                    key={product_info._id}
+                                  >
                                     {product_info?.product?.price}
                                   </li>
                                 </div>

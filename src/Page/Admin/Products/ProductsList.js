@@ -58,8 +58,10 @@ function ProductCard({ product }) {
       //   });
     },
     {
-      onSuccess: (data) => {
-        toast.success(`Product has been succefully deleted !`, {
+      onSuccess: (response) => {
+        const message = response?.data?.message || "Operation successful";
+
+        toast.success(message, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -69,12 +71,14 @@ function ProductCard({ product }) {
           progress: undefined,
           theme: "light",
         });
-        console.log({ data });
         dispatch(AllProduct_fun());
       },
       onError: (error) => {
-        console.error("Error occurred while submitting the form:", error);
-        toast.error(`${error?.response?.data?.msg}`, {
+        const errorMessage =
+          error?.response?.data?.message ||
+          error?.response?.data?.msg ||
+          "An error occurred";
+        toast.error(errorMessage, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -240,12 +244,12 @@ const ProductsList = () => {
               </p>
             </header>
             <div className="flex flex-col w-full h-full p-5  mt-5 bg-white n rounded-xl">
-              <div className="f flex   justify-end gap-5 my-3">
+              <div className="flex justify-end gap-5 my-3">
                 <button
                   onClick={() => navigate("/admin/Addproduct")}
                   className=" border-green-400  border-2 cursor-pointer px-3 py-2 rounded-2xl "
                 >
-                  Create product{" "}
+                  Create product
                 </button>
               </div>
 
