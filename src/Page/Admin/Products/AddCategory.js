@@ -88,7 +88,9 @@ const AddCategory = () => {
 
     Deletemutation.mutate(id);
   };
-  const { category_data } = useSelector((state) => state.reducer?.ProductSlice);
+  const { category_data } = useSelector(
+    (state) => state?.reducer?.ProductSlice
+  );
 
   console.log({ category_data });
 
@@ -248,7 +250,7 @@ const AddCategory = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {category_data.map((category, index) => (
+                    {category_data?.map((category, index) => (
                       <tr
                         key={index}
                         className="bg-white border-b dark:bg-white-800 dark:border-white-700"
@@ -257,11 +259,11 @@ const AddCategory = () => {
                           scope="row"
                           className="px-6 py-4 font-medium text-black-900 whitespace-nowrap dark:text-black"
                         >
-                          {category.name}
+                          {category?.name}
                         </th>
-                        <td className="px-6 py-4">{category.colour}</td>
-                        <td className="px-6 py-4">{category.description}</td>
-                        <td className="px-6 py-4">{category.price}</td>
+                        <td className="px-6 py-4">{category?.colour}</td>
+                        <td className="px-6 py-4">{category?.description}</td>
+                        <td className="px-6 py-4">{category?.price}</td>
                         <td className="px-6 py-4">
                           <button
                             type="button"
