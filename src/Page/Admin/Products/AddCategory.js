@@ -88,9 +88,7 @@ const AddCategory = () => {
 
     Deletemutation.mutate(id);
   };
-  const { category_data } = useSelector(
-    (state) => state?.reducer?.ProductSlice
-  );
+  const { category_data } = useSelector((state) => state.reducer?.ProductSlice);
 
   console.log({ category_data });
 
