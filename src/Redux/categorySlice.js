@@ -1,6 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import { toast } from "react-toastify";
+import axios from 'axios';
+import { toast } from 'react-toastify';
+
+import {
+  createAsyncThunk,
+  createSlice,
+} from '@reduxjs/toolkit';
 
 const Base_URL = process.env.REACT_APP_Url;
 
@@ -20,17 +24,22 @@ const Category_fun_Service = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.get(API_URL, config);
-  console.log({ ss: response.data });
 
+  const response = await axios.get(API_URL, config);
   return response.data;
 };
 
 export const Category_fun = createAsyncThunk(
-  "ProductSlice/Category_fun",
+  "CategorySlice/Category_fun",
   async (_, thunkAPI) => {
     try {
-      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      const state = thunkAPI.getState();
+      console.log("State:", state); // Log the state to see if AuthenticationSlice exists
+
+      const token = state.AuthenticationSlice?.data?.token;
+      if (!token) {
+        throw new Error("Token is not available");
+      }
       return await Category_fun_Service(token);
     } catch (error) {
       console.log({ error });
@@ -38,12 +47,14 @@ export const Category_fun = createAsyncThunk(
         (error.response && error.response.data && error.response.data.msg) ||
         error.message ||
         error.msg ||
-        error.response.data.msg ||
+        error.response?.data?.msg ||
         error.toString();
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
+
+
 
 export const CategorySlice = createSlice({
   name: "CategorySlice",
@@ -52,21 +63,19 @@ export const CategorySlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-
       .addCase(Category_fun.pending, (state) => {
-        state.category_isLoading = true;
+        state.isLoading = true;
       })
       .addCase(Category_fun.fulfilled, (state, action) => {
-        state.category_isLoading = false;
-        state.category_isSuccess = true;
-        state.category_data = action.payload;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.data = action.payload;
       })
       .addCase(Category_fun.rejected, (state, action) => {
-        state.category_isLoading = false;
-
-        state.category_isError = true;
-        state.category_message = action.payload;
-        toast.error(`${state.category_message}`, {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        toast.error(`${state.message}`, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -79,8 +88,5 @@ export const CategorySlice = createSlice({
       });
   },
 });
-
-// Action creators are generated for each case reducer function
-export const {} = CategorySlice.actions;
 
 export default CategorySlice.reducer;

@@ -1,5 +1,9 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+} from 'react';
 
+import axios from 'axios';
 import {
   FaAlignCenter,
   FaAlignJustify,
@@ -12,27 +16,66 @@ import {
   FaItalic,
   FaSortDown,
   FaUnderline,
-} from "react-icons/fa";
-import axios from "axios";
+} from 'react-icons/fa';
+import { useMutation } from 'react-query';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import { useLocation } from 'react-router';
+import { toast } from 'react-toastify';
 
-import Sidebar from "../../../Component/AdminComponent/Sidebar";
-import Navbar from "../../../Component/AdminComponent/Navbar";
-import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
-import { useMutation } from "react-query";
-import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
-import { useLocation } from "react-router";
-import { fetchCategoryOptions } from "../../../Redux/CategoryOptionsApi";
-import { Category_fun } from "../../../Redux/categorySlice";
+import background
+  from '../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg';
+import Navbar from '../../../Component/AdminComponent/Navbar';
+import Sidebar from '../../../Component/AdminComponent/Sidebar';
+import { Category_fun } from '../../../Redux/categorySlice';
 
 const Base_URL = process.env.REACT_APP_Url;
+
+
+
+
 
 const AddProducts = () => {
   let { state } = useLocation();
 
-  const { category_data } = useSelector(
-    (state) => state.reducer?.CategorySlice
-  );
+  const dispatch = useDispatch();
+
+  // Fetch category data when component mounts
+  // useEffect(() => {
+  //   dispatch(Category_fun());
+  // }, [dispatch]);
+
+  // const categoryState = useSelector((state) => state.CategorySlice); // Access CategorySlice state
+  // Initialize categoryState with default values
+  const [categoryState, setCategoryState] = useState({
+    isLoading: false,
+    isError: false,
+    message: "",
+    data: [], // or initialize with an empty array: data: []
+  });
+
+  // Fetch category data when component mounts
+  useEffect(() => {
+    // Update categoryState to show loading state
+    setCategoryState({
+      isLoading: true,
+      isError: false,
+      message: "Loading...",
+      data: [], // or update with fetched data
+    });
+
+    // Dispatch action to fetch category data
+    dispatch(Category_fun());
+  }, [dispatch]); // Make sure to include dispatch as a dependency if it's used inside useEffect
+
+  // Check category data in the console
+  console.log(categoryState.data);
+
+  // console.log(categoryState.data);
+
+  // Check category data in the console
 
   // useEffect(() => {
   //   dispatch(Category_fun());
@@ -138,7 +181,9 @@ const AddProducts = () => {
   ];
   // const dispatch = useDispatch();
   // dispatch(fetchCategoryOptions());
-  const { data } = useSelector((state) => state.reducer.AuthenticationSlice);
+  const { data } = useSelector(
+    (state) => state.reducer.AuthenticationSlice || {}
+  );
 
   const creatProduct = useMutation(
     (formData) => {
@@ -515,21 +560,27 @@ const AddProducts = () => {
                         Category
                       </h2>
                       <div className="relative mt-2">
-                        <select
-                          className="w-full pl-5 pr-10 h-10 bg-[#f6f6f6] text-[#6f6d6d] rounded-lg"
-                          value={selectedCategory}
-                          onChange={handleCategoryChange}
-                        >
-                          <option defaultValue={"Select a category"}>
-                            Select a category
-                          </option>
-
-                          {category_data.map((option) => (
-                            <option key={option._id} value={option.value}>
-                              {option?.name}
+                        {categoryState.isLoading ? (
+                          <p>Loading...</p>
+                        ) : categoryState.isError || !categoryState.data ? (
+                          <p>Error: {categoryState.message}</p>
+                        ) : (
+                          <select
+                            className="w-full pl-5 pr-10 h-10 bg-[#f6f6f6] text-[#6f6d6d] rounded-lg"
+                            value={selectedCategory}
+                            onChange={handleCategoryChange}
+                          >
+                            <option defaultValue={"Select a category"}>
+                              Select a category
                             </option>
-                          ))}
-                        </select>
+
+                            {categoryState.data.map((option) => (
+                              <option key={option._id} value={option.value}>
+                                {option.name}
+                              </option>
+                            ))}
+                          </select>
+                        )}
                       </div>
                     </div>
                   </div>

@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect } from 'react';
 
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+
+import background
+  from '../../assets/images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg';
+import Navbar from '../../Component/AdminComponent/Navbar';
 // import background from "../images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg";
-import Sidebar from "../../Component/AdminComponent/Sidebar";
-import Navbar from "../../Component/AdminComponent/Navbar";
-import background from "../../assets/images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg";
-import Orange from "../../assets/images/Orange.png";
-import banana from "../../assets/images/Rectangle 45.png";
-import tomato from "../../assets/images/Tomato.png";
-import { useDispatch, useSelector } from "react-redux";
-import { Get_All_User_Orders_fun } from "../../Redux/OrderSlice";
+import Sidebar from '../../Component/AdminComponent/Sidebar';
+import { Get_All_User_Orders_fun } from '../../Redux/OrderSlice';
+
 const Base_URL = process.env.REACT_APP_Url;
 
 const OrdersPage = () => {
@@ -89,7 +91,7 @@ const OrdersPage = () => {
         </div>
         <div className=" basis-[90%]">
           <Navbar />
-          <div className=" flex items-center  px-24 mt-10 justify-center">
+          <div className=" flex items-center pl-12 pr-5 mt-10 justify-center">
             <main className=" w-full  overflow-hidden table border-collapse font-['Raleway'] bg-[#fff5] shadow-md bg-opacity-5 rounded-[12.8px] mt-[15px]">
               <section className=" w-full h-[10%] bg-[#fff4] py-[12.8px] px-[16px]">
                 <h1 className=" text-[24px] font-bold">Orders</h1>
@@ -107,7 +109,15 @@ const OrdersPage = () => {
                         {" "}
                         Username
                       </th>
-                      <th className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe] ">
+                      <th
+                        className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe] "
+                        style={{
+                          maxWidth: "200px",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
                         {" "}
                         Product's Name
                       </th>
@@ -120,7 +130,15 @@ const OrdersPage = () => {
                       <th className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe]">
                         Order Date
                       </th>
-                      <th className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]">
+                      <th
+                        className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]"
+                        style={{
+                          maxWidth: "200px",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
                         Total Amount
                       </th>
                       <th className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]">
@@ -135,33 +153,48 @@ const OrdersPage = () => {
                         className=" even:bg-[#0000000b] hover:bg-[#fff6]"
                         key={order._id}
                       >
-                        <td className=" p-[16px] border-collapse">
+                        <td
+                          className="p-[16px] border-collapse"
+                          style={{
+                            maxWidth: "100px",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
                           #{order._id}
                         </td>
-                        <td className=" p-[16px] border-collapse">
+                        <td
+                          className="p-[16px] border-collapse"
+                          style={{
+                            maxWidth: "200px",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
                           {order?.user?.fullName}
                         </td>
-                        <td className=" p-[16px] border-collapse">
-                          <div className=" ">
+                        <td
+                          className="p-[16px] border-collapse"
+                          style={{
+                            maxWidth: "200px",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          <div>
                             {order?.orderItems?.map((product_info) => {
                               return (
-                                <div className="">
-                                  {/* <img
-                                    className=" w-[60px] h-[50px] rounded-[12.8px]"
-                                    src={product_info?.product?.image}
-                                    alt="tomato"
-                                  ></img> */}
-
-                                  <li
-                                    className=" text-[15px]"
-                                    key={product_info._id}
-                                  >
+                                <div key={product_info._id}>
+                                  <li className="text-[15px] list-none">
                                     {product_info?.product?.name}
                                   </li>
                                 </div>
                               );
                             })}
-                          </div>{" "}
+                          </div>
                         </td>
                         <td className=" p-[16px] border-collapse">
                           <div className=" ">
@@ -179,7 +212,7 @@ const OrdersPage = () => {
                                   ></img> */}
 
                                   <li
-                                    className=" text-[15px]"
+                                    className=" text-[15px] list-none"
                                     key={product_info._id}
                                   >
                                     {product_info?.product?.price}
@@ -189,7 +222,15 @@ const OrdersPage = () => {
                             })}
                           </div>
                         </td>
-                        <td className=" p-[16px] border-collapse">
+                        <td
+                          className=" p-[16px] border-collapse"
+                          style={{
+                            maxWidth: "200px",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
                           {`${order?.shippingAddress1},  ${order?.shippingAddress2}, ${order?.city}, ${order?.country}`}
                         </td>
                         <td className=" p-[16px] border-collapse">
@@ -198,9 +239,9 @@ const OrdersPage = () => {
                         <td className=" p-[16px] border-collapse">
                           NGN{order?.totalPrice}
                         </td>
-                        <td className="p-[16px] border-collapse text-black">
+                        <td className="p-[10px] border-collapse text-black">
                           <p
-                            className={`text-center rounded-[32px] py-[6.4px] px-auto 
+                            className={`text-center rounded-xl py-[6.4px] px-2 -ml-4 
     ${
       order?.status === "Cancelled"
         ? "bg-red-500 text-white"

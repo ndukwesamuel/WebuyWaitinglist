@@ -1,14 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import {
+  CiLock,
+  CiUser,
+} from 'react-icons/ci';
+import { MdOutlineMail } from 'react-icons/md';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
-import background from "../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg";
-import ModalContainer from "../Component/modal-container/modal-container";
-import { RegisterFun, resetSignup } from "../Redux/Auth";
-import { MdOutlineMail } from "react-icons/md";
-import { CiLock, CiUser } from "react-icons/ci";
+import background from '../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg';
+import {
+  RegisterFun,
+  resetSignup,
+} from '../Redux/Auth';
 
 const SignUp = () => {
   const { data, isLoading } = useSelector((state) => state.reducer?.Auth);
@@ -150,7 +160,7 @@ const SignUp = () => {
               {/* </p> */}
 
               <button
-                className="text-[#ffffff] hover:text-[#355E3B] mt-10  hover:bg-transparent hover:border-[1px] hover:border-[#355E3B] bg-[#009B4D] text-center px-[55px] py-[7px]  text-[14px] rounded-[10px]  w-full"
+                className="text-[#ffffff] hover:text-[#355E3B] mt-10  hover:bg-transparent hover:border-[1px] hover:border-[#355E3B] bg-[#009B4D] text-center px-[55px] py-[12px] text-lg rounded-[10px]  w-full"
                 type="button"
                 onClick={handleSubmit}
               >

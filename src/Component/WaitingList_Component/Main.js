@@ -4,16 +4,14 @@ import { useNavigate } from 'react-router-dom';
 
 import background
   from '../../assets/medium-shot-man-delivering-groceries_9714x5464_4500.0.jpg';
+import Header from '../WaitingList_Component/Header';
 
 const Main = ({ lang, setLang }) => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    navigate('/SignUp');
-  }
-
-
-
+    navigate("/SignUp");
+  };
 
   return (
     <>
@@ -26,16 +24,17 @@ const Main = ({ lang, setLang }) => {
       </div> */}
 
       <div
-        className="w-full h-screen bg-center bg-cover lg:px-[140px] max-sm:px-5 md:px-10 flex flex-col max-sm:h-full"
+        className="w-full h-screen bg-center bg-cover lg:px-[140px] max-sm:px-5 md:px-10 flex flex-col max-sm:w-full"
         style={{
           backgroundImage: `url(${background})`,
           backgroundPosition: "right", // Adjust this value as needed
         }}
       >
+        <Header lang={lang} setLang={setLang} />
         <div className=" flex items-center justify-start my-auto font-['Raleway']">
-          <div className=" lg:w-1/2 max-sm:w-full md:w-3/5 mt-[100px]">
+          <div className=" lg:w-1/2 max-sm:w-full md:w-3/5 mt-[200px]">
             {lang === "en" && (
-              <h1 className=" w-full leading-[53px] text-[#fcedca] text-[55px] font-black">
+              <h1 className=" w-full leading-[53px] text-[#fcedca] text-[60px] font-black">
                 Become A Group Leader.
               </h1>
             )}

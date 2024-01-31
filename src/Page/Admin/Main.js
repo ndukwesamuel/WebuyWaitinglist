@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import {
   Area,
@@ -9,18 +9,19 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts";
+} from 'recharts';
 
-import avatar from "../../assets/Ellipse 13.png";
-import avatar1 from "../../assets/Ellipse 14.png";
-import avatar2 from "../../assets/Ellipse 15.png";
-import avatar3 from "../../assets/Ellipse 16.png";
-import avatar4 from "../../assets/Ellipse 17.png";
-import orange from "../../assets/images/Orange.png";
-import banana from "../../assets/images/Rectangle 45.png";
-import seeds from "../../assets/images/Seeds.png";
-import tomato from "../../assets/images/Tomato.png";
-import PieComponent from "../../Component/AdminComponent/PieComponent";
+import avatar from '../../assets/Ellipse 13.png';
+import avatar1 from '../../assets/Ellipse 14.png';
+import avatar2 from '../../assets/Ellipse 15.png';
+import avatar3 from '../../assets/Ellipse 16.png';
+import avatar4 from '../../assets/Ellipse 17.png';
+import orange from '../../assets/images/Orange.png';
+import banana from '../../assets/images/Rectangle 45.png';
+import seeds from '../../assets/images/Seeds.png';
+import tomato from '../../assets/images/Tomato.png';
+import PieComponent from '../../Component/AdminComponent/PieComponent';
+
 // import PieComponent from ".";
 
 const datas = [

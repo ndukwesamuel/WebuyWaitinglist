@@ -1,25 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 
-import { FaSearch, FaSlidersH } from "react-icons/fa";
-import Sidebar from "../../../Component/AdminComponent/Sidebar";
-import Navbar from "../../../Component/AdminComponent/Navbar";
-import { useMutation } from "react-query";
-import axios from "axios";
-import { ErrorFunc } from "../../../utilities/ApiErrorFun";
+import axios from 'axios';
+import { CiEdit } from 'react-icons/ci';
+import {
+  FaSearch,
+  FaSlidersH,
+} from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
+import { useMutation } from 'react-query';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 // import Navbar from '../../../Component/ Navbar';
 // import Sidebar from '../../components/Sidebar';
-import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
-import { useNavigate } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { AllProduct_fun } from "../../../Redux/ProductSlice";
-import { MdDelete } from "react-icons/md";
-import { toast } from "react-toastify";
-import { CiEdit } from "react-icons/ci";
-import ModalContainer, {
-  Reusable_modal,
-} from "../../../Component/modal-container/modal-container";
-import { Link } from "react-router-dom";
+import background
+  from '../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg';
+import Navbar from '../../../Component/AdminComponent/Navbar';
+import Sidebar from '../../../Component/AdminComponent/Sidebar';
+import { AllProduct_fun } from '../../../Redux/ProductSlice';
+
 const Base_URL = process.env.REACT_APP_Url;
 
 function ProductCard({ product }) {
@@ -27,15 +34,13 @@ function ProductCard({ product }) {
     (state) => state?.reducer?.AuthenticationSlice?.data
   );
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const delete_Product_mutate = useMutation(
     (formData) => {
       // Your API request code here
       // Use formData to send the image data to the API
 
       let API_URL = `${Base_URL}products/${formData}`;
-      console.log({ API_URL });
-
+      console.log({ API_URL })
       const config = {
         headers: {
           // "Content-Type": "application/json",
@@ -122,7 +127,7 @@ function ProductCard({ product }) {
           {!delete_Product_mutate?.isLoading && (
             <>
               <MdDelete
-                className=" text-red-600 text-2xl mx-5"
+                className="mx-5 text-2xl text-red-600 "
                 onClick={() => {
                   // deleteProduct(product._id);
                   delete_Product_mutate.mutate(product._id);
@@ -132,9 +137,9 @@ function ProductCard({ product }) {
               <Link
                 to="/admin/Addproduct"
                 state={product}
-                className=" text-green-600 text-2xl mx-5"
+                className="mx-5 text-2xl text-green-600 "
               >
-                <CiEdit className="  text-2xl mx-5" />
+                <CiEdit className="mx-5 text-2xl " />
               </Link>
             </>
           )}
@@ -243,11 +248,11 @@ const ProductsList = () => {
                 webuy/product/products
               </p>
             </header>
-            <div className="flex flex-col w-full h-full p-5  mt-5 bg-white n rounded-xl">
+            <div className="flex flex-col w-full h-full p-5 mt-5 bg-white n rounded-xl">
               <div className="flex justify-end gap-5 my-3">
                 <button
                   onClick={() => navigate("/admin/Addproduct")}
-                  className=" border-green-400  border-2 cursor-pointer px-3 py-2 rounded-2xl "
+                  className="px-3 py-2 border-2 border-green-400 cursor-pointer  rounded-2xl"
                 >
                   Create product
                 </button>

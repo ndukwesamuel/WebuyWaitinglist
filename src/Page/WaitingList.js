@@ -1,13 +1,20 @@
-import "swiper/css";
-import "swiper/css/pagination";
+import 'swiper/css';
+import 'swiper/css/autoplay';
+import 'swiper/css/pagination';
 
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  Autoplay,
+  Navigation,
+} from 'swiper/modules';
+import {
+  Swiper,
+  SwiperSlide,
+} from 'swiper/react';
 
-import Buyers from "../Component/WaitingList_Component/Buyers";
-import Main from "../Component/WaitingList_Component/Main";
+import Buyers from '../Component/WaitingList_Component/Buyers';
+import Main from '../Component/WaitingList_Component/Main';
 
 function WaitingList() {
   const [lang, setLang] = useState("en");
@@ -15,14 +22,19 @@ function WaitingList() {
   return (
     <>
       <Swiper
-        pagination={true}
-        modules={[Pagination]}
+        spaceBetween={0}
+        centeredSlides={true}
+        autoplay={{
+          delay: 10000,
+        }}
+        navigation={true}
+        modules={[Autoplay, Navigation]}
         className="mySwiper w-full h-full font-['Raleway']"
       >
-        <SwiperSlide className="">
+        <SwiperSlide className="flex items-center content-center">
           <Main lang={lang} setLang={setLang} />{" "}
         </SwiperSlide>
-        <SwiperSlide>
+        <SwiperSlide className="flex items-center content-center">
           <Buyers lang={lang} setLang={setLang} />{" "}
         </SwiperSlide>
       </Swiper>
