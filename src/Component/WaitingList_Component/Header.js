@@ -5,7 +5,7 @@ import image from '../../assets/Subtract.png';
 const Header = ({ lang, setLang }) => {
   return (
     <>
-      <div className="flex flex-row lg:px-[140px] max-sm:px-5 md:px-10 pt-[20px] absolute top-0 left-0  items-center justify-between w-full ">
+      <div className="flex flex-row lg:px-[140px] max-sm:px-5 md:px-10 2xl:px-[190px] pt-[20px] absolute top-0 left-0  items-center justify-between w-full ">
         <a className="cursor-pointer " href="/">
           <h1 className="text-[23px] font-extrabold text-[#faf5e9] max-sm:text-3xl max-md:text-4xl">
             WE
@@ -16,7 +16,7 @@ const Header = ({ lang, setLang }) => {
             ></img>
           </h1>
         </a>
-        <div>
+        <div className="flex items-center gap-2">
           <input
             className=" p-3 w-[200px] h-7 max-sm:hidden bg-[#faf5e9] opacity-25 rounded-full"
             type="text"
