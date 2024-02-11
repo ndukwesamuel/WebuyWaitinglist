@@ -9,13 +9,21 @@ import { useMutation } from "react-query";
 import { toast } from "react-toastify";
 import { IoAddCircleSharp } from "react-icons/io5";
 import ModalContainer from "../../Component/modal-container/modal-container";
-
+import { useGetCategoryQuery } from "../../Redux/categoryApi";
 const Base_URL = process.env.REACT_APP_Url;
 
 const AddCategory = () => {
   const { token } = useSelector(
     (state) => state?.reducer?.AuthenticationSlice?.data
   );
+  const {
+    data: category_data,
+    isLoading,
+    isError,
+    error,
+  } = useGetCategoryQuery();
+  console.log(category_data, "cateory result");
+  console.log(isLoading, "isloading");
 
   const dispatch = useDispatch();
   const [selectedCategory, setSelectedCategory] = useState([]);
@@ -39,15 +47,14 @@ const AddCategory = () => {
       Deletemutation.mutate(id);
     }
   };
-  const { category_data } = useSelector(
-    (state) => state.reducer?.CategorySlice
-  );
+  // useEffect(() => {
+  //   dispatch(Category_fun());
 
-  useEffect(() => {
-    dispatch(Category_fun());
-
-    return () => {};
-  }, []);
+  //   return () => {};
+  // }, []);
+  // const { category_data } = useSelector(
+  //   (state) => state.reducer?.CategorySlice
+  // );
 
   const Deletemutation = useMutation(
     (formData) => {
@@ -203,6 +210,7 @@ const AddCategory = () => {
                     </tr>
                   </thead>
                   <tbody>
+                    {isLoading && <p>Loading...</p>}
                     {category_data.map((category, index) => (
                       <tr
                         key={index}

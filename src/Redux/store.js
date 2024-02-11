@@ -9,6 +9,7 @@ import ProfileSlice from "./ProfileSlice";
 import { walletApi } from "./WalletApi";
 import { orderApi } from "./orderApi";
 import { passwordResetApi } from "./PasswordResetApi";
+import { categoryApi } from "./categoryApi";
 import ProductSlice from "./ProductSlice";
 import OrderSlice from "./OrderSlice";
 import CategorySlice from "./categorySlice";
@@ -44,13 +45,15 @@ export const store = configureStore({
     [walletApi.reducerPath]: walletApi.reducer,
     [passwordResetApi.reducerPath]: passwordResetApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,
+    [categoryApi.reducerPath]: categoryApi.reducer,
   },
   devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({ serializableCheck: false }).concat(
       walletApi.middleware,
       passwordResetApi.middleware,
-      orderApi.middleware
+      orderApi.middleware,
+      categoryApi.middleware
     );
   },
   passwordResetApi,

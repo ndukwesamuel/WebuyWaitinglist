@@ -1,19 +1,16 @@
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import axios from "axios";
+import { toast } from "react-toastify";
 
-import {
-  createAsyncThunk,
-  createSlice,
-} from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const Base_URL = process.env.REACT_APP_Url;
 
 const initialState = {
-  isError: false,
-  isSuccess: false,
-  isLoading: false,
-  message: null,
-  data: null,
+  category_data: null,
+  category_isError: false,
+  category_isLoading: false,
+  category_isSuccess: false,
+  category_message: null,
 };
 
 const Category_fun_Service = async (token) => {
@@ -26,6 +23,7 @@ const Category_fun_Service = async (token) => {
   };
 
   const response = await axios.get(API_URL, config);
+  // console.log(response.data, "category response");
   return response.data;
 };
 
@@ -33,16 +31,14 @@ export const Category_fun = createAsyncThunk(
   "CategorySlice/Category_fun",
   async (_, thunkAPI) => {
     try {
-      const state = thunkAPI.getState();
-      console.log("State:", state); // Log the state to see if AuthenticationSlice exists
-
-      const token = state.AuthenticationSlice?.data?.token;
+      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      console.log(token, "token here");
       if (!token) {
         throw new Error("Token is not available");
       }
       return await Category_fun_Service(token);
     } catch (error) {
-      console.log({ error });
+      console.log(error, "category slice error");
       const message =
         (error.response && error.response.data && error.response.data.msg) ||
         error.message ||
@@ -53,8 +49,6 @@ export const Category_fun = createAsyncThunk(
     }
   }
 );
-
-
 
 export const CategorySlice = createSlice({
   name: "CategorySlice",
@@ -88,5 +82,6 @@ export const CategorySlice = createSlice({
       });
   },
 });
+export const {} = CategorySlice.actions;
 
 export default CategorySlice.reducer;

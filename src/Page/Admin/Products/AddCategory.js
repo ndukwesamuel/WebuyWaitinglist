@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
 import Sidebar from "../../../Component/AdminComponent/Sidebar";
 import Navbar from "../../../Component/AdminComponent/Navbar";
-import { addCategoryApi } from "../../../Redux/AddCategoryApi";
 import { useDispatch, useSelector } from "react-redux";
 import { Category_fun } from "../../../Redux/ProductSlice";
 import axios from "axios";
@@ -10,6 +9,7 @@ import { useMutation } from "react-query";
 import { toast } from "react-toastify";
 import { IoAddCircleSharp } from "react-icons/io5";
 import ModalContainer from "../../../Component/modal-container/modal-container";
+import { useGetCategoryQuery } from "../../../Redux/categoryApi";
 
 const Base_URL = process.env.REACT_APP_Url;
 
@@ -17,6 +17,12 @@ const AddCategory = () => {
   const { token } = useSelector(
     (state) => state?.reducer?.AuthenticationSlice?.data
   );
+  const {
+    data: category_data,
+    isLoading,
+    isError,
+    error,
+  } = useGetCategoryQuery();
 
   const dispatch = useDispatch();
   const [selectedCategory, setSelectedCategory] = useState([]);
@@ -27,6 +33,9 @@ const AddCategory = () => {
     setShowSuccess(!showSuccess);
   };
 
+  useEffect(() => {
+    dispatch(Category_fun());
+  });
   const [edit, setEdit] = useState(false);
   const [name, setName] = useState("");
 
@@ -40,15 +49,6 @@ const AddCategory = () => {
       Deletemutation.mutate(id);
     }
   };
-  const { category_data } = useSelector(
-    (state) => state.reducer?.CategorySlice
-  );
-
-  useEffect(() => {
-    dispatch(Category_fun());
-
-    return () => {};
-  }, []);
 
   const Deletemutation = useMutation(
     (formData) => {
@@ -155,7 +155,6 @@ const AddCategory = () => {
   const handleEdit = (category) => {
     setShowSuccess(true);
     setSelectedCategory(category);
-    console.log({ category });
     setName(category?.name);
     setEdit(true);
   };
@@ -205,37 +204,39 @@ const AddCategory = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {category_data.map((category, index) => (
-                      <tr
-                        key={index}
-                        className="bg-white border-b dark:bg-white-800 dark:border-white-700"
-                      >
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-black-900 whitespace-nowrap dark:text-black"
+                    {isLoading && <p>Loading...</p>}
+                    {category_data &&
+                      category_data.map((category, index) => (
+                        <tr
+                          key={index}
+                          className="bg-white border-b dark:bg-white-800 dark:border-white-700"
                         >
-                          {category.name}
-                        </th>
-                        <td className="px-6 py-4">
-                          <button
-                            type="button"
-                            onClick={() => handleEdit(category)}
-                            className="font-medium text-blue-600 dark:text-blue-500 "
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-black-900 whitespace-nowrap dark:text-black"
                           >
-                            Edit
-                          </button>
-                        </td>
-                        <td className="px-6 py-4">
-                          <button
-                            type="button"
-                            onClick={() => handleDelete(category)}
-                            className="font-medium text-red-600 dark:text-red-500 "
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                            {category.name}
+                          </th>
+                          <td className="px-6 py-4">
+                            <button
+                              type="button"
+                              onClick={() => handleEdit(category)}
+                              className="font-medium text-blue-600 dark:text-blue-500 "
+                            >
+                              Edit
+                            </button>
+                          </td>
+                          <td className="px-6 py-4">
+                            <button
+                              type="button"
+                              onClick={() => handleDelete(category)}
+                              className="font-medium text-red-600 dark:text-red-500 "
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>

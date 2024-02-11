@@ -40,7 +40,6 @@ function ProductCard({ product }) {
       // Use formData to send the image data to the API
 
       let API_URL = `${Base_URL}products/${formData}`;
-      console.log({ API_URL })
       const config = {
         headers: {
           // "Content-Type": "application/json",
@@ -53,7 +52,6 @@ function ProductCard({ product }) {
       // return axios.post(API_URL, formData, config);
 
       return axios.delete(API_URL, config).catch((error) => {
-        console.error("Network error:", error.message);
         throw error; // Rethrow the error to trigger onError in useMutation
       });
 
