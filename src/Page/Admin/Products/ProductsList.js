@@ -1,31 +1,21 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from "react";
 
-import axios from 'axios';
-import { CiEdit } from 'react-icons/ci';
-import {
-  FaSearch,
-  FaSlidersH,
-} from 'react-icons/fa';
-import { MdDelete } from 'react-icons/md';
-import { useMutation } from 'react-query';
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
-import { useNavigate } from 'react-router';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import axios from "axios";
+import { CiEdit } from "react-icons/ci";
+import { FaSearch, FaSlidersH } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { useMutation } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // import Navbar from '../../../Component/ Navbar';
 // import Sidebar from '../../components/Sidebar';
-import background
-  from '../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg';
-import Navbar from '../../../Component/AdminComponent/Navbar';
-import Sidebar from '../../../Component/AdminComponent/Sidebar';
-import { AllProduct_fun } from '../../../Redux/ProductSlice';
+import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
+import Navbar from "../../../Component/AdminComponent/Navbar";
+import Sidebar from "../../../Component/AdminComponent/Sidebar";
+import { AllProduct_fun } from "../../../Redux/ProductSlice";
 
 const Base_URL = process.env.REACT_APP_Url;
 
@@ -47,18 +37,9 @@ function ProductCard({ product }) {
           Authorization: `Bearer ${token}`,
         },
       };
-
-      // console.log(config);
-      // return axios.post(API_URL, formData, config);
-
       return axios.delete(API_URL, config).catch((error) => {
         throw error; // Rethrow the error to trigger onError in useMutation
       });
-
-      //   return axios.post(API_URL, formData, config).catch((error) => {
-      //     console.error("Network error:", error.message);
-      //     throw error; // Rethrow the error to trigger onError in useMutation
-      //   });
     },
     {
       onSuccess: (response) => {
@@ -127,8 +108,13 @@ function ProductCard({ product }) {
               <MdDelete
                 className="mx-5 text-2xl text-red-600 "
                 onClick={() => {
-                  // deleteProduct(product._id);
-                  delete_Product_mutate.mutate(product._id);
+                  const confirmed = window.confirm(
+                    "Are you sure you want to delete this product?"
+                  );
+
+                  if (confirmed) {
+                    delete_Product_mutate.mutate(product._id);
+                  }
                 }}
               />
 

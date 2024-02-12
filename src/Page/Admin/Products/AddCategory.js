@@ -3,7 +3,6 @@ import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplas
 import Sidebar from "../../../Component/AdminComponent/Sidebar";
 import Navbar from "../../../Component/AdminComponent/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import { Category_fun } from "../../../Redux/ProductSlice";
 import axios from "axios";
 import { useMutation } from "react-query";
 import { toast } from "react-toastify";
@@ -22,6 +21,7 @@ const AddCategory = () => {
     isLoading,
     isError,
     error,
+    refetch,
   } = useGetCategoryQuery();
 
   const dispatch = useDispatch();
@@ -33,9 +33,6 @@ const AddCategory = () => {
     setShowSuccess(!showSuccess);
   };
 
-  useEffect(() => {
-    dispatch(Category_fun());
-  });
   const [edit, setEdit] = useState(false);
   const [name, setName] = useState("");
 
@@ -76,7 +73,7 @@ const AddCategory = () => {
           progress: undefined,
           theme: "light",
         });
-        dispatch(Category_fun());
+        refetch();
       },
       onError: (error) => {
         toast.error(
@@ -98,6 +95,7 @@ const AddCategory = () => {
     }
   );
 
+  const [createLoading, setCreateLoading] = useState(false);
   const createmutation = useMutation(
     async ({ id, name }) => {
       let API_URL = `${Base_URL}category`;
@@ -111,7 +109,7 @@ const AddCategory = () => {
       };
 
       let data = { name };
-
+      setCreateLoading(true);
       if (edit) {
         const PUT_URL = `${API_URL}/${id}`;
         return await axios.put(PUT_URL, data, config);
@@ -132,7 +130,8 @@ const AddCategory = () => {
           progress: undefined,
           theme: "light",
         });
-        dispatch(Category_fun());
+        setCreateLoading(false);
+        refetch();
       },
       onError: (error) => {
         const errorMessage =
@@ -148,6 +147,7 @@ const AddCategory = () => {
           theme: "light",
           className: "Forbidden403",
         });
+        setCreateLoading(false);
       },
     }
   );
@@ -162,6 +162,8 @@ const AddCategory = () => {
     e.preventDefault();
     createmutation.mutate({ id: selectedCategory._id, name });
   };
+
+  useEffect(() => {}, [category_data]);
 
   return (
     <div className="font-['Raleway']">
@@ -205,6 +207,8 @@ const AddCategory = () => {
                   </thead>
                   <tbody>
                     {isLoading && <p>Loading...</p>}
+                    {isError && <p>{error}</p>}
+
                     {category_data &&
                       category_data.map((category, index) => (
                         <tr
@@ -280,7 +284,13 @@ const AddCategory = () => {
               type="submit"
               className="bg-[#009B4D] text-white py-2 px-4 rounded hover:bg-[#009B4D] focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
             >
-              Submit
+              {createLoading ? (
+                <div className="flex items-center justify-center">
+                  <div className="w-4 h-4 border-t-2 border-[#4f7942] border-solid rounded-full animate-spin" />
+                </div>
+              ) : (
+                <>Submit </>
+              )}
             </button>
           </div>
         </form>

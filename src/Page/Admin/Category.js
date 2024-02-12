@@ -3,7 +3,6 @@ import background from "../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.j
 import Sidebar from "../../Component/AdminComponent/Sidebar";
 import Navbar from "../../Component/AdminComponent/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import { Category_fun } from "../../Redux/categorySlice";
 import axios from "axios";
 import { useMutation } from "react-query";
 import { toast } from "react-toastify";
@@ -47,14 +46,6 @@ const AddCategory = () => {
       Deletemutation.mutate(id);
     }
   };
-  // useEffect(() => {
-  //   dispatch(Category_fun());
-
-  //   return () => {};
-  // }, []);
-  // const { category_data } = useSelector(
-  //   (state) => state.reducer?.CategorySlice
-  // );
 
   const Deletemutation = useMutation(
     (formData) => {
@@ -82,7 +73,6 @@ const AddCategory = () => {
           progress: undefined,
           theme: "light",
         });
-        dispatch(Category_fun());
       },
       onError: (error) => {
         toast.error(
@@ -138,7 +128,6 @@ const AddCategory = () => {
           progress: undefined,
           theme: "light",
         });
-        dispatch(Category_fun());
       },
       onError: (error) => {
         const errorMessage =

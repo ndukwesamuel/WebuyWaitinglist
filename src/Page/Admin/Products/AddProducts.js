@@ -37,7 +37,7 @@ const AddProducts = () => {
   const [discount, setDiscount] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(state?.category);
   const [price, setPrice] = useState(state?.price); // State to store the input value
-  const [selectedCurrency, setSelectedCurrency] = useState("dollar"); // Default currency
+  const [selectedCurrency, setSelectedCurrency] = useState("naira"); // Default currency
   const [selectedImage, setSelectedImage] = useState(state?.image);
   const [uploadimage, setUploadimage] = useState(null);
   // const [productID, setProductID] = useState(state?._id);
@@ -49,10 +49,6 @@ const AddProducts = () => {
     error,
   } = useGetCategoryQuery();
 
-  // const { category_isLoading } = useSelector(
-  //   (state) => state.reducer.CategorySlice
-  // );
-  // console.log(category_isLoading, "category state");
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -126,18 +122,11 @@ const AddProducts = () => {
   // Define a mapping of currency symbols
 
   const currencyOptions = [
-    { value: "dollar", label: "$" },
     { value: "naira", label: "₦" },
     { value: "franc", label: "Fr" },
+    { value: "dollar", label: "$" },
   ];
 
-  const categoryOptions = [
-    { value: "", label: "category", disabled: true, hidden: true },
-    { value: "computers", label: "computers" },
-    { value: "groceries", label: "groceries" },
-  ];
-  // const dispatch = useDispatch();
-  // dispatch(fetchCategoryOptions());
   const { data } = useSelector(
     (state) => state.reducer.AuthenticationSlice || {}
   );
@@ -177,8 +166,6 @@ const AddProducts = () => {
           progress: undefined,
           theme: "light",
         });
-
-        // dispatch(Talent_manager_details_Get_all_player_fun());
 
         setProductName("");
         setProductDescription("");

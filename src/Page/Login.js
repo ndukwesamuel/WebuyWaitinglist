@@ -1,23 +1,13 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from "react";
 
-import { CiLock } from 'react-icons/ci';
-import { MdOutlineMail } from 'react-icons/md';
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
-import {
-  Link,
-  useNavigate,
-} from 'react-router-dom';
+import { CiLock } from "react-icons/ci";
+import { MdOutlineMail } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
-// import image from "../assets/istockphoto-1320029684-612x612__1_-removebg.png";
-import background from '../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg';
-import { resetSignup } from '../Redux/Auth';
-import { Login_fun } from '../Redux/AuthenticationSlice';
+import background from "../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg";
+import { resetSignup } from "../Redux/Auth";
+import { Login_fun } from "../Redux/AuthenticationSlice";
 
 const Login = () => {
   const navigate = useNavigate();
