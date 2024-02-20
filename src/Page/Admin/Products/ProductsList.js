@@ -1,21 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 
-import axios from "axios";
-import { CiEdit } from "react-icons/ci";
-import { FaSearch, FaSlidersH } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import { useMutation } from "react-query";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import axios from 'axios';
+import { CiEdit } from 'react-icons/ci';
+import {
+  FaSearch,
+  FaSlidersH,
+} from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
+import { useMutation } from 'react-query';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 // import Navbar from '../../../Component/ Navbar';
 // import Sidebar from '../../components/Sidebar';
-import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
-import Navbar from "../../../Component/AdminComponent/Navbar";
-import Sidebar from "../../../Component/AdminComponent/Sidebar";
-import { AllProduct_fun } from "../../../Redux/ProductSlice";
+import background
+  from '../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg';
+import Navbar from '../../../Component/AdminComponent/Navbar';
+import Sidebar from '../../../Component/AdminComponent/Sidebar';
+import { AllProduct_fun } from '../../../Redux/ProductSlice';
 
 const Base_URL = process.env.REACT_APP_Url;
 
@@ -88,7 +98,7 @@ function ProductCard({ product }) {
       <div className="rounded-xl font-['Raleway'] w-full border-[1.5px] mt-5 border-[#f3f3f3]">
         <div className="w-full">
           <img
-            className="w-full rounded-xl"
+            className="w-full h-[200px] rounded-xl"
             src={product.image}
             alt={product.name}
           />
@@ -232,11 +242,11 @@ const ProductsList = () => {
                 webuy/product/products
               </p>
             </header>
-            <div className="flex flex-col w-full h-full p-5 mt-5 bg-white n rounded-xl">
+            <div className="flex flex-col w-full h-full p-5 mt-5 bg-white rounded-xl overflow-y-scroll max-h-[550px]">
               <div className="flex justify-end gap-5 my-3">
                 <button
                   onClick={() => navigate("/admin/Addproduct")}
-                  className="px-3 py-2 border-2 border-green-400 cursor-pointer  rounded-2xl"
+                  className="px-3 py-2 border-2 border-green-400 cursor-pointer rounded-2xl"
                 >
                   Create product
                 </button>
@@ -244,14 +254,14 @@ const ProductsList = () => {
 
               <div className="relative w-full">
                 <input
-                  className="w-full pl-8 pr-12 py-2 border-2 border-[#f3f3f3] rounded-xl text-xs"
+                  className="w-full pl-8 pr-12 py-2 border-2 border-[#f3f3f3] rounded-full text-xs"
                   type="text"
                   name="search"
                   value={searchQuery}
                   placeholder="Search products..."
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#c3c2c2] text-xs" />
+                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#c3c2c2] text-sm" />
                 <FaSlidersH className="absolute text-xs text-black transform -translate-y-1/2 right-4 top-1/2" />
               </div>
               {error && <p className="mt-2 text-sm text-red-500">{error}</p>}

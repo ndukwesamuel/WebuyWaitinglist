@@ -1,4 +1,7 @@
-import React, { useEffect } from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 
 import {
   useDispatch,
@@ -18,6 +21,7 @@ const OrdersPage = () => {
   const { token } = useSelector(
     (state) => state.reducer?.AuthenticationSlice?.data
   );
+   const [searchQuery, setSearchQuery] = useState("");
 
   const dispatch = useDispatch();
 
@@ -27,7 +31,7 @@ const OrdersPage = () => {
     dispatch(Get_All_User_Orders_fun());
 
     return () => {};
-  }, []);
+  }, [dispatch]);
 
   // let filtered = AllProductData?.filter(
   //   (product) =>
@@ -76,6 +80,27 @@ const OrdersPage = () => {
       ? `${dateOrdered.toLocaleDateString()}`
       : "Invalid Date";
   };
+
+  let filteredOrders = All_User_orders?.orders?.filter(
+    (order) =>
+      order._id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order?.user?.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order?.orderItems?.some((product_info) =>
+        product_info?.product?.name
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
+      ) ||
+      order?.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      formatDate(order?.dateOrdered)
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase())
+  );
+
+
+
+
+
+
   return (
     <div>
       <div className="relative w-full h-full">
@@ -91,13 +116,27 @@ const OrdersPage = () => {
         </div>
         <div className=" basis-[90%]">
           <Navbar />
-          <div className=" flex items-center pl-12 pr-5 mt-10 justify-center">
+          <div className="flex items-center justify-center pl-12 pr-5 mt-10 ">
             <main className=" w-full  overflow-hidden table border-collapse font-['Raleway'] bg-[#fff5] shadow-md bg-opacity-5 rounded-[12.8px] mt-[15px]">
-              <section className=" w-full h-[10%] bg-[#fff4] py-[12.8px] px-[16px]">
+              <section className="flex content-center justify-between w-full h-[10%] bg-[#fff4] py-[12.8px] px-[30px]">
                 <h1 className=" text-[24px] font-bold">Orders</h1>
+                <form className="w-[400px] max-sm:max-w-md lg:max-w-lg md:max-w-sm">
+                  <div className="relative flex items-center">
+                    <i className="fa-solid absolute w-[13px] h-[13px] pointer-events-none ml-4 fa-magnifying-glass fa-beat-fade"></i>
+                    <input
+                      type="text"
+                      name="search"
+                      placeholder=""
+                      autoComplete="off"
+                      className="w-full px-3 py-[5px] max-sm:py-[15px] pl-10 font-semibold placeholder-gray-500 text-[#565454] rounded-full border-none ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    ></input>
+                  </div>
+                </form>
               </section>
               <section className=" w-[95%] max-h-[calc(89%-25.6px)] rounded-[9.6px] overflow-auto bg-[#fffb] my-[12.8px] mx-auto    ">
-                <table className=" w-full ">
+                <table className="w-full ">
                   <thead className="">
                     <tr className=" text-[#565454]">
                       <th className=" p-[16px] sticky top-0 left-0 bg-[#d5d1defe] border-collapse">
@@ -148,7 +187,7 @@ const OrdersPage = () => {
                   </thead>
 
                   <tbody className=" font-semibold text-[#565454]">
-                    {All_User_orders?.orders?.map((order) => (
+                    {filteredOrders?.map((order) => (
                       <tr
                         className=" even:bg-[#0000000b] hover:bg-[#fff6]"
                         key={order._id}
@@ -197,7 +236,7 @@ const OrdersPage = () => {
                           </div>
                         </td>
                         <td className=" p-[16px] border-collapse">
-                          <div className=" ">
+                          <div className="">
                             {order?.orderItems?.map((product_info) => {
                               // console.log({
                               //   hhh: product_info?.product?.image,

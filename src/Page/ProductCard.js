@@ -1,13 +1,18 @@
-import React from "react";
-import { Button, Card } from "flowbite-react";
+/* eslint-disable jsx-a11y/img-redundant-alt */
+import React from 'react';
+
+import {
+  Button,
+  Card,
+} from 'flowbite-react';
 
 const ProductCard = ({ name, price, description }) => {
   return (
-    <Card className="w-full max-w-sm bg-white border border-white-200 rounded-3xl border-[1.5px] mt-5 shadow dark:bg-white-800 dark:border-gray-700 ">
+    <Card className="w-full max-w-sm bg-white border-white-200 rounded-3xl border-[1.5px] mt-5 shadow dark:bg-white-800 dark:border-gray-700 ">
       <img
         className="rounded-t-lg"
         src="https://via.placeholder.com/300x200" // Replace with the actual image source
-        alt="product image"
+        alt="product-image"
       />
       <div className="">
         <a href="#">
@@ -43,7 +48,7 @@ const ProductCard = ({ name, price, description }) => {
             {description}
           </span>
         </div>
-        <div className="flex flex-col sm:flex-row items-center justify-between">
+        <div className="flex flex-col items-center justify-between sm:flex-row">
           <span className="text-3xl font-bold text-gray-900 dark:text-black">
             ${price}
           </span>

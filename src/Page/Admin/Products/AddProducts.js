@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from 'react';
 
-import axios from "axios";
+import axios from 'axios';
 import {
   FaAlignCenter,
   FaAlignJustify,
@@ -13,16 +13,17 @@ import {
   FaItalic,
   FaSortDown,
   FaUnderline,
-} from "react-icons/fa";
-import { useMutation } from "react-query";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router";
-import { toast } from "react-toastify";
+} from 'react-icons/fa';
+import { useMutation } from 'react-query';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router';
+import { toast } from 'react-toastify';
 
-import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
-import Navbar from "../../../Component/AdminComponent/Navbar";
-import Sidebar from "../../../Component/AdminComponent/Sidebar";
-import { useGetCategoryQuery } from "../../../Redux/categoryApi";
+import background
+  from '../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg';
+import Navbar from '../../../Component/AdminComponent/Navbar';
+import Sidebar from '../../../Component/AdminComponent/Sidebar';
+import { useGetCategoryQuery } from '../../../Redux/categoryApi';
 
 const Base_URL = process.env.REACT_APP_Url;
 
@@ -57,6 +58,18 @@ const AddProducts = () => {
       setUploadimage(file);
     }
   };
+
+   const resetInputs = () => {
+     setProductName("");
+     setProductDescription("");
+     setQuantity("");
+     setDiscount("");
+     setPrice("");
+     setSelectedCurrency("");
+     setSelectedCategory("");
+     setSelectedImage("");
+     setUploadimage(null);
+   };
 
   const applyUppercase = () => {
     setProductDescription((prevDescription) => {
@@ -223,6 +236,13 @@ const AddProducts = () => {
 
     creatProduct.mutate(formData);
   };
+
+  const handleDiscard = () => {
+    resetInputs();
+  };
+
+
+
   return (
     <div className=" font-['Raleway']">
       <div className="fixed top-0 left-0 w-full h-full">
@@ -577,6 +597,7 @@ const AddProducts = () => {
               <button
                 className="w-full bg-[#f3f3f3] text-[#009b4d] font-semibold py-2 rounded-lg"
                 type="submit"
+                onClick={handleDiscard}
               >
                 Discard
               </button>

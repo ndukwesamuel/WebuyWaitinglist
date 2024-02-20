@@ -469,12 +469,12 @@ const Main = () => {
             </div>
             <i className="fa-solid fa-people-group text-[#009b4d] text-[20px] transform hover:scale-[110%] transition duration-300 ease-out"></i>
           </div>
-          <div className="w-full px-[20px] py-[5px]">
-            <div className="bg-[#F8F9FC] py-[10px] rounded-[8px]">
+          <div className="w-full px-[15px] py-[5px]">
+            <div className="bg-[#F8F9FC] py-[10px] px-2 rounded-[8px]">
               <ol className=" flex justify-between w-full text-[13px] font-medium text-[#565454]">
-                <li className="-ml-3 ">Name</li>
-                <li className="ml-3 ">Address</li>
-                <li className="mr-4 ">Wallet</li>
+                <li className="">Name</li>
+                <li className="">Address</li>
+                <li className="">Wallet</li>
               </ol>
             </div>
             <div className="py-[5px] mt-2 flex items-center justify-between flex-row gap-[10px]">
@@ -490,7 +490,15 @@ const Main = () => {
                   Mark Wahlberg
                 </h2>
               </div>
-              <p className=" text-[11px] font-semibold -ml-10 text-[#565454]">
+              <p
+                className=" text-[11px] font-semibold -ml-10 text-[#565454]"
+                style={{
+                  maxWidth: "60px",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 Salt lake, 2nd
               </p>
               <p className=" text-[11px] font-semibold text-[#565454]">
@@ -510,7 +518,15 @@ const Main = () => {
                   Chris Hemsworth
                 </h2>
               </div>
-              <p className=" text-[11px] font-semibold -ml-10 text-[#565454]">
+              <p
+                className=" text-[11px] font-semibold -ml-10 text-[#565454]"
+                style={{
+                  maxWidth: "70px",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 Virgin lake, 32nd
               </p>
               <p className=" text-[11px] font-semibold text-[#565454]">
@@ -530,7 +546,15 @@ const Main = () => {
                   Will Smith
                 </h2>
               </div>
-              <p className=" text-[11px] font-semibold text-[#565454]">
+              <p
+                className=" text-[11px] font-semibold text-[#565454]"
+                style={{
+                  maxWidth: "70px",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 Mira tower, sector V
               </p>
               <p className=" text-[11px] font-semibold text-[#565454]">
@@ -550,7 +574,15 @@ const Main = () => {
                   Jessica Alba
                 </h2>
               </div>
-              <p className=" text-[11px] font-semibold text-[#565454]">
+              <p
+                className=" text-[11px] font-semibold text-[#565454]"
+                style={{
+                  maxWidth: "90px",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 Novotel, new town.
               </p>
               <p className=" text-[11px] font-semibold text-[#565454]">
@@ -570,7 +602,15 @@ const Main = () => {
                   Denzel Washington
                 </h2>
               </div>
-              <div className=" text-[11px] font-semibold -ml-10 text-[#565454]">
+              <div
+                className=" text-[11px] font-semibold -ml-10 text-[#565454]"
+                style={{
+                  maxWidth: "60px",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 Salt lake, 2nd
               </div>
               <div className=" text-[11px] font-semibold text-[#565454]">
