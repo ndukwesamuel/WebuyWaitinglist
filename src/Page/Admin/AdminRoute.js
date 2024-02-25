@@ -8,6 +8,8 @@ import background from "../../assets/images/Rectangle 115.png";
 import { Route, Routes } from "react-router-dom";
 import ProductsList from "./Products/ProductsList";
 import GroupPage from "../UserDashboard/GroupPage";
+import GroupsPage from "../Admin/GroupsPage";
+
 import AddProducts from "./Products/AddProducts";
 import AddCategory from "./Products/AddCategory";
 
@@ -16,7 +18,6 @@ import Category from "./Category";
 
 function AdminRoute() {
   const data = useSelector((state) => state.reducer?.AuthenticationSlice);
-  console.log({ data });
   return (
     <div className="">
       <div className="relative w-full h-screen">
@@ -41,7 +42,7 @@ function AdminRoute() {
             <Route path="/category" element={<AddCategory />} />
             {/* <Route path="/category" element={<Category />} />
             // <Route path="/Addcategory" element={<Category />} /> */}
-            <Route path="/group" element={<GroupPage />} />
+            <Route path="/group" element={<GroupsPage />} />
           </Routes>
         </div>
       </div>
