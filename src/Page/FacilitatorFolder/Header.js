@@ -1,15 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { FaChevronDown } from "react-icons/fa6";
-import image from "../../assets/images/Subtract.png";
-import myImage from "../../assets/DP.jpg";
-import UserSidebar from "../../Component/UserComponent/UserSidebar";
-import { IoCart } from "react-icons/io5";
-import { IoCartOutline } from "react-icons/io5";
-import { useNavigate } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { Logout_fun } from "../../Redux/AuthenticationSlice";
-import { AllProduct_fun, GetUSerCart_Fun } from "../../Redux/ProductSlice";
-import { Link } from "react-router-dom";
+import React, {
+  useEffect,
+  useState,
+} from 'react';
+
+import { FaChevronDown } from 'react-icons/fa6';
+import { IoCartOutline } from 'react-icons/io5';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
+
+import image from '../../assets/images/Subtract.png';
+import { Logout_fun } from '../../Redux/AuthenticationSlice';
+import {
+  AllProduct_fun,
+  GetUSerCart_Fun,
+} from '../../Redux/ProductSlice';
 
 const UserNavbar = () => {
   const navigate = useNavigate();
@@ -70,9 +78,9 @@ const UserNavbar = () => {
             <div className="flex gap-[.25rem] cursor-pointer">
               <i className="fa-solid fa-globe text-[#565454]"></i>
 
-              <FaChevronDown className="text-[10px] mt-[.5rem]" />
+              <FaChevronDown className="text-[10px] mt-[.5rem] mr-2" />
 
-              <dv className="flex relative">
+              <dv className="relative flex">
                 <IoCartOutline
                   className="text-[20px] "
                   onClick={() => navigate("/facilitator/cart")}
@@ -86,13 +94,13 @@ const UserNavbar = () => {
             <div className="relative inline-block text-left">
               <button
                 type="button"
-                className="inline-flex justify-center items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 active:bg-gray-200"
+                className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 active:bg-gray-200"
                 id="options-menu"
                 onClick={toggleDropdown}
               >
                 Hi {fullName}
                 <svg
-                  className="-mr-1 ml-2 h-5 w-5"
+                  className="w-5 h-5 ml-2 -mr-1"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -106,7 +114,7 @@ const UserNavbar = () => {
               </button>
 
               {isOpen && (
-                <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                <div className="absolute right-0 w-56 mt-2 origin-top-right bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                   <div
                     className="py-1"
                     role="menu"
@@ -117,7 +125,7 @@ const UserNavbar = () => {
                       <Link
                         key={index}
                         to={`/facilitator/${option.link}`}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                        className="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                         role="menuitem"
                       >
                         {console.log(`/${option?.link}`)}
@@ -136,7 +144,7 @@ const UserNavbar = () => {
                 sessionStorage.clear();
                 window.location.reload();
               }}
-              className="text-[14px] border-2 px-2 leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]"
+              className="text-[14px] border-2 px-4 py-2 leading-[20px] rounded-lg font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]"
             >
               Log Out
             </button>

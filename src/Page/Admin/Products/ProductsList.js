@@ -242,7 +242,14 @@ const ProductsList = () => {
                 webuy/product/products
               </p>
             </header>
-            <div className="flex flex-col w-full h-full p-5 mt-5 bg-white rounded-xl overflow-y-scroll max-h-[550px]">
+            <div
+              className="flex flex-col w-full h-full p-5 mt-5 bg-white rounded-xl overflow-y-scroll max-h-[550px]"
+              style={{
+                overflowY: "auto",
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+              }}
+            >
               <div className="flex justify-end gap-5 my-3">
                 <button
                   onClick={() => navigate("/admin/Addproduct")}

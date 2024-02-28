@@ -1,23 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 
-import { FaSearch, FaSlidersH } from "react-icons/fa";
-import { useMutation } from "react-query";
-import axios from "axios";
+import axios from 'axios';
+import {
+  FaSearch,
+  FaSlidersH,
+} from 'react-icons/fa';
+import {
+  MdDeleteOutline,
+  MdOutlineRemoveShoppingCart,
+} from 'react-icons/md';
+import { useMutation } from 'react-query';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 
-import { useNavigate } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { MdDelete } from "react-icons/md";
-import { toast } from "react-toastify";
-import { CiEdit } from "react-icons/ci";
-import { MdDeleteOutline } from "react-icons/md";
-import { MdOutlineRemoveShoppingCart } from "react-icons/md";
+import ModalContainer from '../../Component/modal-container/modal-container';
+import { Payment_fun } from '../../Redux/PaymentSlice';
+import {
+  AllProduct_fun,
+  GetUSerCart_Fun,
+} from '../../Redux/ProductSlice';
 
-import { Link } from "react-router-dom";
-import { AllProduct_fun, GetUSerCart_Fun } from "../../Redux/ProductSlice";
-import ModalContainer, {
-  Reusable_modal,
-} from "../../Component/modal-container/modal-container";
-import { Payment_fun } from "../../Redux/PaymentSlice";
 const Base_URL = process.env.REACT_APP_Url;
 
 const LoadingSkeleton = () => {
@@ -106,8 +115,8 @@ const Cart = () => {
 
   return (
     <div className="font-['Raleway']">
-      <div className="w-full px-3 md:pl-20 mt-8 md:pr-14">
-        <div className="flex flex-col w-full h-full p-5  mt-5 bg-white n rounded-xl ">
+      <div className="w-full px-3 mt-8 md:pl-20 md:pr-14">
+        <div className="flex flex-col w-full h-full p-5 mt-5 bg-white n rounded-xl ">
           <header className="w-full mb-5">
             <h1 className="text-[24px] leading-[34px] font-semibold text-[#009B4D]">
               Cart
@@ -129,10 +138,17 @@ const Cart = () => {
           </div>
           {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
 
-          <div className="md:flex w-full justify-between">
+          <div
+            className="md:flex w-full h-[500px] overflow-y-scroll justify-between"
+            style={{
+              overflowY: "auto",
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+            }}
+          >
             {cart_data?.message ? (
               <div className="md:w-[70%]">
-                <div className="flex justify-center items-end">
+                <div className="flex items-end justify-center">
                   <MdOutlineRemoveShoppingCart className="text-[100px] mt-20" />
                 </div>
                 <CartPage
@@ -351,8 +367,8 @@ const CartSummary = ({ cartItems }) => {
 
   return (
     <div className="container mx-auto mt-8">
-      <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
-      <div className="bg-gray-100 p-4 border">
+      <h2 className="mb-4 text-2xl font-bold">Order Summary</h2>
+      <div className="p-4 bg-gray-100 border">
         <div className="flex justify-between mb-2">
           <span>Subtotal:</span>
           <span>₦{calculateTotalPrice()}</span>
@@ -377,80 +393,80 @@ const CartSummary = ({ cartItems }) => {
       <ModalContainer close={toggleSuccess} show={showSuccess}>
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label className="block mb-2 text-sm font-bold text-gray-700">
               Shipping Address 1:
             </label>
             <input
               type="text"
               value={shippingAddress1}
               onChange={(e) => setShippingAddress1(e.target.value)}
-              className="border rounded w-full py-2 px-3"
+              className="w-full px-3 py-2 border rounded"
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label className="block mb-2 text-sm font-bold text-gray-700">
               Shipping Address 2:
             </label>
             <input
               type="text"
               value={shippingAddress2}
               onChange={(e) => setShippingAddress2(e.target.value)}
-              className="border rounded w-full py-2 px-3"
+              className="w-full px-3 py-2 border rounded"
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label className="block mb-2 text-sm font-bold text-gray-700">
               City
             </label>
             <input
               type="text"
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              className="border rounded w-full py-2 px-3"
+              className="w-full px-3 py-2 border rounded"
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label className="block mb-2 text-sm font-bold text-gray-700">
               Zip conde
             </label>
             <input
               type="text"
               value={zip}
               onChange={(e) => setZip(e.target.value)}
-              className="border rounded w-full py-2 px-3"
+              className="w-full px-3 py-2 border rounded"
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label className="block mb-2 text-sm font-bold text-gray-700">
               Country
             </label>
             <input
               type="text"
               value={zip}
               onChange={(e) => setCountry(e.target.value)}
-              className="border rounded w-full py-2 px-3"
+              className="w-full px-3 py-2 border rounded"
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label className="block mb-2 text-sm font-bold text-gray-700">
               Phone
             </label>
             <input
               type="text"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="border rounded w-full py-2 px-3"
+              className="w-full px-3 py-2 border rounded"
             />
           </div>
 
           {/* Repeat similar structure for other fields */}
 
-          <div className="mb-4 flex justify-center">
+          <div className="flex justify-center mb-4">
             <button
               type="submit"
               className="bg-[#009B4D] text-white py-2 px-4 rounded hover:bg-[#009B4D] focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
@@ -617,19 +633,19 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
   };
 
   return (
-    <div className="container mx-auto my-8   ">
+    <div className="container mx-auto my-8 ">
       {cartItems?.length === 0 ? (
         <p className="text-center ">Your cart is empty</p>
       ) : (
         <ul className="grid grid-cols-1 gap-4">
           {cartItems?.map((item, index) => (
-            <li key={index} className="border p-4">
-              <div className="flex  flex-col md:flex-row items-center gap-5">
+            <li key={index} className="p-4 border">
+              <div className="flex flex-col items-center gap-5 md:flex-row">
                 <img
                   // src={item?.image}
                   src={item?.productId?.image}
                   alt={item?.name}
-                  className="w-32 rounded-md h-32 object-cover "
+                  className="object-cover w-32 h-32 rounded-md "
                 />
                 <div className="w-full">
                   <div className="flex gap-5">
@@ -647,7 +663,7 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
                     </p>
                   </div>
 
-                  <div className="flex w-full items-center  mt-5 justify-between ">
+                  <div className="flex items-center justify-between w-full mt-5 ">
                     <div
                       className="flex items-center text-red-500 cursor-pointer "
                       //   className="text-red-500 hover:text-red-700"

@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from "react";
-import background from "../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
-import Sidebar from "../../Component/AdminComponent/Sidebar";
-import Navbar from "../../Component/AdminComponent/Navbar";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { useMutation } from "react-query";
-import { toast } from "react-toastify";
-import { IoAddCircleSharp } from "react-icons/io5";
-import ModalContainer from "../../Component/modal-container/modal-container";
-import { useGetCategoryQuery } from "../../Redux/categoryApi";
+import React, { useState } from 'react';
+
+import axios from 'axios';
+import { IoAddCircleSharp } from 'react-icons/io5';
+import { useMutation } from 'react-query';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import { toast } from 'react-toastify';
+
+import background
+  from '../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg';
+import Navbar from '../../Component/AdminComponent/Navbar';
+import Sidebar from '../../Component/AdminComponent/Sidebar';
+import ModalContainer from '../../Component/modal-container/modal-container';
+import { useGetCategoryQuery } from '../../Redux/categoryApi';
+
 const Base_URL = process.env.REACT_APP_Url;
 
 const AddCategory = () => {
@@ -175,7 +182,14 @@ const AddCategory = () => {
                 Category
               </h1>
             </header>
-            <form className="w-full max-w-2xl-lg bg-white p-8 rounded shadow-lg overflow-y-auto h-24 min-h-full ">
+            <form
+              className="w-full max-w-2xl-lg bg-white p-8 rounded shadow-lg overflow-y-auto h-24 min-h-full "
+              style={{
+                overflowY: "auto",
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+              }}
+            >
               <IoAddCircleSharp
                 className="text-[50px]"
                 onClick={() => {
