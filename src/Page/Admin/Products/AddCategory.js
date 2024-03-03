@@ -201,7 +201,14 @@ const AddCategory = () => {
               />
 
               {/* Table */}
-              <div className="relative h-full mt-8 overflow-x-auto shadow-md sm:rounded-lg overflow-y-scroll max-h-[400px]">
+              <div
+                className="relative h-full mt-8 overflow-x-auto shadow-md sm:rounded-lg overflow-y-scroll max-h-[400px]"
+                style={{
+                  overflowY: "auto",
+                  scrollbarWidth: "none",
+                  msOverflowStyle: "none",
+                }}
+              >
                 <table className="w-full text-sm text-left rtl:text-right text-black-500 dark:text-gray-400">
                   <thead className="font-medium text-base text-[#565454]">
                     <tr>

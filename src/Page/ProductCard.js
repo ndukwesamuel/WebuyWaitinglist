@@ -8,7 +8,7 @@ import {
 
 const ProductCard = ({ name, price, description }) => {
   return (
-    <Card className="w-full max-w-sm bg-white border-white-200 rounded-3xl border-[1.5px] mt-5 shadow dark:bg-white-800 dark:border-gray-700 ">
+    <Card className="w-full max-w-sm bg-white border-white-200 rounded-3xl border-[1.5px] mt-5 shadow dark:bg-white-800  ">
       <img
         className="rounded-t-lg"
         src="https://via.placeholder.com/300x200" // Replace with the actual image source

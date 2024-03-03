@@ -1,12 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 
-import { CiLock, CiUser } from "react-icons/ci";
-import { MdOutlineMail } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import {
+  CiLock,
+  CiUser,
+} from 'react-icons/ci';
+import { MdOutlineMail } from 'react-icons/md';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import background from "../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg";
-import { RegisterFun, resetSignup } from "../Redux/Auth";
+import background from '../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg';
+import {
+  RegisterFun,
+  resetSignup,
+} from '../Redux/Auth';
 
 const SignUp = () => {
   const { data, isLoading } = useSelector((state) => state.reducer?.Auth);
@@ -20,9 +32,14 @@ const SignUp = () => {
   });
 
   const [selectedCountry, setSelectedCountry] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   const { email, firstName, lastName, password } = loginform;
@@ -131,7 +148,7 @@ const SignUp = () => {
                   value={email}
                   onChange={handleChange}
                   id="email"
-                  placeholder="Youremail@gmail.com"
+                  placeholder="youremail@gmail.com"
                   label="Email Address"
                   icon={MdOutlineMail}
                 />
@@ -160,7 +177,7 @@ const SignUp = () => {
                       id="country"
                       value={selectedCountry}
                       onChange={handleCountryChange}
-                      className="appearance-none bg-white border border-[#99999999] p-3 rounded w-full"
+                      className="appearance-none bg-white border border-[#99999999] p-3 rounded-lg w-full"
                     >
                       <option value="" disabled>
                         Select a Location
@@ -171,16 +188,6 @@ const SignUp = () => {
 
                       {/* Add more countries as needed */}
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                      {/* You can customize the dropdown arrow icon */}
-                      <svg
-                        className="fill-current h-4 w-4"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M10 12l-8 8-2-2 8-8 8 8-2 2-8-8v10h-4v-14h-2v14h-4v2h14v-2h-4v-10z" />
-                      </svg>
-                    </div>
                   </div>
                 </div>
               </div>

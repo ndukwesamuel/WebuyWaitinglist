@@ -10,6 +10,7 @@ import { walletApi } from "./WalletApi";
 import { orderApi } from "./orderApi";
 import { passwordResetApi } from "./PasswordResetApi";
 import { categoryApi } from "./categoryApi";
+import { groupApi } from "./groupApi";
 import ProductSlice from "./ProductSlice";
 import OrderSlice from "./OrderSlice";
 import AdminRecipteSLice from "./AdminRecipteSLice";
@@ -46,6 +47,7 @@ export const store = configureStore({
     [passwordResetApi.reducerPath]: passwordResetApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,
     [categoryApi.reducerPath]: categoryApi.reducer,
+    [groupApi.reducerPath]: groupApi.reducer,
   },
   devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) => {
@@ -53,7 +55,8 @@ export const store = configureStore({
       walletApi.middleware,
       passwordResetApi.middleware,
       orderApi.middleware,
-      categoryApi.middleware
+      categoryApi.middleware,
+      groupApi.middleware
     );
   },
   passwordResetApi,

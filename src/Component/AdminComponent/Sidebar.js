@@ -50,7 +50,7 @@ const Sidebar = () => {
       <div className="flex items-center gap-[13px] py-[15px] border-b-[0.5px] border-[#000000]/[0.3] cursor-pointer">
         <i className="fa-solid fa-users text-[#565454]"></i>
         <Link
-          to="/group/group-page"
+          to="/admin/group"
           className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]"
         >
           Groups
