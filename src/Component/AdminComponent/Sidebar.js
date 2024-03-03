@@ -77,38 +77,19 @@ const Sidebar = () => {
           Category
         </Link>
       </div>
-      {/* <div className="flex items-center gap-[15px] py-[15px] border-b-[0.5px] border-[#000000]/[0.3] cursor-pointer">
-        <i className="fa-solid fa-cart-shopping text-[#565454]"></i>
-        <p className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d] ">
-          Products
-        </p>
-        <i
-          onClick={showProductDropdown}
-          className="fa-solid fa-chevron-down fa-beat text-[10px] mt-1 -ml-1 text-[#565454]"
-        ></i>
 
-        {open && (
-          <div className="bg-white border absolute left-[135px] top-[265px] z-50  space-y-[2px] w-[120px] p-3 pr-4 rounded-[8px]">
-            <Link to="/Product-list">
-              <p className="cursor-pointer text-[13px] text-[#565454] hover:text-[#009B4D] font-semibold">
-                Product list
-              </p>
-            </Link>
+      <div className="flex items-center gap-[13px] py-[15px] border-b-[0.5px] border-[#000000]/[0.3] cursor-pointer">
+        {/* <i className="fa-solid fa-users text-[#565454]"></i> */}
+        <i class="fa-solid fa-receipt"></i>
 
-            <Link to="/Add-products">
-              <p className="cursor-pointer text-[#565454] text-[13px] hover:text-[#009B4D] font-semibold">
-                Add products
-              </p>
-            </Link>
-          </div>
-        )}
-      </div> */}
-      <div className="flex items-center gap-[15px] py-[15px] border-b-[0.5px] border-[#000000]/[0.3] cursor-pointer">
-        <i className="fa-solid fa-envelope text-[#565454]"></i>
-        <p className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]">
-          Messages
-        </p>
+        <Link
+          to="/admin/recipte"
+          className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]"
+        >
+          Receipt
+        </Link>
       </div>
+
       <div className="pt-[15px] mt-[70px] border-b-[0.5px] border-[#000000]/[0.3]">
         <p className="text-[10px] font-extrabold leading-[16px] text-[#565454]/[0.4]">
           {" "}

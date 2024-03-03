@@ -13,6 +13,7 @@ import AddCategory from "./Products/AddCategory";
 
 import { useSelector } from "react-redux";
 import Category from "./Category";
+import Recipte from "./Recipte";
 
 function AdminRoute() {
   const data = useSelector((state) => state.reducer?.AuthenticationSlice);
@@ -42,6 +43,7 @@ function AdminRoute() {
             {/* <Route path="/category" element={<Category />} />
             // <Route path="/Addcategory" element={<Category />} /> */}
             <Route path="/group" element={<GroupPage />} />
+            <Route path="/recipte" element={<Recipte />} />
           </Routes>
         </div>
       </div>
