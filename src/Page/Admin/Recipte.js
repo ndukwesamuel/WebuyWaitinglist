@@ -8,6 +8,7 @@ import Navbar from "../../Component/AdminComponent/Navbar";
 import Sidebar from "../../Component/AdminComponent/Sidebar";
 import { Get_All_User_Orders_fun } from "../../Redux/OrderSlice";
 import { Admin_get_all_recipte_fun_ } from "../../Redux/AdminRecipteSLice";
+import { Link } from "react-router-dom";
 
 const Base_URL = process.env.REACT_APP_Url;
 
@@ -161,7 +162,7 @@ const Recipte = () => {
                   <tbody className=" font-semibold text-[#565454]">
                     {filteredrecipts?.map((order) => (
                       <tr
-                        className=" even:bg-[#0000000b] hover:bg-[#fff6]"
+                        className=" even:bg-[#0000000b] hover:bg-[#fff6] text-center"
                         key={order._id}
                       >
                         <td
@@ -204,30 +205,31 @@ const Recipte = () => {
                           <p
                             className={`text-center rounded-xl py-[6.4px] px-2 -ml-4 
     ${
-      order?.status === "Cancelled"
+      order?.status === "declined"
         ? "bg-red-500 text-white"
-        : order?.status === "Pending"
+        : order?.status === "pending"
         ? "bg-brown-500 text-white debug"
-        : order?.status === "Delivered"
+        : order?.status === "approved"
         ? "bg-green-500 text-white"
         : ""
     }`}
                           >
                             {order?.status}
-                            fire
                           </p>
                         </td>
 
                         <td
                           className="p-[16px] border-collapse"
                           style={{
-                            maxWidth: "200px",
+                            maxWidth: "100px",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             whiteSpace: "nowrap",
                           }}
                         >
-                          Update
+                          <Link to="/admin/update-recipte" state={order}>
+                            Update
+                          </Link>
                         </td>
                       </tr>
                     ))}
