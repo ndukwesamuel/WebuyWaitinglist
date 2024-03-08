@@ -1,23 +1,14 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from "react";
 
-import { FaChevronDown } from 'react-icons/fa6';
-import { IoCartOutline } from 'react-icons/io5';
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
-import { useNavigate } from 'react-router';
-import { Link } from 'react-router-dom';
+import { FaChevronDown } from "react-icons/fa6";
+import { IoCartOutline } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
-import image from '../../assets/images/Subtract.png';
-import { Logout_fun } from '../../Redux/AuthenticationSlice';
-import {
-  AllProduct_fun,
-  GetUSerCart_Fun,
-} from '../../Redux/ProductSlice';
+import image from "../../assets/images/Subtract.png";
+import { Logout_fun } from "../../Redux/AuthenticationSlice";
+import { AllProduct_fun, GetUSerCart_Fun } from "../../Redux/ProductSlice";
 
 const UserNavbar = () => {
   const navigate = useNavigate();
@@ -28,8 +19,6 @@ const UserNavbar = () => {
   const { AllProductData, isLoading, cart_data, cart_isSuccess } = useSelector(
     (state) => state?.reducer?.ProductSlice
   );
-
-  console.log({ aa: cart_data?.userCart?.items?.length });
 
   const [openSidebar, setOpenSidebar] = useState(false);
   const [lang, setLang] = useState("en");
@@ -80,7 +69,7 @@ const UserNavbar = () => {
 
               <FaChevronDown className="text-[10px] mt-[.5rem] mr-2" />
 
-              <dv className="relative flex">
+              <div className="relative flex">
                 <IoCartOutline
                   className="text-[20px] "
                   onClick={() => navigate("/facilitator/cart")}
@@ -88,7 +77,7 @@ const UserNavbar = () => {
                 <span className="ab absolute top-[-7px] left-[18px] bottom-4">
                   {cart_data?.userCart?.items?.length}
                 </span>
-              </dv>
+              </div>
             </div>
             <p className="hidden md:block"></p>
             <div className="relative inline-block text-left">

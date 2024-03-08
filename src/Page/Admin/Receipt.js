@@ -1,82 +1,116 @@
 import React, { useEffect, useState } from "react";
-
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-
 import background from "../../assets/images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg";
 import Navbar from "../../Component/AdminComponent/Navbar";
-// import background from "../images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg";
 import Sidebar from "../../Component/AdminComponent/Sidebar";
 import { Get_All_User_Orders_fun } from "../../Redux/OrderSlice";
 import { Admin_get_all_recipte_fun_ } from "../../Redux/AdminRecipteSLice";
 import { Link } from "react-router-dom";
-
+import ModalContainer from "../../Component/modal-container/modal-container";
+import { useMutation } from "react-query";
+import { toast } from "react-toastify";
 const Base_URL = process.env.REACT_APP_Url;
 
 const Recipte = () => {
   const { token } = useSelector(
-    (state) => state.reducer?.AuthenticationSlice?.data
+    (state) => state?.reducer?.AuthenticationSlice?.data
   );
-
+  const [showSuccess, setShowSuccess] = useState(false);
+  const toggleSuccess = () => {
+    setShowSuccess(!showSuccess);
+  };
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedReceiptId, setSelectedReceiptId] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
+  console.log("this is selectedstatus id", selectedReceiptId);
   const dispatch = useDispatch();
-
-  const { All_User_orders } = useSelector((state) => state.reducer?.OrderSlice);
 
   const { Admin_get_all_recipte } = useSelector(
     (state) => state.reducer?.AdminRecipteSLice
   );
-  console.log({
-    Admin_get_all_recipte,
-  });
 
   useEffect(() => {
     dispatch(Admin_get_all_recipte_fun_());
 
     return () => {};
   }, [dispatch]);
+  const [createLoading, setCreateLoading] = useState(false);
 
-  // let filtered = AllProductData?.filter(
-  //   (product) =>
-  //     product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //     product.category.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
+  const createmutation = useMutation(
+    async ({ receiptId, status }) => {
+      let API_URL = `${Base_URL}wallet/receipt`;
 
-  // const ProductDetails = ({ productId }) => {
-  //   const [productDetails, setProductDetails] = useState({
-  //     name: "",
-  //     image: "",
-  //   });
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
 
-  //   useEffect(() => {
-  //     const fetchProductDetails = async () => {
-  //       let API_URL = `${Base_URL}products/${productId}`;
-  //       console.log({ token, API_URL });
+      let data = { receiptId, status };
+      setCreateLoading(true);
+      return await axios.post(API_URL, data, config);
+    },
+    {
+      onSuccess: (response) => {
+        const message = response?.data?.message || "Operation successful";
+        toast.success(message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setCreateLoading(false);
+        // refetch();
+      },
+      onError: (error) => {
+        const errorMessage =
+          error?.response?.data?.message || "An error occurred";
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          className: "Forbidden403",
+        });
+        setCreateLoading(false);
+      },
+    }
+  );
 
-  //       const config = {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       };
-  //       try {
-  //         const response = await axios.get(API_URL, config);
+  const handleUpdateClick = (receiptId) => {
+    setSelectedReceiptId(receiptId); // Set the selected receipt ID when "Update" is clicked
+    setShowSuccess(true); // Show the modal
+  };
 
-  //         setProductDetails(response.data);
-  //       } catch (error) {
-  //         console.error("Error fetching product details:", error);
-  //       }
-  //     };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    createmutation.mutate({
+      receiptId: selectedReceiptId, // Use the selected receipt ID
+      status: selectedStatus,
+    });
+  };
 
-  //     fetchProductDetails();
-  //   }, [productId]);
-
-  //   return (
-  //     <div>
-  //       <img src={productDetails.image} alt={productDetails.name} />
-  //       <p className="text-[15px]">{productDetails.name}</p>
-  //     </div>
-  //   );
-  // };
+  const handleStatusChange = (e) => {
+    const newStatus = e.target.value;
+    setSelectedStatus(newStatus);
+  };
+  const statusOptions = [
+    { value: "pending", label: "pending" },
+    { value: "approved", label: "approved" },
+    { value: "declined", label: "declined" },
+  ];
   const formatDate = (dateString) => {
     const dateOrdered = new Date(dateString);
     return dateOrdered instanceof Date && !isNaN(dateOrdered)
@@ -127,12 +161,10 @@ const Recipte = () => {
                   <thead className="">
                     <tr className=" text-[#565454]">
                       <th className=" p-[16px] sticky top-0 left-0 bg-[#d5d1defe] border-collapse">
-                        {" "}
                         Recipte ID
                       </th>
 
                       <th className=" p-[16px] sticky top-0 left-0 bg-[#d5d1defe] border-collapse">
-                        {" "}
                         Username
                       </th>
                       <th
@@ -144,12 +176,10 @@ const Recipte = () => {
                           whiteSpace: "nowrap",
                         }}
                       >
-                        {" "}
                         Amount
                       </th>
 
                       <th className=" p-[16px] sticky top-0 left-0 bg-[#d5d1defe] border-collapse">
-                        {" "}
                         Date
                       </th>
 
@@ -227,7 +257,24 @@ const Recipte = () => {
                             whiteSpace: "nowrap",
                           }}
                         >
-                          <Link to="/admin/update-recipte" state={order}>
+                          <Link to="/admin/view-receipt" state={order}>
+                            View
+                          </Link>
+                        </td>
+                        <td
+                          className="p-[16px] border-collapse"
+                          style={{
+                            maxWidth: "100px",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          <Link
+                            onClick={() => {
+                              handleUpdateClick(order._id);
+                            }}
+                          >
                             Update
                           </Link>
                         </td>
@@ -240,6 +287,42 @@ const Recipte = () => {
           </div>
         </div>
       </div>
+      <ModalContainer close={toggleSuccess} show={showSuccess}>
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-2">
+          <div className="mb-4 relative">
+            <label className="block mb-2 text-sm font-bold text-gray-700">
+              Update Receipt Status
+            </label>
+
+            <select
+              className="absolute right-0 w-full h-10 p-2  bg-[#f6f6f6] text-[#6f6d6d] rounded-lg"
+              value={selectedStatus}
+              onChange={handleStatusChange}
+            >
+              {statusOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex justify-center mb-[4rem] mt-[4rem]">
+            <button
+              type="submit"
+              className="bg-[#009B4D] text-white py-2 px-4 rounded hover:bg-[#009B4D] focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+            >
+              {createLoading ? (
+                <div className="flex items-center justify-center">
+                  <div className="w-4 h-4 border-t-2 border-[#4f7942] border-solid rounded-full animate-spin" />
+                </div>
+              ) : (
+                <>Update </>
+              )}
+            </button>
+          </div>
+        </form>
+      </ModalContainer>
     </div>
   );
 };

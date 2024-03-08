@@ -1,4 +1,5 @@
 import { useGetUserOrderQuery } from "../../Redux/orderApi";
+import { toast } from "react-toastify";
 
 const LoadingSkeleton = () => {
   return (
@@ -19,13 +20,12 @@ const LoadingSkeleton = () => {
 };
 
 const AllOrders = () => {
-  const { data: orders, isLoading, isError } = useGetUserOrderQuery();
+  const { data: orders, isLoading, isError, error } = useGetUserOrderQuery();
   if (isLoading) {
     return <LoadingSkeleton />;
   }
-
   if (isError) {
-    return <div>Error loading orders</div>;
+    return toast.error(error.data.message);
   }
 
   const userOrder = orders.message;
@@ -115,7 +115,7 @@ const AllOrders = () => {
                           <td className=" p-[16px] border-collapse">
                             {order?.orderItems
                               .map((item) => item.product.name)
-                              .join(", ")}
+                              .join(",")}
                           </td>
                           <td className=" p-[16px] border-collapse">
                             {order?.orderItems
