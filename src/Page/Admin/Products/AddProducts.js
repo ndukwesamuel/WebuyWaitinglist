@@ -222,7 +222,6 @@ const AddProducts = () => {
     }
   );
 
-  console.log({ selectedCategory });
   const handleAddProduct = (e) => {
     e.preventDefault();
 

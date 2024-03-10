@@ -1,23 +1,16 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from "react";
 
-import axios from 'axios';
-import { IoAddCircleSharp } from 'react-icons/io5';
-import { useMutation } from 'react-query';
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
-import { toast } from 'react-toastify';
+import axios from "axios";
+import { IoAddCircleSharp } from "react-icons/io5";
+import { useMutation } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
-import background
-  from '../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg';
-import Navbar from '../../../Component/AdminComponent/Navbar';
-import Sidebar from '../../../Component/AdminComponent/Sidebar';
-import ModalContainer from '../../../Component/modal-container/modal-container';
-import { useGetCategoryQuery } from '../../../Redux/categoryApi';
+import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
+import Navbar from "../../../Component/AdminComponent/Navbar";
+import Sidebar from "../../../Component/AdminComponent/Sidebar";
+import ModalContainer from "../../../Component/modal-container/modal-container";
+import { useGetCategoryQuery } from "../../../Redux/categoryApi";
 
 const Base_URL = process.env.REACT_APP_Url;
 
@@ -268,12 +261,6 @@ const AddCategory = () => {
                   type="submit"
                 >
                   Cancel
-                </button>
-                <button
-                  className="w-full bg-[#009b4d] text-white font-semibold py-2 rounded-lg"
-                  type="submit"
-                >
-                  Add Category
                 </button>
               </div>
             </form>

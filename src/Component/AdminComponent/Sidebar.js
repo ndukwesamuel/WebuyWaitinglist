@@ -83,7 +83,7 @@ const Sidebar = () => {
         <i class="fa-solid fa-receipt"></i>
 
         <Link
-          to="/admin/recipte"
+          to="/admin/receipt"
           className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]"
         >
           Receipt
