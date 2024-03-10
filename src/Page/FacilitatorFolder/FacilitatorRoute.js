@@ -1,9 +1,14 @@
-import background from "../../assets/images/Rectangle 115.png";
-import { Route, Routes } from "react-router-dom";
-import Allprodcut from "./Allprodcut";
-import UserNavbar from "./Header";
-import Cart from "./Cart";
-import AllOrders from "./AllOrders";
+import {
+  Route,
+  Routes,
+} from 'react-router-dom';
+
+import background from '../../assets/images/Rectangle 115.png';
+import AllOrders from './AllOrders';
+import Allprodcut from './Allprodcut';
+import Cart from './Cart';
+import UserNavbar from './Header';
+
 const FacilitatorRoute = () => {
   return (
     <div className="">
@@ -15,7 +20,7 @@ const FacilitatorRoute = () => {
         ></img>
       </div>
       <div className="absolute inset-0 flex overflow-scroll">
-        <div className=" w-full">
+        <div className="w-full ">
           <UserNavbar />
           <Routes>
             <Route path="/" element={<Allprodcut />} />

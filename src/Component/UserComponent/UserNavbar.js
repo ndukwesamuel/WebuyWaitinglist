@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { FaChevronDown } from "react-icons/fa6";
-import image from "../../assets/images/Subtract.png";
-import myImage from "../../assets/DP.jpg";
-import UserSidebar from "./UserSidebar";
+import React, { useState } from 'react';
+
+import { FaChevronDown } from 'react-icons/fa6';
+
+import myImage from '../../assets/DP.jpg';
+import UserSidebar from './UserSidebar';
+
 const UserNavbar = () => {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [lang, setLang] = useState("en");
@@ -12,7 +14,7 @@ const UserNavbar = () => {
   return (
     <div className=" font-['Raleway'] bg-[#ffffff] w-full ">
       <div className="flex items-center justify-between h-[70px] shadow-lg px-[25px] ">
-        <div className=" py-[15px] flex items-center justify-center   ">
+        {/* <div className=" py-[15px] flex items-center justify-center   ">
           <a className="cursor-pointer " href="/">
             <h1 className="text-[21px] font-extrabold text-[#565454] max-sm:text-3xl max-md:text-4xl">
               WE
@@ -23,7 +25,7 @@ const UserNavbar = () => {
               ></img>
             </h1>
           </a>
-        </div>
+        </div> */}
 
         <div className="flex items-center rounded-[5px]"></div>
         <div className="flex items-center gap-[20px]">

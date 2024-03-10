@@ -86,7 +86,7 @@ const SignUp = () => {
 
   return (
     <div
-      className=" min-h-screen py-10 px-2"
+      className="min-h-screen px-2 py-10 "
       style={{
         backgroundImage: `url(${background})`,
         backgroundSize: "cover",
@@ -114,7 +114,7 @@ const SignUp = () => {
               </p>
             </div>
 
-            <form className=" flex-col gap-4 justify-center">
+            <form className="flex-col justify-center gap-4 ">
               <div className="my-5">
                 <ReusableInput
                   type="text"
@@ -169,7 +169,7 @@ const SignUp = () => {
 
               <div className="my-5">
                 <div className="my-5">
-                  <label htmlFor="country" className="block">
+                  <label htmlFor="country" className="block font-normal">
                     Location
                   </label>
                   <div className="relative">
@@ -177,7 +177,7 @@ const SignUp = () => {
                       id="country"
                       value={selectedCountry}
                       onChange={handleCountryChange}
-                      className="appearance-none bg-white border border-[#99999999] p-3 rounded-lg w-full"
+                      className="appearance-none bg-white border border-[#99999999] text-base p-3 rounded-lg w-full"
                     >
                       <option value="" disabled>
                         Select a Location
@@ -192,7 +192,7 @@ const SignUp = () => {
                 </div>
               </div>
 
-              {/* <p className="mx-auto mt-3  "> */}
+              {/* <p className="mx-auto mt-3 "> */}
               <Link
                 to="/forget-password"
                 className="text-[12px] flex justify-end cursor-pointer"
@@ -207,7 +207,7 @@ const SignUp = () => {
                 onClick={handleSubmit}
               >
                 {isLoading ? (
-                  <div className="flex justify-center items-center">
+                  <div className="flex items-center justify-center">
                     <div className="w-4 h-4 border-t-2 border-[#4f7942] border-solid rounded-full animate-spin" />
                   </div>
                 ) : (
@@ -241,13 +241,13 @@ const ReusableInput = ({
 
   return (
     <div className="mb-3">
-      <label htmlFor="" className="block">
+      <label htmlFor="" className="block font-normal">
         {label}
       </label>
       <div className="flex items-center gap-4 border-b-[1px] border-[#99999999]">
         {Icon && <Icon />}
         <input
-          className="outline-none w-full"
+          className="w-full outline-none"
           type={isPasswordVisible ? "text" : type}
           placeholder={placeholder}
           name={name}
