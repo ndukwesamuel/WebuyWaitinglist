@@ -26,6 +26,7 @@ const Recipte = () => {
   const { Admin_get_all_recipte } = useSelector(
     (state) => state.reducer?.AdminRecipteSLice
   );
+
   console.log({
     Admin_get_all_recipte,
   });
@@ -36,47 +37,6 @@ const Recipte = () => {
     return () => {};
   }, [dispatch]);
 
-  // let filtered = AllProductData?.filter(
-  //   (product) =>
-  //     product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //     product.category.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
-
-  // const ProductDetails = ({ productId }) => {
-  //   const [productDetails, setProductDetails] = useState({
-  //     name: "",
-  //     image: "",
-  //   });
-
-  //   useEffect(() => {
-  //     const fetchProductDetails = async () => {
-  //       let API_URL = `${Base_URL}products/${productId}`;
-  //       console.log({ token, API_URL });
-
-  //       const config = {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       };
-  //       try {
-  //         const response = await axios.get(API_URL, config);
-
-  //         setProductDetails(response.data);
-  //       } catch (error) {
-  //         console.error("Error fetching product details:", error);
-  //       }
-  //     };
-
-  //     fetchProductDetails();
-  //   }, [productId]);
-
-  //   return (
-  //     <div>
-  //       <img src={productDetails.image} alt={productDetails.name} />
-  //       <p className="text-[15px]">{productDetails.name}</p>
-  //     </div>
-  //   );
-  // };
   const formatDate = (dateString) => {
     const dateOrdered = new Date(dateString);
     return dateOrdered instanceof Date && !isNaN(dateOrdered)

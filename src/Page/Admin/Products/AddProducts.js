@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import axios from 'axios';
+import axios from "axios";
 import {
   FaAlignCenter,
   FaAlignJustify,
@@ -13,31 +13,43 @@ import {
   FaItalic,
   FaSortDown,
   FaUnderline,
-} from 'react-icons/fa';
-import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router';
-import { toast } from 'react-toastify';
+} from "react-icons/fa";
+import { useMutation } from "react-query";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router";
+import { toast } from "react-toastify";
 
-import background
-  from '../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg';
-import Navbar from '../../../Component/AdminComponent/Navbar';
-import Sidebar from '../../../Component/AdminComponent/Sidebar';
-import { useGetCategoryQuery } from '../../../Redux/categoryApi';
+import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
+import Navbar from "../../../Component/AdminComponent/Navbar";
+import Sidebar from "../../../Component/AdminComponent/Sidebar";
+import { useGetCategoryQuery } from "../../../Redux/categoryApi";
 
 const Base_URL = process.env.REACT_APP_Url;
 
 const AddProducts = () => {
   let { state } = useLocation();
 
+  console.log({
+    state,
+  });
+
   const [productName, setProductName] = useState(state?.name);
+  const [frenchName, setFrenchName] = useState(state?.frenchName);
+
   const [productDescription, setProductDescription] = useState(
     state?.description
   );
+
+  const [frenchdescription, setFrenchdescription] = useState(
+    state?.Frenchdescription
+  );
+
   const [quantity, setQuantity] = useState("");
   const [discount, setDiscount] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(state?.category);
   const [price, setPrice] = useState(state?.price); // State to store the input value
+
+  const [otherprice, setOtherprice] = useState(state?.otherprice);
   const [selectedCurrency, setSelectedCurrency] = useState("naira"); // Default currency
   const [selectedImage, setSelectedImage] = useState(state?.image);
   const [uploadimage, setUploadimage] = useState(null);
@@ -59,17 +71,20 @@ const AddProducts = () => {
     }
   };
 
-   const resetInputs = () => {
-     setProductName("");
-     setProductDescription("");
-     setQuantity("");
-     setDiscount("");
-     setPrice("");
-     setSelectedCurrency("");
-     setSelectedCategory("");
-     setSelectedImage("");
-     setUploadimage(null);
-   };
+  const resetInputs = () => {
+    setProductName("");
+    setProductDescription("");
+    setQuantity("");
+    setDiscount("");
+    setPrice("");
+    setSelectedCurrency("");
+    setSelectedCategory("");
+    setSelectedImage("");
+    setUploadimage(null);
+    setFrenchName("");
+    setOtherprice("");
+    setFrenchdescription("");
+  };
 
   const applyUppercase = () => {
     setProductDescription((prevDescription) => {
@@ -215,20 +230,26 @@ const AddProducts = () => {
 
     if (state) {
       formData.append("name", productName);
+      formData.append("frenchName", frenchName);
       formData.append("description", productDescription);
+      formData.append("Frenchdescription", frenchdescription);
       formData.append("quantity", quantity);
       formData.append("discount", discount);
       formData.append("price", price);
+      formData.append("otherprice", otherprice);
       formData.append("currency", selectedCurrency);
       formData.append("category", selectedCategory);
       formData.append("image", uploadimage);
       formData.append("productId", state?._id);
     } else {
       formData.append("name", productName);
+      formData.append("frenchName", frenchName);
       formData.append("description", productDescription);
+      formData.append("Frenchdescription", frenchdescription);
       formData.append("quantity", quantity);
       formData.append("discount", discount);
       formData.append("price", price);
+      formData.append("otherprice", otherprice);
       formData.append("currency", selectedCurrency);
       formData.append("category", selectedCategory);
       formData.append("image", uploadimage);
@@ -240,8 +261,6 @@ const AddProducts = () => {
   const handleDiscard = () => {
     resetInputs();
   };
-
-
 
   return (
     <div className=" font-['Raleway']">
@@ -454,6 +473,26 @@ const AddProducts = () => {
                       ></input>
                     </div>
                   </div>
+
+                  <div className="flex flex-col content-center w-full ">
+                    <div className="flex flex-row content-center justify-between w-full">
+                      <h2 className=" font-medium text-base text-[#565454]">
+                        French Product name
+                      </h2>
+                      <FaInfoCircle style={{ color: "#565454" }} />
+                    </div>
+                    <div className="flex items-center content-center w-full mt-2 text-center ">
+                      <input
+                        className=" w-full pl-5 text-[#009b4d] text-sm font-semibold bg-[#f6f6f6] h-10 rounded-lg"
+                        placeholder="Product name"
+                        type="text"
+                        name="product"
+                        value={frenchName}
+                        // onChange={(e) =>  set  e.target.value}
+                        onChange={(e) => setFrenchName(e.target.value)}
+                      ></input>
+                    </div>
+                  </div>
                   <div className="flex flex-col content-center w-full mt-6">
                     <div className="flex flex-row content-center justify-between w-full">
                       <h2 className=" font-medium text-base text-[#565454]">
@@ -498,6 +537,56 @@ const AddProducts = () => {
                           placeholder="Product description"
                           value={productDescription}
                           onChange={handleProductDescription}
+                          rows={4}
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col content-center w-full mt-6">
+                    <div className="flex flex-row content-center justify-between w-full">
+                      <h2 className=" font-medium text-base text-[#565454]">
+                        Product Description In French
+                      </h2>
+                      <FaInfoCircle style={{ color: "#565454" }} />
+                    </div>
+                    <div className="w-full mt-2 ">
+                      <div className="w-full flex content-center items-center rounded-t-lg border-b-[1px] border-black h-[40px] py-2 bg-[#f3f3f3] px-5">
+                        <button onClick={applyUppercase}>
+                          <FaFont />
+                        </button>
+                        <FaSortDown className="ml-1" />
+                        <div className="divider w-[1.5px] mx-3 rounded-full h-full bg-[#cbc8c8]"></div>
+                        <button onClick={applyBold}>
+                          <FaBold />
+                        </button>
+                        <button onClick={applyItalic}>
+                          <FaItalic className="mx-5" />
+                        </button>
+                        <button onClick={applyUnderline}>
+                          <FaUnderline />
+                        </button>
+                        <div className="divider w-[1.5px] mx-3 rounded-full h-full bg-[#cbc8c8]"></div>
+                        <button onClick={() => applyAlignment("left")}>
+                          <FaAlignLeft />
+                        </button>
+                        <button onClick={() => applyAlignment("center")}>
+                          <FaAlignCenter className="mx-5" />
+                        </button>
+                        <button onClick={() => applyAlignment("right")}>
+                          <FaAlignRight />
+                        </button>
+                        <button onClick={() => applyAlignment("justify")}>
+                          <FaAlignJustify className="mx-5" />
+                        </button>
+                      </div>
+                      <div className=" w-full rounded-b-lg bg-[#f3f3f3]">
+                        <textarea
+                          id="myTextarea"
+                          className="w-full h-full p-3 bg-[#f3f3f3] text-[#6f6d6d] text-sm rounded-b-lg"
+                          placeholder="Product description"
+                          value={frenchdescription}
+                          onChange={(e) => setFrenchdescription(e.target.value)}
                           rows={4}
                         ></textarea>
                       </div>
@@ -575,7 +664,41 @@ const AddProducts = () => {
                           ))}
                         </select>
                       </div>
+
+                      <div>
+                        <h2 className="font-medium text-base text-[#565454]">
+                          Benin Price per unit
+                        </h2>
+                        <div className="relative mt-2">
+                          <input
+                            className="w-full h-10 bg-[#f6f6f6] text-[#6f6d6d] pl-5 rounded-lg pr-10"
+                            placeholder="Price per unit"
+                            type="number"
+                            name="price"
+                            value={otherprice}
+                            onChange={(e) => setOtherprice(e.target.value)}
+                          />
+                          <div className="absolute right-2 top-2">
+                            <FaAngleDown
+                              size={20}
+                              style={{ color: "#6f6d6d" }}
+                            />
+                          </div>
+                          <select
+                            className="absolute right-0 w-10 h-10 bg-[#f6f6f6] text-[#6f6d6d] rounded-r-lg"
+                            value={selectedCurrency}
+                            onChange={handleCurrencyChange}
+                          >
+                            {currencyOptions.map((option) => (
+                              <option key={option.value} value={option.value}>
+                                {option.label}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
                     </div>
+
                     <div className="flex flex-col w-full ">
                       <h2 className="font-medium text-base text-[#565454]">
                         Discount

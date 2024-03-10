@@ -7,20 +7,32 @@ import Navbar from "../../Component/AdminComponent/Navbar";
 // import background from "../images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg";
 import Sidebar from "../../Component/AdminComponent/Sidebar";
 import { Get_All_User_Orders_fun } from "../../Redux/OrderSlice";
-import { Admin_get_all_recipte_fun_ } from "../../Redux/AdminRecipteSLice";
+import {
+  Admin_get_all_recipte_fun_,
+  Admin_get_single_recipte_fun,
+  AdminRecipteSLice_reset,
+} from "../../Redux/AdminRecipteSLice";
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useMutation } from "react-query";
+import axios from "axios";
+let main_url = process.env.REACT_APP_Url;
 
 const Base_URL = process.env.REACT_APP_Url;
 
 const UpdateRecipte = () => {
   const { token } = useSelector(
-    (state) => state.reducer?.AuthenticationSlice?.data
+    (state) => state?.reducer?.AuthenticationSlice?.data
+  );
+
+  const { Admin_get_single_recipte } = useSelector(
+    (state) => state.reducer?.AdminRecipteSLice
   );
 
   const { state } = useLocation();
   console.log({
-    state,
+    Admin_get_single_recipte,
   });
 
   const { amount, createdAt, _id, receipt, status, updatedAt, user } = state;
@@ -37,6 +49,67 @@ const UpdateRecipte = () => {
 
   const { Admin_get_all_recipte } = useSelector(
     (state) => state.reducer?.AdminRecipteSLice
+  );
+
+  useEffect(() => {
+    dispatch(Admin_get_single_recipte_fun(state?._id));
+    return () => {
+      dispatch(AdminRecipteSLice_reset());
+    };
+  }, [dispatch, state?._id]);
+
+  const UpdateUserWalletmutation = useMutation(
+    (formData) => {
+      // Your API request code here
+      // Use formData to send the image data to the API
+
+      let API_URL = `${main_url}wallet/receipt  `;
+
+      // const tokengot = data?.token;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      return axios.post(API_URL, formData, config);
+
+      //   return axios.post(API_URL, formData, config).catch((error) => {
+      //     console.error("Network error:", error.message);
+      //     throw error; // Rethrow the error to trigger onError in useMutation
+      //   });
+    },
+    {
+      onSuccess: () => {
+        toast.success("Updated successfully!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      },
+      onError: (error) => {
+        console.error("Error occurred while submitting the form:", error);
+        toast.error(`${error?.response?.data?.msg}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          className: "Forbidden403",
+        });
+      },
+    }
   );
 
   return (
@@ -75,31 +148,73 @@ const UpdateRecipte = () => {
               </section>
               <section className=" w-[95%] max-h-[calc(89%-25.6px)] rounded-[9.6px] overflow-auto bg-[#fffb] my-[12.8px] mx-auto    ">
                 <div className=" mt-8 p-4 bg-white rounded shadow-lg">
-                  <h2 className="text-2xl font-bold mb-4">
-                    Receipt Information
-                  </h2>
+                  <div className="flex justify-between">
+                    <h2 className="text-2xl font-bold mb-4">
+                      Receipt Information
+                    </h2>
+
+                    <div>
+                      {Admin_get_single_recipte?.message?.status ===
+                      "pending" ? (
+                        <div className="flex gap-10">
+                          <button
+                            className="bg-red-500  text-white font-bold py-2 px-4 rounded"
+                            onClick={() =>
+                              UpdateUserWalletmutation.mutate("declined")
+                            }
+                          >
+                            {UpdateUserWalletmutation?.isLoading
+                              ? "Loading..."
+                              : "Decline"}
+                          </button>
+
+                          <button
+                            className="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            onClick={() =>
+                              UpdateUserWalletmutation.mutate("approved")
+                            }
+                          >
+                            {UpdateUserWalletmutation?.isLoading
+                              ? "Loading..."
+                              : "Approve"}
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex gap-10">
+                          <button className="bg-yellow-500  text-white font-bold py-2 px-4 rounded">
+                            {Admin_get_single_recipte?.message?.status}
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
                   <p>
-                    <span className="font-semibold">ID:</span> {_id}
+                    <span className="font-semibold">ID:</span>{" "}
+                    {Admin_get_single_recipte?.message?._id}
                   </p>
                   <p>
-                    <span className="font-semibold">User:</span> {user.fullName}
+                    <span className="font-semibold">User:</span>{" "}
+                    {Admin_get_single_recipte?.message?.user?.fullName}
                   </p>
                   <p>
-                    <span className="font-semibold">Amount:</span> ${amount}
+                    <span className="font-semibold">Amount: CFA </span>
+                    {Admin_get_single_recipte?.message?.amount}
                   </p>
                   <p>
-                    <span className="font-semibold">Status:</span> {status}
+                    <span className="font-semibold">Status:</span>{" "}
+                    {Admin_get_single_recipte?.message?.status}
                   </p>
                   <p>
                     <span className="font-semibold">Created At:</span>{" "}
-                    {createdAt}
+                    {Admin_get_single_recipte?.message?.createdAt}
                   </p>
                   <p>
                     <span className="font-semibold">Updated At:</span>{" "}
-                    {updatedAt}
+                    {Admin_get_single_recipte?.message?.updatedAt}
                   </p>
                   <img
-                    src={receipt}
+                    src={Admin_get_single_recipte?.message?.receipt}
                     alt="Receipt"
                     className="mt-4"
                     style={{ maxWidth: "100%", height: "auto" }}
