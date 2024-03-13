@@ -8,3 +8,8 @@
   }
 }
 
+
+.two-color-background {
+    background: linear-gradient(to right, white 50%, #009b4d 50%);
+}
+

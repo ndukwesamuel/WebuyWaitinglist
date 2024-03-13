@@ -12,6 +12,7 @@ import {
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
+import image from '../../assets/Subtract.png';
 import { Logout_fun } from '../../Redux/AuthenticationSlice';
 import {
   AllProduct_fun,
@@ -56,7 +57,7 @@ const UserNavbar = () => {
   return (
     <div className=" font-['Raleway'] bg-[#ffffff] w-full ">
       <div className="flex items-center justify-between py-3 shadow-lg px-[55px] ">
-        {/* <div className="flex items-center justify-center ">
+        <div className="flex items-center justify-center ">
           <a className="cursor-pointer " href="/facilitator">
             <h1 className="text-[21px] font-extrabold text-[#565454] max-sm:text-3xl max-md:text-4xl">
               WE
@@ -67,7 +68,7 @@ const UserNavbar = () => {
               ></img>
             </h1>
           </a>
-        </div> */}
+        </div>
 
         <div className="flex items-center rounded-[5px]"></div>
         <div className="flex items-center gap-[20px]">
