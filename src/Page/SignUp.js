@@ -1,24 +1,12 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from "react";
 
-import {
-  CiLock,
-  CiUser,
-} from 'react-icons/ci';
-import { MdOutlineMail } from 'react-icons/md';
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
-import { Link } from 'react-router-dom';
+import { CiLock, CiUser } from "react-icons/ci";
+import { MdOutlineMail } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
-import background from '../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg';
-import {
-  RegisterFun,
-  resetSignup,
-} from '../Redux/Auth';
+import background from "../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg";
+import { RegisterFun, resetSignup } from "../Redux/Auth";
 
 const SignUp = () => {
   const { data, isLoading } = useSelector((state) => state.reducer?.Auth);
@@ -29,6 +17,7 @@ const SignUp = () => {
     firstName: "",
     lastName: "",
     password: "",
+    referralCode: "",
   });
 
   const [selectedCountry, setSelectedCountry] = useState("");
@@ -42,7 +31,7 @@ const SignUp = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const { email, firstName, lastName, password } = loginform;
+  const { email, firstName, lastName, password, referralCode } = loginform;
 
   const handleChange = (e) => {
     setLoginform({
@@ -61,13 +50,9 @@ const SignUp = () => {
       email: loginform?.email,
       password: loginform?.password,
       country: selectedCountry,
+      referralCode: referralCode,
     };
-    // console.log({
-    //   name: name,
-    //   email: loginform?.email,
-    //   password: loginform?.password,
-    //   country: selectedCountry,
-    // });
+
     dispatch(RegisterFun(newData));
   };
 
@@ -190,6 +175,17 @@ const SignUp = () => {
                     </select>
                   </div>
                 </div>
+              </div>
+              <div className="my-5">
+                <ReusableInput
+                  type="text"
+                  name="referralCode"
+                  value={referralCode}
+                  onChange={handleChange}
+                  id="referralCode"
+                  placeholder="asawasas"
+                  label="Referral Code (optional)"
+                />
               </div>
 
               {/* <p className="mx-auto mt-3 "> */}

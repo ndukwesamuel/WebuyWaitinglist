@@ -16,7 +16,7 @@ const UpdateReceipt = () => {
       <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
         <div className="mb-4">
           <label className="block mb-2 text-sm font-bold text-gray-700">
-            Update Receipt Status{" "}
+            Update Receipt Status
           </label>
           <input
             type="text"
