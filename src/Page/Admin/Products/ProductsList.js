@@ -1,31 +1,21 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from "react";
 
-import axios from 'axios';
-import { CiEdit } from 'react-icons/ci';
-import {
-  FaSearch,
-  FaSlidersH,
-} from 'react-icons/fa';
-import { MdDelete } from 'react-icons/md';
-import { useMutation } from 'react-query';
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
-import { useNavigate } from 'react-router';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import axios from "axios";
+import { CiEdit } from "react-icons/ci";
+import { FaSearch, FaSlidersH } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { useMutation } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // import Navbar from '../../../Component/ Navbar';
 // import Sidebar from '../../components/Sidebar';
-import background
-  from '../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg';
-import Navbar from '../../../Component/AdminComponent/Navbar';
-import Sidebar from '../../../Component/AdminComponent/Sidebar';
-import { AllProduct_fun } from '../../../Redux/ProductSlice';
+import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
+import Navbar from "../../../Component/AdminComponent/Navbar";
+import Sidebar from "../../../Component/AdminComponent/Sidebar";
+import { AllProduct_fun } from "../../../Redux/ProductSlice";
 
 const Base_URL = process.env.REACT_APP_Url;
 
@@ -187,38 +177,15 @@ const ProductsList = () => {
     dispatch(AllProduct_fun());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   // Filter products based on search query
-  //   let filtered;
-  //   if (AllProductData?.message) {
-  //     filtered = [];
-  //   } else {
-  //     filtered = AllProductData?.filter(
-  //       (product) =>
-  //         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //         product.category.toLowerCase().includes(searchQuery.toLowerCase())
-  //     );
-  //   }
-
-  //   setFilteredProducts(filtered);
-
-  //   // Check if there are no search results
-  //   if (filtered?.length === 0 && searchQuery !== "") {
-  //     setError("No matching products found.");
-  //   } else {
-  //     setError("");
-  //   }
-  // }, [searchQuery, AllProductData]);
-
   let filtered;
 
   if (AllProductData?.message) {
     filtered = [];
   } else {
-    filtered = AllProductData?.filter(
+    filtered = AllProductData?.products?.filter(
       (product) =>
-        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.category.toLowerCase().includes(searchQuery.toLowerCase())
+        product?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product?.category.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }
 
