@@ -218,51 +218,63 @@ const AddCategory = () => {
                     {isLoading && <p>Loading...</p>}
                     {isError && <p>{error}</p>}
 
-                    {category_data &&
-                      category_data.map((category, index) => (
-                        <tr
-                          key={index}
-                          className="bg-white border-b dark:bg-white-800 dark:border-white-700"
-                        >
-                          <th
-                            scope="row"
-                            className="px-6 py-4 font-medium text-black-900 whitespace-nowrap dark:text-black"
-                          >
-                            {category.name}
-                          </th>
-                          <td className="px-6 py-4">
-                            <button
-                              type="button"
-                              onClick={() => handleEdit(category)}
-                              className="font-medium text-blue-600 dark:text-blue-500 "
+                    {console.log({
+                      category_data,
+                    })}
+
+                    {category_data?.message === "No category created yet" ? (
+                      <div>
+                        <p>No category created yet</p>
+                      </div>
+                    ) : (
+                      <>
+                        {category_data &&
+                          category_data.map((category, index) => (
+                            <tr
+                              key={index}
+                              className="bg-white border-b dark:bg-white-800 dark:border-white-700"
                             >
-                              Edit
-                            </button>
-                          </td>
-                          <td className="px-6 py-4">
-                            <button
-                              type="button"
-                              onClick={() => handleDelete(category)}
-                              className="font-medium text-red-600 dark:text-red-500 "
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
+                              <th
+                                scope="row"
+                                className="px-6 py-4 font-medium text-black-900 whitespace-nowrap dark:text-black"
+                              >
+                                {category.name}
+                              </th>
+                              <td className="px-6 py-4">
+                                <button
+                                  type="button"
+                                  onClick={() => handleEdit(category)}
+                                  className="font-medium text-blue-600 dark:text-blue-500 "
+                                >
+                                  Edit
+                                </button>
+                              </td>
+                              <td className="px-6 py-4">
+                                <button
+                                  type="button"
+                                  onClick={() => handleDelete(category)}
+                                  className="font-medium text-red-600 dark:text-red-500 "
+                                >
+                                  Delete
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                      </>
+                    )}
                   </tbody>
                 </table>
               </div>
 
               {/* Submit and Cancel Buttons */}
-              <div className="flex content-center w-full gap-8 mt-6">
+              {/* <div className="flex content-center w-full gap-8 mt-6">
                 <button
                   className="w-full bg-[#f3f3f3] text-[#009b4d] font-semibold py-2 rounded-lg"
                   type="submit"
                 >
                   Cancel
                 </button>
-              </div>
+              </div> */}
             </form>
           </div>
         </div>

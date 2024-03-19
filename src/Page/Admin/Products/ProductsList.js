@@ -182,7 +182,7 @@ const ProductsList = () => {
   if (AllProductData?.message) {
     filtered = [];
   } else {
-    filtered = AllProductData?.products?.filter(
+    filtered = AllProductData?.filter(
       (product) =>
         product?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product?.category.toLowerCase().includes(searchQuery.toLowerCase())
