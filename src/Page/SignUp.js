@@ -1,4 +1,4 @@
-import React, {
+import {
   useEffect,
   useState,
 } from 'react';
@@ -19,11 +19,6 @@ import {
   RegisterFun,
   resetSignup,
 } from '../Redux/Auth';
-
-// Import your function for sending emails
-// import {
-  // sendReferralEmail,
-// } from './emailService'; // You need to implement this
 
 const SignUp = () => {
   const { data, isLoading } = useSelector((state) => state.reducer?.Auth);
@@ -57,7 +52,7 @@ const SignUp = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     let name = `${firstName} ${lastName}`;
@@ -70,21 +65,7 @@ const SignUp = () => {
       referralCode: referralCode,
     };
 
-    // Call the register function to sign up the user
     dispatch(RegisterFun(newData));
-
-    // Generate referral link
-    const referralLink = generateReferralLink(loginform.referralCode);
-
-    // Send referral link via email
-    // await sendReferralEmail(loginform.email, referralLink);
-  };
-
-  // Function to generate referral link
-  const generateReferralLink = (referralCode) => {
-    // You can generate the referral link as per your requirement
-    // For example: return `https://example.com/signup?ref=${referralCode}`;
-    return `https://yourwebsite.com/signup?ref=${referralCode}`;
   };
 
   const [showSuccess, setShowSuccess] = useState(false);
@@ -218,6 +199,15 @@ const SignUp = () => {
                   label="Referral Code (optional)"
                 />
               </div>
+
+              {/* <p className="mx-auto mt-3 "> */}
+              <Link
+                to="/forget-password"
+                className="text-[12px] flex justify-end cursor-pointer"
+              >
+                Forget Password ?
+              </Link>
+              {/* </p> */}
 
               <button
                 className="text-[#ffffff] hover:text-[#355E3B] mt-10  hover:bg-transparent hover:border-[1px] hover:border-[#355E3B] bg-[#009B4D] text-center px-[55px] py-[12px] text-lg rounded-[10px]  w-full"
