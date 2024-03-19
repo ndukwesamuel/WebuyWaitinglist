@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import { FaChevronDown } from "react-icons/fa6";
-import image from "../../assets/images/Subtract.png";
-import myImage from "../../assets/DP.jpg";
-import UserSidebar from "./UserSidebar";
+import React, { useState } from 'react';
+
+import { FaChevronDown } from 'react-icons/fa6';
+
+import myImage from '../../assets/DP.jpg';
+import image from '../../assets/Subtract.png';
+import UserSidebar from './UserSidebar';
+
 const UserNavbar = () => {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [lang, setLang] = useState("en");

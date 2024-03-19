@@ -1,11 +1,16 @@
-import { Route, Routes } from "react-router-dom";
-import WaitingList from "./WaitingList";
-import SignUp from "./SignUp";
-import Login from "./Login";
-import { Private, PrivateRoute } from "./privateroute/Private";
-import EmailVerification from "./EmailVerification";
-import ResetPassword from "./ResetPassword";
-import ForgetPassword from "./ForgetPassword";
+import {
+  Route,
+  Routes,
+} from 'react-router-dom';
+
+import EmailVerification from './EmailVerification';
+import ForgetPassword from './ForgetPassword';
+import Login from './Login';
+import OnboardingRoute from './Onboarding/OnboardingRoute';
+import { Private } from './privateroute/Private';
+import ResetPassword from './ResetPassword';
+import SignUp from './SignUp';
+import WaitingList from './WaitingList';
 
 const PageRoutes = () => {
   return (
@@ -16,6 +21,15 @@ const PageRoutes = () => {
         element={
           <Private>
             <WaitingList />
+          </Private>
+        }
+      />
+
+      <Route
+        path="/onboarding"
+        element={
+          <Private>
+            <OnboardingRoute />
           </Private>
         }
       />

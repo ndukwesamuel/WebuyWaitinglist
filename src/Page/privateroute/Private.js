@@ -1,5 +1,5 @@
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 export const Private = ({ children }) => {
   const { data, isLoading, isSuccess } = useSelector(
@@ -11,7 +11,7 @@ export const Private = ({ children }) => {
     // return <Navigate to="/" state={{ from: history.location }} />;
 
     if (data?.isAdmin === false) {
-      return <Navigate to="/facilitator" />;
+      return <Navigate to="/onboarding" />;
     } else {
       return <Navigate to="/admin" />;
     }
@@ -48,7 +48,7 @@ export const AdminPrivateRoute = ({ children }) => {
   }
 
   if (data?.isAdmin === false) {
-    return <Navigate to="/facilitator" />;
+    return <Navigate to="/onboarding" />;
   }
 
   return children;
