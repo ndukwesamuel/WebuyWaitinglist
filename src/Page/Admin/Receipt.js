@@ -24,7 +24,6 @@ const Recipte = () => {
   const [selectedReceiptId, setSelectedReceiptId] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
-  console.log("this is selectedstatus id", selectedReceiptId);
   const dispatch = useDispatch();
 
   const { Admin_get_all_recipte } = useSelector(

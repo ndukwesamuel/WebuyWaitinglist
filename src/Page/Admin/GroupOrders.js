@@ -1,5 +1,11 @@
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetGroupOrderQuery } from "../../Redux/orderApi";
 import { toast } from "react-toastify";
+import ModalContainer from "../../Component/modal-container/modal-container";
+import axios from "axios";
+import { useMutation } from "react-query";
+const Base_URL = process.env.REACT_APP_Url;
 
 const LoadingSkeleton = () => {
   return (
@@ -20,15 +26,96 @@ const LoadingSkeleton = () => {
 };
 
 const GroupOrders = () => {
+  const { token } = useSelector(
+    (state) => state?.reducer?.AuthenticationSlice?.data
+  );
+  const toggleSuccess = () => {
+    setShowSuccess(!showSuccess);
+  };
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedOrderId, setSelectedOrderId] = useState("");
+  const [createLoading, setCreateLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  console.log("this is selectedstatus id", setSelectedOrderId);
   const { data: orders, isLoading, isError, error } = useGetGroupOrderQuery();
-  if (isLoading) {
-    return <LoadingSkeleton />;
-  }
-  if (isError) {
-    return toast.error(error.data.message);
-  }
+
+  const createmutation = useMutation(
+    async ({ OrderId, status }) => {
+      let API_URL = `${Base_URL}history/group-order`;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      let data = { OrderId, status };
+      setCreateLoading(true);
+      return await axios.post(API_URL, data, config);
+    },
+    {
+      onSuccess: (response) => {
+        const message = response?.data?.message || "Operation successful";
+        toast.success(message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setCreateLoading(false);
+        // refetch();
+      },
+      onError: (error) => {
+        const errorMessage =
+          error?.response?.data?.message || "An error occurred";
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          className: "Forbidden403",
+        });
+        setCreateLoading(false);
+      },
+    }
+  );
 
   const groupOrders = orders.message;
+  console.log("G order", groupOrders);
+
+  const handleUpdateClick = (selectedOrderId) => {
+    setSelectedOrderId(selectedOrderId); // Set the selected receipt ID when "Update" is clicked
+    setShowSuccess(true); // Show the modal
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    createmutation.mutate({
+      orderId: selectedOrderId, // Use the selected receipt ID
+      status: selectedStatus,
+    });
+  };
+
+  const handleStatusChange = (e) => {
+    const newStatus = e.target.value;
+    setSelectedStatus(newStatus);
+  };
+  const statusOptions = [
+    { value: "pending", label: "pending" },
+    { value: "processing", label: "processing" },
+    { value: "completed", label: "completed" },
+  ];
 
   const formatDate = (dateString) => {
     const dateOrdered = new Date(dateString);
@@ -36,7 +123,12 @@ const GroupOrders = () => {
       ? `${dateOrdered.toLocaleDateString()}`
       : "Invalid Date";
   };
-
+  if (isLoading) {
+    return <LoadingSkeleton />;
+  }
+  if (isError) {
+    return toast.error(error.data.message);
+  }
   return (
     <div className="font-['Raleway']">
       <div className="w-full px-3 md:pl-20 mt-8 md:pr-14">
@@ -106,11 +198,11 @@ const GroupOrders = () => {
                             <p
                               className={`text-center rounded-full py-[6.4px] px-auto 
     ${
-      order?.status === "Cancelled"
+      order?.status === "Pending"
         ? "bg-red-500 text-black"
-        : order?.status === "Pending"
+        : order?.status === "Processing"
         ? "bg-brown-500 text-black debug"
-        : order?.status === "Delivered"
+        : order?.status === "Completed"
         ? "bg-green-500 text-black"
         : ""
     }`}
@@ -136,6 +228,42 @@ const GroupOrders = () => {
           </main>
         </div>
       </div>
+      <ModalContainer close={toggleSuccess} show={showSuccess}>
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-2">
+          <div className="mb-4 relative">
+            <label className="block mb-2 text-sm font-bold text-gray-700">
+              Update Receipt Status
+            </label>
+
+            <select
+              className="absolute right-0 w-full h-10 p-2  bg-[#f6f6f6] text-[#6f6d6d] rounded-lg"
+              value={selectedStatus}
+              onChange={handleStatusChange}
+            >
+              {statusOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex justify-center mb-[4rem] mt-[4rem]">
+            <button
+              type="submit"
+              className="bg-[#009B4D] text-white py-2 px-4 rounded hover:bg-[#009B4D] focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+            >
+              {createLoading ? (
+                <div className="flex items-center justify-center">
+                  <div className="w-4 h-4 border-t-2 border-[#4f7942] border-solid rounded-full animate-spin" />
+                </div>
+              ) : (
+                <>Update </>
+              )}
+            </button>
+          </div>
+        </form>
+      </ModalContainer>
     </div>
   );
 };
