@@ -7,7 +7,7 @@ import AuthenticationSlice from "./AuthenticationSlice";
 import groupSlice from "./groupSlice";
 import ProfileSlice from "./ProfileSlice";
 import { walletApi } from "./WalletApi";
-import { orderApi } from "./orderApi";
+import { orderApi, groupOrderApi } from "./orderApi";
 import { passwordResetApi } from "./PasswordResetApi";
 import { categoryApi } from "./categoryApi";
 import { groupApi } from "./groupApi";
@@ -46,6 +46,8 @@ export const store = configureStore({
     [walletApi.reducerPath]: walletApi.reducer,
     [passwordResetApi.reducerPath]: passwordResetApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,
+    [groupOrderApi.reducerPath]: groupOrderApi.reducer,
+
     [categoryApi.reducerPath]: categoryApi.reducer,
     [groupApi.reducerPath]: groupApi.reducer,
   },
@@ -55,6 +57,7 @@ export const store = configureStore({
       walletApi.middleware,
       passwordResetApi.middleware,
       orderApi.middleware,
+      groupOrderApi.middleware,
       categoryApi.middleware,
       groupApi.middleware
     );

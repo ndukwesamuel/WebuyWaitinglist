@@ -1,6 +1,7 @@
 import React from "react";
 import Main from "./Main";
 import OrdersPage from "./OrdersPage";
+import GroupOrders from "./GroupOrders";
 
 import Navbar from "../../Component/AdminComponent/Navbar";
 import Sidebar from "../../Component/AdminComponent/Sidebar";
@@ -39,7 +40,7 @@ function AdminRoute() {
 
           <Routes>
             <Route path="/" element={<Main />} />
-            <Route path="/orders" element={<OrdersPage />} />
+            <Route path="/group-orders" element={<GroupOrders />} />
             <Route path="/products" element={<ProductsList />} />
             <Route path="/Addproduct" element={<AddProducts />} />
             <Route path="/category" element={<AddCategory />} />

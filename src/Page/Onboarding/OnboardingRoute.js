@@ -1,19 +1,12 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from "react";
 
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
-import ScrollReveal from 'scrollreveal';
+import { useDispatch, useSelector } from "react-redux";
+import ScrollReveal from "scrollreveal";
 
-import board
-  from '../../assets/istockphoto-1320029684-612x612__1_-removebg.png';
-import image from '../../assets/Subtract.png';
-import playstore from '../../img/Google-Play-PNG-Clipart.png';
-import { Logout_fun } from '../../Redux/AuthenticationSlice';
+import board from "../../assets/istockphoto-1320029684-612x612__1_-removebg.png";
+import image from "../../assets/Subtract.png";
+import playstore from "../../img/Google-Play-PNG-Clipart.png";
+import { Logout_fun } from "../../Redux/AuthenticationSlice";
 
 const OnboardingRoute = () => {
   const dispatch = useDispatch();
@@ -29,14 +22,14 @@ const OnboardingRoute = () => {
   const [iconColor, setIconColor] = useState("#ffffff");
 
   useEffect(() => {
-    ScrollReveal().reveal('.image', {
-      distance: '60px',
+    ScrollReveal().reveal(".image", {
+      distance: "60px",
       duration: 2000,
-      easing: 'ease-in',
-      origin: 'right',
-      reset: false
+      easing: "ease-in",
+      origin: "right",
+      reset: false,
     });
-  })
+  });
 
   useEffect(() => {
     // Update icon color based on screen size
@@ -204,6 +197,6 @@ const OnboardingRoute = () => {
       </div>
     </>
   );
-}
+};
 
-export default OnboardingRoute
+export default OnboardingRoute;
