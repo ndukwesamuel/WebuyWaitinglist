@@ -11,6 +11,7 @@ import { orderApi, groupOrderApi } from "./orderApi";
 import { passwordResetApi } from "./PasswordResetApi";
 import { categoryApi } from "./categoryApi";
 import { groupApi } from "./groupApi";
+import { userApi } from "./userApi";
 import ProductSlice from "./ProductSlice";
 import OrderSlice from "./OrderSlice";
 import AdminRecipteSLice from "./AdminRecipteSLice";
@@ -47,7 +48,7 @@ export const store = configureStore({
     [passwordResetApi.reducerPath]: passwordResetApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,
     [groupOrderApi.reducerPath]: groupOrderApi.reducer,
-
+    [userApi.reducerPath]: userApi.reducer,
     [categoryApi.reducerPath]: categoryApi.reducer,
     [groupApi.reducerPath]: groupApi.reducer,
   },
@@ -59,7 +60,8 @@ export const store = configureStore({
       orderApi.middleware,
       groupOrderApi.middleware,
       categoryApi.middleware,
-      groupApi.middleware
+      groupApi.middleware,
+      userApi.middleware
     );
   },
   passwordResetApi,

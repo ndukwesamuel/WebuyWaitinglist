@@ -19,6 +19,7 @@ import Category from "./Category";
 import Receipt from "./Receipt";
 import ViewReceipt from "./ViewReceipt";
 import UpdateReceipt from "./UpdateReceipt";
+import Users from "./Users";
 
 function AdminRoute() {
   const data = useSelector((state) => state.reducer?.AuthenticationSlice);
@@ -46,9 +47,10 @@ function AdminRoute() {
             <Route path="/category" element={<AddCategory />} />
             {/* <Route path="/category" element={<Category />} />
             // <Route path="/Addcategory" element={<Category />} /> */}
-            <Route path="/group" element={<GroupPage />} />
+            <Route path="/group" element={<GroupsPage />} />
             <Route path="/receipt" element={<Receipt />} />
             <Route path="/view-receipt" element={<ViewReceipt />} />
+            <Route path="/users" element={<Users />} />
 
             <Route path="/update-receipt" element={<UpdateReceipt />} />
           </Routes>

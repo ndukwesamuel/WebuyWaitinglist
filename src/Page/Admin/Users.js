@@ -1,13 +1,7 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useGetGroupOrderQuery } from "../../Redux/orderApi";
-import { toast } from "react-toastify";
-import ModalContainer from "../../Component/modal-container/modal-container";
-import axios from "axios";
-import { useMutation } from "react-query";
 import { Link } from "react-router-dom";
-
-const Base_URL = process.env.REACT_APP_Url;
+import { useGetUsersQuery } from "../../Redux/userApi";
+import { toast } from "react-toastify";
+import { use } from "i18next";
 
 const LoadingSkeleton = () => {
   return (
@@ -26,207 +20,96 @@ const LoadingSkeleton = () => {
     </>
   );
 };
-
-const GroupOrders = () => {
-  const { token } = useSelector(
-    (state) => state?.reducer?.AuthenticationSlice?.data
-  );
-  const toggleSuccess = () => {
-    setShowSuccess(!showSuccess);
-  };
-  const [selectedStatus, setSelectedStatus] = useState("");
-  const [selectedOrderId, setSelectedOrderId] = useState("");
-  const [createLoading, setCreateLoading] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
-
-  const { data: orders, isLoading, isError, error } = useGetGroupOrderQuery();
-
-  const createmutation = useMutation(
-    async ({ orderId, status }) => {
-      let API_URL = `${Base_URL}history/group-order`;
-
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      let data = { orderId, status };
-      setCreateLoading(true);
-      return await axios.post(API_URL, data, config);
-    },
-    {
-      onSuccess: (response) => {
-        const message = response?.data?.message || "Operation successful";
-        toast.success(message, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        setCreateLoading(false);
-        // refetch();
-      },
-      onError: (error) => {
-        const errorMessage =
-          error?.response?.data?.message || "An error occurred";
-        console.log(error);
-        toast.error(errorMessage, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          className: "Forbidden403",
-        });
-        setCreateLoading(false);
-      },
-    }
-  );
+const Users = () => {
+  const { data: users, isLoading, isError, error } = useGetUsersQuery();
   if (isLoading) {
     return <LoadingSkeleton />;
   }
   if (isError) {
     return toast.error(error.data.message);
   }
-  const groupOrders = orders.message;
-
-  const handleUpdateClick = (selectedOrderId) => {
-    setSelectedOrderId(selectedOrderId);
-    setShowSuccess(true);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    createmutation.mutate({
-      orderId: selectedOrderId,
-      status: selectedStatus,
-    });
-  };
-
-  const handleStatusChange = (e) => {
-    const newStatus = e.target.value;
-    setSelectedStatus(newStatus);
-  };
-  const statusOptions = [
-    { value: "pending", label: "pending" },
-    { value: "processing", label: "processing" },
-    { value: "completed", label: "completed" },
-  ];
-
-  const formatDate = (dateString) => {
-    const dateOrdered = new Date(dateString);
-    return dateOrdered instanceof Date && !isNaN(dateOrdered)
-      ? `${dateOrdered.toLocaleDateString()}`
-      : "Invalid Date";
-  };
-
+  console.log("user", users);
   return (
     <div className="font-['Raleway']">
       <div className="w-full px-3 md:pl-20 mt-8 md:pr-14">
         <div className="flex flex-col w-full h-full p-5  mt-5 bg-white n rounded-xl ">
           <header className="w-full mb-5">
             <h1 className="text-[24px] leading-[34px] font-semibold text-[#009B4D]">
-              Group Orders
+              Registered Users
             </h1>
 
             <hr />
           </header>
-          {isError && toast.error(error.data.message)}
           <main className="w-full overflow-x-auto bg-[#fff5] shadow-md bg-opacity-5 rounded-[12.8px] mt-[15px]">
-            <section className=" w-[95%] max-h-[calc(89%-25.6px)] rounded-[9.6px] overflow-auto bg-[#fffb] my-[12.8px] mx-auto    ">
+            <section className=" w-full max-h-[calc(89%-25.6px)] rounded-[9.6px] overflow-auto bg-[#fffb] my-[12.8px] mx-auto    ">
               <div className="flex justify-center">
                 <table className=" w-full table-auto">
                   <thead>
                     <tr className=" text-[#565454]">
-                      <th className=" p-[16px] sticky top-0 left-0 bg-[#d5d1defe] border-collapse">
-                        Order ID
-                      </th>
                       <th className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe] ">
                         Name
                       </th>
+                      <th className=" p-[16px] sticky top-0 left-0 bg-[#d5d1defe] border-collapse">
+                        email
+                      </th>
                       <th className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe] ">
-                        Country
+                        verified
                       </th>
                       <th className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe]">
-                        Date
+                        User Admin
                       </th>
                       <th className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]">
-                        Status
+                        Admin
                       </th>
                       <th className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]">
-                        item
+                        wallet
                       </th>
                       <th className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]">
-                        Quantity
+                        Country
                       </th>
                       <th className=" p-[16px] sticky top-0 left-0 border-collapse bg-[#d5d1defe]">
-                        Total Amount
+                        referred users
                       </th>
                     </tr>
                   </thead>
                   <tbody className=" font-semibold text-[#565454] ">
-                    {groupOrders &&
-                      groupOrders?.map((order) => (
+                    {users &&
+                      users.data?.map((user) => (
                         <tr
                           className=" even:bg-[#0000000b] hover:bg-[#fff6]"
-                          key={order._id}
+                          key={user._id}
                         >
                           <td className=" p-[16px] border-collapse">
-                            #{order?._id}
+                            {user?.fullName}
                           </td>
                           <td className=" p-[16px] border-collapse">
-                            {order?.groupId?.name}
+                            {user?.email}
                           </td>
                           <td className=" p-[16px] border-collapse">
-                            {order?.groupId.country}
+                            {user && user?.verified === true ? "Yes" : "No"}
                           </td>
-                          <td className=" p-[16px] border-collapse">
-                            {formatDate(order?.createdAt)}
-                          </td>
+
                           <td className="p-[16px] border-collapse text-black">
-                            <p
-                              className={`text-center rounded-full py-[6.4px] px-auto 
-    ${
-      order?.status === "Pending"
-        ? "bg-red-500 text-black"
-        : order?.status === "Processing"
-        ? "bg-brown-500 text-black debug"
-        : order?.status === "Completed"
-        ? "bg-green-500 text-black"
-        : ""
-    }`}
-                            >
-                              {order?.status}
-                            </p>
+                            {user && user?.isUserAdmin === true ? "Yes" : "No"}
                           </td>
                           <td className=" p-[16px] border-collapse">
-                            {order?.productId?.name}
+                            {user && user?.isAdmin === true ? "Yes" : "No"}
                           </td>
                           <td className=" p-[16px] border-collapse">
-                            {order?.totalQuantity}
+                            {user?.wallet}
                           </td>
                           <td className=" p-[16px] border-collapse">
-                            #{order?.totalAmount}
+                            {user?.country}
                           </td>
-                          <td>
+                          {/* <td>
                             <Link
                               onClick={() => {
-                                handleUpdateClick(order._id);
+                                handleUpdateClick(user._id);
                               }}
                             >
                               Update
                             </Link>
-                          </td>
+                          </td> */}
                         </tr>
                       ))}
                   </tbody>
@@ -236,7 +119,7 @@ const GroupOrders = () => {
           </main>
         </div>
       </div>
-      <ModalContainer close={toggleSuccess} show={showSuccess}>
+      {/* <ModalContainer close={toggleSuccess} show={showSuccess}>
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-2">
           <div className="mb-4 relative">
             <label className="block mb-2 text-sm font-bold text-gray-700">
@@ -271,9 +154,9 @@ const GroupOrders = () => {
             </button>
           </div>
         </form>
-      </ModalContainer>
+      </ModalContainer> */}
     </div>
   );
 };
 
-export default GroupOrders;
+export default Users;

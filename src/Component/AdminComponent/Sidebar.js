@@ -77,6 +77,15 @@ const Sidebar = () => {
           Category
         </Link>
       </div>
+      <div className="flex items-center gap-[13px] py-[15px] border-b-[0.5px] border-[#000000]/[0.3] cursor-pointer">
+        <i className="fa-solid fa-users text-[#565454]"></i>
+        <Link
+          to="/admin/users"
+          className="text-[14px] leading-[20px] font-semibold text-[#565454] hover:text-[#009b4d] focus:text-[#009b4d]"
+        >
+          Users
+        </Link>
+      </div>
 
       <div className="flex items-center gap-[13px] py-[15px] border-b-[0.5px] border-[#000000]/[0.3] cursor-pointer">
         {/* <i className="fa-solid fa-users text-[#565454]"></i> */}
@@ -92,7 +101,6 @@ const Sidebar = () => {
 
       <div className="pt-[15px] mt-[70px] border-b-[0.5px] border-[#000000]/[0.3]">
         <p className="text-[10px] font-extrabold leading-[16px] text-[#565454]/[0.4]">
-          {" "}
           ADDONS
         </p>
         <div className="flex items-center justify-between gap-[10px] py-[15px] cursor-pointer">

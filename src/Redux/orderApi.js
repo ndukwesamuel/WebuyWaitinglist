@@ -39,9 +39,6 @@ export const groupOrderApi = createApi({
     getGroupOrder: builder.query({
       query: () => "history/all-group",
     }),
-    updateStatus: builder.query({
-      query: (id) => `history/group-order`,
-    }),
   }),
 });
 
