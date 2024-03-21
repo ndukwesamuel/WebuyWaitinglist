@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import ModalContainer from "../../Component/modal-container/modal-container";
 import axios from "axios";
 import { useMutation } from "react-query";
+import { Link } from "react-router-dom";
+
 const Base_URL = process.env.REACT_APP_Url;
 
 const LoadingSkeleton = () => {
@@ -37,11 +39,10 @@ const GroupOrders = () => {
   const [createLoading, setCreateLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  console.log("this is selectedstatus id", setSelectedOrderId);
   const { data: orders, isLoading, isError, error } = useGetGroupOrderQuery();
 
   const createmutation = useMutation(
-    async ({ OrderId, status }) => {
+    async ({ orderId, status }) => {
       let API_URL = `${Base_URL}history/group-order`;
 
       const config = {
@@ -52,7 +53,7 @@ const GroupOrders = () => {
         },
       };
 
-      let data = { OrderId, status };
+      let data = { orderId, status };
       setCreateLoading(true);
       return await axios.post(API_URL, data, config);
     },
@@ -75,6 +76,7 @@ const GroupOrders = () => {
       onError: (error) => {
         const errorMessage =
           error?.response?.data?.message || "An error occurred";
+        console.log(error);
         toast.error(errorMessage, {
           position: "top-right",
           autoClose: 5000,
@@ -90,19 +92,25 @@ const GroupOrders = () => {
       },
     }
   );
-
+  if (isLoading) {
+    return <LoadingSkeleton />;
+  }
+  if (isError) {
+    return toast.error(error.data.message);
+  }
   const groupOrders = orders.message;
   console.log("G order", groupOrders);
 
   const handleUpdateClick = (selectedOrderId) => {
-    setSelectedOrderId(selectedOrderId); // Set the selected receipt ID when "Update" is clicked
-    setShowSuccess(true); // Show the modal
+    setSelectedOrderId(selectedOrderId);
+    setShowSuccess(true);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("selected id", selectedOrderId);
     createmutation.mutate({
-      orderId: selectedOrderId, // Use the selected receipt ID
+      orderId: selectedOrderId,
       status: selectedStatus,
     });
   };
@@ -123,12 +131,7 @@ const GroupOrders = () => {
       ? `${dateOrdered.toLocaleDateString()}`
       : "Invalid Date";
   };
-  if (isLoading) {
-    return <LoadingSkeleton />;
-  }
-  if (isError) {
-    return toast.error(error.data.message);
-  }
+
   return (
     <div className="font-['Raleway']">
       <div className="w-full px-3 md:pl-20 mt-8 md:pr-14">
@@ -140,7 +143,7 @@ const GroupOrders = () => {
 
             <hr />
           </header>
-
+          {isError && toast.error(error.data.message)}
           <main className="w-full overflow-x-auto bg-[#fff5] shadow-md bg-opacity-5 rounded-[12.8px] mt-[15px]">
             <section className=" w-[95%] max-h-[calc(89%-25.6px)] rounded-[9.6px] overflow-auto bg-[#fffb] my-[12.8px] mx-auto    ">
               <div className="flex justify-center">
@@ -189,11 +192,9 @@ const GroupOrders = () => {
                           <td className=" p-[16px] border-collapse">
                             {order?.groupId.country}
                           </td>
-
                           <td className=" p-[16px] border-collapse">
                             {formatDate(order?.createdAt)}
                           </td>
-
                           <td className="p-[16px] border-collapse text-black">
                             <p
                               className={`text-center rounded-full py-[6.4px] px-auto 
@@ -219,6 +220,15 @@ const GroupOrders = () => {
                           <td className=" p-[16px] border-collapse">
                             #{order?.totalAmount}
                           </td>
+                          <td>
+                            <Link
+                              onClick={() => {
+                                handleUpdateClick(order._id);
+                              }}
+                            >
+                              Update
+                            </Link>
+                          </td>
                         </tr>
                       ))}
                   </tbody>
@@ -232,7 +242,7 @@ const GroupOrders = () => {
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-2">
           <div className="mb-4 relative">
             <label className="block mb-2 text-sm font-bold text-gray-700">
-              Update Receipt Status
+              Update Order Status
             </label>
 
             <select
