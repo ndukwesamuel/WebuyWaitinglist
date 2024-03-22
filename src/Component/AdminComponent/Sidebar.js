@@ -99,7 +99,7 @@ const Sidebar = () => {
         </Link>
       </div>
 
-      <div className="pt-[15px] mt-[70px] border-b-[0.5px] border-[#000000]/[0.3]">
+      <div className="pt-[15px] mt-[10px] border-b-[0.5px] border-[#000000]/[0.3]">
         <p className="text-[10px] font-extrabold leading-[16px] text-[#565454]/[0.4]">
           ADDONS
         </p>
