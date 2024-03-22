@@ -39,9 +39,12 @@ export const groupOrderApi = createApi({
     getGroupOrder: builder.query({
       query: () => "history/all-group",
     }),
+    getRevenue: builder.query({
+      query: () => "history/revenues",
+    }),
   }),
 });
 
-export const { useGetGroupOrderQuery } = groupOrderApi;
+export const { useGetGroupOrderQuery, useGetRevenueQuery } = groupOrderApi;
 
 export const { useGetUserOrderQuery } = orderApi;

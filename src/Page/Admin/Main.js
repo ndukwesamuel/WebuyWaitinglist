@@ -1,5 +1,6 @@
-import React from 'react';
-
+import React from "react";
+import { useGetRevenueQuery } from "../../Redux/orderApi";
+import { toast } from "react-toastify";
 import {
   Area,
   AreaChart,
@@ -9,21 +10,37 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from 'recharts';
+} from "recharts";
 
-import avatar from '../../assets/Ellipse 13.png';
-import avatar1 from '../../assets/Ellipse 14.png';
-import avatar2 from '../../assets/Ellipse 15.png';
-import avatar3 from '../../assets/Ellipse 16.png';
-import avatar4 from '../../assets/Ellipse 17.png';
-import orange from '../../assets/images/Orange.png';
-import banana from '../../assets/images/Rectangle 45.png';
-import seeds from '../../assets/images/Seeds.png';
-import tomato from '../../assets/images/Tomato.png';
-import PieComponent from '../../Component/AdminComponent/PieComponent';
+import avatar from "../../assets/Ellipse 13.png";
+import avatar1 from "../../assets/Ellipse 14.png";
+import avatar2 from "../../assets/Ellipse 15.png";
+import avatar3 from "../../assets/Ellipse 16.png";
+import avatar4 from "../../assets/Ellipse 17.png";
+import orange from "../../assets/images/Orange.png";
+import banana from "../../assets/images/Rectangle 45.png";
+import seeds from "../../assets/images/Seeds.png";
+import tomato from "../../assets/images/Tomato.png";
+import PieComponent from "../../Component/AdminComponent/PieComponent";
 
 // import PieComponent from ".";
-
+const LoadingSkeleton = () => {
+  return (
+    <>
+      <div className="rounded-xl font-['Raleway'] w-full border-[1.5px] mt-5 border-[#f3f3f3]">
+        <div className="w-full bg-gray-200 animate-pulse">
+          <div className="h-40"></div>
+        </div>
+        <div className="w-full p-3">
+          <div className="h-4 mb-2 bg-gray-200 animate-pulse"></div>
+          <div className="h-3 mb-2 bg-gray-200 animate-pulse"></div>
+          <div className="h-8 mb-2 bg-gray-200 animate-pulse"></div>
+          <div className="h-3 bg-gray-200 animate-pulse"></div>
+        </div>
+      </div>
+    </>
+  );
+};
 const datas = [
   {
     name: "Jan",
@@ -98,8 +115,15 @@ const datas = [
     amt: 2100,
   },
 ];
-
 const Main = () => {
+  const { data, isLoading, isError, error } = useGetRevenueQuery();
+  if (isLoading) {
+    return <LoadingSkeleton />;
+  }
+  if (isError) {
+    return toast.error(error.data.message);
+  }
+  console.log("main", data.totalOrders);
   return (
     <div className="px-[25px] pt-[10px] pb-[40px] font-['Raleway'] z-0">
       <div className="flex items-center justify-between">
@@ -118,7 +142,7 @@ const Main = () => {
             </div>
             <div>
               <h2 className="font-medium text-[16px]">Total Revenue</h2>
-              <h1 className="font-bold text-[19px] ">NGN 600,500</h1>
+              <h1 className="font-bold text-[19px] ">{data?.totalRevenue}</h1>
             </div>
           </div>
           <div className="flex items-center flex-row gap-1 text-[12px]">
@@ -138,7 +162,7 @@ const Main = () => {
             </div>
             <div>
               <h2 className="font-medium text-[16px]">Total Orders</h2>
-              <h1 className="font-bold text-[19px] ">2,567</h1>
+              <h1 className="font-bold text-[19px] ">{data?.totalOrders}</h1>
             </div>
           </div>
           <div className="flex items-center flex-row gap-1 text-[12px]">
