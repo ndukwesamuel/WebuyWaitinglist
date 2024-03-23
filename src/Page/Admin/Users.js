@@ -27,7 +27,7 @@ const Users = () => {
   const [selectedUserId, setSelectedUserId] = useState("");
   const [createLoading, setCreateLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-
+  const [searchQuery, setSearchQuery] = useState("");
   const createmutation = useMutation(
     async ({ id, amount }) => {
       let API_URL = `${Base_URL}wallet/update/${id}`;
@@ -94,23 +94,45 @@ const Users = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    createmutation.mutate({
-      id: selectedUserId,
-      amount: amount,
-    });
+    const confirmed = window.confirm("Are you sure you?");
+    if (confirmed) {
+      createmutation.mutate({
+        id: selectedUserId,
+        amount: amount,
+      });
+    }
   };
-
+  let filteredUsers = users?.data?.filter(
+    (user) =>
+      user._id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user?.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user?.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user?.country.toLowerCase().includes(searchQuery.toLocaleLowerCase())
+  );
   return (
     <div className="font-['Raleway']">
       <div className="w-full px-3 md:pl-20 mt-8 md:pr-14">
         <div className="flex flex-col w-full h-full p-5  mt-5 bg-white n rounded-xl ">
-          <header className="w-full mb-5">
+          <header className="flex content-center justify-between w-full h-[10%] bg-[#fff4] py-[12.8px] px-[30px]">
             <h1 className="text-[24px] leading-[34px] font-semibold text-[#009B4D]">
               Registered Users
             </h1>
-
-            <hr />
+            <form className="w-[400px] max-sm:max-w-md lg:max-w-lg md:max-w-sm">
+              <div className="relative flex items-center">
+                <i className="fa-solid absolute w-[13px] h-[13px] pointer-events-none ml-4 fa-magnifying-glass fa-beat-fade"></i>
+                <input
+                  type="text"
+                  name="search"
+                  placeholder=""
+                  autoComplete="off"
+                  className="w-full px-3 py-[5px] max-sm:py-[15px] pl-10 font-semibold placeholder-gray-500 text-[#565454] rounded-full border-none ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                ></input>
+              </div>
+            </form>
           </header>
+          <hr />
           <main className="w-full overflow-x-auto bg-[#fff5] shadow-md bg-opacity-5 rounded-[12.8px] mt-[15px]">
             <section className=" w-full max-h-[calc(89%-25.6px)] rounded-[9.6px] overflow-auto bg-[#fffb] my-[12.8px] mx-auto    ">
               <div className="flex justify-center">
@@ -144,8 +166,8 @@ const Users = () => {
                     </tr>
                   </thead>
                   <tbody className=" font-semibold text-[#565454] ">
-                    {users &&
-                      users.data?.map((user) => (
+                    {filteredUsers &&
+                      filteredUsers?.map((user) => (
                         <tr
                           className=" even:bg-[#0000000b] hover:bg-[#fff6]"
                           key={user._id}
