@@ -1,34 +1,105 @@
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useGetUsersQuery } from "../../Redux/userApi";
 import { toast } from "react-toastify";
-import { use } from "i18next";
+import { LoadingSkeleton } from "../../Component/Loader/LoadingSkeleton";
+import ModalContainer from "../../Component/modal-container/modal-container";
+import axios from "axios";
+import { useMutation } from "react-query";
+const Base_URL = process.env.REACT_APP_Url;
 
-const LoadingSkeleton = () => {
-  return (
-    <>
-      <div className="rounded-xl font-['Raleway'] w-full border-[1.5px] mt-5 border-[#f3f3f3]">
-        <div className="w-full bg-gray-200 animate-pulse">
-          <div className="h-40"></div>
-        </div>
-        <div className="w-full p-3">
-          <div className="h-4 mb-2 bg-gray-200 animate-pulse"></div>
-          <div className="h-3 mb-2 bg-gray-200 animate-pulse"></div>
-          <div className="h-8 mb-2 bg-gray-200 animate-pulse"></div>
-          <div className="h-3 bg-gray-200 animate-pulse"></div>
-        </div>
-      </div>
-    </>
-  );
-};
 const Users = () => {
-  const { data: users, isLoading, isError, error } = useGetUsersQuery();
+  const { token } = useSelector(
+    (state) => state?.reducer?.AuthenticationSlice?.data
+  );
+  const {
+    data: users,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useGetUsersQuery();
+  const toggleSuccess = () => {
+    setShowSuccess(!showSuccess);
+  };
+  const [amount, setAmount] = useState("");
+  const [selectedUserId, setSelectedUserId] = useState("");
+  const [createLoading, setCreateLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const createmutation = useMutation(
+    async ({ id, amount }) => {
+      let API_URL = `${Base_URL}wallet/update/${id}`;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      let data = { amount };
+      setCreateLoading(true);
+      return await axios.patch(API_URL, data, config);
+    },
+    {
+      onSuccess: (response) => {
+        const message = response?.data?.message || "Operation successful";
+        toast.success(message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setCreateLoading(false);
+        setAmount("");
+        refetch();
+      },
+      onError: (error) => {
+        const errorMessage =
+          error?.response?.data?.message || "An error occurred";
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          className: "Forbidden403",
+        });
+        setCreateLoading(false);
+        setAmount("");
+      },
+    }
+  );
   if (isLoading) {
     return <LoadingSkeleton />;
   }
   if (isError) {
     return toast.error(error.data.message);
   }
-  console.log("user", users);
+
+  const handleUpdateClick = (selectedUserId) => {
+    setSelectedUserId(selectedUserId);
+    setShowSuccess(true);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    createmutation.mutate({
+      id: selectedUserId,
+      amount: amount,
+    });
+  };
+
   return (
     <div className="font-['Raleway']">
       <div className="w-full px-3 md:pl-20 mt-8 md:pr-14">
@@ -101,7 +172,10 @@ const Users = () => {
                           <td className=" p-[16px] border-collapse">
                             {user?.country}
                           </td>
-                          {/* <td>
+                          <td className=" p-[16px] border-collapse">
+                            {user?.referredUsers.length}
+                          </td>
+                          <td>
                             <Link
                               onClick={() => {
                                 handleUpdateClick(user._id);
@@ -109,7 +183,7 @@ const Users = () => {
                             >
                               Update
                             </Link>
-                          </td> */}
+                          </td>
                         </tr>
                       ))}
                   </tbody>
@@ -119,24 +193,21 @@ const Users = () => {
           </main>
         </div>
       </div>
-      {/* <ModalContainer close={toggleSuccess} show={showSuccess}>
+      <ModalContainer close={toggleSuccess} show={showSuccess}>
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-2">
           <div className="mb-4 relative">
             <label className="block mb-2 text-sm font-bold text-gray-700">
-              Update Order Status
+              Update user's wallet : Enter Amount
             </label>
 
-            <select
-              className="absolute right-0 w-full h-10 p-2  bg-[#f6f6f6] text-[#6f6d6d] rounded-lg"
-              value={selectedStatus}
-              onChange={handleStatusChange}
-            >
-              {statusOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+            <input
+              type="text"
+              className="p-2 border-2 mx-auto outline-none"
+              onChange={(e) => {
+                setAmount(e.target.value);
+              }}
+              value={amount}
+            />
           </div>
 
           <div className="flex justify-center mb-[4rem] mt-[4rem]">
@@ -154,7 +225,7 @@ const Users = () => {
             </button>
           </div>
         </form>
-      </ModalContainer> */}
+      </ModalContainer>
     </div>
   );
 };

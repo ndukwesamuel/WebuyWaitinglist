@@ -6,26 +6,9 @@ import ModalContainer from "../../Component/modal-container/modal-container";
 import axios from "axios";
 import { useMutation } from "react-query";
 import { Link } from "react-router-dom";
+import { LoadingSkeleton } from "../../Component/Loader/LoadingSkeleton";
 
 const Base_URL = process.env.REACT_APP_Url;
-
-const LoadingSkeleton = () => {
-  return (
-    <>
-      <div className="rounded-xl font-['Raleway'] w-full border-[1.5px] mt-5 border-[#f3f3f3]">
-        <div className="w-full bg-gray-200 animate-pulse">
-          <div className="h-40"></div>
-        </div>
-        <div className="w-full p-3">
-          <div className="h-4 mb-2 bg-gray-200 animate-pulse"></div>
-          <div className="h-3 mb-2 bg-gray-200 animate-pulse"></div>
-          <div className="h-8 mb-2 bg-gray-200 animate-pulse"></div>
-          <div className="h-3 bg-gray-200 animate-pulse"></div>
-        </div>
-      </div>
-    </>
-  );
-};
 
 const GroupOrders = () => {
   const { token } = useSelector(
@@ -39,7 +22,13 @@ const GroupOrders = () => {
   const [createLoading, setCreateLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const { data: orders, isLoading, isError, error } = useGetGroupOrderQuery();
+  const {
+    data: orders,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useGetGroupOrderQuery();
 
   const createmutation = useMutation(
     async ({ orderId, status }) => {
@@ -71,12 +60,11 @@ const GroupOrders = () => {
           theme: "light",
         });
         setCreateLoading(false);
-        // refetch();
+        refetch();
       },
       onError: (error) => {
         const errorMessage =
           error?.response?.data?.message || "An error occurred";
-        console.log(error);
         toast.error(errorMessage, {
           position: "top-right",
           autoClose: 5000,
