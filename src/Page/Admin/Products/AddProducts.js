@@ -62,6 +62,10 @@ const AddProducts = () => {
     error,
   } = useGetCategoryQuery();
 
+  console.log({
+    ss: category_data,
+  });
+
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -621,14 +625,20 @@ const AddProducts = () => {
                           <option defaultValue={"Select a category"}>
                             Select a category
                           </option>
-                          {category_data ? (
-                            category_data.map((option) => (
-                              <option key={option._id} value={option.value}>
-                                {option.name}
-                              </option>
-                            ))
+                          {category_data?.message ? (
+                            <h1> empty data</h1>
                           ) : (
-                            <option disabled>Loading categories...</option>
+                            <>
+                              {category_data ? (
+                                category_data?.map((option) => (
+                                  <option key={option._id} value={option.value}>
+                                    {option.name}
+                                  </option>
+                                ))
+                              ) : (
+                                <option disabled>Loading categories...</option>
+                              )}
+                            </>
                           )}
                         </select>
                       </div>
