@@ -161,7 +161,7 @@ const ProductsList = () => {
   const { AllProductData, isLoading } = useSelector(
     (state) => state?.reducer?.ProductSlice
   );
-  console.log({ AllProductData });
+  console.log({ AllProductData, ff: AllProductData?.products?.length });
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -179,7 +179,7 @@ const ProductsList = () => {
 
   let filtered;
 
-  if (AllProductData?.message) {
+  if (AllProductData?.message || AllProductData?.products?.length === 0) {
     filtered = [];
   } else {
     filtered = AllProductData?.filter(
@@ -188,6 +188,10 @@ const ProductsList = () => {
         product?.category.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }
+
+  console.log({
+    rer: filtered,
+  });
 
   return (
     <div className="font-['Raleway']">
