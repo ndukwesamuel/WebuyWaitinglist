@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import axios from "axios";
-import { IoAddCircleSharp } from "react-icons/io5";
-import { useMutation } from "react-query";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import axios from 'axios';
+import { IoAddCircleSharp } from 'react-icons/io5';
+import { useMutation } from 'react-query';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import { toast } from 'react-toastify';
 
-import background from "../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
-import Navbar from "../../Component/AdminComponent/Navbar";
-import Sidebar from "../../Component/AdminComponent/Sidebar";
-import ModalContainer from "../../Component/modal-container/modal-container";
-import { useGetCategoryQuery } from "../../Redux/categoryApi";
+import background
+  from '../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg';
+import Navbar from '../../Component/AdminComponent/Navbar';
+import Sidebar from '../../Component/AdminComponent/Sidebar';
+import ModalContainer from '../../Component/modal-container/modal-container';
+import { useGetCategoryQuery } from '../../Redux/categoryApi';
 
 const Base_URL = process.env.REACT_APP_Url;
 
@@ -172,14 +176,14 @@ const AddCategory = () => {
         </div>
         <div className="basis-[90%] ">
           <Navbar />
-          <div className="w-full pl-20 my-8 pr-14 h-24 min-h-full ">
+          <div className="w-full h-24 min-h-full pl-20 my-8 pr-14 rounded-xl ">
             <header className="w-full ">
               <h1 className="text-[24px] leading-[34px] font-semibold text-white  ">
                 Category
               </h1>
             </header>
             <form
-              className="w-full max-w-2xl-lg bg-white p-8 rounded shadow-lg overflow-y-auto h-24 min-h-full "
+              className="w-full h-24 min-h-full p-8 overflow-y-auto bg-white rounded shadow-lg max-w-2xl-lg "
               style={{
                 overflowY: "auto",
                 scrollbarWidth: "none",
@@ -195,7 +199,7 @@ const AddCategory = () => {
               />
 
               {/* Table */}
-              <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-8 h-full">
+              <div className="relative h-full mt-8 overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left rtl:text-right text-black-500 dark:text-gray-400">
                   <thead className="font-medium text-base text-[#565454]">
                     <tr>
@@ -246,7 +250,7 @@ const AddCategory = () => {
               </div>
 
               {/* Submit and Cancel Buttons */}
-              <div className="flex content-center w-full mt-6 gap-8">
+              <div className="flex content-center w-full gap-8 mt-6">
                 <button
                   className="w-full bg-[#f3f3f3] text-[#009b4d] font-semibold py-2 rounded-lg"
                   type="submit"
@@ -268,18 +272,18 @@ const AddCategory = () => {
       <ModalContainer close={toggleSuccess} show={showSuccess}>
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label className="block mb-2 text-sm font-bold text-gray-700">
               Category name
             </label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="border rounded w-full py-2 px-3"
+              className="w-full px-3 py-2 border rounded"
             />
           </div>
 
-          <div className="mb-4 flex justify-center">
+          <div className="flex justify-center mb-4">
             <button
               type="submit"
               className="bg-[#009B4D] text-white py-2 px-4 rounded hover:bg-[#009B4D] focus:outline-none focus:shadow-outline-blue active:bg-blue-800"

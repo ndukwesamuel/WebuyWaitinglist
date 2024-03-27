@@ -1,15 +1,38 @@
-import React, { useState } from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 
 import {
   FaEnvelope,
   FaRegBell,
   FaSearch,
 } from 'react-icons/fa';
-
-import profile from '../../assets/profile.png';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { fullName, email } = useSelector(
+    (state) => state?.reducer?.AuthenticationSlice?.data
+  );
+  const [userImage, setUserImage] = useState(null);
+
+  useEffect(() => {
+    const fetchUserImage = async () => {
+      try {
+        const response = await fetch(`/api/user/image?email=${email}`);
+        const data = await response.json();
+        setUserImage(data.imageUrl);
+      } catch (error) {
+        console.error("Error fetching user image:", error);
+      }
+    };
+
+    if (email) {
+      fetchUserImage();
+    }
+  }, [email]);
+
 
   const showProfile = () => {
     // alert("helloo")
@@ -39,10 +62,18 @@ const Navbar = () => {
             onClick={showProfile}
           >
             <p className="font-medium text-[15px] text-[#565454]">
-              Jesse Iyoha
+              Hi, {fullName}
             </p>
-            <div className="h-[40px] w-[40px] rounded-full bg-[#009B4D] cursor-pointer flex items-center justify-center relative z-40">
-              <img src={profile} alt="" />
+            <div className="w-8 h-8 flex items-center max-sm:hidden justify-center rounded-full border-[2px] border-[#ffffff]">
+              {userImage ? (
+                <img
+                  className="w-full h-full rounded-full"
+                  src={userImage}
+                  alt="User Avatar"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-200 rounded-full"></div>
+              )}
             </div>
 
             {open && (

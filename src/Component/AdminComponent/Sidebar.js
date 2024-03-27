@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { FaTachometerAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaTachometerAlt } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import image from "../../assets/images/Subtract.png";
-import { useDispatch } from "react-redux";
-import { Logout_fun } from "../../Redux/AuthenticationSlice";
+import image from '../../assets/images/Subtract.png';
+import { Logout_fun } from '../../Redux/AuthenticationSlice';
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
@@ -87,7 +87,7 @@ const Sidebar = () => {
         </Link>
       </div>
 
-      <div className="flex items-center gap-[13px] py-[15px] border-b-[0.5px] border-[#000000]/[0.3] cursor-pointer">
+      <div className="flex items-center ml-1 gap-[17px] py-[15px] border-b-[0.5px] border-[#000000]/[0.3] cursor-pointer">
         {/* <i className="fa-solid fa-users text-[#565454]"></i> */}
         <i className="fa-solid fa-receipt"></i>
 

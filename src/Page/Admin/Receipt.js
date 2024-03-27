@@ -1,15 +1,24 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import background from "../../assets/images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg";
-import Navbar from "../../Component/AdminComponent/Navbar";
-import Sidebar from "../../Component/AdminComponent/Sidebar";
-import { Get_All_User_Orders_fun } from "../../Redux/OrderSlice";
-import { Admin_get_all_recipte_fun_ } from "../../Redux/AdminRecipteSLice";
-import { Link } from "react-router-dom";
-import ModalContainer from "../../Component/modal-container/modal-container";
-import { useMutation } from "react-query";
-import { toast } from "react-toastify";
+import React, {
+  useEffect,
+  useState,
+} from 'react';
+
+import axios from 'axios';
+import { useMutation } from 'react-query';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import background
+  from '../../assets/images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg';
+import Navbar from '../../Component/AdminComponent/Navbar';
+import Sidebar from '../../Component/AdminComponent/Sidebar';
+import ModalContainer from '../../Component/modal-container/modal-container';
+import { Admin_get_all_recipte_fun_ } from '../../Redux/AdminRecipteSLice';
+
 const Base_URL = process.env.REACT_APP_Url;
 
 const Recipte = () => {
@@ -160,7 +169,7 @@ const Recipte = () => {
                   <thead className="">
                     <tr className=" text-[#565454]">
                       <th className=" p-[16px] sticky top-0 left-0 bg-[#d5d1defe] border-collapse">
-                        Recipte ID
+                        Receipt ID
                       </th>
 
                       <th className=" p-[16px] sticky top-0 left-0 bg-[#d5d1defe] border-collapse">
@@ -288,7 +297,7 @@ const Recipte = () => {
       </div>
       <ModalContainer close={toggleSuccess} show={showSuccess}>
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-2">
-          <div className="mb-4 relative">
+          <div className="relative mb-4">
             <label className="block mb-2 text-sm font-bold text-gray-700">
               Update Receipt Status
             </label>

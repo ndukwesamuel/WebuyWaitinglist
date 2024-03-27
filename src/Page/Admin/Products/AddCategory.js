@@ -1,16 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 
-import axios from "axios";
-import { IoAddCircleSharp } from "react-icons/io5";
-import { useMutation } from "react-query";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import axios from 'axios';
+import { IoAddCircleSharp } from 'react-icons/io5';
+import { useMutation } from 'react-query';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import { toast } from 'react-toastify';
 
-import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
-import Navbar from "../../../Component/AdminComponent/Navbar";
-import Sidebar from "../../../Component/AdminComponent/Sidebar";
-import ModalContainer from "../../../Component/modal-container/modal-container";
-import { useGetCategoryQuery } from "../../../Redux/categoryApi";
+import background
+  from '../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg';
+import Navbar from '../../../Component/AdminComponent/Navbar';
+import Sidebar from '../../../Component/AdminComponent/Sidebar';
+import ModalContainer from '../../../Component/modal-container/modal-container';
+import { useGetCategoryQuery } from '../../../Redux/categoryApi';
 
 const Base_URL = process.env.REACT_APP_Url;
 
@@ -178,13 +185,13 @@ const AddCategory = () => {
         </div>
         <div className="basis-[90%] ">
           <Navbar />
-          <div className="w-full h-24 min-h-full pl-20 my-8 pr-14 ">
+          <div className="w-full h-24 min-h-full pl-20 my-8 rounded-xl pr-14 ">
             <header className="w-full ">
               <h1 className="text-[24px] leading-[34px] font-semibold text-white  ">
                 Category
               </h1>
             </header>
-            <form className="w-full p-8 mt-4 bg-white rounded-lg shadow-lg max-w-2xl-lg ">
+            <form className="w-full p-8 mt-4 bg-white shadow-lg rounded-xl max-w-2xl-lg ">
               <IoAddCircleSharp
                 className="text-[50px]"
                 onClick={() => {
