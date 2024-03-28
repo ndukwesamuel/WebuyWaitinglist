@@ -143,7 +143,7 @@ const Users = () => {
             </form>
           </header>
           <hr />
-          <main className="w-full overflow-x-auto bg-[#fff5] shadow-md bg-opacity-5 rounded-[12.8px] mt-[15px]">
+          <main className="w-full bg-[#fff5] shadow-md bg-opacity-5 rounded-[12.8px] mt-[15px]">
             <section className=" w-full max-h-[calc(89%-25.6px)] rounded-[9.6px] overflow-auto bg-[#fffb] my-[12.8px] mx-auto    ">
               <div className="flex justify-center ">
                 <table className="w-full table-auto ">
