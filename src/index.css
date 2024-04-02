@@ -17,6 +17,17 @@
   }
 }
 
+.btn{
+  background-color: #009b4d;
+  border: none;
+  box-shadow: -6px -6px 10px #017d3f,
+              6px 6px 10px #00000026;    
+}
+
+.btn:hover{
+  box-shadow: 2px 2px 2px #017d3f,
+  -2px -2px 2px #00000026;
+}
 
 
 .magicpattern { 

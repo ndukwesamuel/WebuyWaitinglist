@@ -7,33 +7,39 @@ import {
 } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const EmailVerification = () => {
+const EmailVerification = ({ axiosInstance, toast }) => {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
+    const sendReferralEmail = async (userId, referralCode) => {
+      try {
+        const API_URL = process.env.REACT_APP_API_URL;
+        await axiosInstance.post(`${API_URL}/send-referral-email`, {
+          userId,
+          referralCode,
+        });
+      } catch (error) {
+        console.error("Error sending referral email:", error);
+        toast.error("Failed to send referral email.");
+      }
+    };
+
     const verifyEmail = async (userId, uniqueString) => {
       try {
         if (userId && uniqueString) {
-          const API_URL = process.env.REACT_APP_Url;
-          const form = new FormData();
-          form.append("userId", userId);
-          form.append("uniqueString", uniqueString);
-
-          const response = await axios.post(
-            API_URL + "user/verify-email",
-            form,
+          const API_URL = process.env.REACT_APP_API_URL; // Assuming REACT_APP_API_URL is defined
+          const response = await axiosInstance.post(
+            `${API_URL}/user/verify-email`,
             {
-              headers: {
-                "Content-Type": "application/json",
-              },
+              userId,
+              uniqueString,
             }
           );
 
-          if (response.data.error === true) {
+          if (response.data.error) {
             toast.error(response.data.message);
           } else {
-            // If email verification is successful, send another email with referral code
             const referralCode = searchParams.get("ref");
             if (referralCode) {
               await sendReferralEmail(userId, referralCode);
@@ -51,29 +57,18 @@ const EmailVerification = () => {
       }
     };
 
-    // Extract userId and uniqueString from URL parameters
     const userId = searchParams.get("userId");
     const uniqueString = searchParams.get("uniqueString");
 
-    // Call the verification function
     verifyEmail(userId, uniqueString);
-  }, []);
-
-  // Function to send referral email
-  const sendReferralEmail = async (userId, referralCode) => {
-    try {
-      const API_URL = process.env.REACT_APP_Url;
-      await axios.post(API_URL + "send-referral-email", {
-        userId,
-        referralCode,
-      });
-    } catch (error) {
-      console.error("Error sending referral email:", error);
-      toast.error("Failed to send referral email.");
-    }
-  };
+  }, [axiosInstance, navigate, searchParams, toast]);
 
   return null;
+};
+
+EmailVerification.defaultProps = {
+  axiosInstance: axios,
+  toast: toast,
 };
 
 export default EmailVerification;

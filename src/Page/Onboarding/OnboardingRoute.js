@@ -173,7 +173,7 @@ const OnboardingRoute = () => {
                   sessionStorage.clear();
                   window.location.reload();
                 }}
-                className="text-[14px] border-2 max-sm:ml-0 ml-10 max-sm:text-[#000000] md:text-[#000000] px-4 py-2 leading-[20px] rounded-lg font-semibold lg:text-[#ffffff] focus:text-[#009b4d] max-sm:hover:text-[#ffffff] md:hover:text-[#ffffff] transition ease-in-out delay-150 bg-transparent hover:-translate-y-1 hover:scale-80 hover:bg-[#009b4d] duration-300"
+                className="text-[14px] btn rounded-lg max-sm:ml-0 ml-10 max-sm:text-[#000000] md:text-[#000000] px-5 py-2 leading-[20px] font-semibold lg:text-[#ffffff] focus:text-[#009b4d] max-sm:hover:text-[#ffffff] md:hover:text-[#ffffff]"
               >
                 {logOut}
               </button>
