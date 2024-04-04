@@ -28,7 +28,7 @@ const EmailVerification = ({ axiosInstance, toast }) => {
     const verifyEmail = async (userId, uniqueString) => {
       try {
         if (userId && uniqueString) {
-          const API_URL = process.env.REACT_APP_API_URL; // Assuming REACT_APP_API_URL is defined
+          const API_URL = process.env.REACT_APP_API_URL; 
           const response = await axiosInstance.post(
             `${API_URL}/user/verify-email`,
             {

@@ -29,6 +29,38 @@
   -2px -2px 2px #00000026;
 }
 
+.alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  color: #009b4d;
+  padding: 15px;
+  border-radius: 5px;
+  z-index: 9999;
+}
+
+.progress-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 15px;
+  background-color: red;
+  z-index: 9998;
+  animation: progress-animation 2s linear forwards;
+}
+
+@keyframes progress-animation {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+
+
 
 .magicpattern { 
   width: 60%;
