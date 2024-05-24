@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useGetGroupOrderQuery } from "../../Redux/orderApi";
-import { toast } from "react-toastify";
-import ModalContainer from "../../Component/modal-container/modal-container";
-import axios from "axios";
-import { useMutation } from "react-query";
-import { Link } from "react-router-dom";
-import { LoadingSkeleton } from "../../Component/Loader/LoadingSkeleton";
+import { useState } from 'react';
+
+import axios from 'axios';
+import { useMutation } from 'react-query';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import { LoadingSkeleton } from '../../Component/Loader/LoadingSkeleton';
+import ModalContainer from '../../Component/modal-container/modal-container';
+import { useGetGroupOrderQuery } from '../../Redux/orderApi';
 
 const Base_URL = process.env.REACT_APP_Url;
 
@@ -119,20 +121,33 @@ const GroupOrders = () => {
       ? `${dateOrdered.toLocaleDateString()}`
       : "Invalid Date";
   };
-  let filteredOrders = orders?.message?.filter(
-    (order) =>
-      order._id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order?.groupId?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order?.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order?.groupId?.country
-        .toLowerCase()
-        .includes(searchQuery.toLocaleLowerCase()) ||
-      order?.productId?.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+
+  let filteredOrders = [];
+
+  if (orders && Array.isArray(orders.message)) {
+    filteredOrders = orders.message.filter(
+      (order) =>
+        order._id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        order?.groupId?.name
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        order?.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        order?.groupId?.country
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        order?.productId?.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }
+
+  
   return (
     <div className="font-['Raleway']">
-      <div className="w-full px-3 md:pl-20 mt-8 md:pr-14">
-        <div className="flex flex-col w-full h-full p-5  mt-5 bg-white n rounded-xl ">
+      <div className="w-full px-3 mt-8 md:px-14">
+        <div className="flex flex-col overflow-y-scroll max-h-[600px] w-full h-full p-5 mt-5 bg-white rounded-xl " style={{
+                overflowY: "auto",
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+              }}>
           <header className="flex content-center justify-between w-full h-[10%] bg-[#fff4] py-[12.8px] px-[30px]">
             <h1 className="text-[24px] leading-[34px] font-semibold text-[#009B4D]">
               Group Orders
@@ -157,7 +172,7 @@ const GroupOrders = () => {
           <main className="w-full overflow-x-auto bg-[#fff5] shadow-md bg-opacity-5 rounded-[12.8px] mt-[15px]">
             <section className=" w-[95%] max-h-[calc(89%-25.6px)] rounded-[9.6px] overflow-auto bg-[#fffb] my-[12.8px] mx-auto    ">
               <div className="flex justify-center">
-                <table className=" w-full table-auto">
+                <table className="w-full table-auto ">
                   <thead>
                     <tr className=" text-[#565454]">
                       <th className=" p-[16px] sticky top-0 left-0 bg-[#d5d1defe] border-collapse">
@@ -250,7 +265,7 @@ const GroupOrders = () => {
       </div>
       <ModalContainer close={toggleSuccess} show={showSuccess}>
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-2">
-          <div className="mb-4 relative">
+          <div className="relative mb-4">
             <label className="block mb-2 text-sm font-bold text-gray-700">
               Update Order Status
             </label>

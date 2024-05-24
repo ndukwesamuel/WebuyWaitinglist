@@ -1,12 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 
-import { useDispatch, useSelector } from "react-redux";
-import ScrollReveal from "scrollreveal";
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import ScrollReveal from 'scrollreveal';
 
-import board from "../../assets/istockphoto-1320029684-612x612__1_-removebg.png";
-import image from "../../assets/Subtract.png";
-import playstore from "../../img/Google-Play-PNG-Clipart.png";
-import { Logout_fun } from "../../Redux/AuthenticationSlice";
+import board
+  from '../../assets/istockphoto-1320029684-612x612__1_-removebg.png';
+import image from '../../assets/Subtract.png';
+import ReferralCodeModal
+  from '../../Component/ReferralCodeModalComponent/ReferralCodeModal';
+import playstore from '../../img/Google-Play-PNG-Clipart.png';
+import { Logout_fun } from '../../Redux/AuthenticationSlice';
+import { generateReferralCodes } from '../../utilities/ReferralCode';
 
 const OnboardingRoute = () => {
   const dispatch = useDispatch();
@@ -20,6 +30,12 @@ const OnboardingRoute = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("En");
   const [userImage, setUserImage] = useState(null);
   const [iconColor, setIconColor] = useState("#ffffff");
+
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
 
   useEffect(() => {
     ScrollReveal().reveal(".image", {
@@ -166,7 +182,7 @@ const OnboardingRoute = () => {
                   sessionStorage.clear();
                   window.location.reload();
                 }}
-                className="text-[14px] border-2 max-sm:ml-0 ml-10 max-sm:text-[#000000] md:text-[#000000] px-4 py-2 leading-[20px] rounded-lg font-semibold lg:text-[#ffffff] focus:text-[#009b4d] max-sm:hover:text-[#ffffff] md:hover:text-[#ffffff] transition ease-in-out delay-150 bg-transparent hover:-translate-y-1 hover:scale-80 hover:bg-[#009b4d] duration-300"
+                className="text-[14px] btn rounded-lg max-sm:ml-0 ml-10 max-sm:text-[#000000] md:text-[#000000] px-5 py-2 leading-[20px] font-semibold lg:text-[#ffffff] focus:text-[#009b4d] max-sm:hover:text-[#ffffff] md:hover:text-[#ffffff]"
               >
                 {logOut}
               </button>
@@ -182,9 +198,24 @@ const OnboardingRoute = () => {
             <p className="mt-1 max-sm:text-center text-[#565454] font-semibold max-w-[550px] text-xl max-sm:text-lg ">
               {paragraphText}
             </p>
-            <a href="/">
-              <img className="w-[200px] " src={playstore} alt=""></img>
-            </a>
+            <div className="flex items-center w-full">
+              <a href="/">
+                <img className="w-[200px] " src={playstore} alt=""></img>
+              </a>
+              <button
+                onClick={toggleModal}
+                className="sm:text-[14px] text-wrap md:text-[18px] text-[#fff] font-medium rounded-lg px-5 py-[15px] bg-[#242c3f]"
+                type="referral"
+              >
+                Referral Code
+              </button>
+              {showModal && (
+                <ReferralCodeModal
+                  referralCode={generateReferralCodes}
+                  onClose={toggleModal}
+                />
+              )}
+            </div>
           </div>
           <div className=" w-2/5 max-sm:w-full max-sm:hidden md:hidden lg:flex justify-center bg-[#009b4d] max-sm:p-0 max-sm:h-auto h-screen">
             <img
@@ -200,3 +231,4 @@ const OnboardingRoute = () => {
 };
 
 export default OnboardingRoute;
+

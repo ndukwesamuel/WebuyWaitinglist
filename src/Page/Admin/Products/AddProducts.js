@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import axios from "axios";
+import axios from 'axios';
 import {
   FaAlignCenter,
   FaAlignJustify,
@@ -13,16 +13,17 @@ import {
   FaItalic,
   FaSortDown,
   FaUnderline,
-} from "react-icons/fa";
-import { useMutation } from "react-query";
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router";
-import { toast } from "react-toastify";
+} from 'react-icons/fa';
+import { useMutation } from 'react-query';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router';
+import { toast } from 'react-toastify';
 
-import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
-import Navbar from "../../../Component/AdminComponent/Navbar";
-import Sidebar from "../../../Component/AdminComponent/Sidebar";
-import { useGetCategoryQuery } from "../../../Redux/categoryApi";
+import background
+  from '../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg';
+import Navbar from '../../../Component/AdminComponent/Navbar';
+import Sidebar from '../../../Component/AdminComponent/Sidebar';
+import { useGetCategoryQuery } from '../../../Redux/categoryApi';
 
 const Base_URL = process.env.REACT_APP_Url;
 
@@ -291,7 +292,7 @@ const AddProducts = () => {
             </header>
             <form>
               <div className="flex flex-row content-center justify-between w-full h-full gap-6 mt-8 ">
-                <section className="w-full flex-col h-[510px] flex content-center p-5  bg-[#f5f6fa] rounded-lg cursor-pointer">
+                <section className="w-full flex-col h-[510px] flex content-center p-5  bg-[#f5f6fa] rounded-xl cursor-pointer">
                   <header className="flex content-center justify-between w-full ">
                     <h1 className="font-medium text-base text-[#565454]">
                       Product Image
@@ -457,7 +458,14 @@ const AddProducts = () => {
                     </div>
                   </div>
                 </section>
-                <section className="flex flex-col content-center w-full h-full px-6 py-5 bg-white rounded-lg ">
+                <section
+                  className="flex flex-col content-center w-full h-full px-6 py-5 bg-white rounded-xl overflow-y-scroll max-h-[510px] "
+                  style={{
+                    overflowY: "auto",
+                    scrollbarWidth: "none",
+                    msOverflowStyle: "none",
+                  }}
+                >
                   <div className="flex flex-col content-center w-full ">
                     <div className="flex flex-row content-center justify-between w-full">
                       <h2 className=" font-medium text-base text-[#565454]">

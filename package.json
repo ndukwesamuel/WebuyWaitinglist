@@ -25,6 +25,7 @@
     "recharts": "^2.7.3",
     "redux": "^4.2.1",
     "redux-persist": "^6.0.0",
+    "referral-codes": "^3.0.0",
     "scrollreveal": "^4.0.9",
     "slick-carousel": "^1.8.1",
     "swiper": "^11.0.6",

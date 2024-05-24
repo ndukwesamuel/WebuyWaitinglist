@@ -1,12 +1,15 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { useGetUsersQuery } from "../../Redux/userApi";
-import { toast } from "react-toastify";
-import { LoadingSkeleton } from "../../Component/Loader/LoadingSkeleton";
-import ModalContainer from "../../Component/modal-container/modal-container";
-import axios from "axios";
-import { useMutation } from "react-query";
+import { useState } from 'react';
+
+import axios from 'axios';
+import { useMutation } from 'react-query';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import { LoadingSkeleton } from '../../Component/Loader/LoadingSkeleton';
+import ModalContainer from '../../Component/modal-container/modal-container';
+import { useGetUsersQuery } from '../../Redux/userApi';
+
 const Base_URL = process.env.REACT_APP_Url;
 
 const Users = () => {
@@ -111,8 +114,15 @@ const Users = () => {
   );
   return (
     <div className="font-['Raleway']">
-      <div className="w-full px-3 md:pl-20 mt-8 md:pr-14">
-        <div className="flex flex-col w-full h-full p-5  mt-5 bg-white n rounded-xl ">
+      <div className="w-full px-3 mt-8 md:px-14">
+        <div
+          className="flex flex-col w-full h-full p-5 overflow-y-scroll max-h-[600px]  mt-5 bg-white rounded-xl "
+          style={{
+            overflowY: "auto",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+        >
           <header className="flex content-center justify-between w-full h-[10%] bg-[#fff4] py-[12.8px] px-[30px]">
             <h1 className="text-[24px] leading-[34px] font-semibold text-[#009B4D]">
               Registered Users
@@ -133,11 +143,11 @@ const Users = () => {
             </form>
           </header>
           <hr />
-          <main className="w-full overflow-x-auto bg-[#fff5] shadow-md bg-opacity-5 rounded-[12.8px] mt-[15px]">
+          <main className="w-full bg-[#fff5] shadow-md bg-opacity-5 rounded-[12.8px] mt-[15px]">
             <section className=" w-full max-h-[calc(89%-25.6px)] rounded-[9.6px] overflow-auto bg-[#fffb] my-[12.8px] mx-auto    ">
-              <div className="flex justify-center">
-                <table className=" w-full table-auto">
-                  <thead>
+              <div className="flex justify-center ">
+                <table className="w-full table-auto ">
+                  <thead className="">
                     <tr className=" text-[#565454]">
                       <th className=" p-[16px] border-collapse sticky top-0 left-0 bg-[#d5d1defe] ">
                         Name
@@ -203,7 +213,7 @@ const Users = () => {
                                 handleUpdateClick(user._id);
                               }}
                             >
-                              Update
+                              <i class="fa-solid fa-pen-to-square"></i>
                             </Link>
                           </td>
                         </tr>
@@ -217,14 +227,14 @@ const Users = () => {
       </div>
       <ModalContainer close={toggleSuccess} show={showSuccess}>
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-2">
-          <div className="mb-4 relative">
+          <div className="relative mb-4">
             <label className="block mb-2 text-sm font-bold text-gray-700">
               Update user's wallet : Enter Amount
             </label>
 
             <input
               type="text"
-              className="p-2 border-2 mx-auto outline-none"
+              className="p-2 mx-auto border-2 outline-none"
               onChange={(e) => {
                 setAmount(e.target.value);
               }}
