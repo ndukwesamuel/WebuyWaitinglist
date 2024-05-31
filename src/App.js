@@ -1,24 +1,20 @@
-import './App.css';
-import 'react-toastify/dist/ReactToastify.css';
+import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
 
-import React from 'react';
+import React from "react";
 
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-} from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
-import AdminRoute from './Page/Admin/AdminRoute';
-import FacilitatorRoute from './Page/FacilitatorFolder/FacilitatorRoute';
-import OnboardingRoute from './Page/Onboarding/OnboardingRoute';
-import PageRoutes from './Page/PageRoutes';
+import AdminRoute from "./Page/Admin/AdminRoute";
+import FacilitatorRoute from "./Page/FacilitatorFolder/FacilitatorRoute";
+import OnboardingRoute from "./Page/Onboarding/OnboardingRoute";
+import PageRoutes from "./Page/PageRoutes";
 import {
   AdminPrivateRoute,
   UserPrivateRoute,
-} from './Page/privateroute/Private';
-import Dashboard from './Page/UserDashboard/Dashboard';
+} from "./Page/privateroute/Private";
+import Dashboard from "./Page/UserDashboard/Dashboard";
 
 // import './main.scss';
 
