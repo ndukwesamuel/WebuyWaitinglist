@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const Base_URL = `${process.env.REACT_APP_Url}user/register`;
+console.log("baseUrl", Base_URL);
 
 const tokengot = localStorage.getItem("token");
 

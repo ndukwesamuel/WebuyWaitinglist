@@ -12,7 +12,8 @@ const EmailVerification = () => {
     const verifyEmail = async (userId, uniqueString) => {
       try {
         if (userId && uniqueString) {
-          const API_URL = process.env.REACT_APP_API_URL;
+          const API_URL = process.env.REACT_APP_Local;
+          console.log("api_url", API_URL);
           const response = await axios.post(`${API_URL}user/verify-email`, {
             userId,
             uniqueString,
@@ -27,6 +28,7 @@ const EmailVerification = () => {
           toast.error("Invalid verification parameters.");
         }
       } catch (error) {
+        console.log(error);
         toast.error("An error occurred while verifying email.");
       }
     };
