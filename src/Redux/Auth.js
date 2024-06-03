@@ -28,6 +28,7 @@ export const RegisterFun = createAsyncThunk(
       const message =
         (error.response && error.response.data && error.response.data.msg) ||
         error.msg ||
+        error.error ||
         error.response.data.message ||
         error.toString();
       return thunkAPI.rejectWithValue(message);
