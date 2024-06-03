@@ -19,15 +19,15 @@ const EmailVerification = () => {
           });
 
           if (response.data.error) {
-            toast.error(response.data.message);
+            return toast.error(response.data.message);
           }
+          toast.success(response.data.message);
+          navigate("/login");
         } else {
           toast.error("Invalid verification parameters.");
         }
       } catch (error) {
         toast.error("An error occurred while verifying email.");
-      } finally {
-        navigate("/login");
       }
     };
 
