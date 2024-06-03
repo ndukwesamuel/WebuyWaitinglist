@@ -27,7 +27,6 @@ const EmailVerification = () => {
           toast.error("Invalid verification parameters.");
         }
       } catch (error) {
-        console.log(error);
         toast.error("An error occurred while verifying email.");
       }
     };
