@@ -12,8 +12,7 @@ const EmailVerification = () => {
     const verifyEmail = async (userId, uniqueString) => {
       try {
         if (userId && uniqueString) {
-          const API_URL = process.env.REACT_APP_Local;
-          console.log("api_url", API_URL);
+          const API_URL = process.env.REACT_APP_Url;
           const response = await axios.post(`${API_URL}user/verify-email`, {
             userId,
             uniqueString,
