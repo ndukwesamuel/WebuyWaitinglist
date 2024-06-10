@@ -206,67 +206,29 @@ const initialState = {
 const Admin_get_all_recipte_fun_Service = async (token) => {
   let Base_URL = main_url + "wallet/receipt";
 
-  try {
-    const response = await axios.get(Base_URL, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  const response = await axios.get(Base_URL, {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
-    return response.data;
-    // Process the response data here
-  } catch (error) {
-    toast.error(`${error}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      className: "Forbidden403",
-    });
-
-    // Handle the error here
-    ErrorFunc(error);
-    throw error;
-  }
+  return response.data;
 };
 
 const Admin_update_recipte_fun_Service = async (data, token) => {
   let Base_URL = main_url + "wallet/receipt";
 
-  try {
-    const response = await axios.post(Base_URL, data, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  const response = await axios.post(Base_URL, data, {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
-    return response.data;
-    // Process the response data here
-  } catch (error) {
-    toast.error(`${error}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      className: "Forbidden403",
-    });
-    // Handle the error here
-
-    ErrorFunc(error);
-    throw error;
-  }
+  return response.data;
 };
 export const Admin_update_recipte_fun_ = createAsyncThunk(
   "AdminRecipteSLice/Admin_update_recipte_fun",
@@ -320,18 +282,6 @@ const Admin_get_single_recipte_fun_Service = async (id, token) => {
     return response.data;
     // Process the response data here
   } catch (error) {
-    toast.error(`${error}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      className: "Forbidden403",
-    });
-
     // Handle the error here
     ErrorFunc(error);
     throw error;

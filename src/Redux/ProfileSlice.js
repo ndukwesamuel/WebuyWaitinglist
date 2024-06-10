@@ -26,17 +26,6 @@ const Profile_fun_Service = async (data, token) => {
 
     return response;
   } catch (error) {
-    // toast.error(`${error}`, {
-    //   position: "top-right",
-    //   autoClose: 5000,
-    //   hideProgressBar: false,
-    //   closeOnClick: true,
-    //   pauseOnHover: true,
-    //   draggable: true,
-    //   progress: undefined,
-    //   theme: "light",
-    //   className: "Forbidden403",
-    // });
     throw error;
 
     // Handle the error here
@@ -81,6 +70,7 @@ export const Profile_fun = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      console.log("token", token);
       return await Profile_fun_Service(data, token);
     } catch (error) {
       const message =

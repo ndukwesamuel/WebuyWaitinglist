@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import axios from 'axios';
-import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import axios from "axios";
+import { useMutation } from "react-query";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
-import { LoadingSkeleton } from '../../Component/Loader/LoadingSkeleton';
-import ModalContainer from '../../Component/modal-container/modal-container';
-import { useGetUsersQuery } from '../../Redux/userApi';
+import { LoadingSkeleton } from "../../Component/Loader/LoadingSkeleton";
+import ModalContainer from "../../Component/modal-container/modal-container";
+import { useGetUsersQuery } from "../../Redux/userApi";
 
 const Base_URL = process.env.REACT_APP_Url;
 
@@ -213,7 +213,7 @@ const Users = () => {
                                 handleUpdateClick(user._id);
                               }}
                             >
-                              <i class="fa-solid fa-pen-to-square"></i>
+                              <i className="fa-solid fa-pen-to-square"></i>
                             </Link>
                           </td>
                         </tr>
