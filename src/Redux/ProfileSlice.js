@@ -26,17 +26,6 @@ const Profile_fun_Service = async (data, token) => {
 
     return response;
   } catch (error) {
-    // toast.error(`${error}`, {
-    //   position: "top-right",
-    //   autoClose: 5000,
-    //   hideProgressBar: false,
-    //   closeOnClick: true,
-    //   pauseOnHover: true,
-    //   draggable: true,
-    //   progress: undefined,
-    //   theme: "light",
-    //   className: "Forbidden403",
-    // });
     throw error;
 
     // Handle the error here

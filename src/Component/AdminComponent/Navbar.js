@@ -1,38 +1,24 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
-
-import {
-  FaEnvelope,
-  FaRegBell,
-  FaSearch,
-} from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { FaEnvelope, FaRegBell, FaSearch } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { Profile_fun } from "../../Redux/ProfileSlice";
+import { useDispatch } from "react-redux";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const { fullName, email } = useSelector(
     (state) => state?.reducer?.AuthenticationSlice?.data
   );
+  const { data: profile } = useSelector(
+    (state) => state?.reducer?.ProfileSlice
+  );
+
   const [userImage, setUserImage] = useState(null);
 
   useEffect(() => {
-    const fetchUserImage = async () => {
-      try {
-        const response = await fetch(`/api/user/image?email=${email}`);
-        const data = await response.json();
-        setUserImage(data.imageUrl);
-      } catch (error) {
-        console.error("Error fetching user image:", error);
-      }
-    };
-
-    if (email) {
-      fetchUserImage();
-    }
-  }, [email]);
-
+    dispatch(Profile_fun());
+  }, []);
 
   const showProfile = () => {
     // alert("helloo")
@@ -65,10 +51,10 @@ const Navbar = () => {
               Hi, {fullName}
             </p>
             <div className="w-8 h-8 flex items-center max-sm:hidden justify-center rounded-full border-[2px] border-[#ffffff]">
-              {userImage ? (
+              {profile && profile.data ? (
                 <img
                   className="w-full h-full rounded-full"
-                  src={userImage}
+                  src={profile.data.message.profileImage}
                   alt="User Avatar"
                 />
               ) : (

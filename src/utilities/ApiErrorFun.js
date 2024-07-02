@@ -2,7 +2,6 @@ import { toast } from "react-toastify";
 
 // This function checks the type of error and returns a toast.
 export const ErrorFunc = (message) => {
-  console.log(message);
   let { response } = message;
   //   if (response.status === 403) {
   toast.error(`${response.data.message}`, {

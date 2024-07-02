@@ -31,21 +31,12 @@ const UpdateRecipte = () => {
   );
 
   const { state } = useLocation();
-  console.log({
-    Admin_get_single_recipte,
-  });
 
   const { amount, createdAt, _id, receipt, status, updatedAt, user } = state;
-
-  // const orderData = location.state;
-
-  const navigate = useNavigate();
 
   const [searchQuery, setSearchQuery] = useState("");
 
   const dispatch = useDispatch();
-
-  const { All_User_orders } = useSelector((state) => state.reducer?.OrderSlice);
 
   const { Admin_get_all_recipte } = useSelector(
     (state) => state.reducer?.AdminRecipteSLice
@@ -96,7 +87,7 @@ const UpdateRecipte = () => {
         });
       },
       onError: (error) => {
-        console.error("Error occurred while submitting the form:", error);
+        // console.error("Error occurred while submitting the form:", error);
         toast.error(`${error?.response?.data?.msg}`, {
           position: "top-right",
           autoClose: 5000,

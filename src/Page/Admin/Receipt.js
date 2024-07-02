@@ -1,23 +1,16 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from "react";
 
-import axios from 'axios';
-import { useMutation } from 'react-query';
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import axios from "axios";
+import { useMutation } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
-import background
-  from '../../assets/images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg';
-import Navbar from '../../Component/AdminComponent/Navbar';
-import Sidebar from '../../Component/AdminComponent/Sidebar';
-import ModalContainer from '../../Component/modal-container/modal-container';
-import { Admin_get_all_recipte_fun_ } from '../../Redux/AdminRecipteSLice';
+import background from "../../assets/images/gaelle-marcel-Y1kFBWWzOP4-unsplash.jpg";
+import Navbar from "../../Component/AdminComponent/Navbar";
+import Sidebar from "../../Component/AdminComponent/Sidebar";
+import ModalContainer from "../../Component/modal-container/modal-container";
+import { Admin_get_all_recipte_fun_ } from "../../Redux/AdminRecipteSLice";
 
 const Base_URL = process.env.REACT_APP_Url;
 
@@ -81,7 +74,7 @@ const Recipte = () => {
       onError: (error) => {
         const errorMessage =
           error?.response?.data?.message || "An error occurred";
-        toast.error(errorMessage, {
+        toast.error("error here", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
