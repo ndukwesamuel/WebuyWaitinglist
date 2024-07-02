@@ -1,16 +1,16 @@
-import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 export const Private = ({ children }) => {
   const { data, isLoading, isSuccess } = useSelector(
     (state) => state.reducer?.AuthenticationSlice
   );
 
-  if (data?.token) {
+  if (data?.data?.token) {
     // not logged in so redirect to login page with the return url
     // return <Navigate to="/" state={{ from: history.location }} />;
 
-    if (data?.isAdmin === false) {
+    if (data?.data?.user?.isAdmin === false) {
       return <Navigate to="/onboarding" />;
     } else {
       return <Navigate to="/admin" />;
@@ -25,9 +25,7 @@ export const PrivateRoute = ({ children }) => {
     (state) => state.reducer?.AuthenticationSlice
   );
 
-  console.log({ data });
-
-  if (!data?.token) {
+  if (!data?.data?.token) {
     // not logged in so redirect to login page with the return url
     // return <Navigate to="/" state={{ from: history.location }} />;
     return <Navigate to="/" />;
@@ -41,13 +39,13 @@ export const AdminPrivateRoute = ({ children }) => {
     (state) => state.reducer?.AuthenticationSlice
   );
 
-  if (!data?.token) {
+  if (!data?.data?.token) {
     // not logged in so redirect to login page with the return url
     // return <Navigate to="/" state={{ from: history.location }} />;
     return <Navigate to="/" />;
   }
 
-  if (data?.isAdmin === false) {
+  if (data?.data?.user?.isAdmin === false) {
     return <Navigate to="/onboarding" />;
   }
 
@@ -59,11 +57,11 @@ export const UserPrivateRoute = ({ children }) => {
     (state) => state.reducer?.AuthenticationSlice
   );
 
-  if (!data?.token) {
+  if (!data?.data?.token) {
     return <Navigate to="/" />;
   }
 
-  if (data?.isAdmin === true) {
+  if (data?.data?.user?.isAdmin === true) {
     return <Navigate to="/admin" />;
   }
 

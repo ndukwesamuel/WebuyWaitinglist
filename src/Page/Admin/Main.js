@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import axios from 'axios';
-import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import axios from "axios";
+import { useMutation } from "react-query";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   Area,
   AreaChart,
@@ -14,16 +14,16 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from 'recharts';
+} from "recharts";
 
-import avatar from '../../assets/Ellipse 13.png';
-import avatar1 from '../../assets/Ellipse 14.png';
-import avatar2 from '../../assets/Ellipse 15.png';
-import avatar3 from '../../assets/Ellipse 16.png';
-import avatar4 from '../../assets/Ellipse 17.png';
-import PieComponent from '../../Component/AdminComponent/PieComponent';
-import { LoadingSkeleton } from '../../Component/Loader/LoadingSkeleton';
-import { useGetGroupOrderQuery } from '../../Redux/orderApi';
+import avatar from "../../assets/Ellipse 13.png";
+import avatar1 from "../../assets/Ellipse 14.png";
+import avatar2 from "../../assets/Ellipse 15.png";
+import avatar3 from "../../assets/Ellipse 16.png";
+import avatar4 from "../../assets/Ellipse 17.png";
+import PieComponent from "../../Component/AdminComponent/PieComponent";
+import { LoadingSkeleton } from "../../Component/Loader/LoadingSkeleton";
+import { useGetGroupOrderQuery } from "../../Redux/orderApi";
 
 // import PieComponent from ".";
 
@@ -110,8 +110,12 @@ const Main = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { token } = useSelector(
-    (state) => state?.reducer?.AuthenticationSlice?.data
+    (state) => state?.reducer?.AuthenticationSlice?.data?.data
   );
+
+  console.log({
+    rer: token,
+  });
 
   const {
     data: orders,
@@ -208,9 +212,6 @@ const Main = () => {
       ? `${dateOrdered.toLocaleDateString()}`
       : "Invalid Date";
   };
-
-
-
 
   return (
     <div className="px-[25px] pt-[10px] pb-[40px] font-['Raleway'] z-0">

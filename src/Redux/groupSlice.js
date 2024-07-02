@@ -50,7 +50,8 @@ export const getallGroup_fun = createAsyncThunk(
   "groupSlice/getallGroup_fun",
   async (_, thunkAPI) => {
     try {
-      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      let token =
+        thunkAPI.getState().reducer.AuthenticationSlice.data.data?.token;
 
       return await getallGroup_fun_Service(token);
     } catch (error) {

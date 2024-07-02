@@ -1,22 +1,13 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from "react";
 
-import { CiLock } from 'react-icons/ci';
-import { MdOutlineMail } from 'react-icons/md';
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
-import {
-  Link,
-  useNavigate,
-} from 'react-router-dom';
+import { CiLock } from "react-icons/ci";
+import { MdOutlineMail } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
-import background from '../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg';
-import { resetSignup } from '../Redux/Auth';
-import { Login_fun } from '../Redux/AuthenticationSlice';
+import background from "../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg";
+import { resetSignup } from "../Redux/Auth";
+import { Login_fun } from "../Redux/AuthenticationSlice";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -60,7 +51,7 @@ const Login = () => {
 
   useEffect(() => {
     if (data && isSuccess) {
-      if (data?.isAdmin) {
+      if (data?.data?.user?.isAdmin) {
         navigate("/admin");
       } else {
         navigate("/onboarding");
