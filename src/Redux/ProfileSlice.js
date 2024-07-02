@@ -69,8 +69,8 @@ export const Profile_fun = createAsyncThunk(
   "AuthenticationSlice/Profile_fun",
   async (data, thunkAPI) => {
     try {
-      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
-      console.log("token", token);
+      let token =
+        thunkAPI.getState().reducer.AuthenticationSlice.data.data?.token;
       return await Profile_fun_Service(data, token);
     } catch (error) {
       const message =
@@ -88,7 +88,8 @@ export const ProfileUpdate_fun = createAsyncThunk(
   "AuthenticationSlice/ProfileUpdate_fun",
   async (data, thunkAPI) => {
     try {
-      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      let token =
+        thunkAPI.getState().reducer.AuthenticationSlice.data.data?.token;
       return await ProfileUpdate_fun_Service(data, token);
     } catch (error) {
       const message =
@@ -105,7 +106,8 @@ export const ProfileImage_fun = createAsyncThunk(
   "AuthenticationSlice/ProfileImage_fun",
   async (data, thunkAPI) => {
     try {
-      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      let token =
+        thunkAPI.getState().reducer.AuthenticationSlice.data.data?.token;
       return await ProfileImage_fun_Service(data, token);
     } catch (error) {
       const message =

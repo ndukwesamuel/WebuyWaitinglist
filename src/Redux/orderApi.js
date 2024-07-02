@@ -6,7 +6,7 @@ export const orderApi = createApi({
     baseUrl: process.env.REACT_APP_Url,
     prepareHeaders: (headers, { getState }) => {
       // Add your token to the headers
-      const token = getState().reducer.AuthenticationSlice.data.token;
+      const token = getState().reducer.AuthenticationSlice.data.data?.token;
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
@@ -27,7 +27,7 @@ export const groupOrderApi = createApi({
     baseUrl: process.env.REACT_APP_Url,
     prepareHeaders: (headers, { getState }) => {
       // Add your token to the headers
-      const token = getState().reducer.AuthenticationSlice.data.token;
+      const token = getState().reducer.AuthenticationSlice.data.data?.token;
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }

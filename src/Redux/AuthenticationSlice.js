@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { ErrorFunc } from "../utilities/ApiErrorFun";
 
 let main_url = process.env.REACT_APP_Url;
+
 const initialState = {
   isError: false,
   isSuccess: false,
@@ -58,7 +59,8 @@ export const Logout_fun = createAsyncThunk(
   "AuthenticationSlice/Logout_fun",
   async (data, thunkAPI) => {
     try {
-      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      let token =
+        thunkAPI.getState().reducer.AuthenticationSlice.data.data?.token;
       return await Logout_fun_Service(data, token);
     } catch (error) {
       const message =
@@ -74,35 +76,17 @@ export const Logout_fun = createAsyncThunk(
 
 const Login_fun_Service = async (data) => {
   let Base_URL = main_url + "user/login";
+  console.log({
+    rrr: Base_URL,
+  });
 
   try {
     const response = await axios.post(Base_URL, data);
-    // toast.success(`${response.data?.message}`, {
-    //   position: "top-right",
-    //   autoClose: 5000,
-    //   hideProgressBar: false,
-    //   closeOnClick: true,
-    //   pauseOnHover: true,
-    //   draggable: true,
-    //   progress: undefined,
-    //   theme: "light",
-    // });
     return response.data;
-    // Process the response data here
   } catch (error) {
-    // toast.error(`${error}`, {
-    //   position: "top-right",
-    //   autoClose: 5000,
-    //   hideProgressBar: false,
-    //   closeOnClick: true,
-    //   pauseOnHover: true,
-    //   draggable: true,
-    //   progress: undefined,
-    //   theme: "light",
-    //   className: "Forbidden403",
-    // });
-    // Handle the error here
-
+    console.log({
+      dfdf: error.response.data,
+    });
     throw error;
   }
 };

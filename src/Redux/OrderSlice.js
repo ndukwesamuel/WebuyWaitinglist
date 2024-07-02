@@ -46,7 +46,7 @@ export const GetUSerCart_Fun = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       let token =
-        thunkAPI.getState()?.reducer?.AuthenticationSlice?.data?.token;
+        thunkAPI.getState()?.reducer?.AuthenticationSlice?.data?.data?.token;
       return await GetUSerCart_Fun_Service(token);
     } catch (error) {
       const message =
@@ -76,7 +76,8 @@ export const Get_All_User_Orders_fun = createAsyncThunk(
   "OrderSlice/Get_All_User_Orders",
   async (_, thunkAPI) => {
     try {
-      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      let token =
+        thunkAPI.getState().reducer.AuthenticationSlice.data.data?.token;
       return await Get_All_User_Orders_Service(token);
     } catch (error) {
       const message =

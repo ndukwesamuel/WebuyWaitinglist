@@ -48,7 +48,7 @@ export const GetUSerCart_Fun = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       let token =
-        thunkAPI.getState()?.reducer?.AuthenticationSlice?.data?.token;
+        thunkAPI.getState()?.reducer?.AuthenticationSlice?.data?.data?.token;
       return await GetUSerCart_Fun_Service(token);
     } catch (error) {
       const message =
@@ -126,7 +126,8 @@ export const Profile_fun = createAsyncThunk(
   "AuthenticationSlice/Profile_fun",
   async (data, thunkAPI) => {
     try {
-      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      let token =
+        thunkAPI.getState().reducer.AuthenticationSlice.data.data?.token;
       return await Profile_fun_Service(data, token);
     } catch (error) {
       const message =
@@ -190,7 +191,8 @@ export const Payment_fun = createAsyncThunk(
   "PaymentSlice/Payment_fun",
   async (paynow, thunkAPI) => {
     try {
-      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      let token =
+        thunkAPI.getState().reducer.AuthenticationSlice.data.data?.token;
       return await Payment_fun_Service(paynow, token);
     } catch (error) {
       console.log({ error });

@@ -55,7 +55,7 @@
 //   "AdminRecipteSLice/Admin_get_all_recipte_fun_",
 //   async (_, thunkAPI) => {
 //     try {
-//       let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+//       let token = thunkAPI.getState().reducer.AuthenticationSlice.data.data?.token;
 
 //       return await Admin_get_all_recipte_fun_Service(token);
 //     } catch (error) {
@@ -111,7 +111,7 @@
 //   "AdminRecipteSLice/Admin_get_single_recipte_fun",
 //   async (id, thunkAPI) => {
 //     try {
-//       let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+//       let token = thunkAPI.getState().reducer.AuthenticationSlice.data.data?.token;
 
 //       return await Admin_get_single_recipte_fun_Service(id, token);
 //     } catch (error) {
@@ -234,7 +234,8 @@ export const Admin_update_recipte_fun_ = createAsyncThunk(
   "AdminRecipteSLice/Admin_update_recipte_fun",
   async (data, thunkAPI) => {
     try {
-      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      let token =
+        thunkAPI.getState().reducer.AuthenticationSlice.data.data?.token;
 
       return await Admin_update_recipte_fun_Service(data, token);
     } catch (error) {
@@ -252,7 +253,8 @@ export const Admin_get_all_recipte_fun_ = createAsyncThunk(
   "AdminRecipteSLice/Admin_get_all_recipte_fun_",
   async (_, thunkAPI) => {
     try {
-      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      let token =
+        thunkAPI.getState().reducer.AuthenticationSlice.data.data?.token;
 
       return await Admin_get_all_recipte_fun_Service(token);
     } catch (error) {
@@ -292,7 +294,8 @@ export const Admin_get_single_recipte_fun = createAsyncThunk(
   "AdminRecipteSLice/Admin_get_single_recipte_fun",
   async (id, thunkAPI) => {
     try {
-      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      let token =
+        thunkAPI.getState().reducer.AuthenticationSlice.data.data?.token;
 
       return await Admin_get_single_recipte_fun_Service(id, token);
     } catch (error) {

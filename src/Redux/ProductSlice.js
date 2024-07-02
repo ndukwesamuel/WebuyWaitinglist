@@ -53,7 +53,7 @@ export const GetUSerCart_Fun = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       let token =
-        thunkAPI.getState()?.reducer?.AuthenticationSlice?.data?.token;
+        thunkAPI.getState()?.reducer?.AuthenticationSlice?.data?.data?.token;
       return await GetUSerCart_Fun_Service(token);
     } catch (error) {
       const message =
@@ -83,7 +83,8 @@ export const AllProduct_fun = createAsyncThunk(
   "ProductSlice/AllProduct_fun",
   async (_, thunkAPI) => {
     try {
-      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      let token =
+        thunkAPI.getState().reducer.AuthenticationSlice.data.data?.token;
       return await AllProduct_fun_Service(token);
     } catch (error) {
       const message =
@@ -113,7 +114,8 @@ export const UserOrders_fun = createAsyncThunk(
   "ProductSlice/UserOrders_fun",
   async (_, thunkAPI) => {
     try {
-      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      let token =
+        thunkAPI.getState().reducer.AuthenticationSlice.data.data?.token;
       return await UserOrders_fun_Service(token);
     } catch (error) {
       const message =
@@ -144,7 +146,8 @@ export const Category_fun = createAsyncThunk(
   "ProductSlice/Category_fun",
   async (_, thunkAPI) => {
     try {
-      let token = thunkAPI.getState().reducer.AuthenticationSlice.data.token;
+      let token =
+        thunkAPI.getState().reducer.AuthenticationSlice.data.data?.token;
       return await Category_fun_Service(token);
     } catch (error) {
       const message =
