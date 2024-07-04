@@ -1,49 +1,35 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useEffect, useState } from "react";
 
-import axios from 'axios';
-import { CiEdit } from 'react-icons/ci';
-import {
-  FaSearch,
-  FaSlidersH,
-} from 'react-icons/fa';
-import { MdDelete } from 'react-icons/md';
-import { useMutation } from 'react-query';
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
-import { useNavigate } from 'react-router';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import axios from "axios";
+import { CiEdit } from "react-icons/ci";
+import { FaSearch, FaSlidersH } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { useMutation } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // import Navbar from '../../../Component/ Navbar';
 // import Sidebar from '../../components/Sidebar';
-import background
-  from '../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg';
-import Navbar from '../../../Component/AdminComponent/Navbar';
-import Sidebar from '../../../Component/AdminComponent/Sidebar';
-import { AllProduct_fun } from '../../../Redux/ProductSlice';
+import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
+import Navbar from "../../../Component/AdminComponent/Navbar";
+import Sidebar from "../../../Component/AdminComponent/Sidebar";
+import { AllProduct_fun } from "../../../Redux/ProductSlice";
 
 const Base_URL = process.env.REACT_APP_Url;
 
 function ProductCard({ product }) {
-  const { token } = useSelector(
+  const { data } = useSelector(
     (state) => state?.reducer?.AuthenticationSlice?.data
   );
   const dispatch = useDispatch();
+  const token = data?.token;
   const delete_Product_mutate = useMutation(
     (formData) => {
-      // Your API request code here
-      // Use formData to send the image data to the API
-
       let API_URL = `${Base_URL}products/${formData}`;
       const config = {
         headers: {
-          // "Content-Type": "application/json",
-          // Accept: "application/json",
           Authorization: `Bearer ${token}`,
         },
       };
@@ -87,12 +73,6 @@ function ProductCard({ product }) {
     }
   );
 
-  const [showSuccess, setShowSuccess] = useState(true);
-
-  const toggleSuccess = () => {
-    setShowSuccess(!showSuccess);
-    // dispatch(resetSignup());
-  };
   return (
     <>
       <div className="rounded-xl font-['Raleway'] w-full border-[1.5px] mt-5 border-[#f3f3f3]">
@@ -112,11 +92,11 @@ function ProductCard({ product }) {
           <p className="category">{product.category}</p>
         </div>
 
-        <div className="flex justify-center">
+        <div className="flex justify-between p-3">
           {!delete_Product_mutate?.isLoading && (
             <>
               <MdDelete
-                className="mx-5 text-2xl text-red-600 "
+                className=" text-2xl text-red-600 "
                 onClick={() => {
                   const confirmed = window.confirm(
                     "Are you sure you want to delete this product?"
@@ -131,20 +111,14 @@ function ProductCard({ product }) {
               <Link
                 to="/admin/Addproduct"
                 state={product}
-                className="mx-5 text-2xl text-green-600 "
+                className="mx- text-2xl text-green-600 "
               >
-                <CiEdit className="mx-5 text-2xl " />
+                <CiEdit />
               </Link>
             </>
           )}
         </div>
       </div>
-      {/* <Reusable_modal close={toggleSuccess} show={showSuccess} width={""}>
-        <div>
-          <p className="text-xl text-center">Success!</p>
-          <p className="text-xl text-center">data?.message to your mail</p>
-        </div>
-      </Reusable_modal> */}
     </>
   );
 }
