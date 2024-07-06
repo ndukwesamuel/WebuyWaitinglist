@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import axios from 'axios';
+import axios from "axios";
 import {
   FaAlignCenter,
   FaAlignJustify,
@@ -13,22 +13,28 @@ import {
   FaItalic,
   FaSortDown,
   FaUnderline,
-} from 'react-icons/fa';
-import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router';
-import { toast } from 'react-toastify';
+} from "react-icons/fa";
+import { useMutation } from "react-query";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router";
+import { toast } from "react-toastify";
 
-import background
-  from '../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg';
-import Navbar from '../../../Component/AdminComponent/Navbar';
-import Sidebar from '../../../Component/AdminComponent/Sidebar';
-import { useGetCategoryQuery } from '../../../Redux/categoryApi';
+import background from "../../../assets/images/markus-spiske-ezYZfFnzARM-unsplash.jpg";
+import Navbar from "../../../Component/AdminComponent/Navbar";
+import Sidebar from "../../../Component/AdminComponent/Sidebar";
+import { useGetCategoryQuery } from "../../../Redux/categoryApi";
 
 const Base_URL = process.env.REACT_APP_Url;
 
 const AddProducts = () => {
   let { state } = useLocation();
+
+  const countryItems = [
+    { label: "Nigeria", value: "NGA" },
+    { label: "Ghana", value: "GHA" },
+    { label: "Benin", value: "BEN" },
+    { label: "Rwanda", value: "RWA" },
+  ];
 
   console.log({
     state,
@@ -55,6 +61,12 @@ const AddProducts = () => {
   const [selectedImage, setSelectedImage] = useState(state?.image);
   const [uploadimage, setUploadimage] = useState(null);
   // const [productID, setProductID] = useState(state?._id);
+
+  const [selectedCountry, setSelectedCountry] = useState("");
+
+  const handleChange = (event) => {
+    setSelectedCountry(event.target.value);
+  };
 
   const {
     data: category_data,
@@ -247,15 +259,15 @@ const AddProducts = () => {
       formData.append("productId", state?._id);
     } else {
       formData.append("name", productName);
-      formData.append("frenchName", frenchName);
+      // formData.append("frenchName", frenchName);
       formData.append("description", productDescription);
-      formData.append("Frenchdescription", frenchdescription);
-      formData.append("quantity", quantity);
+      // formData.append("Frenchdescription", frenchdescription);
+      // formData.append("quantity", quantity);
       formData.append("discount", discount);
       formData.append("price", price);
-      formData.append("otherprice", otherprice);
-      formData.append("currency", selectedCurrency);
-      formData.append("category", selectedCategory);
+      // formData.append("otherprice", otherprice);
+      // formData.append("currency", selectedCurrency);
+      // formData.append("category", selectedCategory);
       formData.append("image", uploadimage);
     }
 
@@ -485,7 +497,7 @@ const AddProducts = () => {
                     </div>
                   </div>
 
-                  <div className="flex flex-col content-center w-full ">
+                  {/* <div className="flex flex-col content-center w-full ">
                     <div className="flex flex-row content-center justify-between w-full">
                       <h2 className=" font-medium text-base text-[#565454]">
                         French Product name
@@ -503,7 +515,7 @@ const AddProducts = () => {
                         onChange={(e) => setFrenchName(e.target.value)}
                       ></input>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="flex flex-col content-center w-full mt-6">
                     <div className="flex flex-row content-center justify-between w-full">
                       <h2 className=" font-medium text-base text-[#565454]">
@@ -553,8 +565,31 @@ const AddProducts = () => {
                       </div>
                     </div>
                   </div>
-
                   <div className="flex flex-col content-center w-full mt-6">
+                    <div className="flex flex-row content-center justify-between w-full">
+                      <h2 className=" font-medium text-base text-[#565454]">
+                        Select a country:
+                      </h2>
+                      <FaInfoCircle style={{ color: "#565454" }} />
+                    </div>
+
+                    <div className="w-full flex content-center items-center rounded-t-lg border-b-[1px]  h-[40px] py-2 bg-[#f3f3f3] px-5">
+                      <select
+                        id="country"
+                        value={selectedCountry}
+                        onChange={handleChange}
+                      >
+                        <option value="">--Please choose an option--</option>
+                        {countryItems.map((country) => (
+                          <option key={country.value} value={country.value}>
+                            {country.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* <div className="flex flex-col content-center w-full mt-6">
                     <div className="flex flex-row content-center justify-between w-full">
                       <h2 className=" font-medium text-base text-[#565454]">
                         Product Description In French
@@ -602,8 +637,8 @@ const AddProducts = () => {
                         ></textarea>
                       </div>
                     </div>
-                  </div>
-                  <div className="flex content-center w-full mt-6 gap-11">
+                  </div> */}
+                  {/* <div className="flex content-center w-full mt-6 gap-11">
                     <div className="flex flex-col w-full ">
                       <h2 className="font-medium text-base text-[#565454]">
                         Quantity
@@ -651,7 +686,7 @@ const AddProducts = () => {
                         </select>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="flex content-center w-full mt-6 gap-11">
                     <div className="flex flex-col w-full ">
                       <h2 className="font-medium text-base text-[#565454]">
@@ -682,7 +717,7 @@ const AddProducts = () => {
                         </select>
                       </div>
 
-                      <div>
+                      {/* <div>
                         <h2 className="font-medium text-base text-[#565454]">
                           Benin Price per unit
                         </h2>
@@ -713,7 +748,7 @@ const AddProducts = () => {
                             ))}
                           </select>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
 
                     <div className="flex flex-col w-full ">
