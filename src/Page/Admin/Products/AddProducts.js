@@ -29,26 +29,26 @@ const Base_URL = process.env.REACT_APP_Url;
 const AddProducts = () => {
   let { state } = useLocation();
 
-  const countryItems = [
+  const currencyOptions = [
+    { value: "naira", label: "₦" },
+    { value: "franc", label: "Fr" },
+    { value: "rwandaFranc", label: "RWF" },
+  ];
+
+  const countryOptions = [
     { label: "Nigeria", value: "NGA" },
     { label: "Ghana", value: "GHA" },
     { label: "Benin", value: "BEN" },
     { label: "Rwanda", value: "RWA" },
   ];
-
   console.log({
     state,
   });
 
   const [productName, setProductName] = useState(state?.name);
-  const [frenchName, setFrenchName] = useState(state?.frenchName);
 
   const [productDescription, setProductDescription] = useState(
     state?.description
-  );
-
-  const [frenchdescription, setFrenchdescription] = useState(
-    state?.Frenchdescription
   );
 
   const [quantity, setQuantity] = useState("");
@@ -56,13 +56,12 @@ const AddProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState(state?.category);
   const [price, setPrice] = useState(state?.price); // State to store the input value
 
-  const [otherprice, setOtherprice] = useState(state?.otherprice);
   const [selectedCurrency, setSelectedCurrency] = useState("naira"); // Default currency
   const [selectedImage, setSelectedImage] = useState(state?.image);
   const [uploadimage, setUploadimage] = useState(null);
-  // const [productID, setProductID] = useState(state?._id);
-
   const [selectedCountry, setSelectedCountry] = useState("");
+
+  // const [productId, setProductId] = useState(state?._id);
 
   const handleChange = (event) => {
     setSelectedCountry(event.target.value);
@@ -74,10 +73,6 @@ const AddProducts = () => {
     isError,
     error,
   } = useGetCategoryQuery();
-
-  console.log({
-    ss: category_data,
-  });
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -98,9 +93,7 @@ const AddProducts = () => {
     setSelectedCategory("");
     setSelectedImage("");
     setUploadimage(null);
-    setFrenchName("");
-    setOtherprice("");
-    setFrenchdescription("");
+    setSelectedCountry("");
   };
 
   const applyUppercase = () => {
@@ -159,6 +152,14 @@ const AddProducts = () => {
     setSelectedCurrency(e.target.value);
   };
 
+  const handleCountryChange = (eventOrValue) => {
+    if (eventOrValue && eventOrValue.target) {
+      setSelectedCountry(eventOrValue.target.value);
+    } else {
+      setSelectedCountry(eventOrValue);
+    }
+  };
+
   const handleCategoryChange = (e) => {
     const newCategory = e.target.value;
     setSelectedCategory(newCategory);
@@ -166,36 +167,31 @@ const AddProducts = () => {
 
   // Define a mapping of currency symbols
 
-  const currencyOptions = [
-    { value: "naira", label: "₦" },
-    { value: "franc", label: "Fr" },
-    { value: "dollar", label: "$" },
-  ];
-
   const { data } = useSelector(
     (state) => state.reducer.AuthenticationSlice || {}
   );
-
   const creatProduct = useMutation(
     (formData) => {
       // Your API request code here
       // Use formData to send the image data to the API
 
-      const tokengot = data?.token;
+      const token = data?.data?.token;
 
       const config = {
         headers: {
           // "Content-Type": "multipart/form-data",
           // Accept: "multipart/form-data",
-          Authorization: `Bearer ${tokengot}`,
+          Authorization: `Bearer ${token}`,
         },
       };
 
       if (state) {
-        let API_URL = `${Base_URL}products/${state?._id}`;
+        let API_URL = `${Base_URL}products/${state._id}`;
+        console.log("id", state._id);
         return axios.put(API_URL, formData, config);
       } else {
         let API_URL = `${Base_URL}products`;
+
         return axios.post(API_URL, formData, config);
       }
     },
@@ -221,6 +217,7 @@ const AddProducts = () => {
         setSelectedCategory("");
         setSelectedImage(null);
         setUploadimage(null);
+        handleCountryChange("");
       },
 
       onError: (e) => {
@@ -246,29 +243,24 @@ const AddProducts = () => {
 
     if (state) {
       formData.append("name", productName);
-      formData.append("frenchName", frenchName);
       formData.append("description", productDescription);
-      formData.append("Frenchdescription", frenchdescription);
       formData.append("quantity", quantity);
       formData.append("discount", discount);
       formData.append("price", price);
-      formData.append("otherprice", otherprice);
       formData.append("currency", selectedCurrency);
       formData.append("category", selectedCategory);
       formData.append("image", uploadimage);
-      formData.append("productId", state?._id);
+      formData.append("country", selectedCountry);
     } else {
       formData.append("name", productName);
-      // formData.append("frenchName", frenchName);
       formData.append("description", productDescription);
-      // formData.append("Frenchdescription", frenchdescription);
-      // formData.append("quantity", quantity);
+      formData.append("quantity", quantity);
       formData.append("discount", discount);
       formData.append("price", price);
-      // formData.append("otherprice", otherprice);
-      // formData.append("currency", selectedCurrency);
-      // formData.append("category", selectedCategory);
+      formData.append("currency", selectedCurrency);
+      formData.append("category", selectedCategory);
       formData.append("image", uploadimage);
+      formData.append("country", selectedCountry);
     }
 
     creatProduct.mutate(formData);
@@ -339,7 +331,7 @@ const AddProducts = () => {
                     {!selectedImage && (
                       <div className="flex items-center content-center gap-2 mt-2 pb-28">
                         <p className="text-xs text-[#727a89] font-semibold text-center">
-                          Drop your Product Images here. or{" "}
+                          Drop your Product Images here. or
                           <label
                             htmlFor="imageInput"
                             className="font-bold text-[#009b4d] text-sm cursor-pointer"
@@ -418,7 +410,7 @@ const AddProducts = () => {
                       {!selectedImage && (
                         <div className="flex items-center content-center gap-2 mt-2">
                           <p className="text-[8px] text-[#727a89] font-semibold text-center">
-                            Drop your Product Images here. or{" "}
+                            Drop your Product Images here. or
                             <label
                               htmlFor="imageInput"
                               className="font-bold text-[#009b4d] text-[9px] cursor-pointer"
@@ -457,7 +449,7 @@ const AddProducts = () => {
                       {!selectedImage && (
                         <div className="flex items-center content-center gap-2 mt-2">
                           <p className="text-[8px] text-[#727a89] font-semibold text-center">
-                            Drop your Product Images here. or{" "}
+                            Drop your Product Images here. or
                             <label
                               htmlFor="imageInput"
                               className="font-bold text-[#009b4d] text-[9px] cursor-pointer"
@@ -497,25 +489,6 @@ const AddProducts = () => {
                     </div>
                   </div>
 
-                  {/* <div className="flex flex-col content-center w-full ">
-                    <div className="flex flex-row content-center justify-between w-full">
-                      <h2 className=" font-medium text-base text-[#565454]">
-                        French Product name
-                      </h2>
-                      <FaInfoCircle style={{ color: "#565454" }} />
-                    </div>
-                    <div className="flex items-center content-center w-full mt-2 text-center ">
-                      <input
-                        className=" w-full pl-5 text-[#009b4d] text-sm font-semibold bg-[#f6f6f6] h-10 rounded-lg"
-                        placeholder="Product name"
-                        type="text"
-                        name="product"
-                        value={frenchName}
-                        // onChange={(e) =>  set  e.target.value}
-                        onChange={(e) => setFrenchName(e.target.value)}
-                      ></input>
-                    </div>
-                  </div> */}
                   <div className="flex flex-col content-center w-full mt-6">
                     <div className="flex flex-row content-center justify-between w-full">
                       <h2 className=" font-medium text-base text-[#565454]">
@@ -565,80 +538,8 @@ const AddProducts = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col content-center w-full mt-6">
-                    <div className="flex flex-row content-center justify-between w-full">
-                      <h2 className=" font-medium text-base text-[#565454]">
-                        Select a country:
-                      </h2>
-                      <FaInfoCircle style={{ color: "#565454" }} />
-                    </div>
 
-                    <div className="w-full flex content-center items-center rounded-t-lg border-b-[1px]  h-[40px] py-2 bg-[#f3f3f3] px-5">
-                      <select
-                        id="country"
-                        value={selectedCountry}
-                        onChange={handleChange}
-                      >
-                        <option value="">--Please choose an option--</option>
-                        {countryItems.map((country) => (
-                          <option key={country.value} value={country.value}>
-                            {country.label}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
-                  {/* <div className="flex flex-col content-center w-full mt-6">
-                    <div className="flex flex-row content-center justify-between w-full">
-                      <h2 className=" font-medium text-base text-[#565454]">
-                        Product Description In French
-                      </h2>
-                      <FaInfoCircle style={{ color: "#565454" }} />
-                    </div>
-                    <div className="w-full mt-2 ">
-                      <div className="w-full flex content-center items-center rounded-t-lg border-b-[1px] border-black h-[40px] py-2 bg-[#f3f3f3] px-5">
-                        <button onClick={applyUppercase}>
-                          <FaFont />
-                        </button>
-                        <FaSortDown className="ml-1" />
-                        <div className="divider w-[1.5px] mx-3 rounded-full h-full bg-[#cbc8c8]"></div>
-                        <button onClick={applyBold}>
-                          <FaBold />
-                        </button>
-                        <button onClick={applyItalic}>
-                          <FaItalic className="mx-5" />
-                        </button>
-                        <button onClick={applyUnderline}>
-                          <FaUnderline />
-                        </button>
-                        <div className="divider w-[1.5px] mx-3 rounded-full h-full bg-[#cbc8c8]"></div>
-                        <button onClick={() => applyAlignment("left")}>
-                          <FaAlignLeft />
-                        </button>
-                        <button onClick={() => applyAlignment("center")}>
-                          <FaAlignCenter className="mx-5" />
-                        </button>
-                        <button onClick={() => applyAlignment("right")}>
-                          <FaAlignRight />
-                        </button>
-                        <button onClick={() => applyAlignment("justify")}>
-                          <FaAlignJustify className="mx-5" />
-                        </button>
-                      </div>
-                      <div className=" w-full rounded-b-lg bg-[#f3f3f3]">
-                        <textarea
-                          id="myTextarea"
-                          className="w-full h-full p-3 bg-[#f3f3f3] text-[#6f6d6d] text-sm rounded-b-lg"
-                          placeholder="Product description"
-                          value={frenchdescription}
-                          onChange={(e) => setFrenchdescription(e.target.value)}
-                          rows={4}
-                        ></textarea>
-                      </div>
-                    </div>
-                  </div> */}
-                  {/* <div className="flex content-center w-full mt-6 gap-11">
+                  <div className="flex content-center w-full mt-4 gap-11">
                     <div className="flex flex-col w-full ">
                       <h2 className="font-medium text-base text-[#565454]">
                         Quantity
@@ -651,23 +552,38 @@ const AddProducts = () => {
                         value={quantity}
                         onChange={handleQuantityChange}
                       ></input>
+
+                      <div className="flex content-center w-full mt-4 gap-11">
+                        <div className="flex flex-col w-full ">
+                          <h2 className="font-medium text-base text-[#565454]">
+                            Discount
+                          </h2>
+                          <input
+                            className=" w-full h-10 bg-[#f6f6f6] text-[#6f6d6d] pl-5 rounded-lg mt-2"
+                            placeholder="discount"
+                            type="number"
+                            name="discount"
+                            value={discount}
+                            onChange={handleDiscountChange}
+                          ></input>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex flex-col w-full ">
+                    {/* <div className="flex flex-col w-full ">
                       <h2 className="font-medium text-base text-[#565454]">
                         Category
                       </h2>
                       <div className="relative mt-2">
                         <select
                           className="w-full pl-5 pr-10 h-10 bg-[#f6f6f6] text-[#6f6d6d] rounded-lg"
+                          placeholder="Select a category"
                           value={selectedCategory}
                           onChange={handleCategoryChange}
                         >
                           {isLoading && (
                             <option disabled>Loading categories...</option>
                           )}
-                          <option defaultValue={"Select a category"}>
-                            Select a category
-                          </option>
+                          <option defaultValue={" "}>Select a category</option>
                           {category_data?.message ? (
                             <h1> empty data</h1>
                           ) : (
@@ -685,9 +601,7 @@ const AddProducts = () => {
                           )}
                         </select>
                       </div>
-                    </div>
-                  </div> */}
-                  <div className="flex content-center w-full mt-6 gap-11">
+                    </div> */}
                     <div className="flex flex-col w-full ">
                       <h2 className="font-medium text-base text-[#565454]">
                         Price per unit
@@ -717,52 +631,27 @@ const AddProducts = () => {
                         </select>
                       </div>
 
-                      {/* <div>
+                      {/* Country */}
+                      <div className="mt-4">
                         <h2 className="font-medium text-base text-[#565454]">
-                          Benin Price per unit
+                          Country
                         </h2>
-                        <div className="relative mt-2">
-                          <input
-                            className="w-full h-10 bg-[#f6f6f6] text-[#6f6d6d] pl-5 rounded-lg pr-10"
-                            placeholder="Price per unit"
-                            type="number"
-                            name="price"
-                            value={otherprice}
-                            onChange={(e) => setOtherprice(e.target.value)}
-                          />
-                          <div className="absolute right-2 top-2">
-                            <FaAngleDown
-                              size={20}
-                              style={{ color: "#6f6d6d" }}
-                            />
-                          </div>
-                          <select
-                            className="absolute right-0 w-10 h-10 bg-[#f6f6f6] text-[#6f6d6d] rounded-r-lg"
-                            value={selectedCurrency}
-                            onChange={handleCurrencyChange}
-                          >
-                            {currencyOptions.map((option) => (
-                              <option key={option.value} value={option.value}>
-                                {option.label}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </div> */}
-                    </div>
-
-                    <div className="flex flex-col w-full ">
-                      <h2 className="font-medium text-base text-[#565454]">
-                        Discount
-                      </h2>
-                      <input
-                        className=" w-full h-10 bg-[#f6f6f6] text-[#6f6d6d] pl-5 rounded-lg mt-2"
-                        placeholder="discount"
-                        type="number"
-                        name="discount"
-                        value={discount}
-                        onChange={handleDiscountChange}
-                      ></input>
+                        <select
+                          id="country"
+                          value={selectedCountry}
+                          onChange={(e) => handleCountryChange(e)}
+                          className="relative mt-2 right-0  w-full h-10 pl-4 bg-[#f6f6f6] text-[#6f6d6d] rounded-lg"
+                        >
+                          <option defaultValue="" disabled>
+                            Select a Country
+                          </option>
+                          {countryOptions?.map((country) => (
+                            <option key={country.value} value={country.value}>
+                              {country.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </section>
