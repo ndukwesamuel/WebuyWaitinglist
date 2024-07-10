@@ -51,8 +51,8 @@ const UpdateRecipte = () => {
       // Your API request code here
       // Use formData to send the image data to the API
 
-      // let API_URL = `${main_url}wallet/receipt`;
-      let API_URL = "http://localhost:5000/api/wallet/receipt/";
+      let API_URL = `${main_url}wallet/receipt`;
+      // let API_URL = "http://localhost:5000/api/wallet/receipt/";
       console.log({
         ddd: formData,
         API_URL,
