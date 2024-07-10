@@ -123,6 +123,9 @@ const Recipte = () => {
     item?.user?.fullName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  console.log({
+    ffd: filteredrecipts,
+  });
   return (
     <div>
       <div className="relative w-full h-full">

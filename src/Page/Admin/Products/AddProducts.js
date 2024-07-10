@@ -36,9 +36,10 @@ const AddProducts = () => {
   ];
 
   const countryOptions = [
-    { value: "Nigeria", label: "Nigeria" },
-    { value: "Benin", label: "Benin" },
-    { value: "Rwanda", label: "Rwanda" },
+    { label: "Nigeria", value: "NGA" },
+    { label: "Ghana", value: "GHA" },
+    { label: "Benin", value: "BEN" },
+    { label: "Rwanda", value: "RWA" },
   ];
   console.log({
     state,
@@ -61,6 +62,10 @@ const AddProducts = () => {
   const [selectedCountry, setSelectedCountry] = useState("");
 
   // const [productId, setProductId] = useState(state?._id);
+
+  const handleChange = (event) => {
+    setSelectedCountry(event.target.value);
+  };
 
   const {
     data: category_data,

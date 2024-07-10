@@ -14,8 +14,15 @@ const Base_URL = process.env.REACT_APP_Url;
 
 const Users = () => {
   const { token } = useSelector(
-    (state) => state?.reducer?.AuthenticationSlice?.data
+    (state) => state?.reducer?.AuthenticationSlice?.data?.data
   );
+
+  const tokens = useSelector(
+    (state) => state?.reducer?.AuthenticationSlice?.data?.data
+  );
+  console.log({
+    tt: tokens,
+  });
   const {
     data: users,
     isLoading,
