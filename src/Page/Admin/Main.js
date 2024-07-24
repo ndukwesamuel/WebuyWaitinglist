@@ -437,7 +437,10 @@ const Main = () => {
                             {order?.groupId?.name}
                           </td>
                           <td className=" p-[16px] border-collapse">
-                            {order?.groupId.country}
+                            {console.log({
+                              country: order?.groupId?.country,
+                            })}
+                            {/* {order?.groupId?.country} */}
                           </td>
                           <td className=" p-[16px] border-collapse">
                             {formatDate(order?.createdAt)}
