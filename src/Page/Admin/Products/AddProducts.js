@@ -66,6 +66,16 @@ const AddProducts = () => {
     error,
   } = useGetCategoryQuery();
 
+  const initialValues = {
+    productName: "",
+    productDescription: "",
+    price: "",
+    quantity: "",
+    discount: "",
+    selectedImage: null,
+    selectedCurrency: "",
+    selectedCountry: "",
+  };
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -674,3 +684,16 @@ const AddProducts = () => {
 };
 
 export default AddProducts;
+
+const validationSchema = Yup.object({
+  productName: Yup.string().required("Product name is required."),
+  productDescription: Yup.string().required("Description is required."),
+  price: Yup.number()
+    .required("Price per unit is required.")
+    .positive("Price must be a positive number."),
+  selectedImage: Yup.mixed().required("Product image is required."),
+  quantity: Yup.number().optional(),
+  discount: Yup.number().optional(),
+  selectedCurrency: Yup.string().required("Currency is required."),
+  selectedCountry: Yup.string().required("Country is required."),
+});
