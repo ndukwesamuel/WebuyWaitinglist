@@ -145,7 +145,6 @@ const ProductsList = () => {
   const { AllProductData, isLoading } = useSelector(
     (state) => state?.reducer?.ProductSlice
   );
-  console.log({ AllProductData, ff: AllProductData?.products?.length });
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);

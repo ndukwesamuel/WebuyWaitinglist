@@ -41,9 +41,6 @@ const AddProducts = () => {
     { label: "Benin", value: "BEN" },
     { label: "Rwanda", value: "RWA" },
   ];
-  console.log({
-    state,
-  });
 
   const [productName, setProductName] = useState(state?.name);
 
@@ -60,12 +57,7 @@ const AddProducts = () => {
   const [selectedImage, setSelectedImage] = useState(state?.image);
   const [uploadimage, setUploadimage] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState("");
-
   // const [productId, setProductId] = useState(state?._id);
-
-  const handleChange = (event) => {
-    setSelectedCountry(event.target.value);
-  };
 
   const {
     data: category_data,
@@ -187,8 +179,7 @@ const AddProducts = () => {
 
       if (state) {
         let API_URL = `${Base_URL}products/${state._id}`;
-        console.log("id", state._id);
-        return axios.put(API_URL, formData, config);
+        return axios.patch(API_URL, formData, config);
       } else {
         let API_URL = `${Base_URL}products`;
 
@@ -638,11 +629,11 @@ const AddProducts = () => {
                         </h2>
                         <select
                           id="country"
-                          value={selectedCountry}
+                          value={selectedCountry || ""} // Ensure no pre-selected value
                           onChange={(e) => handleCountryChange(e)}
-                          className="relative mt-2 right-0  w-full h-10 pl-4 bg-[#f6f6f6] text-[#6f6d6d] rounded-lg"
+                          className="relative mt-2 right-0 w-full h-10 pl-4 bg-[#f6f6f6] text-[#6f6d6d] rounded-lg"
                         >
-                          <option defaultValue="" disabled>
+                          <option value="" disabled>
                             Select a Country
                           </option>
                           {countryOptions?.map((country) => (
