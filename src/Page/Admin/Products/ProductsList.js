@@ -172,10 +172,6 @@ const ProductsList = () => {
     );
   }
 
-  console.log({
-    rer: filtered,
-  });
-
   return (
     <div className="font-['Raleway']">
       <div className="relative w-full h-full">

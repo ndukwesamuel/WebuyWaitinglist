@@ -56,9 +56,8 @@ const AddProducts = () => {
   const [selectedCurrency, setSelectedCurrency] = useState("naira"); // Default currency
   const [selectedImage, setSelectedImage] = useState(state?.image);
   const [uploadimage, setUploadimage] = useState(null);
-  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState(state?.country);
   // const [productId, setProductId] = useState(state?._id);
-
   const {
     data: category_data,
     isLoading,
@@ -250,7 +249,7 @@ const AddProducts = () => {
       formData.append("price", price);
       formData.append("currency", selectedCurrency);
       formData.append("category", selectedCategory);
-      formData.append("image", uploadimage);
+      formData.append("image", selectedImage);
       formData.append("country", selectedCountry);
     } else {
       formData.append("name", productName);
@@ -685,15 +684,15 @@ const AddProducts = () => {
 
 export default AddProducts;
 
-const validationSchema = Yup.object({
-  productName: Yup.string().required("Product name is required."),
-  productDescription: Yup.string().required("Description is required."),
-  price: Yup.number()
-    .required("Price per unit is required.")
-    .positive("Price must be a positive number."),
-  selectedImage: Yup.mixed().required("Product image is required."),
-  quantity: Yup.number().optional(),
-  discount: Yup.number().optional(),
-  selectedCurrency: Yup.string().required("Currency is required."),
-  selectedCountry: Yup.string().required("Country is required."),
-});
+// const validationSchema = Yup.object({
+//   productName: Yup.string().required("Product name is required."),
+//   productDescription: Yup.string().required("Description is required."),
+//   price: Yup.number()
+//     .required("Price per unit is required.")
+//     .positive("Price must be a positive number."),
+//   selectedImage: Yup.mixed().required("Product image is required."),
+//   quantity: Yup.number().optional(),
+//   discount: Yup.number().optional(),
+//   selectedCurrency: Yup.string().required("Currency is required."),
+//   selectedCountry: Yup.string().required("Country is required."),
+// });
