@@ -24,6 +24,7 @@ import avatar4 from "../../assets/Ellipse 17.png";
 import PieComponent from "../../Component/AdminComponent/PieComponent";
 import { LoadingSkeleton } from "../../Component/Loader/LoadingSkeleton";
 import { useGetGroupOrderQuery } from "../../Redux/orderApi";
+import background from "../../assets/images/Rectangle 115.png";
 
 // import PieComponent from ".";
 
@@ -214,7 +215,15 @@ const Main = () => {
   };
 
   return (
-    <div className="px-[25px] pt-[10px] pb-[40px] font-['Raleway'] z-0">
+    <div
+      className="px-[25px] pt-[10px] pb-[40px] font-['Raleway'] z-0"
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {" "}
       <div className="flex items-center justify-between">
         <h1 className="text-[24px] leading-[34px] font-semibold text-[#232323] cursor-pointer">
           Dashboard
@@ -305,7 +314,6 @@ const Main = () => {
           </div>
         </div>
       </div>
-
       <div className="flex mt-[15px] w-full h-[350px] gap-[30px] rounded-xl">
         <div className="basis-[80%] border bg-white shadow-md cursor-pointer rounded-xl">
           <div className="bg-[#F8F9FC] flex items-center justify-between py-[10px] rounded-xl px-[30px] border-b-[1px] border-[#EDEDED] mb-[20px]">
@@ -379,7 +387,6 @@ const Main = () => {
           </div>
         </div>
       </div>
-
       <div className="flex mt-[15px] w-full py-[10px] gap-[30px]">
         <div className="basis-[65%] border rounded-xl bg-white shadow-md cursor-pointer">
           <div className="bg-[#F8F9FC] flex items-center justify-between py-[15px] rounded-xl px-[20px] border-b-[1px] border-[#EDEDED] mb-[15px]">

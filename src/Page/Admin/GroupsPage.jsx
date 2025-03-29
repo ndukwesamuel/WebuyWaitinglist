@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import {
-  RiArrowDropDownLine,
-  RiArrowDropUpLine,
-} from 'react-icons/ri';
+import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 
-import { useGetAllGroupsQuery } from '../../Redux/groupApi';
-
+import { useGetAllGroupsQuery } from "../../Redux/groupApi";
+import background from "../../assets/images/Rectangle 115.png";
 const GroupsPage = () => {
   const { data, isLoading, isError, error } = useGetAllGroupsQuery();
   console.log(data);
@@ -36,9 +33,16 @@ const GroupsPage = () => {
     );
   };
   return (
-    <div className="flex items-center justify-center w-full pl-16 mt-8 pr-14">
+    <div
+      className="flex items-center justify-center w-full min-h-svh px-4"
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       <div
-        className="flex flex-col w-full h-full p-5 mt-5 bg-white rounded-xl overflow-y-scroll max-h-[500px]"
+        className="flex flex-col w-full p-5  bg-white rounded-xl overflow-y-scroll max-h-[500px]"
         style={{
           overflowY: "auto",
           scrollbarWidth: "none",

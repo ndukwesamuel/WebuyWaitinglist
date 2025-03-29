@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Create from "../../Component/Groupcomponent/Create";
 import JoinGroup from "../../Component/Groupcomponent/JoinGroup";
 // import PostForm from './PostForm';
+import background from "../../assets/images/Rectangle 115.png";
 
 function GroupPage() {
   const [showPostForm, setShowPostForm] = useState(true);
@@ -12,7 +13,14 @@ function GroupPage() {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen w-full flex flex-col">
+    <div
+      className="bg-gray-100 min-h-screen w-full flex flex-col"
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       <header className="bg-blue-500 text-white p-4">
         <h1 className="text-2xl">Post Form App</h1>
         <button

@@ -23,9 +23,6 @@ const Dashboard = () => {
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/wallet" element={<Wallet />} />
         </Routes>
-        <div className="absolute top-[4rem] left-0 w-[10rem] hidden md:flex ">
-          <UserSidebar />
-        </div>
       </div>
     </div>
   );

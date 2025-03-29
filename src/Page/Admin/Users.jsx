@@ -121,7 +121,7 @@ const Users = () => {
   );
   return (
     <div className="font-['Raleway']">
-      <div className="w-full px-3 mt-8 md:px-14">
+      <div className="w-full ">
         <div
           className="flex flex-col w-full h-full p-5 overflow-y-scroll max-h-[600px]  mt-5 bg-white rounded-xl "
           style={{

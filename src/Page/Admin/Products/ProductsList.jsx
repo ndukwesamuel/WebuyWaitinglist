@@ -19,6 +19,100 @@ import { AllProduct_fun } from "../../../Redux/ProductSlice";
 
 const Base_URL = import.meta.env.VITE_REACT_APP_Url;
 
+const ProductsList = () => {
+  const { AllProductData, isLoading } = useSelector(
+    (state) => state?.reducer?.ProductSlice
+  );
+  const [products, setProducts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [error, setError] = useState("");
+  // const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Simulate a delay to show loading screens
+
+    dispatch(AllProduct_fun());
+  }, [dispatch]);
+
+  let filtered;
+
+  if (AllProductData?.message || AllProductData?.products?.length === 0) {
+    filtered = [];
+  } else {
+    filtered = AllProductData?.filter(
+      (product) =>
+        product?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product?.category.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }
+
+  return (
+    <div
+      className="w-full"
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <header className="w-full px-10">
+        <h1 className="text-[24px] leading-[34px] font-semibold text-white">
+          Products
+        </h1>
+        <p className="text-white uppercase text-[10px] font-extralight">
+          webuy/product/products
+        </p>
+      </header>
+      <div
+        className="flex flex-col mt-5 mx-4 px-10 bg-white rounded-xl overflow-y-scroll max-h-[550px]"
+        style={{
+          overflowY: "auto",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
+      >
+        <div className="flex justify-end gap-5 my-3">
+          <button
+            onClick={() => navigate("/admin/Addproduct")}
+            className="px-3 py-2 border-2 border-green-400 cursor-pointer rounded-2xl"
+          >
+            Create product
+          </button>
+        </div>
+
+        <div className="relative w-full">
+          <input
+            className="w-full pl-8 pr-12 py-2 border-2 border-[#f3f3f3] rounded-full text-xs"
+            type="text"
+            name="search"
+            value={searchQuery}
+            placeholder="Search products..."
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#c3c2c2] text-sm" />
+          <FaSlidersH className="absolute text-xs text-black transform -translate-y-1/2 right-4 top-1/2" />
+        </div>
+        {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
+          {isLoading
+            ? Array(4)
+                .fill()
+                .map((_, index) => <LoadingSkeleton key={index} />)
+            : filtered?.map((product, index) => (
+                <ProductCard key={index} product={product} />
+              ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductsList;
+
 function ProductCard({ product }) {
   const { data } = useSelector(
     (state) => state?.reducer?.AuthenticationSlice?.data
@@ -140,103 +234,3 @@ const LoadingSkeleton = () => {
     </>
   );
 };
-
-const ProductsList = () => {
-  const { AllProductData, isLoading } = useSelector(
-    (state) => state?.reducer?.ProductSlice
-  );
-  const [products, setProducts] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [error, setError] = useState("");
-  // const [isLoading, setIsLoading] = useState(true);
-  const dispatch = useDispatch();
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // Simulate a delay to show loading screens
-
-    dispatch(AllProduct_fun());
-  }, [dispatch]);
-
-  let filtered;
-
-  if (AllProductData?.message || AllProductData?.products?.length === 0) {
-    filtered = [];
-  } else {
-    filtered = AllProductData?.filter(
-      (product) =>
-        product?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product?.category.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }
-
-  return (
-    <div className="font-['Raleway']">
-      <div className="relative w-full h-full">
-        <img className="object-cover w-full h-full" src={background} alt="" />
-      </div>
-      <div className="absolute inset-0 flex">
-        <div className="basis-[10%] h-full">
-          <Sidebar />
-        </div>
-        <div className="basis-[90%]">
-          <Navbar />
-          <div className="w-full pl-20 mt-8 pr-14">
-            <header className="w-full">
-              <h1 className="text-[24px] leading-[34px] font-semibold text-white">
-                Products
-              </h1>
-              <p className="text-white uppercase text-[10px] font-extralight">
-                webuy/product/products
-              </p>
-            </header>
-            <div
-              className="flex flex-col w-full h-full p-5 mt-5 bg-white rounded-xl overflow-y-scroll max-h-[550px]"
-              style={{
-                overflowY: "auto",
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-              }}
-            >
-              <div className="flex justify-end gap-5 my-3">
-                <button
-                  onClick={() => navigate("/admin/Addproduct")}
-                  className="px-3 py-2 border-2 border-green-400 cursor-pointer rounded-2xl"
-                >
-                  Create product
-                </button>
-              </div>
-
-              <div className="relative w-full">
-                <input
-                  className="w-full pl-8 pr-12 py-2 border-2 border-[#f3f3f3] rounded-full text-xs"
-                  type="text"
-                  name="search"
-                  value={searchQuery}
-                  placeholder="Search products..."
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#c3c2c2] text-sm" />
-                <FaSlidersH className="absolute text-xs text-black transform -translate-y-1/2 right-4 top-1/2" />
-              </div>
-              {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
-              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
-                {isLoading
-                  ? Array(4)
-                      .fill()
-                      .map((_, index) => <LoadingSkeleton key={index} />)
-                  : filtered?.map((product, index) => (
-                      <ProductCard key={index} product={product} />
-                    ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default ProductsList;

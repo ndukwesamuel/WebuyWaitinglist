@@ -11,7 +11,7 @@ export const Private = ({ children }) => {
     // return <Navigate to="/" state={{ from: history.location }} />;
 
     if (data?.data?.user?.isAdmin === false) {
-      return <Navigate to="/" />;
+      return <Navigate to="/onboarding" />;
     } else {
       return <Navigate to="/admin" />;
     }
@@ -28,7 +28,7 @@ export const PrivateRoute = ({ children }) => {
   if (!data?.data?.token) {
     // not logged in so redirect to login page with the return url
     // return <Navigate to="/" state={{ from: history.location }} />;
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
 
   return children;
@@ -42,7 +42,7 @@ export const AdminPrivateRoute = ({ children }) => {
   if (!data?.data?.token) {
     // not logged in so redirect to login page with the return url
     // return <Navigate to="/" state={{ from: history.location }} />;
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
 
   if (data?.data?.user?.isAdmin === false) {
@@ -58,7 +58,7 @@ export const UserPrivateRoute = ({ children }) => {
   );
 
   if (!data?.data?.token) {
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
 
   if (data?.data?.user?.isAdmin === true) {

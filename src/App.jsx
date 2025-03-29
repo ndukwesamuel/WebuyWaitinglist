@@ -15,7 +15,18 @@ import {
   UserPrivateRoute,
 } from "./Page/privateroute/Private";
 import Dashboard from "./Page/UserDashboard/Dashboard";
-
+import Main from "./Page/Admin/Main";
+import GroupOrders from "./Page/Admin/GroupOrders";
+import ProductsList from "./Page/Admin/Products/ProductsList";
+import AddProducts from "./Page/Admin/Products/AddProducts";
+import AddCategory from "./Page/Admin/Category";
+import GroupsPage from "./Page/Admin/GroupsPage";
+import Receipt from "./Page/Admin/Receipt";
+import ViewReceipt from "./Page/Admin/ViewReceipt";
+import UpdateReceipt from "./Page/Admin/UpdateReceipt";
+import Users from "./Page/Admin/Users";
+import DashboardLayout from "./Component/layouts/DashboardLayout";
+import Navbar from "./Component/AdminComponent/Navbar";
 // import './main.scss';
 
 function App() {
@@ -60,10 +71,24 @@ function App() {
           exact
           element={
             <AdminPrivateRoute>
-              <AdminRoute />
+              <DashboardLayout />
             </AdminPrivateRoute>
           }
-        />
+        >
+          <Route index element={<Main />} />
+          <Route path="group-orders" element={<GroupOrders />} />
+          <Route path="products" element={<ProductsList />} />
+          <Route path="Addproduct" element={<AddProducts />} />
+          <Route path="category" element={<AddCategory />} />
+          {/* <Route path="/category" element={<Category />} />
+                    // <Route path="/Addcategory" element={<Category />} /> */}
+          <Route path="group" element={<GroupsPage />} />
+          <Route path="receipt" element={<Receipt />} />
+          <Route path="view-receipt" element={<ViewReceipt />} />
+          <Route path="users" element={<Users />} />
+
+          <Route path="update-receipt" element={<UpdateReceipt />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

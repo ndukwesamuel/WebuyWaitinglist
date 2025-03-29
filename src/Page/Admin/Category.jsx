@@ -18,12 +18,8 @@ const AddCategory = () => {
   const { token } = useSelector(
     (state) => state?.reducer?.AuthenticationSlice?.data
   );
-  const {
-    data: category_data,
-    isLoading,
-    isError,
-    error,
-  } = useGetCategoryQuery();
+  const { data, isLoading, isError, error } = useGetCategoryQuery();
+  const category_data = [];
   console.log(category_data, "cateory result");
   console.log(isLoading, "isloading");
 
@@ -166,103 +162,95 @@ const AddCategory = () => {
       <div className="fixed top-0 left-0 w-full h-full">
         <img className="object-cover w-full h-full" src={background} alt="" />
       </div>
-      <div className="absolute inset-0 flex">
-        <div className="basis-[10%] h-full">
-          <Sidebar />
-        </div>
-        <div className="basis-[90%] ">
-          <Navbar />
-          <div className="w-full h-24 min-h-full pl-20 my-8 pr-14 rounded-xl ">
-            <header className="w-full ">
-              <h1 className="text-[24px] leading-[34px] font-semibold text-white  ">
-                Category
-              </h1>
-            </header>
-            <form
-              className="w-full h-24 min-h-full p-8 overflow-y-auto bg-white rounded shadow-lg max-w-2xl-lg "
-              style={{
-                overflowY: "auto",
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-              }}
-            >
-              <IoAddCircleSharp
-                className="text-[50px]"
-                onClick={() => {
-                  setName("");
-                  setShowSuccess(true);
-                }}
-              />
+      <div className="w-full h-24 min-h-full pl-20 my-8 pr-14 rounded-xl ">
+        <header className="w-full ">
+          <h1 className="text-[24px] leading-[34px] font-semibold text-white  ">
+            Category
+          </h1>
+        </header>
+        <form
+          className="w-full h-24 min-h-full p-8 overflow-y-auto bg-white rounded shadow-lg max-w-2xl-lg "
+          style={{
+            overflowY: "auto",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+        >
+          <IoAddCircleSharp
+            className="text-[50px]"
+            onClick={() => {
+              setName("");
+              setShowSuccess(true);
+            }}
+          />
 
-              {/* Table */}
-              <div className="relative h-full mt-8 overflow-x-auto shadow-md sm:rounded-lg">
-                <table className="w-full text-sm text-left rtl:text-right text-black-500 dark:text-gray-400">
-                  <thead className="font-medium text-base text-[#565454]">
-                    <tr>
-                      <th scope="col" className="px-6 py-3">
-                        Category Name
-                      </th>
+          {/* Table */}
+          <div className="relative h-full mt-8 overflow-x-auto shadow-md sm:rounded-lg">
+            <table className="w-full text-sm text-left rtl:text-right text-black-500 dark:text-gray-400">
+              <thead className="font-medium text-base text-[#565454]">
+                <tr>
+                  <th scope="col" className="px-6 py-3">
+                    Category Name
+                  </th>
 
-                      <th scope="col" className="px-6 py-3">
-                        <span className="sr-only">Edit</span>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {isLoading && <p>Loading...</p>}
-                    {category_data.map((category, index) => (
-                      <tr
-                        key={index}
-                        className="bg-white border-b dark:bg-white-800 dark:border-white-700"
+                  <th scope="col" className="px-6 py-3">
+                    <span className="sr-only">Edit</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {isLoading && <p>Loading...</p>}
+                {category_data.map((category, index) => (
+                  <tr
+                    key={index}
+                    className="bg-white border-b dark:bg-white-800 dark:border-white-700"
+                  >
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-black-900 whitespace-nowrap dark:text-black"
+                    >
+                      {category.name}
+                    </th>
+                    <td className="px-6 py-4">
+                      <button
+                        type="button"
+                        onClick={() => handleEdit(category)}
+                        className="font-medium text-blue-600 dark:text-blue-500 "
                       >
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-black-900 whitespace-nowrap dark:text-black"
-                        >
-                          {category.name}
-                        </th>
-                        <td className="px-6 py-4">
-                          <button
-                            type="button"
-                            onClick={() => handleEdit(category)}
-                            className="font-medium text-blue-600 dark:text-blue-500 "
-                          >
-                            Edit
-                          </button>
-                        </td>
-                        <td className="px-6 py-4">
-                          <button
-                            type="button"
-                            onClick={() => handleDelete(category)}
-                            className="font-medium text-red-600 dark:text-red-500 "
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                        Edit
+                      </button>
+                    </td>
+                    <td className="px-6 py-4">
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(category)}
+                        className="font-medium text-red-600 dark:text-red-500 "
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-              {/* Submit and Cancel Buttons */}
-              <div className="flex content-center w-full gap-8 mt-6">
-                <button
-                  className="w-full bg-[#f3f3f3] text-[#009b4d] font-semibold py-2 rounded-lg"
-                  type="submit"
-                >
-                  Cancel
-                </button>
-                {/* <button
+          {/* Submit and Cancel Buttons */}
+          <div className="flex content-center w-full gap-8 mt-6">
+            <button
+              className="w-full bg-[#f3f3f3] text-[#009b4d] font-semibold py-2 rounded-lg"
+              type="submit"
+            >
+              Cancel
+            </button>
+            {/* <button
                   className="w-full bg-[#009b4d] text-white font-semibold py-2 rounded-lg"
                   type="submit"
                 >
                   Add Category
                 </button> */}
-              </div>
-            </form>
           </div>
-        </div>
+        </form>
       </div>
 
       <ModalContainer close={toggleSuccess} show={showSuccess}>
