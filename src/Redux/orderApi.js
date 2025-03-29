@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+const apiUrl = import.meta.env.VITE_REACT_APP_Url;
 export const orderApi = createApi({
   reducerPath: "orderApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_Url,
+    baseUrl: apiUrl,
     prepareHeaders: (headers, { getState }) => {
       // Add your token to the headers
       const token = getState().reducer.AuthenticationSlice.data.data?.token;
@@ -24,7 +25,7 @@ export const orderApi = createApi({
 export const groupOrderApi = createApi({
   reducerPath: "groupOrderApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_Url,
+    baseUrl: apiUrl,
     prepareHeaders: (headers, { getState }) => {
       // Add your token to the headers
       const token = getState().reducer.AuthenticationSlice.data.data?.token;

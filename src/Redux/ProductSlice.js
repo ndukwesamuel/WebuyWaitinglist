@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { ErrorFunc } from "../utilities/ApiErrorFun";
 import Category from "../Page/Admin/Category";
 
-const Base_URL = process.env.REACT_APP_Url;
+const Base_URL = import.meta.env.VITE_REACT_APP_Url;
 
 const initialState = {
   isError: false,

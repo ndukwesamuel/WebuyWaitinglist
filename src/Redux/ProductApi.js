@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_Url,
+    baseUrl: import.meta.env.VITE_REACT_APP_Url,
     // prepareHeaders: (headers, { getState }) => {
     //   // Add your token to the headers
     //   const token = getState().reducer.AuthenticationSlice.data.data?.token;

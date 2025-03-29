@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ErrorFunc } from "../utilities/ApiErrorFun";
 
-const Base_URL = process.env.REACT_APP_Url;
+const Base_URL = import.meta.env.VITE_REACT_APP_Url;
 
 const initialState = {
   isError: false,
