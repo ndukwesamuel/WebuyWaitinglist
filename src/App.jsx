@@ -26,7 +26,13 @@ import ViewReceipt from "./Page/Admin/ViewReceipt";
 import UpdateReceipt from "./Page/Admin/UpdateReceipt";
 import Users from "./Page/Admin/Users";
 import DashboardLayout from "./Component/layouts/DashboardLayout";
+
+import Home from "./Component/UserComponent/Home";
+import UserProfile from "./Component/UserComponent/UserProfile";
+import Wallet from "./Component/UserComponent/Wallet";
 import Navbar from "./Component/AdminComponent/Navbar";
+import ProductPage from "./Page/ProductPage";
+
 // import './main.scss';
 
 function App() {
@@ -61,10 +67,15 @@ function App() {
           exact
           element={
             <UserPrivateRoute>
-              <Dashboard />
+              <DashboardLayout />
             </UserPrivateRoute>
           }
-        />
+        >
+          <Route index element={<Home />} />
+          <Route path="shop" element={<ProductPage />} />
+          <Route path="profile" element={<UserProfile />} />
+          <Route path="wallet" element={<Wallet />} />
+        </Route>
 
         <Route
           path="/admin/*"

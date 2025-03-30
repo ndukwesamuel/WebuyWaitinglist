@@ -6,16 +6,19 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../AdminComponent/Navbar";
 const DashboardLayout = ({ children }) => {
   return (
-    <div className="flex h-screen">
-      <SidebarProvider>
-        <AppSidebar />
+    <>
+      <div className="flex flex-col h-screen">
+        <SidebarProvider>
+          <AppSidebar />
 
-        <main className="flex-1 mx-">
-          <SidebarTrigger className="mt-10" />
-          {children || <Outlet />}
-        </main>
-      </SidebarProvider>
-    </div>
+          <main className="flex-1 mx-">
+            <Navbar />
+            <SidebarTrigger className="mt-10" />
+            {children || <Outlet />}
+          </main>
+        </SidebarProvider>
+      </div>
+    </>
   );
 };
 

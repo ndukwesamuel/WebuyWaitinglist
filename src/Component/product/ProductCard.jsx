@@ -1,0 +1,64 @@
+import { Button, Card } from "flowbite-react";
+
+import React, { useState } from "react";
+import { Heart, Star, ShoppingCart } from "lucide-react";
+
+const ProductCard = ({ ...product }) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const { name, price, rating, image } = product;
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  };
+
+  return (
+    <div className="w-50 rounded-lg overflow-hidden shadow-md bg-white">
+      {/* Product image with favorite icon */}
+      <div className="relative">
+        <img src={image} alt={name} className="w-full h-48 object-cover" />
+        <button
+          onClick={toggleFavorite}
+          className={`absolute top-3 right-10 p-2 rounded-full ${
+            isFavorite ? "bg-red-500" : "bg-gray-200"
+          } transition-colors duration-300`}
+        >
+          <Heart
+            size={16}
+            className={`${isFavorite ? "text-white" : "text-gray-500"}`}
+            fill={isFavorite ? "white" : "none"}
+          />
+        </button>
+      </div>
+
+      {/* Product details */}
+      <div className="p-4">
+        {/* Name and rating */}
+        <div className="flex justify-between items-center mb-2">
+          <h3 className="text-lg font-semibold text-gray-800 truncate">
+            {name}
+          </h3>
+          <div className="flex items-center">
+            <Star size={16} className="text-yellow-400" fill="currentColor" />
+            <span className="ml-1 text-sm text-gray-600">{rating}</span>
+          </div>
+        </div>
+
+        {/* Price */}
+        <div className="mb-4">
+          <p className="text-lg font-bold text-gray-900">
+            ₦{price.toLocaleString()}
+          </p>
+        </div>
+
+        {/* Add to cart button */}
+        <button className="w-full py-2 px-4 bg-green-700 hover:bg-green-800 text-white font-medium rounded-md flex items-center justify-center transition-colors duration-300">
+          <ShoppingCart size={18} className="mr-2" />
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default ProductCard;

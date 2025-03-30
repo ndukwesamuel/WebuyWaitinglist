@@ -76,7 +76,7 @@ const AllProduct_fun_Service = async (token) => {
     },
   };
   const response = await axios.get(API_URL, config);
-
+  console.log(response.data);
   return response.data;
 };
 export const AllProduct_fun = createAsyncThunk(

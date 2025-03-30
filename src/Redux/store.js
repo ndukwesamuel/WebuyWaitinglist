@@ -15,6 +15,7 @@ import { userApi } from "./userApi";
 import ProductSlice from "./ProductSlice";
 import OrderSlice from "./OrderSlice";
 import AdminRecipteSLice from "./AdminRecipteSLice";
+import { productApi } from "./ProductApi";
 
 const reducers = combineReducers({
   Auth: Auth,
@@ -51,6 +52,7 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [categoryApi.reducerPath]: categoryApi.reducer,
     [groupApi.reducerPath]: groupApi.reducer,
+    [productApi.reducerPath]: productApi.reducer,
   },
   devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) => {
@@ -61,7 +63,8 @@ export const store = configureStore({
       groupOrderApi.middleware,
       categoryApi.middleware,
       groupApi.middleware,
-      userApi.middleware
+      userApi.middleware,
+      productApi.middleware
     );
   },
   passwordResetApi,

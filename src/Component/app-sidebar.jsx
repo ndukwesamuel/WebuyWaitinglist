@@ -39,10 +39,10 @@ const AppSidebar = () => {
 
   const userMenuItems = [
     { label: "Home", icon: Home, path: "/dashboard" },
-    { label: "Profile", icon: User, path: "/dashboard/profile" },
+    { label: "Shop", icon: ShoppingBag, path: "/dashboard/shop" },
+
     { label: "Messages", icon: MessageSquare, path: "#" },
     { label: "Wallet", icon: Wallet, path: "/dashboard/wallet" },
-    { label: "Settings", icon: Settings, path: "#" },
   ];
 
   const adminMenuItems = [
@@ -66,7 +66,7 @@ const AppSidebar = () => {
 
   return (
     <div className="flex h-screen">
-      <Sidebar className="scrollbar:hidde">
+      <Sidebar className="">
         <SidebarContent className="relative bg-gradient-to- bg-[#4A9D44] pt-[5rem] overflow-y-auto scrollbar-hide">
           <SidebarHeader className="absolute top-4 right-0 left-0 bottom-0">
             {/* <h2 className="text-lg font-semibold text-[#919191] p-4">
@@ -98,7 +98,7 @@ const AppSidebar = () => {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
-                <SidebarMenuItem>
+                {/* <SidebarMenuItem>
                   <SidebarMenuButton
                     className="h-14"
                     style={{ backgroundColor: "transparent", color: "#FFFF" }}
@@ -109,7 +109,7 @@ const AppSidebar = () => {
                       <span className="font-semibold ml-3">Log Out</span>
                     </div>
                   </SidebarMenuButton>
-                </SidebarMenuItem>
+                </SidebarMenuItem> */}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
