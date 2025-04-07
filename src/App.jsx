@@ -30,10 +30,8 @@ import DashboardLayout from "./Component/layouts/DashboardLayout";
 import Home from "./Component/UserComponent/Home";
 import UserProfile from "./Component/UserComponent/UserProfile";
 import Wallet from "./Component/UserComponent/Wallet";
-import Navbar from "./Component/AdminComponent/Navbar";
 import ProductPage from "./Page/ProductPage";
-
-// import './main.scss';
+import Cart from "./Page/UserDashboard/Cart";
 
 function App() {
   return (
@@ -75,6 +73,7 @@ function App() {
           <Route path="shop" element={<ProductPage />} />
           <Route path="profile" element={<UserProfile />} />
           <Route path="wallet" element={<Wallet />} />
+          <Route path="cart" element={<Cart />} />
         </Route>
 
         <Route

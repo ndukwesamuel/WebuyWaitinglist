@@ -2,6 +2,7 @@
   "name": "landing-page1",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-separator": "^1.1.2",

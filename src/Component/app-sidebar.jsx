@@ -30,6 +30,7 @@ import {
   Receipt,
   Box,
 } from "lucide-react";
+import sidebarBg from "../assets/images/sidebarBg.png";
 
 const AppSidebar = () => {
   const dispatch = useDispatch();
@@ -38,8 +39,9 @@ const AppSidebar = () => {
   const isAdmin = data?.data?.user?.isAdmin || false;
 
   const userMenuItems = [
-    { label: "Home", icon: Home, path: "/dashboard" },
+    { label: "Wallet", icon: Home, path: "/dashboard" },
     { label: "Shop", icon: ShoppingBag, path: "/dashboard/shop" },
+    { label: "Cart", icon: ShoppingBag, path: "/dashboard/cart" },
 
     { label: "Messages", icon: MessageSquare, path: "#" },
     { label: "Wallet", icon: Wallet, path: "/dashboard/wallet" },
@@ -67,7 +69,16 @@ const AppSidebar = () => {
   return (
     <div className="flex h-screen">
       <Sidebar className="">
-        <SidebarContent className="relative bg-gradient-to- bg-[#4A9D44] pt-[5rem] overflow-y-auto scrollbar-hide">
+        {/* bg-[#4A9D44] */}
+        <SidebarContent
+          className="relative pt-[5rem] overflow-y-auto "
+          style={{
+            backgroundImage: `url(${sidebarBg})`,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+          }}
+        >
           <SidebarHeader className="absolute top-4 right-0 left-0 bottom-0">
             {/* <h2 className="text-lg font-semibold text-[#919191] p-4">
               Dashboard
@@ -84,8 +95,8 @@ const AppSidebar = () => {
                       className="h-14"
                       style={
                         location.pathname === item.path
-                          ? { backgroundColor: "#A4CEA1", color: "#FFFF" }
-                          : { backgroundColor: "transparent", color: "#FFFF" }
+                          ? { backgroundColor: "#A4CEA1", color: "#4A9D44" }
+                          : { backgroundColor: "transparent", color: "#919191" }
                       }
                     >
                       <Link
