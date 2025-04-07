@@ -84,7 +84,7 @@ const Cart = () => {
       {/* Cart Items - Left Side */}
       <div className="w-full lg:w-2/3 bg-white rounded-lg shadow">
         <div className="p-6">
-          <h2 className="text-2xl font-bold mb-6">
+          <h2 className="text-2xl font-bold mb-6 text-[#4A9D44]">
             Shopping Cart ({cartItems.length} items)
           </h2>
 

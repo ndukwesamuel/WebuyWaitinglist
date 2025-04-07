@@ -69,7 +69,7 @@ function App() {
             </UserPrivateRoute>
           }
         >
-          <Route index element={<Home />} />
+          <Route index element={<Wallet />} />
           <Route path="shop" element={<ProductPage />} />
           <Route path="profile" element={<UserProfile />} />
           <Route path="wallet" element={<Wallet />} />
