@@ -1,15 +1,21 @@
 import { Button, Card } from "flowbite-react";
-
 import React, { useState } from "react";
-import { Heart, Star, ShoppingCart } from "lucide-react";
+import { Star, ShoppingCart } from "lucide-react";
+import { toast } from "react-toastify";
+import { useAddToCartMutation } from "../../Redux/cartApi";
 
 const ProductCard = ({ ...product }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [addToCart, { isLoading }] = useAddToCartMutation();
 
-  const { name, price, rating, image } = product;
-
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
+  const { _id, name, price, rating, image } = product;
+  const handleAddToCart = async () => {
+    try {
+      await addToCart(_id).unwrap();
+      toast.success("Item added to cart!");
+    } catch (err) {
+      toast.error("Failed to add item to cart");
+      console.error("Add to cart error:", err);
+    }
   };
 
   return (
@@ -17,18 +23,6 @@ const ProductCard = ({ ...product }) => {
       {/* Product image with favorite icon */}
       <div className="relative">
         <img src={image} alt={name} className="w-full h-48 object-cover" />
-        <button
-          onClick={toggleFavorite}
-          className={`absolute top-3 right-10 p-2 rounded-full ${
-            isFavorite ? "bg-red-500" : "bg-gray-200"
-          } transition-colors duration-300`}
-        >
-          <Heart
-            size={16}
-            className={`${isFavorite ? "text-white" : "text-gray-500"}`}
-            fill={isFavorite ? "white" : "none"}
-          />
-        </button>
       </div>
 
       {/* Product details */}
@@ -52,9 +46,13 @@ const ProductCard = ({ ...product }) => {
         </div>
 
         {/* Add to cart button */}
-        <button className="w-full py-2 px-4 bg-green-700 hover:bg-green-800 text-white font-medium rounded-md flex items-center justify-center transition-colors duration-300">
+        <button
+          onClick={handleAddToCart}
+          disabled={isLoading}
+          className="w-full py-2 px-4 bg-green-700 hover:bg-green-800 text-white font-medium rounded-md flex items-center justify-center transition-colors duration-300 disabled:opacity-50"
+        >
           <ShoppingCart size={18} className="mr-2" />
-          Add to Cart
+          {isLoading ? "Adding..." : "Add to Cart"}
         </button>
       </div>
     </div>

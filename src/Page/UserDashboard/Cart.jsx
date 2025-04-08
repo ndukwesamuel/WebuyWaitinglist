@@ -1,123 +1,115 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import {
+  useGetCartQuery,
+  useAddToCartMutation,
+  useDecreaseItemMutation,
+  useDeleteItemMutation,
+} from "../../Redux/cartApi";
+import { toast } from "react-toastify";
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Wireless Headphones",
-      description:
-        "Noise cancelling over-ear headphones with 30 hour battery life",
-      price: 149.99,
-      quantity: 1,
-      image: "/api/placeholder/80/80",
-      checked: true,
-    },
-    {
-      id: 2,
-      name: "Smart Watch",
-      description: "Fitness tracker with heart rate monitor and sleep tracking",
-      price: 199.99,
-      quantity: 1,
-      image: "/api/placeholder/80/80",
-      checked: true,
-    },
-    {
-      id: 3,
-      name: "Portable Power Bank",
-      description: "10,000mAh fast charging power bank with dual USB ports",
-      price: 49.99,
-      quantity: 2,
-      image: "/api/placeholder/80/80",
-      checked: false,
-    },
-  ]);
+  const { data: cartData = {}, isLoading, refetch } = useGetCartQuery();
+  const [addToCart] = useAddToCartMutation();
+  const [decreaseItem] = useDecreaseItemMutation();
+  const [deleteItem] = useDeleteItemMutation();
+  const [checkedItems, setCheckedItems] = useState({});
+  const deliveryFee = 2000;
 
-  const deliveryFee = 9.99;
-  const [orderSummary, setOrderSummary] = useState({
-    subtotal: 0,
-    deliveryFee: deliveryFee,
-    total: 0,
-  });
+  const userCart = cartData?.userCart || { items: [] };
+  const cartItems = userCart.items || [];
 
-  // Update order summary whenever cart items change
   useEffect(() => {
-    const subtotal = cartItems
-      .filter((item) => item.checked)
-      .reduce((sum, item) => sum + item.price * item.quantity, 0);
+    if (cartItems.length > 0) {
+      const defaultChecked = {};
+      cartItems.forEach((item) => {
+        defaultChecked[item._id] = true;
+      });
+      setCheckedItems(defaultChecked);
+    }
+  }, [cartItems]);
 
-    setOrderSummary({
-      subtotal: subtotal,
-      deliveryFee: deliveryFee,
-      total: subtotal + deliveryFee,
-    });
-  }, [cartItems, deliveryFee]);
+  // Calculate subtotal based on checked items only
+  const subtotal = cartItems.reduce((sum, item) => {
+    if (checkedItems[item._id]) {
+      return sum + item.productId.price * item.quantity;
+    }
+    return sum;
+  }, 0);
 
-  // Handle checkbox change
+  const total = subtotal + deliveryFee;
+
   const handleCheckboxChange = (id) => {
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === id ? { ...item, checked: !item.checked } : item
-      )
-    );
+    setCheckedItems((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
   };
 
-  // Handle quantity change
-  const updateQuantity = (id, change) => {
-    setCartItems(
-      cartItems.map((item) => {
-        if (item.id === id) {
-          const newQuantity = Math.max(1, item.quantity + change);
-          return { ...item, quantity: newQuantity };
-        }
-        return item;
-      })
-    );
+  const handleUpdateQuantity = async (id, type, productId) => {
+    try {
+      if (type === "increase") {
+        await addToCart(productId).unwrap();
+      } else {
+        await decreaseItem(productId).unwrap();
+      }
+      refetch();
+    } catch (err) {
+      toast.error("Error updating quantity");
+    }
   };
 
-  // Remove item from cart
-  const removeItem = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
+  const handleRemove = async (id, productId) => {
+    try {
+      await deleteItem(productId).unwrap();
+      toast.success("Item removed");
+      refetch();
+    } catch (err) {
+      toast.error("Failed to remove item");
+    }
   };
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 p-4 w-full">
-      {/* Cart Items - Left Side */}
+      {/* Cart Items */}
       <div className="w-full lg:w-2/3 bg-white rounded-lg shadow">
         <div className="p-6">
           <h2 className="text-2xl font-bold mb-6 text-[#4A9D44]">
             Shopping Cart ({cartItems.length} items)
           </h2>
 
-          {cartItems.length === 0 ? (
+          {isLoading ? (
+            <p className="text-gray-600">Loading cart...</p>
+          ) : cartItems.length === 0 ? (
             <div className="text-center py-8">
               <p className="text-gray-500">Your cart is empty</p>
             </div>
           ) : (
             <div className="space-y-6">
-              {cartItems.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex flex-col sm:flex-row items-start sm:items-center py-4 border-b"
-                >
-                  {/* Checkbox */}
-                  <div className="flex items-center mr-4 mb-2 sm:mb-0">
-                    <div className="relative">
+              {cartItems.map((item) => {
+                const { _id, productId, quantity } = item;
+                return (
+                  <div
+                    key={_id}
+                    className="flex flex-col sm:flex-row items-start sm:items-center py-4 border-b"
+                  >
+                    {/* Checkbox */}
+                    <div className="flex items-center mr-4 mb-2 sm:mb-0">
                       <input
                         type="checkbox"
-                        id={`checkbox-${item.id}`}
-                        checked={item.checked}
-                        onChange={() => handleCheckboxChange(item.id)}
-                        className="sr-only" // Hide the actual checkbox but keep functionality
+                        checked={checkedItems[_id] || false}
+                        onChange={() => handleCheckboxChange(_id)}
+                        className="sr-only"
+                        id={`checkbox-${_id}`}
                       />
                       <label
-                        htmlFor={`checkbox-${item.id}`}
+                        htmlFor={`checkbox-${_id}`}
                         className={`flex h-5 w-5 cursor-pointer items-center justify-center rounded border ${
-                          item.checked
+                          checkedItems[_id]
                             ? "bg-gradient-to-b from-[#4A9D44] to-[#0D5F07] border-transparent"
                             : "bg-white border-gray-300"
                         }`}
                       >
-                        {item.checked && (
+                        {checkedItems[_id] && (
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-3 w-3 text-white"
@@ -133,76 +125,66 @@ const Cart = () => {
                         )}
                       </label>
                     </div>
-                  </div>
 
-                  {/* Product Image */}
-                  <div className="w-20 h-20 flex-shrink-0 mr-4 mb-2 sm:mb-0">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover rounded"
-                    />
-                  </div>
+                    {/* Image */}
+                    <div className="w-20 h-20 flex-shrink-0 mr-4 mb-2 sm:mb-0">
+                      <img
+                        src={productId.image}
+                        alt={productId.name}
+                        className="w-full h-full object-cover rounded"
+                      />
+                    </div>
 
-                  {/* Product Details */}
-                  <div className="flex-grow mb-2 sm:mb-0">
-                    <h3 className="font-medium text-lg">{item.name}</h3>
-                    <p className="text-gray-600 text-sm mb-2">
-                      {item.description}
-                    </p>
+                    {/* Details */}
+                    <div className="flex-grow">
+                      <h3 className="font-medium text-lg">{productId.name}</h3>
+                      <p className="text-gray-600 text-sm mb-2">
+                        {productId.description}
+                      </p>
 
-                    {/* Quantity Controls */}
-                    <div className="flex items-center mt-2">
+                      {/* Quantity */}
+                      <div className="flex items-center mt-2">
+                        <button
+                          onClick={() =>
+                            handleUpdateQuantity(_id, "decrease", productId._id)
+                          }
+                          className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center"
+                        >
+                          <span className="text-lg">-</span>
+                        </button>
+                        <span className="mx-3">{quantity}</span>
+                        <button
+                          onClick={() =>
+                            handleUpdateQuantity(_id, "increase", productId._id)
+                          }
+                          className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center"
+                        >
+                          <span className="text-lg">+</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Price & Remove */}
+                    <div className="flex flex-col items-end">
+                      <span className="font-bold text-lg text-[#4A9D44]">
+                        ₦{(productId.price * quantity).toFixed(2)}
+                      </span>
                       <button
-                        onClick={() => updateQuantity(item.id, -1)}
-                        className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center"
+                        onClick={() => handleRemove(_id, productId._id)}
+                        className="text-red-500 mt-2"
                       >
-                        <span className="text-lg">-</span>
-                      </button>
-                      <span className="mx-3">{item.quantity}</span>
-                      <button
-                        onClick={() => updateQuantity(item.id, 1)}
-                        className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center"
-                      >
-                        <span className="text-lg">+</span>
+                        Remove
                       </button>
                     </div>
                   </div>
-
-                  {/* Price and Delete - Right Side */}
-                  <div className="flex flex-col items-end mt-2 sm:mt-0">
-                    <span className="font-bold text-lg text-[#4A9D44]">
-                      #{(item.price * item.quantity).toFixed(2)}
-                    </span>
-                    <button
-                      onClick={() => removeItem(item.id)}
-                      className="text-red-500 mt-2"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M3 6h18"></path>
-                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
       </div>
 
-      {/* Order Summary - Right Side */}
+      {/* Order Summary */}
       <div className="w-full lg:w-1/3">
         <div className="bg-white rounded-lg shadow p-6 sticky top-4">
           <h2 className="text-xl font-bold mb-6">Order Summary</h2>
@@ -210,21 +192,21 @@ const Cart = () => {
           <div className="space-y-4 mb-6">
             <div className="flex justify-between">
               <span className="text-gray-600">Subtotal</span>
-              <span>#{orderSummary.subtotal.toFixed(2)}</span>
+              <span>₦{subtotal.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Delivery</span>
-              <span>#{orderSummary.deliveryFee.toFixed(2)}</span>
+              <span>₦{deliveryFee.toFixed(2)}</span>
             </div>
             <div className="border-t pt-4 flex justify-between font-bold">
               <span>Total</span>
-              <span>#{orderSummary.total.toFixed(2)}</span>
+              <span>₦{total.toFixed(2)}</span>
             </div>
           </div>
 
           <button
             className="w-full bg-gradient-to-b from-[#4A9D44] to-[#0D5F07] text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-50"
-            disabled={!cartItems.some((item) => item.checked)}
+            disabled={!cartItems.some((item) => checkedItems[item._id])}
           >
             Proceed to Checkout
           </button>
