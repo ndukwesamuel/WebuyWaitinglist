@@ -15,24 +15,29 @@ export const cartApi = createApi({
   endpoints: (builder) => ({
     getCart: builder.query({
       query: () => "",
+      providesTags: ["Cart"],
     }),
     addToCart: builder.mutation({
       query: (productId) => ({
         url: `addItem?productId=${productId}`,
         method: "GET",
       }),
+      invalidatesTags: ["Cart"],
     }),
     decreaseItem: builder.mutation({
       query: (productId) => ({
         url: `decreaseItem?productId=${productId}`,
         method: "GET",
       }),
+      invalidatesTags: ["Cart"],
     }),
     deleteItem: builder.mutation({
       query: (productId) => ({
-        url: `deleteItem?productId=${productId}`,
+        url: `deleteItem`,
         method: "DELETE",
+        body: { productId },
       }),
+      invalidatesTags: ["Cart"],
     }),
   }),
 });
@@ -43,3 +48,7 @@ export const {
   useDecreaseItemMutation,
   useDeleteItemMutation,
 } = cartApi;
+export const selectCartItemCount = (state) => {
+  const cartData = state.cartApi.queries["getCart(undefined)"]?.data;
+  return cartData?.userCart?.items?.length || 0;
+};

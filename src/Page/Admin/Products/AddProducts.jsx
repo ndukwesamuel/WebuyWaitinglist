@@ -24,7 +24,7 @@ import Navbar from "../../../Component/AdminComponent/Navbar";
 import Sidebar from "../../../Component/AdminComponent/Sidebar";
 import { useGetCategoryQuery } from "../../../Redux/categoryApi";
 
-const Base_URL = import.meta.env.VITE_REACT_APP_Url;
+const Base_URL = import.meta.env.VITE_APP_Local;
 
 const AddProducts = () => {
   let { state } = useLocation();
@@ -672,7 +672,7 @@ const AddProducts = () => {
                   // type="submit"
                   onClick={handleAddProduct}
                 >
-                  {creatProduct?.isLoading ? "Loading..." : "Add Product"}
+                  {creatProduct?.isLoading ? "Adding..." : "Add Product"}
                 </button>
               )}
             </div>

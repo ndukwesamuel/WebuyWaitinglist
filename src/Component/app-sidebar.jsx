@@ -31,13 +31,18 @@ import {
   Box,
 } from "lucide-react";
 import sidebarBg from "../assets/images/sidebarBg.png";
-
+import { selectCartItemCount } from "../Redux/cartApi";
+import { useGetCartQuery } from "../Redux/cartApi";
 const AppSidebar = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { data } = useSelector((state) => state.reducer?.AuthenticationSlice);
   const isAdmin = data?.data?.user?.isAdmin || false;
+  // const cartItemCount = useSelector(selectCartItemCount);
+  const { data: cartData } = useGetCartQuery();
 
+  // Calculate cart count from the latest data
+  const cartItemCount = cartData?.userCart?.items?.length || 0;
   const userMenuItems = [
     { label: "Wallet", icon: Home, path: "/dashboard" },
     { label: "Shop", icon: ShoppingBag, path: "/dashboard/shop" },
@@ -79,11 +84,7 @@ const AppSidebar = () => {
             backgroundPosition: "center",
           }}
         >
-          <SidebarHeader className="absolute top-4 right-0 left-0 bottom-0">
-            {/* <h2 className="text-lg font-semibold text-[#919191] p-4">
-              Dashboard
-            </h2> */}
-          </SidebarHeader>
+          <SidebarHeader className="absolute top-4 right-0 left-0 bottom-0"></SidebarHeader>
           <SidebarGroup className="mt-[2rem]">
             <SidebarGroupContent>
               <SidebarMenu>
@@ -104,7 +105,15 @@ const AppSidebar = () => {
                         className="flex items-center h-14 p-4 transition-colors duration-200"
                       >
                         <item.icon size={20} />
-                        <span className="font-semibold ml-3">{item.label}</span>
+                        <span className="font-semibold ml-3 flex items-center gap-2">
+                          {item.label}
+
+                          {item.label === "Cart" && cartItemCount > 0 && (
+                            <span className="bg-red-500 text-white text-xs font-bold rounded-full px-2 py-0.5">
+                              {cartItemCount}
+                            </span>
+                          )}
+                        </span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

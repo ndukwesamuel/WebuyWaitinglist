@@ -1,61 +1,77 @@
 import { Button, Card } from "flowbite-react";
-import React, { useState } from "react";
-import { Star, ShoppingCart } from "lucide-react";
+import React from "react";
+import { Star, ShoppingCart, Loader2 } from "lucide-react";
 import { toast } from "react-toastify";
 import { useAddToCartMutation } from "../../Redux/cartApi";
+import { Link } from "react-router-dom";
 
-const ProductCard = ({ ...product }) => {
+const ProductCard = ({ productLink, ...product }) => {
   const [addToCart, { isLoading }] = useAddToCartMutation();
 
   const { _id, name, price, rating, image } = product;
-  const handleAddToCart = async () => {
+
+  const handleAddToCart = async (e) => {
+    // Prevent the click from bubbling up to the parent Link component
+    e.preventDefault();
+    e.stopPropagation();
+
     try {
       await addToCart(_id).unwrap();
       toast.success("Item added to cart!");
     } catch (err) {
       toast.error("Failed to add item to cart");
-      console.error("Add to cart error:", err);
     }
   };
 
   return (
-    <div className="w-50 rounded-lg overflow-hidden shadow-md bg-white">
-      {/* Product image with favorite icon */}
-      <div className="relative">
-        <img src={image} alt={name} className="w-full h-48 object-cover" />
-      </div>
+    <Link to={productLink} className="block">
+      <div className="w-50 rounded-lg overflow-hidden shadow-md bg-white">
+        {/* Product image with favorite icon */}
+        <div className="relative">
+          <img src={image} alt={name} className="w-full h-48 object-cover" />
+        </div>
 
-      {/* Product details */}
-      <div className="p-4">
-        {/* Name and rating */}
-        <div className="flex justify-between items-center mb-2">
-          <h3 className="text-lg font-semibold text-gray-800 truncate">
-            {name}
-          </h3>
-          <div className="flex items-center">
-            <Star size={16} className="text-yellow-400" fill="currentColor" />
-            <span className="ml-1 text-sm text-gray-600">{rating}</span>
+        {/* Product details */}
+        <div className="p-4">
+          {/* Name and rating */}
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="text-lg font-semibold text-gray-800 truncate">
+              {name}
+            </h3>
+            <div className="flex items-center">
+              <Star size={16} className="text-yellow-400" fill="currentColor" />
+              <span className="ml-1 text-sm text-gray-600">{rating}</span>
+            </div>
           </div>
-        </div>
 
-        {/* Price */}
-        <div className="mb-4">
-          <p className="text-lg font-bold text-gray-900">
-            ₦{price.toLocaleString()}
-          </p>
-        </div>
+          {/* Price */}
+          <div className="mb-4">
+            <p className="text-lg font-bold text-gray-900">
+              ₦{price.toLocaleString()}
+            </p>
+          </div>
 
-        {/* Add to cart button */}
-        <button
-          onClick={handleAddToCart}
-          disabled={isLoading}
-          className="w-full py-2 px-4 bg-green-700 hover:bg-green-800 text-white font-medium rounded-md flex items-center justify-center transition-colors duration-300 disabled:opacity-50"
-        >
-          <ShoppingCart size={18} className="mr-2" />
-          {isLoading ? "Adding..." : "Add to Cart"}
-        </button>
+          {/* Add to cart button */}
+          <button
+            onClick={handleAddToCart}
+            disabled={isLoading}
+            className="w-full py-2 px-4 bg-gradient-to-b from-[#4A9D44] to-[#0D5F07] text-white font-medium rounded-md flex items-center justify-center transition-colors duration-300 disabled:opacity-50"
+          >
+            {isLoading ? (
+              <>
+                <Loader2 size={20} className="animate-spin mr-2" />
+                <span>Adding...</span>
+              </>
+            ) : (
+              <>
+                <ShoppingCart size={20} className="mr-2" />
+                <span>Add to Cart</span>
+              </>
+            )}
+          </button>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

@@ -32,6 +32,7 @@ import UserProfile from "./Component/UserComponent/UserProfile";
 import Wallet from "./Component/UserComponent/Wallet";
 import ProductPage from "./Page/ProductPage";
 import Cart from "./Page/UserDashboard/Cart";
+import ProductDetail from "./Page/ProductDetails";
 
 function App() {
   return (
@@ -74,6 +75,7 @@ function App() {
           <Route path="profile" element={<UserProfile />} />
           <Route path="wallet" element={<Wallet />} />
           <Route path="cart" element={<Cart />} />
+          <Route path="products/:id" element={<ProductDetail />} />
         </Route>
 
         <Route

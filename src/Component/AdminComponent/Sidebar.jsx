@@ -1,19 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { FaTachometerAlt } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { FaTachometerAlt } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
-import image from '../../assets/images/Subtract.png';
-import { Logout_fun } from '../../Redux/AuthenticationSlice';
+import image from "../../assets/images/Subtract.png";
+import { Logout_fun } from "../../Redux/AuthenticationSlice";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-
-  const showProductDropdown = () => {
-    setOpen(!open);
-  };
 
   return (
     <div className=" bg-[#ffffff] h-full fixed top-0 left-0 font-['Raleway'] px-[25px]">
