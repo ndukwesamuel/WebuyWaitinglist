@@ -33,6 +33,7 @@ import Wallet from "./Component/UserComponent/Wallet";
 import ProductPage from "./Page/ProductPage";
 import Cart from "./Page/UserDashboard/Cart";
 import ProductDetail from "./Page/ProductDetails";
+import GroupPage from "./Page/UserDashboard/GroupPage";
 
 function App() {
   return (
@@ -76,6 +77,7 @@ function App() {
           <Route path="wallet" element={<Wallet />} />
           <Route path="cart" element={<Cart />} />
           <Route path="products/:id" element={<ProductDetail />} />
+          <Route path="group" element={<GroupPage />} />
         </Route>
 
         <Route

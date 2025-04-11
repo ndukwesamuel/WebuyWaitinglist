@@ -47,6 +47,7 @@ const AppSidebar = () => {
     { label: "Wallet", icon: Home, path: "/dashboard" },
     { label: "Shop", icon: ShoppingBag, path: "/dashboard/shop" },
     { label: "Cart", icon: ShoppingBag, path: "/dashboard/cart" },
+    { label: "Group", icon: ShoppingBag, path: "/dashboard/group" },
 
     { label: "Messages", icon: MessageSquare, path: "#" },
     { label: "Wallet", icon: Wallet, path: "/dashboard/wallet" },
