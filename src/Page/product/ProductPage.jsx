@@ -1,10 +1,8 @@
-// ProductList.jsx
 import React from "react";
-import { useGetAllProductQuery } from "../Redux/ProductApi";
+import { useGetAllProductQuery } from "../../Redux/ProductApi";
 import ProductCard from "@/Component/product/ProductCard";
-import { Link } from "react-router-dom";
 
-const ProductList = () => {
+const ProductPage = () => {
   const { data: products, isLoading } = useGetAllProductQuery();
 
   if (isLoading) {
@@ -31,11 +29,5 @@ const ProductList = () => {
     </div>
   );
 };
-
-const ProductPage = () => (
-  <div className="font-['Raleway'] bg-[#ffffff] w-full">
-    <ProductList />
-  </div>
-);
 
 export default ProductPage;

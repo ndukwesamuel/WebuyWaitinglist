@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const Base_URL = `${import.meta.env.VITE_REACT_APP_Url}user/register`;
+const Base_URL = `${import.meta.env.VITE_APP_Local}user/register`;
 
 const tokengot = localStorage.getItem("token");
 
@@ -28,6 +28,7 @@ export const RegisterFun = createAsyncThunk(
       const message =
         (error.response && error.response.data && error.response.data.msg) ||
         error.msg ||
+        error.message ||
         error.response.data.error ||
         error.response.data.message ||
         error.toString();

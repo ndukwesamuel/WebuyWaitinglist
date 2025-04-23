@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Plus, Minus, ShoppingCart } from "lucide-react";
 import { useGetProductQuery } from "@/Redux/ProductApi";
-import { useGetCartQuery, useAddToCartMutation } from "../Redux/cartApi";
+import { useGetCartQuery, useAddToCartMutation } from "../../Redux/cartApi";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Loader2 } from "lucide-react";

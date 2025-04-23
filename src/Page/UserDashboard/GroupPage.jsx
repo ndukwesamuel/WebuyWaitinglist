@@ -331,7 +331,7 @@ const GroupPage = () => {
                 <SelectTrigger className="w-[160px] h-10">
                   <SelectValue placeholder="Search by..." />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white">
                   {searchFields.map((field) => (
                     <SelectItem key={field.value} value={field.value}>
                       {field.label}
@@ -361,7 +361,7 @@ const GroupPage = () => {
                     <SelectTrigger className="h-9">
                       <SelectValue placeholder="Filter by status" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white">
                       {statusOptions.map((option) => (
                         <SelectItem key={option.value} value={option.value}>
                           {option.label}
@@ -377,7 +377,7 @@ const GroupPage = () => {
                     <SelectTrigger className="h-9">
                       <SelectValue placeholder="Filter by landmark" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white">
                       {landmarkOptions.map((option) => (
                         <SelectItem key={option.value} value={option.value}>
                           {option.label}

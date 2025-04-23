@@ -4,7 +4,8 @@ import { Star, ShoppingCart, Loader2 } from "lucide-react";
 import { toast } from "react-toastify";
 import { useAddToCartMutation } from "../../Redux/cartApi";
 import { Link } from "react-router-dom";
-const ProductCard = ({ productLink, ...product }) => {
+import { ChevronDown } from "lucide-react";
+const ComboProductCard = ({ productLink, ...product }) => {
   const [addToCart, { isLoading }] = useAddToCartMutation();
 
   const { _id, name, price, rating, image } = product;
@@ -45,8 +46,11 @@ const ProductCard = ({ productLink, ...product }) => {
 
           {/* Price */}
           <div className="flex justify-between mb-4">
+            <p className="flex text-customGreen">
+              4 options <ChevronDown />{" "}
+            </p>
             <p className="text-lg font-bold text-gray-900">
-              ₦{price.toLocaleString()}
+              {/* ₦{price.toLocaleString()} */}
             </p>
           </div>
 
@@ -74,4 +78,4 @@ const ProductCard = ({ productLink, ...product }) => {
   );
 };
 
-export default ProductCard;
+export default ComboProductCard;

@@ -46,6 +46,8 @@ const AppSidebar = () => {
   const userMenuItems = [
     { label: "Wallet", icon: Home, path: "/dashboard" },
     { label: "Shop", icon: ShoppingBag, path: "/dashboard/shop" },
+    { label: "Combo", icon: ShoppingBag, path: "/dashboard/combo" },
+
     { label: "Cart", icon: ShoppingBag, path: "/dashboard/cart" },
     { label: "Group", icon: ShoppingBag, path: "/dashboard/group" },
 

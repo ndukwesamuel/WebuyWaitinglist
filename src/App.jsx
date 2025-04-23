@@ -30,10 +30,11 @@ import DashboardLayout from "./Component/layouts/DashboardLayout";
 import Home from "./Component/UserComponent/Home";
 import UserProfile from "./Component/UserComponent/UserProfile";
 import Wallet from "./Component/UserComponent/Wallet";
-import ProductPage from "./Page/ProductPage";
+import ProductPage from "./Page/product/ProductPage";
 import Cart from "./Page/UserDashboard/Cart";
-import ProductDetail from "./Page/ProductDetails";
+import ProductDetail from "./Page/product/ProductDetails";
 import GroupPage from "./Page/UserDashboard/GroupPage";
+import ComboProductPage from "./Page/product/ComboProductPage";
 
 function App() {
   return (
@@ -73,6 +74,8 @@ function App() {
         >
           <Route index element={<Wallet />} />
           <Route path="shop" element={<ProductPage />} />
+          <Route path="combo" element={<ComboProductPage />} />
+
           <Route path="profile" element={<UserProfile />} />
           <Route path="wallet" element={<Wallet />} />
           <Route path="cart" element={<Cart />} />

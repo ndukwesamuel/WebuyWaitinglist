@@ -5,15 +5,14 @@ export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_APP_Local,
-    // prepareHeaders: (headers, { getState }) => {
-    //   // Add your token to the headers
-    //   const token = getState().reducer.AuthenticationSlice.data.data?.token;
-    //   if (token) {
-    //     headers.set("Authorization", `Bearer ${token}`);
-    //   }
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().reducer.AuthenticationSlice.data.data?.token;
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
 
-    //   return headers;
-    // },
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     getAllProduct: builder.query({
@@ -22,7 +21,19 @@ export const productApi = createApi({
     getProduct: builder.query({
       query: (id) => `products/${id}`,
     }),
+    //Combo products
+    getComboProducts: builder.query({
+      query: () => "combo",
+    }),
+    getComboProductById: builder.query({
+      query: (id) => `combo/${id}`,
+    }),
   }),
 });
 
-export const { useGetAllProductQuery, useGetProductQuery } = productApi;
+export const {
+  useGetAllProductQuery,
+  useGetProductQuery,
+  useGetComboProductsQuery,
+  useGetComboProductByIdQuery,
+} = productApi;
