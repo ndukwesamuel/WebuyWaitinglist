@@ -1,48 +1,38 @@
-import React, { useEffect, useState } from "react";
-
-import { CiLock } from "react-icons/ci";
-import { MdOutlineMail } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 
-import background from "../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+
 import { resetSignup } from "../Redux/Auth";
 import { Login_fun } from "../Redux/AuthenticationSlice";
+import background from "../assets/markus-spiske-ezYZfFnzARM-unsplash.jpg";
+import loginImage from "../assets/signup-image.png";
+
+// Validation schema using Yup
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string().required("Password is required"),
+});
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { data, isLoading, isSuccess } = useSelector(
     (state) => state.reducer?.AuthenticationSlice
   );
 
-  const dispatch = useDispatch();
-
-  const [loginform, setLoginform] = useState({
-    email: "",
-    password: "",
-  });
-
-  const { email, password } = loginform;
-
-  const handleChange = (e) => {
-    setLoginform({
-      ...loginform,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    let newData = {
-      email: loginform?.email,
-      password: loginform?.password,
-    };
-    console.log({ newData });
-    dispatch(Login_fun(newData));
-  };
-
+  const [showPassword, setShowPassword] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const toggleSuccess = () => {
     setShowSuccess(!showSuccess);
@@ -57,86 +47,153 @@ const Login = () => {
         navigate("/onboarding");
       }
     }
-  }, [data, dispatch, isSuccess, navigate]);
+  }, [data, isSuccess, navigate]);
+
+  const handleSubmit = (values) => {
+    const newData = {
+      email: values.email,
+      password: values.password,
+    };
+
+    dispatch(Login_fun(newData));
+  };
 
   return (
     <div
-      className="min-h-screen px-2 py-10 "
+      className="min-h-screen flex items-center justify-center p-4"
       style={{
         backgroundImage: `url(${background})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <div className=" md:flex md:justify-center">
-        <div className="bg-white   shadow-2xl flex justify-center   rounded-xl py-5 md:w-[50%]  lg:py-36 ">
-          <div>
-            <div className="text-center">
-              <p className="text-[30px] font-medium text-[#009B4D] lg:text-[40px]">
-                Sign in
-              </p>
-              <p className="lg:text-[20px]">
-                If you don’t have an account registered
-              </p>
-              <p className="lg:text-[20px]">
-                You can{" "}
-                <Link
-                  to="/signup"
-                  className="text-[#009B4D] text-[15px] font-medium "
-                >
-                  Register here !
-                </Link>
+      <div className="w-full max-w-5xl bg-white rounded-xl shadow-2xl overflow-hidden">
+        <div className="grid lg:grid-cols-2">
+          {/* Left side - Image (visible on large screens) */}
+          <div className="hidden lg:block">
+            <div className="h-full flex items-center justify-center bg-gray-100">
+              <img
+                src={loginImage}
+                alt="Login"
+                className="h-full w-full object-cover object-center"
+              />
+            </div>
+          </div>
+
+          {/* Right side - Form */}
+          <div className="py-8 px-6 md:px-12 flex flex-col justify-center">
+            <div className="text-center mb-6">
+              <h1 className="text-3xl font-medium text-[#009B4D]">Login</h1>
+              <p className="mt-2 text-gray-600">
+                Welcome back! Please login to continue.
               </p>
             </div>
 
-            <form className="flex-col justify-center gap-4 ">
-              <div className="my-5">
-                <ReusableInput
-                  label="Email"
-                  type="text"
-                  placeholder="Enter your email address"
-                  name="email"
-                  value={email}
-                  onChange={handleChange}
-                  icon={MdOutlineMail}
-                />
-              </div>
-
-              <div className="my-5">
-                <ReusableInput
-                  label="Password"
-                  type="password"
-                  placeholder="Enter your Password"
-                  name="password"
-                  value={password}
-                  onChange={handleChange}
-                  icon={CiLock}
-                />
-              </div>
-
-              {/* <p className="mx-auto mt-3 "> */}
-              <Link
-                to="/forget-password"
-                className="text-[12px] flex justify-end cursor-pointer"
-              >
-                Forget Password ?
-              </Link>
-              {/* </p> */}
-
-              <button
-                className="text-[#ffffff] hover:text-[#355E3B] mt-10  hover:bg-transparent hover:border-[1px] hover:border-[#355E3B] bg-[#009B4D] text-center px-[55px] py-[12px] text-lg rounded-[10px]  w-full"
-                type="button"
-                onClick={handleSubmit}
-              >
-                {isLoading ? (
-                  <div className="flex items-center justify-center">
-                    <div className="w-4 h-4 border-t-2 border-[#4f7942] border-solid rounded-full animate-spin" />
+            <Formik
+              initialValues={{
+                email: "",
+                password: "",
+              }}
+              validationSchema={LoginSchema}
+              onSubmit={handleSubmit}
+            >
+              {({ errors, touched, values, handleChange }) => (
+                <Form className="space-y-5">
+                  <div>
+                    <Label
+                      htmlFor="email"
+                      className="block text-sm font-medium mb-1"
+                    >
+                      Email
+                    </Label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="Enter your email address"
+                        value={values.email}
+                        onChange={handleChange}
+                        className="pl-10"
+                      />
+                    </div>
+                    {errors.email && touched.email && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {errors.email}
+                      </p>
+                    )}
                   </div>
-                ) : (
-                  <>Login </>
-                )}
-              </button>
-            </form>
+
+                  <div>
+                    <Label
+                      htmlFor="password"
+                      className="block text-sm font-medium mb-1"
+                    >
+                      Password
+                    </Label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+                      <Input
+                        id="password"
+                        name="password"
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Enter your Password"
+                        value={values.password}
+                        onChange={handleChange}
+                        className="pl-10 pr-10"
+                      />
+                      <button
+                        type="button"
+                        onClick={togglePasswordVisibility}
+                        className="absolute right-3 top-3"
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4 text-gray-500" />
+                        ) : (
+                          <Eye className="h-4 w-4 text-gray-500" />
+                        )}
+                      </button>
+                    </div>
+                    {errors.password && touched.password && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {errors.password}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="flex justify-end">
+                    <Link
+                      to="/forget-password"
+                      className="text-sm text-gray-600 hover:text-[#009B4D]"
+                    >
+                      Forgot Password?
+                    </Link>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-full bg-[#009B4D] hover:bg-[#00843f] text-white font-medium py-2"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <div className="flex items-center justify-center">
+                        <div className="w-4 h-4 border-t-2 border-white border-solid rounded-full animate-spin mr-2" />
+                        <span>Processing...</span>
+                      </div>
+                    ) : (
+                      "Login"
+                    )}
+                  </Button>
+                  <p className="text-gray-600 flex justify-center">
+                    Don't have an account? &nbsp;
+                    <Link to="/signup" className="text-[#009B4D] font-medium">
+                      Register
+                    </Link>
+                  </p>
+                </Form>
+              )}
+            </Formik>
           </div>
         </div>
       </div>
@@ -145,43 +202,3 @@ const Login = () => {
 };
 
 export default Login;
-
-const ReusableInput = ({
-  label,
-  type,
-  placeholder,
-  name,
-  value,
-  onChange,
-  icon: Icon,
-}) => {
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setIsPasswordVisible(!isPasswordVisible);
-  };
-
-  return (
-    <div className="mb-3">
-      <label htmlFor="" className="block">
-        {label}
-      </label>
-      <div className="flex items-center gap-4 border-b-[1px] border-[#99999999]">
-        {Icon && <Icon />}
-        <input
-          className="w-full outline-none"
-          type={isPasswordVisible ? "text" : type}
-          placeholder={placeholder}
-          name={name}
-          value={value}
-          onChange={onChange}
-        />
-        {type === "password" && (
-          <div onClick={togglePasswordVisibility} className="cursor-pointer">
-            {isPasswordVisible ? "👁️" : "🙈"}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
