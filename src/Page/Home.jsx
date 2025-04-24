@@ -1,18 +1,11 @@
 import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/pagination";
-
-import React, { useState } from "react";
-
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-import Buyers from "../Component/WaitingList_Component/Buyers";
-import Main from "../Component/WaitingList_Component/Main";
-
-function WaitingList() {
-  const [lang, setLang] = useState("en");
-
+import Hero from "@/Component/Home/Hero";
+import HeroBuyer from "@/Component/Home/HeroBuyer";
+const Home = () => {
   return (
     <>
       <Swiper
@@ -26,10 +19,10 @@ function WaitingList() {
         className="mySwiper w-full h-full font-['Raleway']"
       >
         <SwiperSlide className="flex items-center content-center">
-          <Main lang={lang} setLang={setLang} />{" "}
+          <Hero />
         </SwiperSlide>
         <SwiperSlide className="flex items-center content-center">
-          <Buyers lang={lang} setLang={setLang} />{" "}
+          <HeroBuyer />{" "}
         </SwiperSlide>
       </Swiper>
 
@@ -41,6 +34,6 @@ function WaitingList() {
       </div>
     </>
   );
-}
+};
 
-export default WaitingList;
+export default Home;
