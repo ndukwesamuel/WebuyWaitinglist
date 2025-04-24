@@ -70,17 +70,7 @@ const Login = () => {
       <div className="w-full max-w-5xl bg-white rounded-xl shadow-2xl overflow-hidden">
         <div className="grid lg:grid-cols-2">
           {/* Left side - Image (visible on large screens) */}
-          <div className="hidden lg:block">
-            <div className="h-full flex items-center justify-center bg-gray-100">
-              <img
-                src={loginImage}
-                alt="Login"
-                className="h-full w-full object-cover object-center"
-              />
-            </div>
-          </div>
 
-          {/* Right side - Form */}
           <div className="py-8 px-6 md:px-12 flex flex-col justify-center">
             <div className="text-center mb-6">
               <h1 className="text-3xl font-medium text-[#009B4D]">Login</h1>
@@ -194,6 +184,17 @@ const Login = () => {
                 </Form>
               )}
             </Formik>
+          </div>
+          {/* Right side - Form */}
+
+          <div className="hidden lg:block">
+            <div className="h-full flex items-center justify-center bg-gray-100">
+              <img
+                src={loginImage}
+                alt="Login"
+                className="h-full w-full object-cover object-center"
+              />
+            </div>
           </div>
         </div>
       </div>
