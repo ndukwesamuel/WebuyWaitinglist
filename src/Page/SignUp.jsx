@@ -86,7 +86,7 @@ const SignUp = () => {
           </div>
 
           {/* Right side - Form */}
-          <div className="py-8 px-6 md:px-12">
+          <div className="flex flex-col justify-center py-8 px-6 md:px-12">
             <div className="text-center mb-8">
               <h1 className="text-3xl lg:text-4xl font-medium text-[#009B4D]">
                 Register Here
