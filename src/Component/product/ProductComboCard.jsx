@@ -8,7 +8,14 @@ import { ChevronDown } from "lucide-react";
 const ComboProductCard = ({ productLink, ...product }) => {
   const [addToCart, { isLoading }] = useAddToCartMutation();
 
-  const { _id, name, price, rating, image } = product;
+  const {
+    _id,
+    name,
+    totalPrice,
+    rating,
+    image,
+    products: comboItems,
+  } = product;
 
   const handleAddToCart = async (e) => {
     // Prevent the click from bubbling up to the parent Link component
@@ -47,10 +54,10 @@ const ComboProductCard = ({ productLink, ...product }) => {
           {/* Price */}
           <div className="flex justify-between mb-4">
             <p className="flex text-customGreen">
-              4 options <ChevronDown />{" "}
+              {comboItems.length} options <ChevronDown />{" "}
             </p>
             <p className="text-lg font-bold text-gray-900">
-              {/* ₦{price.toLocaleString()} */}
+              ₦{totalPrice.toLocaleString()}
             </p>
           </div>
 
