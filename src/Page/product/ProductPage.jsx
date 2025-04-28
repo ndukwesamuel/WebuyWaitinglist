@@ -63,7 +63,7 @@ const ProductPage = () => {
               disabled={!hasPrevPage}
               className={`px-4 py-2 rounded-md ${
                 hasPrevPage
-                  ? "bg-[#007A3D] text-white hover:bg-[#005a2d]"
+                  ? "bg-gradient-to-b from-[#4A9D44] to-[#0D5F07] text-white "
                   : "bg-gray-200 text-gray-500 cursor-not-allowed"
               }`}
             >
@@ -79,7 +79,7 @@ const ProductPage = () => {
               disabled={!hasNextPage}
               className={`px-4 py-2 rounded-md ${
                 hasNextPage
-                  ? "bg-[#007A3D] text-white hover:bg-[#005a2d]"
+                  ? "bg-gradient-to-b from-[#4A9D44] to-[#0D5F07] text-white "
                   : "bg-gray-200 text-gray-500 cursor-not-allowed"
               }`}
             >
