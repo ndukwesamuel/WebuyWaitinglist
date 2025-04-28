@@ -114,10 +114,6 @@ const Main = () => {
     (state) => state?.reducer?.AuthenticationSlice?.data?.data
   );
 
-  console.log({
-    rer: token,
-  });
-
   const {
     data: orders,
     isLoading,

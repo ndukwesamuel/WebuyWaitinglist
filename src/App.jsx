@@ -44,16 +44,6 @@ function App() {
         <Route path="/*" exact element={<PageRoutes />} />
 
         <Route
-          path="/onboarding/*"
-          exact
-          element={
-            <UserPrivateRoute>
-              <Dashboard />
-            </UserPrivateRoute>
-          }
-        />
-
-        <Route
           path="/facilitator/*"
           exact
           element={

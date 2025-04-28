@@ -16,13 +16,13 @@ const Header = ({ lang, setLang }) => {
           </h1>
         </a>
         <div className="flex items-center gap-2">
-          <input
+          {/* <input
             className=" p-3 w-[200px] h-7 max-sm:hidden bg-[#faf5e9] opacity-25 rounded-full"
             type="text"
             name="search"
             value={lang === "fr" ? "rechercher" : "search"}
-          ></input>
-          <i className="fa-sharp fa-solid fa-magnifying-glass max-sm:hidden relative right-[25px] top-[1px]"></i>
+          ></input> */}
+          {/* <i className="fa-sharp fa-solid fa-magnifying-glass max-sm:hidden relative right-[25px] top-[1px]"></i> */}
 
           <button
             className=" bg-transparent text-[#faf5e9] focus:text-[#009b4d] focus:text-opacity-60 font-semibold text-md"

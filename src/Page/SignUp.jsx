@@ -238,12 +238,18 @@ const SignUp = () => {
                         <SelectItem value="Nigeria" className="cursor-pointer">
                           Nigeria
                         </SelectItem>
-                        <SelectItem value="Ghana" className="cursor-pointer">
+                        {/* <SelectItem value="GHA" className="cursor-pointer">
                           Ghana
                         </SelectItem>
-                        <SelectItem value="Benin" className="cursor-pointer">
+                        <SelectItem value="BEN" className="cursor-pointer">
                           Benin
                         </SelectItem>
+                         <SelectItem value="RWA" className="cursor-pointer">
+                          Rwanda
+                        </SelectItem>
+                        
+                        
+                        */}
                       </SelectContent>
                     </Select>
                     {errors.country && touched.country && (

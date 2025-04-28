@@ -5,9 +5,12 @@ import { toast } from "react-toastify";
 import { useAddToCartMutation } from "../../Redux/cartApi";
 import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
+import { useSelector } from "react-redux";
 const ComboProductCard = ({ productLink, ...product }) => {
   const [addToCart, { isLoading }] = useAddToCartMutation();
-
+  const token = useSelector(
+    (state) => state?.reducer?.AuthenticationSlice?.data?.data.token
+  );
   const {
     _id,
     name,
@@ -21,7 +24,10 @@ const ComboProductCard = ({ productLink, ...product }) => {
     // Prevent the click from bubbling up to the parent Link component
     e.preventDefault();
     e.stopPropagation();
-
+    if (!token) {
+      navigate("/login");
+      return;
+    }
     try {
       await addToCart(_id).unwrap();
       toast.success("Item added to cart!");

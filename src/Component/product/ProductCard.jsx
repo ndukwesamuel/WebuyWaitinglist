@@ -4,16 +4,24 @@ import { Star, ShoppingCart, Loader2 } from "lucide-react";
 import { toast } from "react-toastify";
 import { useAddToCartMutation } from "../../Redux/cartApi";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 const ProductCard = ({ productLink, ...product }) => {
+  const navigate = useNavigate();
   const [addToCart, { isLoading }] = useAddToCartMutation();
-
   const { _id, name, price, rating, image } = product;
-
+  const token = useSelector(
+    (state) => state?.reducer?.AuthenticationSlice?.data?.data.token
+  );
   const handleAddToCart = async (e) => {
     // Prevent the click from bubbling up to the parent Link component
     e.preventDefault();
     e.stopPropagation();
-
+    if (!token) {
+      navigate("/login");
+      return;
+    }
     try {
       await addToCart(_id).unwrap();
       toast.success("Item added to cart!");

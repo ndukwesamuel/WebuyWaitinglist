@@ -15,15 +15,6 @@ const PageRoutes = () => {
       <Route path="/*" exact element={<Home />} />
 
       <Route
-        path="/onboarding"
-        element={
-          <Private>
-            <OnboardingRoute />
-          </Private>
-        }
-      />
-
-      <Route
         path="/signup"
         element={
           <Private>

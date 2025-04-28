@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useGetAllProductQuery } from "../../Redux/ProductApi";
 import ProductCard from "@/Component/product/ProductCard";
-
 const ProductPage = () => {
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(20);
+  const [limit] = useState(20);
   const { data, isLoading } = useGetAllProductQuery({ page, limit });
+  const productContainerRef = useRef(null);
 
+  useEffect(() => {
+    if (productContainerRef.current) {
+      productContainerRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [page]);
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-60">Loading...</div>
@@ -16,7 +21,6 @@ const ProductPage = () => {
   const { products, pagination } = data || { products: [], pagination: {} };
   const { currentPage, totalPages, hasNextPage, hasPrevPage } =
     pagination || {};
-
   const handlePrevPage = () => {
     if (hasPrevPage) {
       setPage(page - 1);
@@ -30,7 +34,10 @@ const ProductPage = () => {
   };
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div
+      className="w-full flex flex-col items-center"
+      ref={productContainerRef}
+    >
       {!products || products.length === 0 ? (
         <h2 className="text-3xl font-extrabold text-[#007A3D] max-sm:text-4xl max-md:text-5xl">
           No Products Available

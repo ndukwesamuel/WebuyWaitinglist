@@ -5,14 +5,14 @@ export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_APP_Local,
-    prepareHeaders: (headers, { getState }) => {
-      const token = getState().reducer.AuthenticationSlice.data.data?.token;
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
+    // prepareHeaders: (headers, { getState }) => {
+    //   const token = getState().reducer.AuthenticationSlice.data.data?.token;
+    //   if (token) {
+    //     headers.set("Authorization", `Bearer ${token}`);
+    //   }
 
-      return headers;
-    },
+    //   return headers;
+    // },
   }),
   endpoints: (builder) => ({
     getAllProduct: builder.query({

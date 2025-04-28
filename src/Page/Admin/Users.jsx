@@ -17,12 +17,6 @@ const Users = () => {
     (state) => state?.reducer?.AuthenticationSlice?.data?.data
   );
 
-  const tokens = useSelector(
-    (state) => state?.reducer?.AuthenticationSlice?.data?.data
-  );
-  console.log({
-    tt: tokens,
-  });
   const {
     data: users,
     isLoading,
@@ -30,6 +24,8 @@ const Users = () => {
     error,
     refetch,
   } = useGetUsersQuery();
+
+  console.log(users);
   const toggleSuccess = () => {
     setShowSuccess(!showSuccess);
   };
