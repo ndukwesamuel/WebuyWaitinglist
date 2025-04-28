@@ -13,7 +13,9 @@ export default function ProductDetail() {
   const { data: product, isLoading, error } = useGetProductQuery(id);
   const { data: cart, refetch } = useGetCartQuery();
   const [addToCart] = useAddToCartMutation();
-
+  const token = useSelector(
+    (state) => state?.reducer?.AuthenticationSlice?.data?.data.token
+  );
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -41,6 +43,10 @@ export default function ProductDetail() {
 
   // Handle add to cart
   const handleAddToCart = async (productId) => {
+    if (!token) {
+      navigate("/login");
+      return;
+    }
     try {
       setIsAddingToCart(true);
       // Add to cart multiple times based on quantity

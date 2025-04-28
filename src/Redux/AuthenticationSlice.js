@@ -76,12 +76,11 @@ export const Logout_fun = createAsyncThunk(
 
 const Login_fun_Service = async (data) => {
   let Base_URL = main_url + "user/login";
-  console.log({
-    rrr: Base_URL,
-  });
 
   try {
-    const response = await axios.post(Base_URL, data);
+    const response = await axios.post(Base_URL, data, {
+      timeout: 10000,
+    });
     return response.data;
   } catch (error) {
     console.log({

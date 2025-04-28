@@ -15,7 +15,9 @@ const initialState = {
 };
 const RegisterFunService = async (data) => {
   let api_url = Base_URL;
-  const response = await axios.post(api_url, data);
+  const response = await axios.post(api_url, data, {
+    timeout: 10000,
+  });
   return response.data;
 };
 

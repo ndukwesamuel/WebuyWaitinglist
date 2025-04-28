@@ -28,7 +28,7 @@ export const PrivateRoute = ({ children }) => {
   if (!data?.data?.token) {
     // not logged in so redirect to login page with the return url
     // return <Navigate to="/" state={{ from: history.location }} />;
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
 
   return children;
@@ -58,7 +58,7 @@ export const UserPrivateRoute = ({ children }) => {
   );
 
   if (!data?.data?.token) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
 
   if (data?.data?.user?.isAdmin === true) {

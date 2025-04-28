@@ -26,7 +26,6 @@ const Login = () => {
   const { data, isLoading, isSuccess } = useSelector(
     (state) => state.reducer?.AuthenticationSlice
   );
-
   const [showPassword, setShowPassword] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 

@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Hero from "@/Component/Home/Hero";
 import HeroBuyer from "@/Component/Home/HeroBuyer";
 import ProductPage from "./product/ProductPage";
+import Footer from "@/Component/Footer";
 const Home = () => {
   return (
     <>
@@ -29,12 +30,10 @@ const Home = () => {
       <section className="py-10">
         <ProductPage />
       </section>
-      <div>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque
-        voluptate ullam voluptatum. Maxime aspernatur rem dolores a repellendus
-        necessitatibus atque totam nesciunt consectetur, tenetur, nobis soluta.
-        Voluptatem voluptates laboriosam quam.
-      </div>
+
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 };
