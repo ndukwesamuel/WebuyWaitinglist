@@ -5,8 +5,10 @@ import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Hero from "@/Component/Home/Hero";
 import HeroBuyer from "@/Component/Home/HeroBuyer";
-import ProductPage from "./product/ProductPage";
-import Footer from "@/Component/Footer";
+import { Suspense, lazy } from "react";
+
+const ProductPage = lazy(() => import("./product/ProductPage"));
+const Footer = lazy(() => import("@/Component/Footer"));
 const Home = () => {
   return (
     <>
@@ -14,7 +16,7 @@ const Home = () => {
         spaceBetween={0}
         centeredSlides={true}
         autoplay={{
-          delay: 10000,
+          delay: 5000,
         }}
         navigation={true}
         modules={[Autoplay, Navigation]}
@@ -28,11 +30,15 @@ const Home = () => {
         </SwiperSlide>
       </Swiper>
       <section className="py-10">
-        <ProductPage />
+        <Suspense fallback={<div>Loading products...</div>}>
+          <ProductPage />
+        </Suspense>
       </section>
 
       <footer>
-        <Footer />
+        <Suspense fallback={<div>Loading footer...</div>}>
+          <Footer />
+        </Suspense>
       </footer>
     </>
   );

@@ -5,6 +5,7 @@ import { useGetCartQuery, useAddToCartMutation } from "../../Redux/cartApi";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Loader2 } from "lucide-react";
+import { useSelector } from "react-redux";
 export default function ProductDetail() {
   // Get productId or slug from URL params
   const { id } = useParams();
@@ -85,7 +86,7 @@ export default function ProductDetail() {
           className="mt-4 text-lg font-medium text-green-600"
           style={{ color: "#009b4d" }}
         >
-          ${product?.price?.toFixed(2) || "0.00"}
+          #{product?.price?.toFixed(2) || "0.00"}
         </div>
 
         <div className="mt-4 text-gray-600">
