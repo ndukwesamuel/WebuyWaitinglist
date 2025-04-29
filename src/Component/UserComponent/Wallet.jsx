@@ -194,7 +194,6 @@ const Wallet = () => {
       );
     }
   };
-  // console.log(profile?.data?.data?.user?.wallet);
 
   return (
     <div className="rounded-lg shadow-lg p-6 w-full max-w-6xl mx-auto">

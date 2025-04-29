@@ -6,12 +6,23 @@ import {
   useDeleteItemMutation,
 } from "../../Redux/cartApi";
 import { toast } from "react-toastify";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 const Cart = () => {
   const { data: cartData = {}, isLoading, refetch } = useGetCartQuery();
   const [addToCart] = useAddToCartMutation();
   const [decreaseItem] = useDecreaseItemMutation();
   const [deleteItem] = useDeleteItemMutation();
+  const [paymentMode, setPaymentMode] = useState(false);
   const [checkedItems, setCheckedItems] = useState({});
   const deliveryFee = 2000;
 
@@ -207,6 +218,7 @@ const Cart = () => {
           <button
             className="w-full bg-gradient-to-b from-[#4A9D44] to-[#0D5F07] text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-50"
             disabled={!cartItems.some((item) => checkedItems[item._id])}
+            onClick={() => setPaymentMode(true)}
           >
             Proceed to Checkout
           </button>
@@ -216,6 +228,37 @@ const Cart = () => {
           </div>
         </div>
       </div>
+
+      {/* Payment method */}
+
+      <Dialog open={paymentMode} onOpenChange={setPaymentMode}>
+        <DialogContent className="sm:max-w-md bg-white">
+          <DialogHeader>
+            <DialogTitle className="text-center">
+              Pick your payment mode
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="grid gap-4 py-4 ">
+            <div className="flex flex-col gap-2">
+              <button
+                className="w-full bg-gradient-to-b from-[#4A9D44] to-[#0D5F07]  text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-50"
+                disabled={!cartItems.some((item) => checkedItems[item._id])}
+                onClick={() => setPaymentMode(true)}
+              >
+                Pay from wallet
+              </button>
+              <button
+                className="w-full bg-gradient-to-b from-[#4A9D44] to-[#0D5F07] text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-50"
+                disabled={!cartItems.some((item) => checkedItems[item._id])}
+                onClick={() => setPaymentMode(true)}
+              >
+                Buy now pay later
+              </button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
