@@ -7,6 +7,7 @@ import { Private } from "./privateroute/Private";
 import ResetPassword from "./ResetPassword";
 import SignUp from "./SignUp";
 import Home from "./Home";
+import ProductDetail from "./product/ProductDetails";
 const PageRoutes = () => {
   return (
     <Routes>
@@ -28,6 +29,8 @@ const PageRoutes = () => {
           </Private>
         }
       />
+      <Route path="products/:id" element={<ProductDetail />} />
+
       <Route path="/forget-password" element={<ForgetPassword />} />
 
       <Route path="/reset-password" element={<ResetPassword />} />

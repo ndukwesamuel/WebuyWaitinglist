@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Loader2 } from "lucide-react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 export default function ProductDetail() {
   // Get productId or slug from URL params
   const { id } = useParams();
@@ -14,6 +15,8 @@ export default function ProductDetail() {
   const { data: product, isLoading, error } = useGetProductQuery(id);
   const { data: cart, refetch } = useGetCartQuery();
   const [addToCart] = useAddToCartMutation();
+  const location = useLocation();
+
   const token = useSelector(
     (state) => state?.reducer?.AuthenticationSlice?.data?.data.token
   );
@@ -64,7 +67,11 @@ export default function ProductDetail() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row max-w-6xl mx-auto p-4 gap-8">
+    <div
+      className={`flex flex-col md:flex-row max-w-6xl mx-auto p-4 gap-8 ${
+        location.pathname.startsWith("/products") ? "mt-[10rem]" : "mt-0"
+      } `}
+    >
       {/* Product Image */}
       <div className="md:w-1/2">
         <div className="bg-gray-100 rounded-lg overflow-hidden h-96 flex items-center justify-center">

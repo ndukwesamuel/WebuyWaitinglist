@@ -1,11 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { useGetAllProductQuery } from "../../Redux/ProductApi";
 import ProductCard from "@/Component/product/ProductCard";
+import { useLocation } from "react-router-dom";
 const ProductPage = () => {
   const [page, setPage] = useState(1);
   const [limit] = useState(20);
   const { data, isLoading } = useGetAllProductQuery({ page, limit });
   const productContainerRef = useRef(null);
+  const location = useLocation();
 
   useEffect(() => {
     if (productContainerRef.current) {
@@ -17,7 +19,13 @@ const ProductPage = () => {
       <div className="flex justify-center items-center h-60">Loading...</div>
     );
   }
-
+  let productLink;
+  if (location.pathname === "/") {
+    productLink = `/products`;
+  } else {
+    productLink = `/dashboard/products`; // For protected route
+  }
+  console.log(productLink);
   const { products, pagination } = data || { products: [], pagination: {} };
   const { currentPage, totalPages, hasNextPage, hasPrevPage } =
     pagination || {};
@@ -49,9 +57,7 @@ const ProductPage = () => {
               <ProductCard
                 key={index}
                 {...product}
-                productLink={`/dashboard/products/${
-                  product.slug || product._id
-                }`}
+                productLink={`${productLink}/${product.slug || product._id}`}
               />
             ))}
           </div>
