@@ -7,11 +7,33 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 import bgWallet from "../../assets/images/walletBg.png";
+import {
+  Profile_fun,
+  ProfileUpdate_fun,
+  ProfileImage_fun,
+} from "../../Redux/ProfileSlice";
+import { useFundWalletMutation } from "@/Redux/WalletApi";
+import { useSelector } from "react-redux";
 const Wallet = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
-
+  const [fundWallet, { isLoading }] = useFundWalletMutation();
+  const [showAddMoneyDialog, setShowAddMoneyDialog] = useState(false);
+  const [amount, setAmount] = useState("");
+  const [error, setError] = useState("");
+  const { data: profile } = useSelector((state) => state.reducer?.ProfileSlice);
   // Sample transaction data - replace with actual data from your API
   const transactions = [
     {
@@ -136,11 +158,49 @@ const Wallet = () => {
   const goToPrevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
   const goToPage = (page) => setCurrentPage(page);
 
+  // Handle opening the Add Money dialog
+  const openAddMoneyDialog = () => {
+    setShowAddMoneyDialog(true);
+    setAmount("");
+    setError("");
+  };
+
+  // Validate amount and initiate Paystack transaction
+  const handleAddMoney = async () => {
+    if (!amount) {
+      setError("Please enter an amount");
+      return;
+    }
+
+    const amountValue = parseFloat(amount);
+    if (isNaN(amountValue) || amountValue <= 0) {
+      setError("Please enter a valid amount");
+      return;
+    }
+
+    setError("");
+
+    try {
+      const response = await fundWallet({ amount: amountValue }).unwrap();
+      if (response && response.data.authorizationUrl) {
+        // Redirect to Paystack payment page
+        window.location.href = response.data.authorizationUrl;
+      } else {
+        setShowAddMoneyDialog(false);
+      }
+    } catch (error) {
+      setError(
+        error.message || "An error occurred while processing your request"
+      );
+    }
+  };
+  // console.log(profile?.data?.data?.user?.wallet);
+
   return (
-    <div className=" rounded-lg shadow-lg p-6 w-full max-w-6xl mx-auto">
+    <div className="rounded-lg shadow-lg p-6 w-full max-w-6xl mx-auto">
       {/* Wallet Card with Background Image */}
       <div
-        className="relative mb-8 rounded-xl overflow-hidden "
+        className="relative mb-8 rounded-xl overflow-hidden"
         style={{
           backgroundImage: `url(${bgWallet})`,
           backgroundSize: "cover",
@@ -153,19 +213,78 @@ const Wallet = () => {
         <div className="relative p-6 h-full flex flex-col md:flex-row justify-between items-start md:items-center text-white z-10">
           <div>
             <h3 className="text-lg opacity-90">Total Balance</h3>
-            <h2 className="text-3xl font-bold">#{totalBalance.toFixed(2)}</h2>
+            <h2 className="text-3xl font-bold">
+              #{profile?.data?.data?.user?.wallet.toFixed(2)}
+            </h2>
           </div>
 
           <div className="flex mt-4 md:mt-0 space-x-3">
-            <button className="bg-[#4A9D44] hover:bg-opacity-90 px-4 py-2 rounded-lg font-medium transition-all">
+            <button
+              className="bg-[#4A9D44] hover:bg-opacity-90 px-4 py-2 rounded-lg font-medium transition-all"
+              onClick={openAddMoneyDialog}
+            >
               Add Money
             </button>
-            <button className="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg font-medium transition-all">
+            {/* <button className="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg font-medium transition-all">
               Withdraw
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
+
+      {/* Add Money Dialog */}
+      <Dialog open={showAddMoneyDialog} onOpenChange={setShowAddMoneyDialog}>
+        <DialogContent className="sm:max-w-md bg-white">
+          <DialogHeader>
+            <DialogTitle>Add Money to Wallet</DialogTitle>
+            <DialogDescription>
+              Enter the amount you want to add to your wallet. You'll be
+              redirected to complete the payment.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="grid gap-4 py-4 ">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="amount" className="text-sm font-medium">
+                Amount (NGN)
+              </label>
+              <Input
+                id="amount"
+                type="number"
+                placeholder="Enter amount"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="col-span-3"
+              />
+              {error && <p className="text-red-500 text-sm">{error}</p>}
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setShowAddMoneyDialog(false)}
+              className="mr-2"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleAddMoney}
+              disabled={isLoading}
+              className="bg-[#4A9D44] hover:bg-opacity-90 text-white"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                "Proceed to Payment"
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Transaction History */}
       <div>
@@ -190,7 +309,7 @@ const Wallet = () => {
                   </TableCell>
                   <TableCell>{transaction.type}</TableCell>
                   <TableCell
-                    className={` ${
+                    className={`${
                       transaction.type === "Credit"
                         ? "text-[#4A9D44]"
                         : "text-red-500"

@@ -31,7 +31,7 @@ const Footer = () => {
           <img
             src={footerImg}
             alt="Footer Logo"
-            className="max-w-full h-auto max-h-60"
+            className="max-w-full h-auto max-h-60 mx-auto md:mx-0"
           />
           <div className="mt-6 space-y-3">
             <div className="flex items-center gap-2">
@@ -82,7 +82,7 @@ const Footer = () => {
               />
               <button
                 type="submit"
-                className="px-6 py-3 bg-[#007A3D] text-white rounded-md hover:bg-[#006030] transition-colors duration-300 whitespace-nowrap"
+                className="px-6 py-3 bg-gradient-to-b from-[#4A9D44] to-[#0D5F07] text-white rounded-md hover:bg-[#006030] transition-colors duration-300 whitespace-nowrap"
               >
                 Subscribe
               </button>

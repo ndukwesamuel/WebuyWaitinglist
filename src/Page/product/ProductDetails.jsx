@@ -6,16 +6,17 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Loader2 } from "lucide-react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 export default function ProductDetail() {
   // Get productId or slug from URL params
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const { data: product, isLoading, error } = useGetProductQuery(id);
-  const { data: cart, refetch } = useGetCartQuery();
+  // const { data: cart, refetch } = useGetCartQuery();
   const [addToCart] = useAddToCartMutation();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const token = useSelector(
     (state) => state?.reducer?.AuthenticationSlice?.data?.data.token
@@ -93,7 +94,8 @@ export default function ProductDetail() {
           className="mt-4 text-lg font-medium text-green-600"
           style={{ color: "#009b4d" }}
         >
-          #{product?.price?.toFixed(2) || "0.00"}
+          {/* #{product?.price?.toFixed(2) || "0.00"} */}₦
+          {product.price.toLocaleString()}
         </div>
 
         <div className="mt-4 text-gray-600">
