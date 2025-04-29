@@ -21,11 +21,10 @@ const ProductPage = () => {
   }
   let productLink;
   if (location.pathname === "/") {
-    productLink = `/products`;
+    productLink = `/products`; // For landing page
   } else {
     productLink = `/dashboard/products`; // For protected route
   }
-  console.log(productLink);
   const { products, pagination } = data || { products: [], pagination: {} };
   const { currentPage, totalPages, hasNextPage, hasPrevPage } =
     pagination || {};
