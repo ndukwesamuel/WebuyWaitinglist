@@ -85,6 +85,7 @@ const ShippingAddressForm = ({
 
   const handleSelectSavedAddress = (addr) => {
     setSelectedSavedAddress(addr);
+    onAddressSubmit(addr); // to show paymentModal
     const match = searchAreas(addr.area)[0];
     if (match) {
       setDeliveryFee(match.deliveryFee);
@@ -99,16 +100,10 @@ const ShippingAddressForm = ({
 
       {savedAddresses.length > 0 && (
         <div className="mb-4 flex gap-4">
-          <Button
-            variant={useNewAddress ? "secondary" : "default"}
-            onClick={() => setUseNewAddress(false)}
-          >
+          <Button onClick={() => setUseNewAddress(false)}>
             Use Saved Address
           </Button>
-          <Button
-            variant={!useNewAddress ? "secondary" : "default"}
-            onClick={() => setUseNewAddress(true)}
-          >
+          <Button onClick={() => setUseNewAddress(true)}>
             Add New Address
           </Button>
         </div>

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const apiUrl = import.meta.env.VITE_REACT_APP_Url;
+const apiUrl = import.meta.env.VITE_APP_Local + "orders";
 export const orderApi = createApi({
   reducerPath: "orderApi",
   baseQuery: fetchBaseQuery({
@@ -16,6 +16,13 @@ export const orderApi = createApi({
     },
   }),
   endpoints: (builder) => ({
+    createOrder: builder.mutation({
+      query: (data) => ({
+        url: "/",
+        method: "POST",
+        body: data,
+      }),
+    }),
     getUserOrder: builder.query({
       query: () => "orders/user-order",
     }),
@@ -48,4 +55,4 @@ export const groupOrderApi = createApi({
 
 export const { useGetGroupOrderQuery, useGetRevenueQuery } = groupOrderApi;
 
-export const { useGetUserOrderQuery } = orderApi;
+export const { useGetUserOrderQuery, useCreateOrderMutation } = orderApi;

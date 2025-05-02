@@ -6,14 +6,9 @@ import {
   useDeleteItemMutation,
 } from "../../Redux/cartApi";
 import { toast } from "react-toastify";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import ShippingAddressForm from "@/Component/ShippingAddressForm";
 
+import ShippingAddressForm from "@/Component/checkout/ShippingAddressForm";
+import PaymentModal from "@/Component/checkout/PaymentModal";
 const Cart = () => {
   const { data: cartData = {}, isLoading, refetch } = useGetCartQuery();
   const [addToCart] = useAddToCartMutation();
@@ -28,7 +23,6 @@ const Cart = () => {
 
   const userCart = cartData?.userCart || { items: [] };
   const cartItems = userCart.items || [];
-
   useEffect(() => {
     if (cartItems.length > 0) {
       const defaultChecked = {};
@@ -46,7 +40,6 @@ const Cart = () => {
     }
     return sum;
   }, 0);
-
   const total = subtotal + deliveryFee;
 
   const handleCheckboxChange = (id) => {
@@ -78,10 +71,11 @@ const Cart = () => {
       toast.error("Failed to remove item");
     }
   };
-
+  const selectedCartItems = cartItems.filter((item) => checkedItems[item._id]);
   const handleProceedToCheckout = () => {
     // Make sure at least one item is selected
-    if (!cartItems.some((item) => checkedItems[item._id])) {
+
+    if (!selectedCartItems.some((item) => checkedItems[item._id])) {
       toast.error("Please select at least one item");
       return;
     }
@@ -316,32 +310,13 @@ const Cart = () => {
       </div>
 
       {/* Payment method dialog */}
-      <Dialog open={paymentMode} onOpenChange={setPaymentMode}>
-        <DialogContent className="sm:max-w-md bg-white">
-          <DialogHeader>
-            <DialogTitle className="text-center">
-              Pick your payment mode
-            </DialogTitle>
-          </DialogHeader>
-
-          <div className="grid gap-4 py-4 ">
-            <div className="flex flex-col gap-2">
-              <button
-                className="w-full bg-gradient-to-b from-[#4A9D44] to-[#0D5F07] text-white py-3 rounded-lg font-medium transition-colors"
-                onClick={() => setPaymentMode(true)}
-              >
-                Pay from wallet
-              </button>
-              <button
-                className="w-full bg-gradient-to-b from-[#4A9D44] to-[#0D5F07] text-white py-3 rounded-lg font-medium transition-colors"
-                onClick={() => setPaymentMode(true)}
-              >
-                Buy now pay later
-              </button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <PaymentModal
+        shippingDetails={shippingAddress}
+        deliveryFee={deliveryFee}
+        paymentMode={paymentMode}
+        setPaymentMode={setPaymentMode}
+        selectedCartItems={selectedCartItems}
+      />
     </div>
   );
 };
