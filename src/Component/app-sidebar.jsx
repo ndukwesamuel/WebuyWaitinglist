@@ -1,25 +1,22 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+
 import { Logout_fun } from "@/Redux/AuthenticationSlice";
 import {
   Home,
   User,
+  Users2,
   MessageSquare,
   Wallet,
   Settings,
@@ -29,31 +26,31 @@ import {
   List,
   Receipt,
   Box,
+  Store,
+  Package,
+  ClipboardList,
 } from "lucide-react";
 import sidebarBg from "../assets/images/sidebarBg.png";
-import { selectCartItemCount } from "../Redux/cartApi";
 import { useGetCartQuery } from "../Redux/cartApi";
 const AppSidebar = () => {
-  const dispatch = useDispatch();
   const location = useLocation();
   const { data } = useSelector((state) => state.reducer?.AuthenticationSlice);
   const isAdmin = data?.data?.user?.isAdmin || false;
-  // const cartItemCount = useSelector(selectCartItemCount);
   const { data: cartData } = useGetCartQuery();
 
   // Calculate cart count from the latest data
   const cartItemCount = cartData?.userCart?.items?.length || 0;
   const userMenuItems = [
-    { label: "Wallet", icon: Home, path: "/dashboard" },
-    { label: "Shop", icon: ShoppingBag, path: "/dashboard/shop" },
+    { label: "Home", icon: Home, path: "/dashboard" },
+    { label: "Shop", icon: Store, path: "/dashboard/shop" },
     { label: "Cart", icon: ShoppingBag, path: "/dashboard/cart" },
-    { label: "Orders", icon: ShoppingBag, path: "/dashboard/order" },
+    { label: "Orders", icon: ClipboardList, path: "/dashboard/order" },
     { label: "Combo", icon: ShoppingBag, path: "/dashboard/combo" },
 
-    { label: "Group", icon: ShoppingBag, path: "/dashboard/group" },
+    { label: "Group", icon: Users, path: "/dashboard/group" },
 
-    { label: "Messages", icon: MessageSquare, path: "#" },
-    { label: "Wallet", icon: Wallet, path: "/dashboard/wallet" },
+    // { label: "Messages", icon: MessageSquare, path: "#" },
+    // { label: "Wallet", icon: Wallet, path: "/dashboard/wallet" },
   ];
 
   const adminMenuItems = [
@@ -67,13 +64,6 @@ const AppSidebar = () => {
   ];
 
   const menuItems = isAdmin ? adminMenuItems : userMenuItems;
-
-  const handleLogout = () => {
-    dispatch(Logout_fun());
-    localStorage.clear();
-    sessionStorage.clear();
-    window.location.reload();
-  };
 
   return (
     <div className="flex h-screen">
@@ -122,18 +112,6 @@ const AppSidebar = () => {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
-                {/* <SidebarMenuItem>
-                  <SidebarMenuButton
-                    className="h-14"
-                    style={{ backgroundColor: "transparent", color: "#FFFF" }}
-                    onClick={handleLogout}
-                  >
-                    <div className="flex items-center h-14 p-4 transition-colors duration-200">
-                      <LogOut size={20} />
-                      <span className="font-semibold ml-3">Log Out</span>
-                    </div>
-                  </SidebarMenuButton>
-                </SidebarMenuItem> */}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
