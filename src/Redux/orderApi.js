@@ -24,7 +24,7 @@ export const orderApi = createApi({
       }),
     }),
     getUserOrder: builder.query({
-      query: () => "orders/user-order",
+      query: ({ page, limit }) => `/user-order?page=${page}&limit=${limit}`,
     }),
   }),
 });

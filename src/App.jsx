@@ -35,7 +35,7 @@ import Cart from "./Page/UserDashboard/Cart";
 import ProductDetail from "./Page/product/ProductDetails";
 import GroupPage from "./Page/UserDashboard/GroupPage";
 import ComboProductPage from "./Page/product/ComboProductPage";
-
+import OrderPage from "./Page/UserDashboard/Order";
 function App() {
   return (
     <BrowserRouter>
@@ -65,6 +65,7 @@ function App() {
           <Route index element={<Wallet />} />
           <Route path="shop" element={<ProductPage />} />
           <Route path="combo" element={<ComboProductPage />} />
+          <Route path="order" element={<OrderPage />} />
 
           <Route path="profile" element={<UserProfile />} />
           <Route path="wallet" element={<Wallet />} />

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useGetAllProductQuery } from "../../Redux/ProductApi";
 import ProductCard from "@/Component/product/ProductCard";
 import { useLocation } from "react-router-dom";
+import Loader from "@/Component/Loader/Loader";
 const ProductPage = () => {
   const [page, setPage] = useState(1);
   const [limit] = useState(20);
@@ -15,9 +16,7 @@ const ProductPage = () => {
     }
   }, [page]);
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-60">Loading...</div>
-    );
+    return <Loader />;
   }
   let productLink;
   if (location.pathname === "/") {
@@ -25,7 +24,10 @@ const ProductPage = () => {
   } else {
     productLink = `/dashboard/products`; // For protected route
   }
-  const { products, pagination } = data || { products: [], pagination: {} };
+  const { products, pagination } = data || {
+    products: [],
+    pagination: {},
+  };
   const { currentPage, totalPages, hasNextPage, hasPrevPage } =
     pagination || {};
   const handlePrevPage = () => {

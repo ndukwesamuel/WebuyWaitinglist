@@ -75,10 +75,10 @@ export const Profile_fun = createAsyncThunk(
     } catch (error) {
       const message =
         (error.response && error.response.data && error.response.data.msg) ||
-        error.message ||
         error.msg ||
         error.response.data.message ||
-        error.toString();
+        error.toString() ||
+        "Something went wrong";
       return thunkAPI.rejectWithValue(message);
     }
   }

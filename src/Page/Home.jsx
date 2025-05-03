@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Hero from "@/Component/Home/Hero";
 import HeroBuyer from "@/Component/Home/HeroBuyer";
 import { Suspense, lazy } from "react";
-
+import Loader from "@/Component/Loader/Loader";
 const ProductPage = lazy(() => import("./product/ProductPage"));
 const Footer = lazy(() => import("@/Component/Footer"));
 const Home = () => {
@@ -30,13 +30,13 @@ const Home = () => {
         </SwiperSlide>
       </Swiper>
       <section className="py-10">
-        <Suspense fallback={<div>Loading products...</div>}>
+        <Suspense fallback={<Loader />}>
           <ProductPage />
         </Suspense>
       </section>
 
       <footer>
-        <Suspense fallback={<div>Loading footer...</div>}>
+        <Suspense fallback={<Loader />}>
           <Footer />
         </Suspense>
       </footer>

@@ -72,6 +72,7 @@ const Cart = () => {
     }
   };
   const selectedCartItems = cartItems.filter((item) => checkedItems[item._id]);
+  console.log(selectedCartItems);
   const handleProceedToCheckout = () => {
     // Make sure at least one item is selected
 
